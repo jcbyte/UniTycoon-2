@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon;
+package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.screens.MapSelectorScreen;
+import com.vikingz.unitycoon.screens.SettingsScreen;
 
 public class MenuScreen implements Screen {
 

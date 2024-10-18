@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon;
+package com.vikingz.unitycoon.screens;
 
 
 import com.badlogic.gdx.Game;
@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.screens.GameScreen;
+import com.vikingz.unitycoon.util.BackgroundRenderer;
 
 public class MapSelectorScreen implements Screen {
 
@@ -70,9 +72,9 @@ public class MapSelectorScreen implements Screen {
         table.add(map3Button).pad(10);
         table.row();
 
-        table.add(new Image(map1Texture)).width(150).height(150).pad(10);
-        table.add(new Image(map2Texture)).width(150).height(150).pad(10);
-        table.add(new Image(map3Texture)).width(150).height(150).pad(10);
+        table.add(new Image(map1Texture)).width(150).height(350).pad(10);
+        table.add(new Image(map2Texture)).width(150).height(350).pad(10);
+        table.add(new Image(map3Texture)).width(150).height(350).pad(10);
 
         // Add the table to the stage
         stage.addActor(table);

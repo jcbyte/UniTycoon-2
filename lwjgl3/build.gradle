@@ -1,9 +1,13 @@
 
+
+
+
 buildscript {
   repositories {
     gradlePluginPortal()
   }
   dependencies {
+
     if(enableGraalNative == 'true') {
       classpath "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin:0.9.28"
     }
@@ -27,10 +31,15 @@ if (JavaVersion.current().isJava9Compatible()) {
         compileJava.options.release.set(17)
 }
 
+
 dependencies {
   implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
+  implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"  // Add this line
+
   implementation project(':core')
 
   if(enableGraalNative == 'true') {
@@ -60,6 +69,8 @@ jar {
   exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
     exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
+
+
   }
 // setting the manifest makes the JAR runnable.
   manifest {
@@ -132,3 +143,5 @@ startScripts.classpath = project.tasks.jar.outputs.files
 if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
+
+

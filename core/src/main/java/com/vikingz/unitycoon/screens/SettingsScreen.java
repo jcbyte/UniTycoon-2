@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon;
+package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.global.GameConfig;
 
 public class SettingsScreen implements Screen {
 
@@ -32,7 +33,7 @@ public class SettingsScreen implements Screen {
         // Create volume slider
 
         volumeSlider = new Slider(0, 100, 1, false, skin); // Min: 0, Max: 100, Step: 1
-        volumeSlider.setValue(50);
+        volumeSlider.setValue(GameConfig.VOLUME_VALUE);
 
         volumeLabel = new Label(volume, skin);
         this.volume = "Volume: " + String.valueOf(volumeSlider.getValue());
@@ -74,7 +75,8 @@ public class SettingsScreen implements Screen {
         // Draw stage
         volume = "Volume: " + String.valueOf(volumeSlider.getValue());
         volumeLabel.setText(volume);
-        System.out.println(volume);
+        GameConfig.VOLUME_VALUE = volumeSlider.getValue();
+
 
         stage.act(delta);
         stage.draw();
@@ -96,6 +98,8 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
+
+
         stage.dispose();
         skin.dispose();
     }
