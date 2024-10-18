@@ -7,8 +7,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.io.Console;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class BackgroundRenderer{
+
+    private final char GRASS = 'G';
+    private final char WATER = 'W';
+    private final char COBBLE_STONE = 'C';
+
+
     private SpriteBatch batch;
+    private String mapName;
+    private String map;
     private Texture texture;
     private TextureRegion grassTile, waterTile, cobbleTile, tile4;
 
@@ -17,10 +31,14 @@ public class BackgroundRenderer{
     private int screenWidth;
     private int screenHeight;
 
-    public BackgroundRenderer() {
+    public BackgroundRenderer(String mapName) {
+        this.mapName = mapName;
+
+        this.map = FileHandler.loadMap(mapName);
+
         batch = new SpriteBatch();
 
-        texture = new Texture(Gdx.files.internal("textureAtlas/backgroundAtlas.png")); // Load your 64x64 PNG
+        texture = new Texture(Gdx.files.internal("textureAtlases/backgroundAtlas.png")); // Load your 64x64 PNG
 
         // Create TextureRegions for each tile
         grassTile = new TextureRegion(texture, 0, 0,                     atlasTileSize, atlasTileSize);   // Tile 1 (Top-left)
@@ -41,23 +59,24 @@ public class BackgroundRenderer{
 
         batch.begin();
 
-        drawTiledBackground();
+        //drawTiledBackground();
+        drawTiledBackgroundFromMap();
 
         // Draw the tiles at specific positions
-        batch.draw(grassTile, 10, 10);  // Draw Tile 1
-        batch.draw(waterTile, 70, 10);  // Draw Tile 1
-        batch.draw(cobbleTile, 150, 10);  // Draw Tile 1
+        //batch.draw(grassTile, 10, 10);  // Draw Tile 1
+        //batch.draw(waterTile, 70, 10);  // Draw Tile 1
+        //batch.draw(cobbleTile, 150, 10);  // Draw Tile 1
 
         batch.end();
     }
 
     private void drawTiledBackground() {
         // Calculate the number of tiles needed
-        int rows = (int) Math.ceil((double) screenHeight / tileSize);
-        int cols = (int) Math.ceil((double) screenWidth / tileSize);
+        //int rows = (int) Math.ceil((double) screenHeight / tileSize);
+        //int cols = (int) Math.ceil((double) screenWidth / tileSize);
 
-        //int rows = 10;
-        //int cols = 10;
+        int rows = 31;
+        int cols = 57;
 
         // Render the tiles
         for (int row = 0; row < rows; row++) {
@@ -68,6 +87,49 @@ public class BackgroundRenderer{
         }
     }
 
+    private void drawTiledBackgroundFromMap() {
+        // Calculate the number of tiles needed
+        //int rows = (int) Math.ceil((double) screenHeight / tileSize);
+        //int cols = (int) Math.ceil((double) screenWidth / tileSize);
+
+        int rowsMax = 31;
+        int colsMax = 57;
+
+        int rows = map.split("\n").length;
+        int cols = map.split("\n")[0].length();
+
+
+
+        for(int i = 0; i < rows ; i++){
+            for(int j = 0; j < cols; j++){
+
+                // The list has to be reversed as the file is read top to bottom
+                // but the tiles are drawn bottom to top.
+
+                List<String> strRowsList = Arrays.asList(map.split("\n"));
+                Collections.reverse(strRowsList);
+
+                switch (strRowsList.get(i).charAt(j)){
+                    case GRASS:
+                        batch.draw(grassTile, j * tileSize, i * tileSize, tileSize, tileSize);
+                        break;
+
+                    case WATER:
+                        batch.draw(waterTile, j * tileSize, i * tileSize, tileSize, tileSize);
+                        break;
+
+                    case COBBLE_STONE:
+                        batch.draw(cobbleTile, j * tileSize, i * tileSize, tileSize, tileSize);
+                        break;
+
+
+
+                }
+
+            }
+        }
+
+    }
 
 
     public void resize(int width, int height) {

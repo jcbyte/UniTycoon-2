@@ -3,7 +3,9 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -54,12 +56,16 @@ public class MenuScreen implements Screen {
         table.setFillParent(true);  // Center table on stage
         table.center();
 
+        Image texture = new Image(new Texture(Gdx.files.internal("gameLogo.png"))); // Load your 64x64 PNG
+        table.add(texture).pad(50);
+        table.row();
+
         // Add buttons to table
-        table.add(playButton).fillX().uniformX().pad(10);
+        table.add(playButton).pad(10);
         table.row();
-        table.add(settingsButton).fillX().uniformX().pad(10);
+        table.add(settingsButton).pad(10);
         table.row();
-        table.add(quitButton).fillX().uniformX().pad(10);
+        table.add(quitButton).pad(10);
 
         // Add the table to the stage
         stage.addActor(table);

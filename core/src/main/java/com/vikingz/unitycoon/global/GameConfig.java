@@ -2,7 +2,7 @@ package com.vikingz.unitycoon.global;
 
 public class GameConfig {
 
-    public static boolean SKIP_MENUS = true;
+    public static boolean SKIP_MENUS = false;
 
     public static int WINDOW_WIDTH = 1820;
     public static int WINDOW_HEIGHT = 980;

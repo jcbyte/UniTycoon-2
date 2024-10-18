@@ -6,10 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
+import com.vikingz.unitycoon.ui.BuildMenu;
 import com.vikingz.unitycoon.util.BackgroundRenderer;
 import com.vikingz.unitycoon.util.StatsCalculator;
 import com.vikingz.unitycoon.util.StatsRenderer;
@@ -19,7 +18,7 @@ public class GameScreen implements Screen {
     private Game game;
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    private String map;
+    private String mapName;
 
     // Counter variables
     private int counter;
@@ -32,15 +31,19 @@ public class GameScreen implements Screen {
     private BackgroundRenderer backgroundRenderer;
     private StatsRenderer statsRenderer;
 
+    // Menus
+    private BuildMenu buildMenu;
 
 
-    public GameScreen(Game game, String map) {
+
+    public GameScreen(Game game, String mapName) {
         this.game = game;
-        this.map = map;
+        this.mapName = mapName;
 
         camera = new OrthographicCamera();
-        backgroundRenderer = new BackgroundRenderer();
+        backgroundRenderer = new BackgroundRenderer(mapName);
         statsRenderer = new StatsRenderer();
+        buildMenu = new BuildMenu();
 
         //camera.setToOrtho(false, 800, 480); // Adjust camera settings for your game's resolution
         batch = new SpriteBatch();
@@ -69,6 +72,7 @@ public class GameScreen implements Screen {
         // Update the camera
         camera.update();
 
+
         backgroundRenderer.render(delta);
 
         // Update the counter
@@ -95,13 +99,21 @@ public class GameScreen implements Screen {
 
         statsRenderer.render(delta);
 
+        buildMenu.render(delta);
+
+
         batch.end();
     }
+
+
 
     @Override
     public void resize(int width, int height) {
         // Adjust the viewport when the window size changes
         camera.setToOrtho(false, width, height);
+
+        backgroundRenderer.resize(width, height);
+        buildMenu.resize(width, height);
     }
 
     @Override

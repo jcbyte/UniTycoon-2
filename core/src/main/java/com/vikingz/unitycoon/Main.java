@@ -11,7 +11,7 @@ public class Main extends Game {
     public void create() {
         // If SKIP_MENUS is enabled in GameConfig, the game will load straight into the game.
         if(GameConfig.SKIP_MENUS){
-            setScreen(new GameScreen(this, "Map1"));
+            setScreen(new GameScreen(this, "map1"));
         }
         else{
             setScreen(new MenuScreen(this));
