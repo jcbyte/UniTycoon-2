@@ -1,0 +1,106 @@
+package com.vikingz.unitycoon;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+public class MenuScreen implements Screen {
+
+    private Game game;
+    private Stage stage;
+    private Skin skin;
+
+    public MenuScreen(Game game) {
+        this.game = game;
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+
+        // Load a default skin
+        skin = new Skin(Gdx.files.internal("ui/glassy-ui.json"));
+
+        // Create buttons
+        TextButton playButton = new TextButton("Play", skin);
+        TextButton settingsButton = new TextButton("Settings", skin);
+        TextButton quitButton = new TextButton("Quit", skin);
+
+        // Add listeners to buttons
+        playButton.addListener(e -> {
+            if (!playButton.isPressed()) return false;
+            game.setScreen(new MapSelectorScreen(game)); // Navigate to GameScreen
+            return true;
+        });
+
+        settingsButton.addListener(e -> {
+            if (!settingsButton.isPressed()) return false;
+            game.setScreen(new SettingsScreen(game)); // Navigate to SettingsScreen
+            return true;
+        });
+
+        quitButton.addListener(e -> {
+            if (!quitButton.isPressed()) return false;
+            Gdx.app.exit(); // Quit the application
+            return true;
+        });
+
+        // Create a table for layout
+        Table table = new Table();
+        table.setFillParent(true);  // Center table on stage
+        table.center();
+
+        // Add buttons to table
+        table.add(playButton).fillX().uniformX().pad(10);
+        table.row();
+        table.add(settingsButton).fillX().uniformX().pad(10);
+        table.row();
+        table.add(quitButton).fillX().uniformX().pad(10);
+
+        // Add the table to the stage
+        stage.addActor(table);
+    }
+
+    @Override
+    public void show() {
+        // Called when this screen becomes the current screen for the game.
+    }
+
+    @Override
+    public void render(float delta) {
+        // Clear the screen
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+
+        // Draw the stage
+        stage.act(delta);
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        // Update the stage's viewport when the screen size changes
+        stage.getViewport().update(width, height, true);
+    }
+
+    @Override
+    public void pause() { }
+
+    @Override
+    public void resume() { }
+
+    @Override
+    public void hide() {
+        // This removes the bug where the user can still click the buttons from the game screen.
+        stage.dispose();
+    }
+
+    @Override
+    public void dispose() {
+        // Dispose of assets when this screen is no longer used
+        stage.dispose();
+        skin.dispose();
+    }
+}
