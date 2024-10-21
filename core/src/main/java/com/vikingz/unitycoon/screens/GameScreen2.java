@@ -8,16 +8,20 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.ui.BuildMenu;
+import com.vikingz.unitycoon.util.StatsCalculator;
 import com.vikingz.unitycoon.util.StatsRenderer;
 
 public class GameScreen2 implements Screen {
     private final BitmapFont font;
+    private final SpriteBatch batch;
     Texture img;
     TiledMap tiledMap;
     OrthographicCamera camera;
@@ -27,6 +31,7 @@ public class GameScreen2 implements Screen {
     // Menus
     private BuildMenu buildMenu;
     private StatsRenderer statsRenderer;
+    private float elapsedTime = 0;
 
     public GameScreen2(Game game, String mapName, GameSkins SkinLoader){
         float w = Gdx.graphics.getWidth();
@@ -37,11 +42,11 @@ public class GameScreen2 implements Screen {
         camera.update();
         tiledMap = new TmxMapLoader().load("maps/".concat(mapName).concat(".tmx"));
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-
         statsRenderer = new StatsRenderer();
         buildMenu = new BuildMenu(SkinLoader);
         font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
         font.getData().setScale(2.0f);
+        batch = new SpriteBatch();
     }
 
     @Override
@@ -56,13 +61,35 @@ public class GameScreen2 implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Stats calculate
+        // Update the counter
+        elapsedTime += delta; // delta is the time elapsed since the last frame
+        if (elapsedTime >= 1) { // Increment counter every second
+
+            // Calculate Game Stats
+
+            GameGlobals.BALANCE++;
+            GameGlobals.SATISFACTION += StatsCalculator.calculateSatisfaction(GameGlobals.STUDENTS, 0.5f);
+
+            elapsedTime = 0; // Reset elapsed time
+        }
+
+
+
+        //Button Inputs
         KeyCheck();
+
+        //Tile update
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-        statsRenderer.render(delta);
-        buildMenu.render(delta);
 
+        //UI elements
+        batch.begin();
+        statsRenderer.render(delta);
+
+        buildMenu.render(delta);
+        batch.end();
     }
 
     public boolean KeyCheck() {
@@ -83,6 +110,10 @@ public class GameScreen2 implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+        camera.setToOrtho(false,w,h);
+        camera.update();
 
     }
 

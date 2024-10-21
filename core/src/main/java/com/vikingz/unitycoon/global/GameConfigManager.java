@@ -29,9 +29,6 @@ public class GameConfigManager {
 
 
     public static void saveGameConfig(){
-
-
-
         try {
             FileOutputStream fileOut = new FileOutputStream("gameconfig/gameconf.bin");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
