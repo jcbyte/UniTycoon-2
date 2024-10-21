@@ -133,8 +133,9 @@ public class MapSelectorScreen implements Screen {
             if (!startGame.isPressed()) return false;
             System.out.println("Starting... ".concat(mapText.getText()));
 
-           
-            game.setScreen(new GameScreen(game, mapText.getText().toLowerCase(),skinLoader));
+
+            game.setScreen(new GameScreen2(game, mapText.getText().toLowerCase(),skinLoader));
+
             //game.setScreen(new GameScreen(game, "map1",skinLoader));
             return true;
         });
