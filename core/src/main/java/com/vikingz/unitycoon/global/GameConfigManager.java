@@ -10,7 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 
 public class GameConfigManager {
-    
+
 
     public static void setFullScreen(){
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
@@ -31,7 +31,7 @@ public class GameConfigManager {
     public static void saveGameConfig(){
 
 
-    
+
         try {
             FileOutputStream fileOut = new FileOutputStream("gameconfig/gameconf.bin");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -43,7 +43,7 @@ public class GameConfigManager {
         } catch (IOException i) {
             i.printStackTrace();
         }
-        
+
 
     }
 
@@ -67,12 +67,12 @@ public class GameConfigManager {
             i.printStackTrace();
             return;
         } catch (ClassNotFoundException c) {
-            System.out.println("Employee class not found");
+            System.out.println("GameConfig class not found");
             c.printStackTrace();
             return;
         }
 
-        
+
 
     }
 
