@@ -38,6 +38,7 @@ public class GameScreen implements Screen {
 
 
     public GameScreen(Game game, String mapName, GameSkins SkinLoader) {
+
         this.game = game;
         this.mapName = mapName;
 
@@ -47,6 +48,7 @@ public class GameScreen implements Screen {
         buildMenu = new BuildMenu(SkinLoader);
 
         //camera.setToOrtho(false, 800, 480); // Adjust camera settings for your game's resolution
+
         batch = new SpriteBatch();
 
 

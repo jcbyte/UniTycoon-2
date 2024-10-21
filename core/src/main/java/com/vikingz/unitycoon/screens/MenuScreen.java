@@ -27,7 +27,7 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         // Load a default skin
-        skin = new Skin(Gdx.files.internal("ui/glassy-ui.json"));
+        skin = skinLoader.getQuantumSkin();
 
         // Create buttons
         TextButton playButton = new TextButton("Play", skin);

@@ -3,21 +3,25 @@ package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameSkins;
-import com.vikingz.unitycoon.screens.GameScreen;
-import com.vikingz.unitycoon.ui.BuildMenu;
-import com.vikingz.unitycoon.util.BackgroundRenderer;
 
 public class MapSelectorScreen implements Screen {
 
+    private TextField mapText;
+    private TextureRegionDrawable map1Draw;
+    private TextureRegionDrawable map2Draw;
+    private TextureRegionDrawable map3Draw;
+    private TextureRegionDrawable[] mapArray;
     private Game game;
     private Stage stage;
     private Skin skin;
@@ -26,23 +30,38 @@ public class MapSelectorScreen implements Screen {
     private Texture map1Texture;
     private Texture map2Texture;
     private Texture map3Texture;
+    private GameSkins skinLoader;
+    private int mapSelection = 1;
 
     public MapSelectorScreen(Game game, GameSkins skinLoader) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        this.skinLoader = skinLoader;
 
-        skin = skinLoader.getDefaultSkin();
+        skin = skinLoader.getQuantumSkin();
 
         // Load map textures (replace with your own textures)
         map1Texture = new Texture(Gdx.files.internal("png/map1Texture.png"));
         map2Texture = new Texture(Gdx.files.internal("png/map2Texture.png"));
         map3Texture = new Texture(Gdx.files.internal("png/map3Texture.png"));
 
+        //Adds changeable draws to change the image type
+        //Todo move this to globals as a look up table
+        map1Draw = new TextureRegionDrawable(map1Texture);
+        map2Draw = new TextureRegionDrawable(map2Texture);
+        map3Draw = new TextureRegionDrawable(map3Texture);
+        mapArray = new TextureRegionDrawable[]{map1Draw, map2Draw, map3Draw};
+
+
+
+
+
         // Create buttons for selecting the maps
         TextButton map1Button = new TextButton("Map 1", skin);
         TextButton map2Button = new TextButton("Map 2", skin);
         TextButton map3Button = new TextButton("Map 3", skin);
+
 
         // Add listeners for buttons
         map1Button.addListener(e -> {
@@ -63,20 +82,87 @@ public class MapSelectorScreen implements Screen {
             return true;
         });
 
+        TextButton goBack = new TextButton("Go Back",skin);
+        TextButton startGame = new TextButton("Start Game",skin);
+        TextButton nextMap = new TextButton("+",skin);
+        TextButton previousMap = new TextButton("-",skin);
+
+        //Gp back Button
+        goBack.addListener(e -> {
+            if (!goBack.isPressed()) return false;
+            game.setScreen(new MenuScreen(game, skinLoader));
+            return true;
+        });
+
+
+        Image mapImage = new Image(map1Texture);
+
+        //Selects the next map
+        nextMap.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                mapSelection++;
+                if (mapSelection > 3) {
+                    mapSelection = 1;
+                }
+                mapImage.setDrawable(mapArray[mapSelection-1]);
+                return true;
+            }
+        });
+
+
+        //Selects the previous map
+        previousMap.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                mapSelection--;
+                if (mapSelection < 1){
+                    mapSelection = 3;
+                }
+                mapImage.setDrawable(mapArray[mapSelection-1]);
+                return true;
+            }
+        });
+
+
+
+
+        mapText = new TextField("Map".concat(Integer.toString(mapSelection)),skin);
+
+        startGame.addListener(e -> {
+            if (!startGame.isPressed()) return false;
+            System.out.println("Starting... ".concat(mapText.getText()));
+            game.setScreen(new GameScreen(game,mapText.getText(),skinLoader));
+            return true;
+        });
+
         // Create table for layout
         Table table = new Table();
         table.setFillParent(true);
         table.center();
 
         // Add the map buttons and images to the table
-        table.add(map1Button).pad(10);
-        table.add(map2Button).pad(10);
-        table.add(map3Button).pad(10);
+        //table.add(map1Button).pad(10);
+        //table.add(map2Button).pad(10);
+        //table.add(map3Button).pad(10);
+        //table.row();
+
+        table.add((Actor) null);
+        table.add(mapImage).width(300).height(350).pad(10);
+        //table.add(new Image(map2Texture)).width(150).height(350).pad(10);
+        //table.add(new Image(map3Texture)).width(150).height(350).pad(10);
         table.row();
 
-        table.add(new Image(map1Texture)).width(150).height(350).pad(10);
-        table.add(new Image(map2Texture)).width(150).height(350).pad(10);
-        table.add(new Image(map3Texture)).width(150).height(350).pad(10);
+        table.add(previousMap).pad(10);
+        table.add(mapText).pad(10);
+        table.add(nextMap).pad(10);
+        table.row();
+        table.row();
+
+        table.add(goBack).pad(10);
+        table.add((Actor) null);
+        table.add(startGame).pad(10);
+
 
         // Add the table to the stage
         stage.addActor(table);
@@ -92,6 +178,14 @@ public class MapSelectorScreen implements Screen {
         // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+        mapText.setText("Map".concat(Integer.toString(mapSelection)));
+
+
+        //Key bindings Escape
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            game.setScreen(new MenuScreen(game,skinLoader)); // Navigate back to MenuScreen
+        }
+
 
         // Draw the stage (the UI components)
         stage.act(delta);

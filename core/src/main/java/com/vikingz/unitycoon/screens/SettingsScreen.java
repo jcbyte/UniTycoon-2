@@ -1,8 +1,6 @@
 package com.vikingz.unitycoon.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 
 public class SettingsScreen implements Screen {
@@ -23,23 +22,26 @@ public class SettingsScreen implements Screen {
 
     private Slider volumeSlider;
     private Label volumeLabel;
+    private GameSkins skinLoader;
 
     public SettingsScreen(Game game, GameSkins skinLoader) {
         this.game = game;
-
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
+        // Get Skins variable from Skin loader
+        this.skinLoader = skinLoader;
         skin = skinLoader.getDefaultSkin();
 
-        // Create volume slider
 
+
+
+        // Create volume slider
         volumeSlider = new Slider(0, 100, 1, false, skin); // Min: 0, Max: 100, Step: 1
         volumeSlider.setValue(GameConfig.VOLUME_VALUE);
 
         volumeLabel = new Label(volume, skin);
         this.volume = "Volume: " + String.valueOf(volumeSlider.getValue());
-
 
         // Back button to return to MenuScreen
         TextButton backButton = new TextButton("Back", skin);
@@ -49,17 +51,37 @@ public class SettingsScreen implements Screen {
             return true;
         });
 
+        TextButton Debug = new TextButton("Fullscreen",skin);
+        Debug.addListener(e -> {
+            if (Debug.isPressed()){
+                GameConfig.setFullScreen();
+            }
+            return true;
+        });
+
+        TextButton window = new TextButton("Window Mode",skin);
+        window.addListener(e -> {
+            if (window.isPressed()){
+                GameConfig.setWindowScreen();
+            }
+            return true;
+        });
+
         // Create layout table
         Table table = new Table();
         table.setFillParent(true);
         table.center();
 
         // Add elements to the table
-        table.add(volumeLabel).pad(10);
+        table.add(volumeLabel).uniformX().pad(10);
         table.row();
         table.add(volumeSlider).fillX().uniformX().pad(10);
         table.row();
         table.add(backButton).fillX().uniformX().pad(10);
+        table.row();
+        table.add(Debug).fillX().uniformX().pad(10);
+        table.row();
+        table.add(window).fillX().uniformX().pad(10);
 
         // Add table to stage
         stage.addActor(table);
@@ -78,6 +100,14 @@ public class SettingsScreen implements Screen {
         volume = "Volume: " + String.valueOf(volumeSlider.getValue());
         volumeLabel.setText(volume);
         GameConfig.VOLUME_VALUE = volumeSlider.getValue();
+
+
+        //Key bindings Escape
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            game.setScreen(new MenuScreen(game,skinLoader)); // Navigate back to MenuScreen
+        }
+
+
 
 
         stage.act(delta);
