@@ -31,4 +31,7 @@ public class GameConfig {
         return WINDOW_HEIGHT;
     }
 
+
+
+
 }
