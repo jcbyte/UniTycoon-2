@@ -1,5 +1,7 @@
 package com.vikingz.unitycoon.global;
 
+import com.badlogic.gdx.Gdx;
+
 import java.io.Serializable;
 
 
@@ -10,6 +12,7 @@ public class GameConfig implements Serializable{
     private int windowHeight;
     private boolean skipMenus;
     private float volumeValue;
+    private static boolean VSync = false;
 
 
 
@@ -24,8 +27,18 @@ public class GameConfig implements Serializable{
         this.windowHeight = height;
         this.skipMenus = skipMenus;
         this.volumeValue = volumeValue;
+
     }
 
+    //Sets VSync mode for game on or off
+    public static boolean setVSync(boolean enable){
+        VSync = enable;
+        Gdx.graphics.setVSync(enable);
+        return VSync;
+    }
+    public static boolean getVSync(){
+        return VSync;
+    }
 
     public void setInstance(GameConfig conf){
         INSTANCE = conf;

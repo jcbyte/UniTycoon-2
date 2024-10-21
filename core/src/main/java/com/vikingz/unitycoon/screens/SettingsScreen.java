@@ -34,7 +34,7 @@ public class SettingsScreen implements Screen {
 
         // Get Skins variable from Skin loader
         this.skinLoader = skinLoader;
-        skin = skinLoader.getDefaultSkin();
+        skin = skinLoader.getQuantumSkin();
 
         this.resolutionLabel = new Label(GameConfigManager.CurrentWindowSize(),skin);
 
@@ -77,6 +77,7 @@ public class SettingsScreen implements Screen {
             return true;
         });
 
+
         // Create layout table
         Table table = new Table();
         table.setFillParent(true);
@@ -107,8 +108,6 @@ public class SettingsScreen implements Screen {
         table.add((Actor) null);
         table.add(backButton).fillX().pad(10);
         table.row();
-
-
 
 
 

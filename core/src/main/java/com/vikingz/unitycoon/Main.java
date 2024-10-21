@@ -1,9 +1,11 @@
 package com.vikingz.unitycoon;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameSkins;
+import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.GameScreenOld;
 import com.vikingz.unitycoon.screens.MenuScreen;
 
@@ -17,7 +19,7 @@ public class Main extends Game {
 
         // If SKIP_MENUS is enabled in GameConfig, the game will load straight into the game.
         if(GameConfig.getInstance().isSkipMenus()){
-            setScreen(new GameScreenOld(this, "map1",skinLoader));
+            setScreen(new GameScreen(this, "map1",skinLoader));
         }
         else{
             setScreen(new MenuScreen(this,skinLoader));
