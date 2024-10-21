@@ -35,11 +35,11 @@ public class StatsRenderer {
 
         batch.begin();
 
-        font.draw(batch, "Balance: " + GameGlobals.BALANCE, 10, GameConfig.WINDOW_HEIGHT - 10); // Draw at position (10, 470)
-        font.draw(batch, "Students: " + GameGlobals.STUDENTS, 10, GameConfig.WINDOW_HEIGHT - 40); // Draw at position (10, 470)
-        font.draw(batch, "Satisfaction: " + GameGlobals.SATISFACTION, 10, GameConfig.WINDOW_HEIGHT - 70); // Draw at position (10, 470)
+        font.draw(batch, "Balance: " + GameGlobals.BALANCE, 10, GameConfig.getInstance().getWindowHeight() - 10); // Draw at position (10, 470)
+        font.draw(batch, "Students: " + GameGlobals.STUDENTS, 10, GameConfig.getInstance().getWindowHeight() - 40); // Draw at position (10, 470)
+        font.draw(batch, "Satisfaction: " + GameGlobals.SATISFACTION, 10, GameConfig.getInstance().getWindowHeight() - 70); // Draw at position (10, 470)
 
-        font.draw(batch, "Number Of Buildings: " + GameGlobals.BUILDINGS_COUNT, 10, GameConfig.WINDOW_HEIGHT - 120); // Draw at position (10, 470)
+        font.draw(batch, "Number Of Buildings: " + GameGlobals.BUILDINGS_COUNT, 10, GameConfig.getInstance().getWindowHeight() - 120); // Draw at position (10, 470)
 
         batch.end();
     }
