@@ -5,7 +5,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -52,19 +51,19 @@ public class MapSelectorScreen implements Screen {
         // Add listeners for buttons
         map1Button.addListener(e -> {
             if (!map1Button.isPressed()) return false;
-            game.setScreen(new GameScreen(game, "map1",skinLoader)); // Start GameScreen for Map 1
+            game.setScreen(new GameScreenOld(game, "map1",skinLoader)); // Start GameScreen for Map 1
             return true;
         });
 
         map2Button.addListener(e -> {
             if (!map2Button.isPressed()) return false;
-            game.setScreen(new GameScreen(game, "map2",skinLoader)); // Start GameScreen for Map 2
+            game.setScreen(new GameScreenOld(game, "map2",skinLoader)); // Start GameScreen for Map 2
             return true;
         });
 
         map3Button.addListener(e -> {
             if (!map3Button.isPressed()) return false;
-            game.setScreen(new GameScreen(game, "map3",skinLoader)); // Start GameScreen for Map 3
+            game.setScreen(new GameScreenOld(game, "map3",skinLoader)); // Start GameScreen for Map 3
             return true;
         });
 
@@ -120,7 +119,7 @@ public class MapSelectorScreen implements Screen {
             System.out.println("Starting... ".concat(mapText.getText()));
 
 
-            game.setScreen(new GameScreen2(game, mapText.getText().toLowerCase(),skinLoader));
+            game.setScreen(new GameScreen(game, mapText.getText().toLowerCase(),skinLoader));
 
             //game.setScreen(new GameScreen(game, "map1",skinLoader));
             return true;
