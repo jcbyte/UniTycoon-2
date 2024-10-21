@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 
@@ -35,7 +36,7 @@ public class SettingsScreen implements Screen {
         this.skinLoader = skinLoader;
         skin = skinLoader.getDefaultSkin();
 
-        this.resolutionLabel = new Label(GameConfig.CurrentWindowSize(),skin);
+        this.resolutionLabel = new Label(GameConfigManager.CurrentWindowSize(),skin);
 
         // Create volume slider
         volumeSlider = new Slider(0, 100, 1, false, skin); // Min: 0, Max: 100, Step: 1
@@ -52,18 +53,26 @@ public class SettingsScreen implements Screen {
             return true;
         });
 
-        TextButton Debug = new TextButton("Fullscreen",skin);
-        Debug.addListener(e -> {
-            if (Debug.isPressed()){
-                GameConfig.setFullScreen();
+        TextButton fullscreenButton = new TextButton("Fullscreen",skin);
+        fullscreenButton.addListener(e -> {
+            if (fullscreenButton.isPressed()){
+                GameConfigManager.setFullScreen();
             }
             return true;
         });
 
-        TextButton window = new TextButton("Window Mode",skin);
-        window.addListener(e -> {
-            if (window.isPressed()){
-                GameConfig.setWindowScreen();
+        TextButton windowButton = new TextButton("Window Mode",skin);
+        windowButton.addListener(e -> {
+            if (windowButton.isPressed()){
+                GameConfigManager.setWindowScreen();
+            }
+            return true;
+        });
+
+        TextButton saveGameConfigButton = new TextButton("Save",skin);
+        saveGameConfigButton.addListener(e -> {
+            if (saveGameConfigButton.isPressed()){
+                GameConfigManager.saveGameConfig();
             }
             return true;
         });
@@ -88,9 +97,14 @@ public class SettingsScreen implements Screen {
         table.row();
         table.row();
 
-        table.add(Debug).fillX().uniformX().pad(10);
+        table.add(fullscreenButton).fillX().uniformX().pad(10);
+        table.add(windowButton).fillX().uniformX().pad(10);
+        table.row();
+
+        table.add(saveGameConfigButton).fillX().pad(10);
+        table.row();
+
         table.add(backButton).fillX().pad(10);
-        table.add(window).fillX().uniformX().pad(10);
         table.row();
 
 
@@ -110,7 +124,7 @@ public class SettingsScreen implements Screen {
         // Draw stage
         volume = "Volume: " + String.valueOf(volumeSlider.getValue());
         volumeLabel.setText(volume);
-        resolutionLabel.setText(GameConfig.CurrentWindowSize());
+        resolutionLabel.setText(GameConfigManager.CurrentWindowSize());
         GameConfig.VOLUME_VALUE = volumeSlider.getValue();
 
 
@@ -139,7 +153,6 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
-
 
         stage.dispose();
         skin.dispose();
