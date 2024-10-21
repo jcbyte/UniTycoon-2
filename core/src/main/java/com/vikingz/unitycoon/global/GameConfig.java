@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.global;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 
 public class GameConfig {
 
@@ -15,6 +16,12 @@ public class GameConfig {
 
     public static void setWindowScreen(){
         Gdx.graphics.setWindowedMode(WINDOW_WIDTH,WINDOW_HEIGHT);
+    }
+
+    public static String CurrentWindowSize(){
+        Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
+        if (Gdx.graphics.isFullscreen()) return displayMode.toString();
+        return Integer.toString(getWINDOW_WIDTH()).concat("x").concat(Integer.toString(getWindowHeight())).concat(" bpp ").concat(Integer.toString(displayMode.bitsPerPixel)).concat(" hz ").concat(Integer.toString(Gdx.graphics.getFramesPerSecond()));
     }
 
     public static int getWINDOW_WIDTH(){

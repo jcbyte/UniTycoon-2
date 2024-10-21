@@ -2,6 +2,7 @@ package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -15,6 +16,7 @@ import com.vikingz.unitycoon.global.GameSkins;
 
 public class SettingsScreen implements Screen {
 
+    private Label resolutionLabel;
     private Game game;
     private Stage stage;
     private Skin skin;
@@ -33,8 +35,7 @@ public class SettingsScreen implements Screen {
         this.skinLoader = skinLoader;
         skin = skinLoader.getDefaultSkin();
 
-
-
+        this.resolutionLabel = new Label(GameConfig.CurrentWindowSize(),skin);
 
         // Create volume slider
         volumeSlider = new Slider(0, 100, 1, false, skin); // Min: 0, Max: 100, Step: 1
@@ -72,16 +73,26 @@ public class SettingsScreen implements Screen {
         table.setFillParent(true);
         table.center();
 
+        table.add((Actor) null);
+        table.add(resolutionLabel);
+        table.row();
+
         // Add elements to the table
+        table.add((Actor) null);
         table.add(volumeLabel).uniformX().pad(10);
         table.row();
+
+
+        table.add((Actor) null);
         table.add(volumeSlider).fillX().uniformX().pad(10);
         table.row();
-        table.add(backButton).fillX().uniformX().pad(10);
         table.row();
+
         table.add(Debug).fillX().uniformX().pad(10);
-        table.row();
+        table.add(backButton).fillX().pad(10);
         table.add(window).fillX().uniformX().pad(10);
+        table.row();
+
 
         // Add table to stage
         stage.addActor(table);
@@ -99,6 +110,7 @@ public class SettingsScreen implements Screen {
         // Draw stage
         volume = "Volume: " + String.valueOf(volumeSlider.getValue());
         volumeLabel.setText(volume);
+        resolutionLabel.setText(GameConfig.CurrentWindowSize());
         GameConfig.VOLUME_VALUE = volumeSlider.getValue();
 
 
@@ -106,9 +118,6 @@ public class SettingsScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             game.setScreen(new MenuScreen(game,skinLoader)); // Navigate back to MenuScreen
         }
-
-
-
 
         stage.act(delta);
         stage.draw();
