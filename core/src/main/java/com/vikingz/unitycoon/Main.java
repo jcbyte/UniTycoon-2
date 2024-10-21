@@ -17,6 +17,10 @@ public class Main extends Game {
         GameSkins skinLoader = new GameSkins();
         GameConfigManager.loadGameConfig();
 
+        //Uncomment for funny numbers
+        //Gdx.graphics.setForegroundFPS(99999999);
+        //Gdx.graphics.setVSync(false);
+
         // If SKIP_MENUS is enabled in GameConfig, the game will load straight into the game.
         if(GameConfig.getInstance().isSkipMenus()){
             setScreen(new GameScreen(this, "map1",skinLoader));
