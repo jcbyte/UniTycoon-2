@@ -13,23 +13,19 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 
 public class MapSelectorScreen implements Screen {
 
     private TextField mapText;
-    private TextureRegionDrawable map1Draw;
-    private TextureRegionDrawable map2Draw;
-    private TextureRegionDrawable map3Draw;
     private TextureRegionDrawable[] mapArray;
     private Game game;
     private Stage stage;
     private Skin skin;
 
     // Map images (for example purposes, add your own map textures)
-    private Texture map1Texture;
-    private Texture map2Texture;
-    private Texture map3Texture;
+
     private GameSkins skinLoader;
     private int mapSelection = 1;
 
@@ -41,19 +37,9 @@ public class MapSelectorScreen implements Screen {
 
         skin = skinLoader.getQuantumSkin();
 
-        // Load map textures (replace with your own textures)
-        map1Texture = new Texture(Gdx.files.internal("png/map1Texture.png"));
-        map2Texture = new Texture(Gdx.files.internal("png/map2Texture.png"));
-        map3Texture = new Texture(Gdx.files.internal("png/map3Texture.png"));
+        //Loads maps from global config
 
-        //Adds changeable draws to change the image type
-        //Todo move this to globals as a look up table
-        map1Draw = new TextureRegionDrawable(map1Texture);
-        map2Draw = new TextureRegionDrawable(map2Texture);
-        map3Draw = new TextureRegionDrawable(map3Texture);
-        mapArray = new TextureRegionDrawable[]{map1Draw, map2Draw, map3Draw};
-
-
+        mapArray = GameGlobals.mapArray;
 
 
 
@@ -95,7 +81,7 @@ public class MapSelectorScreen implements Screen {
         });
 
 
-        Image mapImage = new Image(map1Texture);
+        Image mapImage = new Image(GameGlobals.map1Texture);
 
         //Selects the next map
         nextMap.addListener(new InputListener(){
@@ -117,7 +103,7 @@ public class MapSelectorScreen implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 mapSelection--;
                 if (mapSelection < 1){
-                    mapSelection = 3;
+                    mapSelection = mapArray.length;
                 }
                 mapImage.setDrawable(mapArray[mapSelection-1]);
                 return true;
@@ -215,8 +201,5 @@ public class MapSelectorScreen implements Screen {
         // Dispose of resources
         stage.dispose();
         skin.dispose();
-        map1Texture.dispose();
-        map2Texture.dispose();
-        map3Texture.dispose();
     }
 }

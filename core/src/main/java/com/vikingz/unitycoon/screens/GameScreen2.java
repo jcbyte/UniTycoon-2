@@ -36,7 +36,6 @@ public class GameScreen2 implements Screen {
     public GameScreen2(Game game, String mapName, GameSkins SkinLoader){
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
         camera.update();
