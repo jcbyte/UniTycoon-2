@@ -95,16 +95,23 @@ public class SettingsScreen implements Screen {
         table.add((Actor) null);
         table.add(volumeSlider).fillX().uniformX().pad(10);
         table.row();
-        table.row();
+
 
         table.add(fullscreenButton).fillX().uniformX().pad(10);
+        table.add(saveGameConfigButton).fillX().pad(10);
         table.add(windowButton).fillX().uniformX().pad(10);
         table.row();
 
-        table.add(saveGameConfigButton).fillX().pad(10);
+
+
+        table.add((Actor) null);
+        table.add(backButton).fillX().pad(10);
         table.row();
 
-        table.add(backButton).fillX().pad(10);
+
+
+
+
         table.row();
 
 
