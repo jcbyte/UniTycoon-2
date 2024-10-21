@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.vikingz.unitycoon.global.GameGlobals;
+import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.ui.BuildMenu;
 import com.vikingz.unitycoon.util.BackgroundRenderer;
 import com.vikingz.unitycoon.util.StatsCalculator;
@@ -36,14 +37,14 @@ public class GameScreen implements Screen {
 
 
 
-    public GameScreen(Game game, String mapName) {
+    public GameScreen(Game game, String mapName, GameSkins SkinLoader) {
         this.game = game;
         this.mapName = mapName;
 
         camera = new OrthographicCamera();
         backgroundRenderer = new BackgroundRenderer(mapName);
         statsRenderer = new StatsRenderer();
-        buildMenu = new BuildMenu();
+        buildMenu = new BuildMenu(SkinLoader);
 
         //camera.setToOrtho(false, 800, 480); // Adjust camera settings for your game's resolution
         batch = new SpriteBatch();

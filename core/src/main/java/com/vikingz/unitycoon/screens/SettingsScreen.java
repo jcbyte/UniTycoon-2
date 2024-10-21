@@ -3,6 +3,7 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameSkins;
 
 public class SettingsScreen implements Screen {
 
@@ -22,13 +24,13 @@ public class SettingsScreen implements Screen {
     private Slider volumeSlider;
     private Label volumeLabel;
 
-    public SettingsScreen(Game game) {
+    public SettingsScreen(Game game, GameSkins skinLoader) {
         this.game = game;
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal("ui/glassy-ui.json")); // Default UI skin
+        skin = skinLoader.getDefaultSkin();
 
         // Create volume slider
 
@@ -43,7 +45,7 @@ public class SettingsScreen implements Screen {
         TextButton backButton = new TextButton("Back", skin);
         backButton.addListener(e -> {
             if (!backButton.isPressed()) return false;
-            game.setScreen(new MenuScreen(game)); // Navigate back to MenuScreen
+            game.setScreen(new MenuScreen(game,skinLoader)); // Navigate back to MenuScreen
             return true;
         });
 

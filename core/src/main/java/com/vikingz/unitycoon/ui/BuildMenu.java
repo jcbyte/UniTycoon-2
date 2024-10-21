@@ -1,5 +1,6 @@
 package com.vikingz.unitycoon.ui;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,21 +10,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.global.GameSkins;
 
 public class BuildMenu{
     private Stage stage;
     private Skin skin;
+    private Skin quantumSkin;
     private Texture textureAtlas;
     private int atlasTileSize = 64;
 
     private int WINDOW_WIDTH = 500;
     private int WINDOW_HEIGHT = 700;
 
-    public BuildMenu() {
+    public BuildMenu(GameSkins SkinLoader) {
+
         stage = new Stage(new ScreenViewport());
+        //Sets input for LIBGDX ui system to this ui
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal("ui/glassy-ui.json")); // Default UI skin
+        //Imports skins
+        skin = SkinLoader.getDefaultSkin();
+        quantumSkin = SkinLoader.getQuantumSkin();
+
 
 
         textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG

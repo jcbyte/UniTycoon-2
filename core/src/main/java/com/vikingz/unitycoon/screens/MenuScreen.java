@@ -3,6 +3,7 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.screens.MapSelectorScreen;
 import com.vikingz.unitycoon.screens.SettingsScreen;
 
@@ -19,7 +21,7 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private Skin skin;
 
-    public MenuScreen(Game game) {
+    public MenuScreen(Game game, GameSkins skinLoader) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -35,13 +37,13 @@ public class MenuScreen implements Screen {
         // Add listeners to buttons
         playButton.addListener(e -> {
             if (!playButton.isPressed()) return false;
-            game.setScreen(new MapSelectorScreen(game)); // Navigate to GameScreen
+            game.setScreen(new MapSelectorScreen(game,skinLoader)); // Navigate to GameScreen
             return true;
         });
 
         settingsButton.addListener(e -> {
             if (!settingsButton.isPressed()) return false;
-            game.setScreen(new SettingsScreen(game)); // Navigate to SettingsScreen
+            game.setScreen(new SettingsScreen(game, skinLoader)); // Navigate to SettingsScreen
             return true;
         });
 
