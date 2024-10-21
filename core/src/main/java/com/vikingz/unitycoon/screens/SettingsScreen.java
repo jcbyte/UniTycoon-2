@@ -40,7 +40,7 @@ public class SettingsScreen implements Screen {
 
         // Create volume slider
         volumeSlider = new Slider(0, 100, 1, false, skin); // Min: 0, Max: 100, Step: 1
-        volumeSlider.setValue(GameConfig.VOLUME_VALUE);
+        volumeSlider.setValue(GameConfig.getInstance().getVolumeValue());
 
         volumeLabel = new Label(volume, skin);
         this.volume = "Volume: " + String.valueOf(volumeSlider.getValue());
@@ -125,7 +125,7 @@ public class SettingsScreen implements Screen {
         volume = "Volume: " + String.valueOf(volumeSlider.getValue());
         volumeLabel.setText(volume);
         resolutionLabel.setText(GameConfigManager.CurrentWindowSize());
-        GameConfig.VOLUME_VALUE = volumeSlider.getValue();
+        GameConfig.getInstance().setVolumeValue(volumeSlider.getValue());
 
 
         //Key bindings Escape
