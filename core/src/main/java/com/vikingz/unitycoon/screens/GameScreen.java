@@ -76,7 +76,7 @@ public class GameScreen implements Screen {
 
 
         //Button Inputs
-        KeyCheck();
+        KeyCheck(delta);
 
         //Tile update
         camera.update();
@@ -91,20 +91,21 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
-    public boolean KeyCheck() {
+    public boolean KeyCheck(float delta) {
+        float movement = 128f*delta;
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            camera.translate(-32,0);
+            camera.translate(-movement,0);
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            camera.translate(32,0);
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)
-        )           camera.translate(0,32);
+            camera.translate(movement,0);
+        if(Gdx.input.isKeyPressed(Input.Keys.UP))
+            camera.translate(0,movement);
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            camera.translate(0,-32);
+            camera.translate(0,-movement);
         if(Gdx.input.isKeyPressed(Input.Keys.NUM_1))
             tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
         if(Gdx.input.isKeyPressed(Input.Keys.NUM_2))
             tiledMap.getLayers().get(1).setVisible(!tiledMap.getLayers().get(1).isVisible());
-        return false;
+        return true;
     }
 
     @Override
