@@ -127,12 +127,15 @@ public class MapSelectorScreen implements Screen {
 
 
 
-        mapText = new TextField("Map".concat(Integer.toString(mapSelection)),skin);
+        mapText = new TextField("map".concat(Integer.toString(mapSelection)),skin);
 
         startGame.addListener(e -> {
             if (!startGame.isPressed()) return false;
             System.out.println("Starting... ".concat(mapText.getText()));
-            game.setScreen(new GameScreen(game,mapText.getText(),skinLoader));
+
+           
+            game.setScreen(new GameScreen(game, mapText.getText().toLowerCase(),skinLoader));
+            //game.setScreen(new GameScreen(game, "map1",skinLoader));
             return true;
         });
 

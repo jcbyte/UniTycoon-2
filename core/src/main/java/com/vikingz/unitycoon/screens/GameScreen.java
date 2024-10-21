@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.vikingz.unitycoon.game.BackgroundRenderer;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.ui.BuildMenu;
-import com.vikingz.unitycoon.util.BackgroundRenderer;
 import com.vikingz.unitycoon.util.StatsCalculator;
 import com.vikingz.unitycoon.util.StatsRenderer;
 

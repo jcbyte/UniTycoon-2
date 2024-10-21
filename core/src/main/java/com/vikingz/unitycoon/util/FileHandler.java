@@ -10,6 +10,7 @@ public class FileHandler {
     public static String loadMap(String fileName){
         String mapData = "";
         FileHandle fileHandle = Gdx.files.internal("maps/" + fileName + ".txt");
+        //FileHandle fileHandle = Gdx.files.internal("maps/map1.txt");
 
         // Check if the file exists
         if (fileHandle.exists()) {
@@ -17,7 +18,7 @@ public class FileHandler {
             mapData = fileHandle.readString();
 
         } else {
-            System.out.println("File not found!");
+            System.out.println("File not found!: " + fileHandle.toString());
         }
 
         return mapData;
