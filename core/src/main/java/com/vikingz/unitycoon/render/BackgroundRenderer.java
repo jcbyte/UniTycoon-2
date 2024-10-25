@@ -46,6 +46,8 @@ public class BackgroundRenderer{
         waterTile = new TextureRegion(texture, atlasTileSize, 0,            atlasTileSize, atlasTileSize);  // Tile 2 (Top-right)
         cobbleTile = new TextureRegion(texture, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);  // Tile 3 (Bottom-left)
         tile4 = new TextureRegion(texture, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize); // Tile 4 (Bottom-right)
+
+        
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
     }

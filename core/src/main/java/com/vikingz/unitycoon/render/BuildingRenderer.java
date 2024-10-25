@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.buildings.AcademicBuilding;
+import com.vikingz.unitycoon.buildings.Building;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -19,29 +22,45 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildingRenderer implements Screen {
+public class BuildingRenderer{
 
     private Stage stage;
     private Texture png1, png2;
     private SpriteBatch batch;
-    private Texture selectedTexture;
+    private TextureRegion selectedTexture;
     private float previewX, previewY;
     private boolean isPreviewing;
-    private List<PlacedTexture> placedTextures;
+    private List<Building> placedBuildings;
     private boolean justClickedButton;
+    private Texture textureAtlas;
+    private TextureRegion building1, building2;
+
+    private int atlasBuildingSize;
+    private int SCREEN_BUILDING_SIZE = 64;
 
     public BuildingRenderer() {
         // Initialize stage, batch, textures, and UI
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+
+        atlasBuildingSize = 64;
         
         png1 = new Texture(Gdx.files.internal("png1.png"));
         png2 = new Texture(Gdx.files.internal("png2.png"));
+
+
+        // Adding texture atlas
+        textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildingsAtlas.png")); // Load your 64x64 PNG
+        building1 = new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);   // Tile 1 (Top-left)
+        building2 = new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);   // Tile 1 (Top-left)
+
+
+
         
         batch = new SpriteBatch();
         selectedTexture = null;
         isPreviewing = false;
-        placedTextures = new ArrayList<>();
+        placedBuildings = new ArrayList<>();
         justClickedButton = false;
 
         // Skin for buttons
@@ -52,7 +71,7 @@ public class BuildingRenderer implements Screen {
         button1.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                selectedTexture = png1;
+                selectedTexture = building1;
                 isPreviewing = true;
                 justClickedButton = true;
                 return true;
@@ -64,7 +83,7 @@ public class BuildingRenderer implements Screen {
         button2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                selectedTexture = png2;
+                selectedTexture = building2;
                 justClickedButton = true;
                 isPreviewing = true;
                 return true;
@@ -80,7 +99,6 @@ public class BuildingRenderer implements Screen {
         stage.addActor(table);
     }
 
-    @Override
     public void render(float delta) {
         // Clear screen and update stage
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -94,15 +112,15 @@ public class BuildingRenderer implements Screen {
     private void checkAddingBuildings(float delta){
         // Update preview position to follow the mouse cursor
         if (isPreviewing && selectedTexture != null) {
-            previewX = Gdx.input.getX() - selectedTexture.getWidth() / 2;
-            previewY = Gdx.graphics.getHeight() - Gdx.input.getY() - selectedTexture.getHeight() / 2;
+            previewX = Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2;
+            previewY = Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2;
         }
 
         batch.begin();
 
         // Draw all placed textures
-        for (PlacedTexture pt : placedTextures) {
-            batch.draw(pt.texture, pt.x, pt.y);
+        for (Building building : placedBuildings) {
+            batch.draw(building.getTexture(), building.getX(), building.getY());
         }
 
         // Draw the preview texture if one is selected
@@ -117,7 +135,7 @@ public class BuildingRenderer implements Screen {
         }
         // Check for left mouse click to place the texture
         else if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null && checkCollisions()) {
-            placedTextures.add(new PlacedTexture(selectedTexture, previewX, previewY));
+            placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
             isPreviewing = false;
             selectedTexture = null;
 
@@ -129,28 +147,19 @@ public class BuildingRenderer implements Screen {
         return true;
     }
 
-    @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
 
-    @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
 
-    @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
     }
 
-    @Override
-    public void pause() { }
 
-    @Override
-    public void resume() { }
-
-    @Override
     public void dispose() {
         stage.dispose();
         batch.dispose();
@@ -158,15 +167,4 @@ public class BuildingRenderer implements Screen {
         png2.dispose();
     }
 
-    // Helper class to store placed textures
-    private static class PlacedTexture {
-        Texture texture;
-        float x, y;
-
-        PlacedTexture(Texture texture, float x, float y) {
-            this.texture = texture;
-            this.x = x;
-            this.y = y;
-        }
-    }
 }

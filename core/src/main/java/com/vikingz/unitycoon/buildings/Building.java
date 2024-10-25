@@ -1,30 +1,30 @@
 package com.vikingz.unitycoon.buildings;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class Building {
-    private Texture textureBuilding;
+    private TextureRegion texture;
     private float x;
     private float y;
     private float width;
     private float height;
 
 
-    public Building(float x, float y, Texture textureBuilding){
+    public Building(TextureRegion texture, float x, float y){
         this.x = x;
         this.y = y;
         this.width = 64;
         this.height = 64;
-        this.textureBuilding = textureBuilding;
+        this.texture = texture;
     }
 
-    public Texture getTextureBuilding() {
-        return textureBuilding;
+    public TextureRegion getTexture() {
+        return texture;
     }
 
-    public void setTextureBuilding(Texture textureBuilding) {
-        this.textureBuilding = textureBuilding;
+    public void setTexture(TextureRegion textureBuilding) {
+        this.texture = textureBuilding;
     }
 
     public float getX() {
