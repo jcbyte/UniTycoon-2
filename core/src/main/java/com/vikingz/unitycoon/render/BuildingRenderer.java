@@ -2,21 +2,17 @@ package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.buildings.AcademicBuilding;
 import com.vikingz.unitycoon.buildings.Building;
 import com.vikingz.unitycoon.buildings.BuildingType;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
@@ -35,6 +31,7 @@ public class BuildingRenderer{
     private boolean justClickedButton;
     private Texture textureAtlas;
     private TextureRegion building1, building2;
+    private float currentSatisfactionMultiplier;
 
     private int atlasBuildingSize;
     private int SCREEN_BUILDING_SIZE = 128;
@@ -42,7 +39,7 @@ public class BuildingRenderer{
     public BuildingRenderer() {
         // Initialize stage, batch, textures, and UI
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+        //Gdx.input.setInputProcessor(stage);
 
         atlasBuildingSize = 128;
         
@@ -62,11 +59,12 @@ public class BuildingRenderer{
         placedBuildings = new ArrayList<>();
         justClickedButton = false;
         buildingType = BuildingType.ACADEMIC;
+        currentSatisfactionMultiplier = 0;
 
         // Skin for buttons
         Skin skin = new Skin(Gdx.files.internal("ui/glassy-ui.json")); // Replace with your own skin or create custom button textures
 
-        // Button for png1
+        // Button for building 1
         TextButton button1 = new TextButton("addTtest", skin);
         button1.addListener(new InputListener() {
             @Override
@@ -78,7 +76,7 @@ public class BuildingRenderer{
             }
         });
 
-        // Button for png2
+        // Button for building 2
         TextButton button2 = new TextButton("test2", skin);
         button2.addListener(new InputListener() {
             @Override
@@ -92,7 +90,7 @@ public class BuildingRenderer{
 
         // Arrange buttons at the bottom
         Table table = new Table();
-        table.bottom();
+        table.top();
         table.add(button1).padRight(10);
         table.add(button2);
         table.setFillParent(true);
@@ -139,16 +137,17 @@ public class BuildingRenderer{
             
             switch (buildingType) {
                     case ACADEMIC:
-                        placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
+                        placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
                         break;
                 
                     default:
-                        placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
+                        placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
                         break;
                 }
                 
             isPreviewing = false;
             selectedTexture = null;
+            currentSatisfactionMultiplier = 0f;
         }
     }
 
@@ -163,10 +162,13 @@ public class BuildingRenderer{
         switch (buildingID) {
             case "piazza":
                 selectedTexture = building1;
+                currentSatisfactionMultiplier = 1.1f;
                 break;
         
+
             default:
                 selectedTexture = building1;
+                currentSatisfactionMultiplier = 0f;
                 break;
         }
         

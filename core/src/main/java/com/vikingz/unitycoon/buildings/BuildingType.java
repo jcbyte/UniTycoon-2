@@ -4,8 +4,8 @@ public enum BuildingType {
     
 
     ACADEMIC,
+    ACCOMODATION,
     RECREATIONAL,
     FOOD,
-    ACCOMODATION,
 
 }
