@@ -61,7 +61,7 @@ public class BuildingRenderer{
         isPreviewing = false;
         placedBuildings = new ArrayList<>();
         justClickedButton = false;
-        buildingType = null;
+        buildingType = BuildingType.ACADEMIC;
 
         // Skin for buttons
         Skin skin = new Skin(Gdx.files.internal("ui/glassy-ui.json")); // Replace with your own skin or create custom button textures
@@ -145,6 +145,8 @@ public class BuildingRenderer{
                     break;
             
                 default:
+                    placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
+
                     break;
             }
 
@@ -165,7 +167,7 @@ public class BuildingRenderer{
                 break;
         
             default:
-            selectedTexture = building1;
+                selectedTexture = building1;
                 break;
         }
         

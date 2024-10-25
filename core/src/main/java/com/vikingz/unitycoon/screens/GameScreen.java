@@ -23,7 +23,6 @@ public class GameScreen implements Screen {
     private String mapName;
 
     // Counter variables
-    private int counter;
     private float elapsedTime;
 
     // Font to display counter
@@ -56,7 +55,6 @@ public class GameScreen implements Screen {
 
 
         // Initialize counter and font
-        counter = 0;
         elapsedTime = 0;
 
         font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
