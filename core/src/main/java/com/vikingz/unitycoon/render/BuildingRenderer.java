@@ -83,7 +83,7 @@ public class BuildingRenderer{
         button2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                selectedTexture = building2;
+                selectedTexture = building1;
                 justClickedButton = true;
                 isPreviewing = true;
                 return true;
@@ -134,22 +134,21 @@ public class BuildingRenderer{
         }
         // Check for left mouse click to place the texture
         else if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null && checkCollisions()) {
+            
+            //placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
+            
+            switch (buildingType) {
+                    case ACADEMIC:
+                        placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
+                        break;
+                
+                    default:
+                        placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
+                        break;
+                }
+                
             isPreviewing = false;
             selectedTexture = null;
-
-            placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
-
-            switch (buildingType) {
-                case ACADEMIC:
-                    placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
-                    break;
-            
-                default:
-                    placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
-
-                    break;
-            }
-
         }
     }
 
