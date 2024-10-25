@@ -37,14 +37,14 @@ public class BuildingRenderer{
     private TextureRegion building1, building2;
 
     private int atlasBuildingSize;
-    private int SCREEN_BUILDING_SIZE = 64;
+    private int SCREEN_BUILDING_SIZE = 128;
 
     public BuildingRenderer() {
         // Initialize stage, batch, textures, and UI
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        atlasBuildingSize = 64;
+        atlasBuildingSize = 128;
         
 
 
