@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.vikingz.unitycoon.game.BackgroundRenderer;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
+import com.vikingz.unitycoon.render.BackgroundRenderer;
+import com.vikingz.unitycoon.render.StatsRenderer;
 import com.vikingz.unitycoon.ui.BuildMenu;
 import com.vikingz.unitycoon.util.StatsCalculator;
-import com.vikingz.unitycoon.util.StatsRenderer;
 
 public class GameScreen implements Screen {
 
@@ -47,7 +47,6 @@ public class GameScreen implements Screen {
         statsRenderer = new StatsRenderer();
         buildMenu = new BuildMenu(SkinLoader);
 
-        //camera.setToOrtho(false, 800, 480); // Adjust camera settings for your game's resolution
 
         batch = new SpriteBatch();
 
@@ -87,6 +86,10 @@ public class GameScreen implements Screen {
             GameGlobals.BALANCE++;
             GameGlobals.SATISFACTION += StatsCalculator.calculateSatisfaction(GameGlobals.STUDENTS, 0.5f);
 
+            
+
+            
+
             elapsedTime = 0; // Reset elapsed time
         }
 
@@ -98,14 +101,13 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        //batch.draw(texture, 0, 0, 500, 500);
 
-        // Draw the counter value on the screen
 
-        //font.draw(batch, "Counter: " + counter, 10, GameConfig.WINDOW_HEIGHT - 10); // Draw at position (10, 470)
 
         statsRenderer.render(delta);
         buildMenu.render(delta);
+
+
         batch.end();
     }
 

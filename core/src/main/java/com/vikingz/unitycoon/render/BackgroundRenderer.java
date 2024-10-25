@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.game;
+package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
