@@ -9,6 +9,12 @@ public abstract class Building {
     private float y;
 
 
+    public Building(float x, float y, Texture texture){
+        this.x = x;
+        this.y = y;
+        this.textureBuilding = texture;
+    }
+
 
     public void building(String ImageAsset){
         this.textureBuilding = new Texture(ImageAsset);

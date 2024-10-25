@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 
 public class GameConfigManager {
 
@@ -38,6 +39,7 @@ public class GameConfigManager {
             System.out.println("Serialized data is saved.");
 
         } catch (IOException i) {
+            System.out.println("FILE NOT FOUND");
             i.printStackTrace();
         }
 
