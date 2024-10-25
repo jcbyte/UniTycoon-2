@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.buildings.AcademicBuilding;
 import com.vikingz.unitycoon.buildings.Building;
+import com.vikingz.unitycoon.buildings.BuildingType;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -25,11 +26,11 @@ import java.util.List;
 public class BuildingRenderer{
 
     private Stage stage;
-    private Texture png1, png2;
     private SpriteBatch batch;
     private TextureRegion selectedTexture;
     private float previewX, previewY;
     private boolean isPreviewing;
+    private BuildingType buildingType;
     private List<Building> placedBuildings;
     private boolean justClickedButton;
     private Texture textureAtlas;
@@ -45,8 +46,6 @@ public class BuildingRenderer{
 
         atlasBuildingSize = 64;
         
-        png1 = new Texture(Gdx.files.internal("png1.png"));
-        png2 = new Texture(Gdx.files.internal("png2.png"));
 
 
         // Adding texture atlas
@@ -62,6 +61,7 @@ public class BuildingRenderer{
         isPreviewing = false;
         placedBuildings = new ArrayList<>();
         justClickedButton = false;
+        buildingType = null;
 
         // Skin for buttons
         Skin skin = new Skin(Gdx.files.internal("ui/glassy-ui.json")); // Replace with your own skin or create custom button textures
@@ -101,7 +101,6 @@ public class BuildingRenderer{
 
     public void render(float delta) {
         // Clear screen and update stage
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
@@ -135,11 +134,44 @@ public class BuildingRenderer{
         }
         // Check for left mouse click to place the texture
         else if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null && checkCollisions()) {
-            placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
             isPreviewing = false;
             selectedTexture = null;
 
+            placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
+
+            switch (buildingType) {
+                case ACADEMIC:
+                    placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
+                    break;
+            
+                default:
+                    break;
+            }
+
         }
+    }
+
+
+    public void selectBuilding(String buildingID, BuildingType buildingType){
+
+        justClickedButton = true;
+        isPreviewing = true;
+        this.buildingType = buildingType;
+
+
+        switch (buildingID) {
+            case "piazza":
+                selectedTexture = building1;
+                break;
+        
+            default:
+            selectedTexture = building1;
+                break;
+        }
+        
+        
+
+
     }
 
     private boolean checkCollisions(){
@@ -163,8 +195,7 @@ public class BuildingRenderer{
     public void dispose() {
         stage.dispose();
         batch.dispose();
-        png1.dispose();
-        png2.dispose();
+        textureAtlas.dispose();
     }
 
 }

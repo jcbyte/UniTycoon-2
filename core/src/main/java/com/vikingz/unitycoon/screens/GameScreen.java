@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.render.BackgroundRenderer;
+import com.vikingz.unitycoon.render.BuildingRenderer;
 import com.vikingz.unitycoon.render.StatsRenderer;
 import com.vikingz.unitycoon.ui.BuildMenu;
 import com.vikingz.unitycoon.util.StatsCalculator;
@@ -31,9 +32,12 @@ public class GameScreen implements Screen {
     // Renderers
     private BackgroundRenderer backgroundRenderer;
     private StatsRenderer statsRenderer;
+    private BuildingRenderer buildingRenderer;
 
     // Menus
     private BuildMenu buildMenu;
+
+
 
 
 
@@ -46,7 +50,7 @@ public class GameScreen implements Screen {
         backgroundRenderer = new BackgroundRenderer(mapName);
         statsRenderer = new StatsRenderer();
         buildMenu = new BuildMenu(SkinLoader);
-
+        buildingRenderer = new BuildingRenderer();
 
         batch = new SpriteBatch();
 
@@ -93,8 +97,8 @@ public class GameScreen implements Screen {
             elapsedTime = 0; // Reset elapsed time
         }
 
-        System.out.println((Gdx.input.getY()));
-        System.out.println((Gdx.input.getX()));
+        //System.out.println((Gdx.input.getY()));
+        //System.out.println((Gdx.input.getX()));
 
 
         // Draw game objects
@@ -107,7 +111,7 @@ public class GameScreen implements Screen {
         statsRenderer.render(delta);
         buildMenu.render(delta);
 
-
+        buildingRenderer.render(delta);
         batch.end();
     }
 
