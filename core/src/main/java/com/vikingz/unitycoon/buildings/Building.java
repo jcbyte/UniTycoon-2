@@ -7,13 +7,16 @@ public abstract class Building {
     private Texture textureBuilding;
     private float x;
     private float y;
-    private int width;
-    private int height;
+    private float width;
+    private float height;
 
 
-    public void building(int width, int height){
-        this.width = width;
-        this.height = height;
+    public Building(float x, float y, Texture textureBuilding){
+        this.x = x;
+        this.y = y;
+        this.width = 64;
+        this.height = 64;
+        this.textureBuilding = textureBuilding;
     }
 
     public Texture getTextureBuilding() {
