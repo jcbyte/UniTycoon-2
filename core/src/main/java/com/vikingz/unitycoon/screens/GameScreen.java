@@ -2,17 +2,12 @@ package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.vikingz.unitycoon.game.BackgroundRenderer;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.ui.BuildMenu;
@@ -20,47 +15,69 @@ import com.vikingz.unitycoon.util.StatsCalculator;
 import com.vikingz.unitycoon.util.StatsRenderer;
 
 public class GameScreen implements Screen {
-    private final BitmapFont font;
-    private final SpriteBatch batch;
-    Texture img;
-    TiledMap tiledMap;
-    OrthographicCamera camera;
-    TiledMapRenderer tiledMapRenderer;
 
+    private Game game;
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
+    private String mapName;
+
+    // Counter variables
+    private int counter;
+    private float elapsedTime;
+
+    // Font to display counter
+    private BitmapFont font;
+
+    // Renderers
+    private BackgroundRenderer backgroundRenderer;
+    private StatsRenderer statsRenderer;
 
     // Menus
     private BuildMenu buildMenu;
-    private StatsRenderer statsRenderer;
-    private float elapsedTime = 0;
 
-    public GameScreen(Game game, String mapName, GameSkins SkinLoader){
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
+
+
+    public GameScreen(Game game, String mapName, GameSkins SkinLoader) {
+
+        this.game = game;
+        this.mapName = mapName;
+
         camera = new OrthographicCamera();
-        camera.setToOrtho(false,w,h);
-        camera.update();
-        tiledMap = new TmxMapLoader().load("maps/".concat(mapName).concat(".tmx"));
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        backgroundRenderer = new BackgroundRenderer(mapName);
         statsRenderer = new StatsRenderer();
         buildMenu = new BuildMenu(SkinLoader);
+
+        //camera.setToOrtho(false, 800, 480); // Adjust camera settings for your game's resolution
+
+        batch = new SpriteBatch();
+
+
+        // Initialize counter and font
+        counter = 0;
+        elapsedTime = 0;
+
         font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
         font.getData().setScale(2.0f);
-        batch = new SpriteBatch();
+
     }
 
     @Override
     public void show() {
-
+        // Initialize game objects here
     }
 
     @Override
     public void render(float delta) {
-        //Reminder Rendering order is Very important for UI
-        // UI SHOULD COME LAST
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        // Clear screen
+        Gdx.gl.glClearColor(0.1f, 0.1f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //Stats calculate
+
+        // Update the camera
+        camera.update();
+
+
+        backgroundRenderer.render(delta);
+
         // Update the counter
         elapsedTime += delta; // delta is the time elapsed since the last frame
         if (elapsedTime >= 1) { // Increment counter every second
@@ -73,67 +90,49 @@ public class GameScreen implements Screen {
             elapsedTime = 0; // Reset elapsed time
         }
 
+        System.out.println((Gdx.input.getY()));
+        System.out.println((Gdx.input.getX()));
 
 
-        //Button Inputs
-        KeyCheck(delta);
-
-        //Tile update
-        camera.update();
-        tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render();
-
-        //UI elements
+        // Draw game objects
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        statsRenderer.render(delta);
 
+        //batch.draw(texture, 0, 0, 500, 500);
+
+        // Draw the counter value on the screen
+
+        //font.draw(batch, "Counter: " + counter, 10, GameConfig.WINDOW_HEIGHT - 10); // Draw at position (10, 470)
+
+        statsRenderer.render(delta);
         buildMenu.render(delta);
         batch.end();
     }
 
-    public boolean KeyCheck(float delta) {
-        float movement = 128f*delta;
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            camera.translate(-movement,0);
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            camera.translate(movement,0);
-        if(Gdx.input.isKeyPressed(Input.Keys.UP))
-            camera.translate(0,movement);
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            camera.translate(0,-movement);
-        if(Gdx.input.isKeyPressed(Input.Keys.NUM_1))
-            tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
-        if(Gdx.input.isKeyPressed(Input.Keys.NUM_2))
-            tiledMap.getLayers().get(1).setVisible(!tiledMap.getLayers().get(1).isVisible());
-        return true;
-    }
+
 
     @Override
     public void resize(int width, int height) {
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-        camera.setToOrtho(false,w,h);
-        camera.update();
+        // Adjust the viewport when the window size changes
+        camera.setToOrtho(false, width, height);
 
+        backgroundRenderer.resize(width, height);
+        buildMenu.resize(width, height);
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() { }
 
     @Override
     public void dispose() {
-
+        // Dispose of resources
+        batch.dispose();
+        font.dispose(); // Dispose the font
     }
 }

@@ -6,7 +6,7 @@ import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.screens.GameScreen;
-import com.vikingz.unitycoon.screens.GameScreenOld;
+
 import com.vikingz.unitycoon.screens.MenuScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */

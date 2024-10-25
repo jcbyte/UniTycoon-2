@@ -51,19 +51,19 @@ public class MapSelectorScreen implements Screen {
         // Add listeners for buttons
         map1Button.addListener(e -> {
             if (!map1Button.isPressed()) return false;
-            game.setScreen(new GameScreenOld(game, "map1",skinLoader)); // Start GameScreen for Map 1
+            game.setScreen(new GameScreen(game, "map1",skinLoader)); // Start GameScreen for Map 1
             return true;
         });
 
         map2Button.addListener(e -> {
             if (!map2Button.isPressed()) return false;
-            game.setScreen(new GameScreenOld(game, "map2",skinLoader)); // Start GameScreen for Map 2
+            game.setScreen(new GameScreen(game, "map2",skinLoader)); // Start GameScreen for Map 2
             return true;
         });
 
         map3Button.addListener(e -> {
             if (!map3Button.isPressed()) return false;
-            game.setScreen(new GameScreenOld(game, "map3",skinLoader)); // Start GameScreen for Map 3
+            game.setScreen(new GameScreen(game, "map3",skinLoader)); // Start GameScreen for Map 3
             return true;
         });
 
