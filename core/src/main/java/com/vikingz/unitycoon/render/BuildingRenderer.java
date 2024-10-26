@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.buildings.AcademicBuilding;
+import com.vikingz.unitycoon.buildings.AccommodationBuilding;
 import com.vikingz.unitycoon.buildings.Building;
 import com.vikingz.unitycoon.buildings.BuildingType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -131,13 +132,17 @@ public class BuildingRenderer{
             justClickedButton = false;
         }
         // Check for left mouse click to place the texture
-        else if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null && checkCollisions()) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null && checkCollisions()) {
 
             //placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
 
             switch (buildingType) {
                     case ACADEMIC:
                         placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
+                        break;
+
+                    case ACCOMODATION:
+                        placedBuildings.add(new AccommodationBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
                         break;
 
                     default:
