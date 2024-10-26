@@ -32,7 +32,7 @@ public class BuildingRenderer{
     private List<Building> placedBuildings;
     private boolean justClickedButton;
     private Texture textureAtlas;
-    private TextureRegion building1, building2;
+    private TextureRegion piazzaBuilding, ronCookeBuilding;
     private float currentSatisfactionMultiplier;
 
     private int atlasBuildingSize;
@@ -49,8 +49,8 @@ public class BuildingRenderer{
 
         // Adding texture atlas
         textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildingsAtlas.png")); // Load your 64x64 PNG
-        building1 = new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);   // Tile 1 (Top-left)
-        building2 = new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);   // Tile 1 (Top-left)
+        piazzaBuilding = new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);   // Tile 1 (Top-left)
+        ronCookeBuilding = new TextureRegion(textureAtlas, atlasBuildingSize, 0,atlasBuildingSize, atlasBuildingSize);   // Tile 1 (Top-left)
 
 
 
@@ -71,7 +71,7 @@ public class BuildingRenderer{
         button1.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                selectedTexture = building1;
+                selectedTexture = piazzaBuilding;
                 isPreviewing = true;
                 justClickedButton = true;
                 return true;
@@ -83,7 +83,7 @@ public class BuildingRenderer{
         button2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                selectedTexture = building1;
+                selectedTexture = piazzaBuilding;
                 justClickedButton = true;
                 isPreviewing = true;
                 return true;
@@ -111,8 +111,14 @@ public class BuildingRenderer{
     private void checkAddingBuildings(float delta){
         // Update preview position to follow the mouse cursor
         if (isPreviewing && selectedTexture != null) {
-            previewX = Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2;
-            previewY = Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2;
+
+            Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2, Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2);
+
+            //previewX = Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2;
+            //previewY = Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2;
+
+            previewX = previewPoint.getX();
+            previewY = previewPoint.getY();
         }
 
         batch.begin();
@@ -168,13 +174,17 @@ public class BuildingRenderer{
 
         switch (buildingID) {
             case "piazza":
-                selectedTexture = building1;
+                selectedTexture = piazzaBuilding;
+                currentSatisfactionMultiplier = 1.2f;
+                break;
+
+            case "rch":
+                selectedTexture = ronCookeBuilding;
                 currentSatisfactionMultiplier = 1.1f;
                 break;
 
-
             default:
-                selectedTexture = building1;
+                selectedTexture = piazzaBuilding;
                 currentSatisfactionMultiplier = 0f;
                 break;
         }
@@ -187,10 +197,12 @@ public class BuildingRenderer{
 
     private Point snapBuildingToGrid(float x, float y){
 
-        int gridSize = 64;
+        int gridSize = 32;
 
         float newX = Math.round(x / gridSize) * gridSize;
         float newY = Math.round(y / gridSize) * gridSize;
+
+
         return new Point(newX, newY);
 
     }

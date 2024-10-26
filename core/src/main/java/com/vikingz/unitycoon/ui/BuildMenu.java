@@ -144,7 +144,7 @@ public class BuildMenu{
 
             // Set a smaller size for the buttons
             button.setSize(50, 15); // Set width and height
-            button.scaleBy(-1.5f);
+            button.scaleBy(0.5f);
 
             // Add listener to print text when the button is clicked
             button.addListener(new ClickListener() {
@@ -177,17 +177,41 @@ public class BuildMenu{
                 System.out.println("Test");
                 buildingRenderer.selectBuilding("piazza", BuildingType.ACADEMIC);
                 System.out.println("Test");
+                
+                // Should close the window after a button in the menu is pressed otherwise the user cant access
+                // the canvas behind the menu - Damian 
+                window.remove();
             }
         });
         window.row().padTop(10); // Add a row before adding the close button
         window.add(testButton).center(); // Center the close button
 
 
+        // ADDED TO TEST MULTIPLE BUILDINGS 
+
+        //Ron cooke hub building
+        TextButton rchBtn = new TextButton("Ron Cooke Building", skin);
+        rchBtn.setSize(100, 30); // Set size for the close button
+        rchBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                buildingRenderer.selectBuilding("rch", BuildingType.ACADEMIC);
+                
+                // Should close the window after a button in the menu is pressed otherwise the user cant access
+                // the canvas behind the menu - Damian 
+                window.remove();
+            }
+        });
+        window.row().padTop(10); // Add a row before adding the close button
+        window.add(rchBtn).center(); // Center the close button
+
+
+
+
+
         // Create the close button
         TextButton closeButton = new TextButton("Close", skin);
         closeButton.setSize(100, 30); // Set size for the close button
-
-        // Add listener to close the window when the close button is clicked
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

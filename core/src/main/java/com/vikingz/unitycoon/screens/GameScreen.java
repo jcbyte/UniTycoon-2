@@ -6,7 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.render.BackgroundRenderer;
@@ -32,6 +35,7 @@ public class GameScreen implements Screen {
     private BackgroundRenderer backgroundRenderer;
     private StatsRenderer statsRenderer;
     private BuildingRenderer buildingRenderer;
+    private Viewport viewPort;
 
     // Menus
     private BuildMenu buildMenu;
@@ -44,6 +48,8 @@ public class GameScreen implements Screen {
 
         this.game = game;
         this.mapName = mapName;
+
+        this.viewPort = new FitViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
 
         camera = new OrthographicCamera();
         backgroundRenderer = new BackgroundRenderer(mapName);
@@ -106,9 +112,8 @@ public class GameScreen implements Screen {
 
 
         statsRenderer.render(delta);
-        buildMenu.render(delta);
-
         buildingRenderer.render(delta);
+        buildMenu.render(delta);
         batch.end();
     }
 
@@ -117,10 +122,13 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         // Adjust the viewport when the window size changes
-        camera.setToOrtho(false, width, height);
 
-        backgroundRenderer.resize(width, height);
         buildMenu.resize(width, height);
+        viewPort.update(width, height);
+
+        //camera.setToOrtho(false, width, height);
+
+        //backgroundRenderer.resize(width, height);
     }
 
     @Override

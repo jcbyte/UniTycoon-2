@@ -19,13 +19,14 @@ public class BackgroundRenderer{
     private final char GRASS = 'G';
     private final char WATER = 'W';
     private final char COBBLE_STONE = 'C';
+    private final char ROAD = 'R';
 
 
     private SpriteBatch batch;
     private String mapName;
     private String map;
     private Texture texture;
-    private TextureRegion grassTile, waterTile, cobbleTile, tile4;
+    private TextureRegion grassTile, waterTile, cobbleTile, roadTile;
 
     private final int tileSize = 32; // Size of each tile in game
     private final int atlasTileSize = 64;
@@ -42,10 +43,10 @@ public class BackgroundRenderer{
         texture = new Texture(Gdx.files.internal("textureAtlases/backgroundAtlas.png")); // Load your 64x64 PNG
 
         // Create TextureRegions for each tile
-        grassTile = new TextureRegion(texture, 0, 0,                     atlasTileSize, atlasTileSize);   // Tile 1 (Top-left)
-        waterTile = new TextureRegion(texture, atlasTileSize, 0,            atlasTileSize, atlasTileSize);  // Tile 2 (Top-right)
-        cobbleTile = new TextureRegion(texture, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);  // Tile 3 (Bottom-left)
-        tile4 = new TextureRegion(texture, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize); // Tile 4 (Bottom-right)
+        grassTile = new TextureRegion(texture, 0, 0,                     atlasTileSize, atlasTileSize);  
+        waterTile = new TextureRegion(texture, atlasTileSize, 0,            atlasTileSize, atlasTileSize); 
+        cobbleTile = new TextureRegion(texture, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize); 
+        roadTile = new TextureRegion(texture, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize); 
 
         
         screenWidth = Gdx.graphics.getWidth();
@@ -124,6 +125,9 @@ public class BackgroundRenderer{
                         batch.draw(cobbleTile, j * tileSize, i * tileSize, tileSize, tileSize);
                         break;
 
+                    case ROAD:
+                        batch.draw(roadTile, j * tileSize, i * tileSize, tileSize, tileSize);
+                        break;                  
 
 
                 }
