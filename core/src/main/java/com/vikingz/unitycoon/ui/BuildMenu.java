@@ -10,9 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.buildings.BuildingType;
 import com.vikingz.unitycoon.global.GameSkins;
+import com.vikingz.unitycoon.render.BuildingRenderer;
 
 public class BuildMenu{
+    private final BuildingRenderer buildingRenderer;
     private Stage stage;
     private Skin skin;
     private Skin quantumSkin;
@@ -22,11 +25,13 @@ public class BuildMenu{
     private int WINDOW_WIDTH = 500;
     private int WINDOW_HEIGHT = 700;
 
-    public BuildMenu(GameSkins SkinLoader) {
+    public BuildMenu(GameSkins SkinLoader, BuildingRenderer buildingRenderer) {
 
         stage = new Stage(new ScreenViewport());
         //Sets input for LIBGDX ui system to this ui
         Gdx.input.setInputProcessor(stage);
+
+        this.buildingRenderer =  buildingRenderer;
 
         //Imports skins
         skin = SkinLoader.getDefaultSkin();
@@ -129,7 +134,7 @@ public class BuildMenu{
 
         // List of button texts
         String[] buttonTexts = {
-            "Building 1", "Building 2"
+            "Building 1"
         };
 
         // Iterate through the list of button texts and create buttons
@@ -150,16 +155,33 @@ public class BuildMenu{
             });
 
             // Add the button to the table
-            buttonTable.add(button).pad(5);  // Add padding for spacing
-            buttonTable.row();  // Move to the next row after each button
+            window.add(button).pad(5);  // Add padding for spacing
+            window.row();  // Move to the next row after each button
         }
 
+        /*
         // Create a ScrollPane to hold the button table
         ScrollPane scrollPane = new ScrollPane(buttonTable, skin);
         scrollPane.setFillParent(true);  // Make the scroll pane fill the available space
 
         // Add the scroll pane to the window
         window.add(scrollPane).expand().fill(); // Fill the window with the scroll pane
+        */
+
+        //Test Button
+        TextButton testButton = new TextButton("Test", skin);
+        testButton.setSize(100, 30); // Set size for the close button
+        testButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Test");
+                buildingRenderer.selectBuilding("piazza", BuildingType.ACADEMIC);
+                System.out.println("Test");
+            }
+        });
+        window.row().padTop(10); // Add a row before adding the close button
+        window.add(testButton).center(); // Center the close button
+
 
         // Create the close button
         TextButton closeButton = new TextButton("Close", skin);

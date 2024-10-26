@@ -42,7 +42,7 @@ public class BuildingRenderer{
         //Gdx.input.setInputProcessor(stage);
 
         atlasBuildingSize = 128;
-        
+
 
 
         // Adding texture atlas
@@ -52,7 +52,7 @@ public class BuildingRenderer{
 
 
 
-        
+
         batch = new SpriteBatch();
         selectedTexture = null;
         isPreviewing = false;
@@ -132,19 +132,19 @@ public class BuildingRenderer{
         }
         // Check for left mouse click to place the texture
         else if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null && checkCollisions()) {
-            
+
             //placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
-            
+
             switch (buildingType) {
                     case ACADEMIC:
                         placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
                         break;
-                
+
                     default:
                         placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
                         break;
                 }
-                
+
             isPreviewing = false;
             selectedTexture = null;
             currentSatisfactionMultiplier = 0f;
@@ -164,15 +164,15 @@ public class BuildingRenderer{
                 selectedTexture = building1;
                 currentSatisfactionMultiplier = 1.1f;
                 break;
-        
+
 
             default:
                 selectedTexture = building1;
                 currentSatisfactionMultiplier = 0f;
                 break;
         }
-        
-        
+
+
 
 
     }

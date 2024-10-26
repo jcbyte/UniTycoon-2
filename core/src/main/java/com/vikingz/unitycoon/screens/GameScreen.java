@@ -48,9 +48,8 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         backgroundRenderer = new BackgroundRenderer(mapName);
         statsRenderer = new StatsRenderer();
-        buildMenu = new BuildMenu(SkinLoader);
         buildingRenderer = new BuildingRenderer();
-
+        buildMenu = new BuildMenu(SkinLoader, buildingRenderer);
         batch = new SpriteBatch();
 
 
@@ -88,9 +87,9 @@ public class GameScreen implements Screen {
             GameGlobals.BALANCE++;
             GameGlobals.SATISFACTION += StatsCalculator.calculateSatisfaction(GameGlobals.STUDENTS, 0.5f);
 
-            
 
-            
+
+
 
             elapsedTime = 0; // Reset elapsed time
         }
