@@ -14,6 +14,7 @@ import com.vikingz.unitycoon.buildings.AcademicBuilding;
 import com.vikingz.unitycoon.buildings.AccommodationBuilding;
 import com.vikingz.unitycoon.buildings.Building;
 import com.vikingz.unitycoon.buildings.BuildingType;
+import com.vikingz.unitycoon.util.Point;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
@@ -128,6 +129,7 @@ public class BuildingRenderer{
 
         batch.end();
 
+        // Fixes placing buildings on button which doesnt happen any more due to switch to building menu
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && justClickedButton){
             justClickedButton = false;
         }
@@ -182,6 +184,18 @@ public class BuildingRenderer{
 
     }
 
+
+    private Point snapBuildingToGrid(float x, float y){
+
+        int gridSize = 64;
+
+        float newX = Math.round(x / gridSize) * gridSize;
+        float newY = Math.round(y / gridSize) * gridSize;
+        return new Point(newX, newY);
+
+    }
+
+
     private boolean checkCollisions(){
 
         return true;
@@ -205,5 +219,7 @@ public class BuildingRenderer{
         batch.dispose();
         textureAtlas.dispose();
     }
+
+
 
 }
