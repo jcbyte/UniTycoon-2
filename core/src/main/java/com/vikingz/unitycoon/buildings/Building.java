@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.buildings;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.vikingz.unitycoon.util.Point;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
 public abstract class Building {
@@ -28,6 +29,18 @@ public abstract class Building {
     }
 
 
+    
+    public Building(TextureRegion texture, Point p, float satisfactionMultiplier){
+        this.x = p.getX();
+        this.y = p.getY();
+        this.width = 64;
+        this.height = 64;
+        this.texture = texture;
+        this.satisfactionMultiplier = satisfactionMultiplier;
+    }
+
+
+
     // Generate Satisfaciton logic
 
     public int calculateSatisfaction(int numberOfStudents){
@@ -35,7 +48,6 @@ public abstract class Building {
         return StatsCalculator.calculateSatisfaction(numberOfStudents, this.satisfactionMultiplier);
 
     }
-
 
 
 

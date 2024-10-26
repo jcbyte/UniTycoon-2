@@ -140,15 +140,15 @@ public class BuildingRenderer{
 
             switch (buildingType) {
                     case ACADEMIC:
-                        placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
+                        placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentSatisfactionMultiplier));
                         break;
 
                     case ACCOMODATION:
-                        placedBuildings.add(new AccommodationBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
+                        placedBuildings.add(new AccommodationBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentSatisfactionMultiplier));
                         break;
 
                     default:
-                        placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY, currentSatisfactionMultiplier));
+                        placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentSatisfactionMultiplier));
                         break;
                 }
 
