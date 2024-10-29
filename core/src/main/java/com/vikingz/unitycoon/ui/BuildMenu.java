@@ -14,12 +14,15 @@ import com.vikingz.unitycoon.buildings.BuildingType;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.render.BuildingRenderer;
 
+import java.util.ArrayList;
+
 public class BuildMenu{
     private final BuildingRenderer buildingRenderer;
     private Stage stage;
     private Skin skin;
     private Skin quantumSkin;
     private Texture textureAtlas;
+    private boolean windowActive = false;
     private int atlasTileSize = 64;
 
     private int WINDOW_WIDTH = 500;
@@ -127,16 +130,19 @@ public class BuildMenu{
     private void showMenu(String buttonNumber) {
         // Create a window (menu)
         Window window = new Window("Menu", skin);
-        window.setMovable(false);
+        window.setMovable(true);
 
         // Create a Table to organize buttons
         Table buttonTable = new Table();
 
         // List of button texts
         String[] buttonTexts = {
-            "Building 1"
+            "piazza"
         };
+        BuildingType buttonType = BuildingType.valueOf(buttonNumber);
+        ArrayList<TextButton> buttonStore = new ArrayList<TextButton>();
 
+        /*
         // Iterate through the list of button texts and create buttons
         for (String text : buttonTexts) {
             // Create a new button with the text
@@ -158,6 +164,7 @@ public class BuildMenu{
             window.add(button).pad(5);  // Add padding for spacing
             window.row();  // Move to the next row after each button
         }
+        */
 
         /*
         // Create a ScrollPane to hold the button table
@@ -168,26 +175,25 @@ public class BuildMenu{
         window.add(scrollPane).expand().fill(); // Fill the window with the scroll pane
         */
 
-        //Test Button
-        TextButton testButton = new TextButton("Test", skin);
-        testButton.setSize(100, 30); // Set size for the close button
-        testButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Test");
-                buildingRenderer.selectBuilding("piazza", BuildingType.ACADEMIC);
-                System.out.println("Test");
-                
-                // Should close the window after a button in the menu is pressed otherwise the user cant access
-                // the canvas behind the menu - Damian 
-                window.remove();
-            }
-        });
-        window.row().padTop(10); // Add a row before adding the close button
-        window.add(testButton).center(); // Center the close button
+        //For loop button creation
+        for (int i=0;i<buttonTexts.length;i++) {
+            //Button Creation
+            TextButton testButton = new TextButton(buttonTexts[0], skin); //Creates a new Button
+            testButton.setSize(100, 30); // Set size for the close button
+            int finalI = i;
+            testButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    buildingRenderer.selectBuilding(buttonTexts[finalI], buttonType); // Adds Building Creator
+                }
+            });
+            window.row().padTop(10); // Add a row before adding the close button
+            window.add(testButton).center(); // Center the close button
+            buttonStore.add(testButton); // Stores active button
+        }
 
 
-        // ADDED TO TEST MULTIPLE BUILDINGS 
+        // ADDED TO TEST MULTIPLE BUILDINGS
 
         //Ron cooke hub building
         TextButton rchBtn = new TextButton("Ron Cooke Building", skin);
@@ -196,9 +202,9 @@ public class BuildMenu{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 buildingRenderer.selectBuilding("rch", BuildingType.ACADEMIC);
-                
+
                 // Should close the window after a button in the menu is pressed otherwise the user cant access
-                // the canvas behind the menu - Damian 
+                // the canvas behind the menu - Damian
                 window.remove();
             }
         });
@@ -212,9 +218,12 @@ public class BuildMenu{
         // Create the close button
         TextButton closeButton = new TextButton("Close", skin);
         closeButton.setSize(100, 30); // Set size for the close button
+
+        // Add listener to close the window when the close button is clicked
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                setWindowActive(false);
                 window.remove();  // Remove window from the stage
             }
         });
@@ -232,8 +241,13 @@ public class BuildMenu{
     }
 
 
+    public boolean isWindowActive() {
+        return windowActive;
+    }
 
-
+    public void setWindowActive(boolean windowActive) {
+        this.windowActive = windowActive;
+    }
 
     public void render(float delta) {
         stage.act(delta);
@@ -246,5 +260,6 @@ public class BuildMenu{
 
     public void dispose() {
         stage.dispose();
+
     }
 }
