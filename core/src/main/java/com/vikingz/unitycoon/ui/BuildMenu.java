@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class BuildMenu{
     private final BuildingRenderer buildingRenderer;
+    private final Skin oldSkin;
     private Stage stage;
     private Skin skin;
     private Skin quantumSkin;
@@ -37,8 +38,8 @@ public class BuildMenu{
         this.buildingRenderer =  buildingRenderer;
 
         //Imports skins
-        skin = SkinLoader.getDefaultSkin();
-        quantumSkin = SkinLoader.getQuantumSkin();
+        oldSkin = SkinLoader.getDefaultSkin();
+        skin = SkinLoader.getQuantumSkin();
 
 
 
@@ -94,28 +95,28 @@ public class BuildMenu{
         btn1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("1");
+                showMenu("ACADEMIC");
             }
         });
 
         btn2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("2");
+                showMenu("ACCOMODATION");
             }
         });
 
         btn3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("3");
+                showMenu("RECREATIONAL");
             }
         });
 
         btn4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("4");
+                showMenu("FOOD");
             }
         });
 
@@ -130,7 +131,7 @@ public class BuildMenu{
     private void showMenu(String buttonNumber) {
         // Create a window (menu)
         Window window = new Window("Menu", skin);
-        window.setMovable(true);
+        window.setMovable(false);
 
         // Create a Table to organize buttons
         Table buttonTable = new Table();
@@ -185,6 +186,8 @@ public class BuildMenu{
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     buildingRenderer.selectBuilding(buttonTexts[finalI], buttonType); // Adds Building Creator
+                    setWindowActive(false);
+                    window.remove();
                 }
             });
             window.row().padTop(10); // Add a row before adding the close button
