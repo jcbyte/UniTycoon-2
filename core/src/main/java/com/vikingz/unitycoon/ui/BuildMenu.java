@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.global.GameSkins;
+import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.render.BuildingRenderer;
-import com.vikingz.unitycoon.screens.GameScreen;
 
 
 public class BuildMenu{
@@ -28,11 +28,9 @@ public class BuildMenu{
 
     private Window currentMenu;
 
-    private GameScreen gameScreen;
 
     public BuildMenu(GameSkins SkinLoader, BuildingRenderer buildingRenderer) {
 
-        this.gameScreen = gameScreen;
 
         stage = new Stage(new ScreenViewport());
         //Sets input for LIBGDX ui system to this ui
@@ -126,6 +124,7 @@ public class BuildMenu{
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
 
+                
                 showMenu(BuildingStats.BuildingType.NONE);
             }
         });
