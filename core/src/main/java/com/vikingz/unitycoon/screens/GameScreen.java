@@ -17,6 +17,7 @@ import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
+import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.render.BackgroundRenderer;
 import com.vikingz.unitycoon.render.BuildingRenderer;
@@ -35,7 +36,7 @@ public class GameScreen implements Screen {
 
     private Stage stage;
     private Skin skin;
-    private PopupMenu popupMenu;
+    private PauseMenu pauseMenu;
 
     // Counter variables
     private float elapsedTime;
@@ -73,7 +74,7 @@ public class GameScreen implements Screen {
         buildMenu = new BuildMenu(SkinLoader, buildingRenderer, stage);
         batch = new SpriteBatch();
 
-        this.popupMenu = new PopupMenu(skin);
+        this.pauseMenu = new PauseMenu(skin);
 
         // Initialize counter and font
         elapsedTime = 0;
@@ -101,13 +102,13 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             System.out.println("Pressed ESC");
 
-            if(!popupMenu.hasParent()){
-                stage.addActor(popupMenu);
-                popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+            if(!pauseMenu.hasParent()){
+                stage.addActor(pauseMenu);
+                pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
                 isPaused = true;
             }
             else{
-                popupMenu.remove();
+                pauseMenu.remove();
                 isPaused = false;
             }
 
