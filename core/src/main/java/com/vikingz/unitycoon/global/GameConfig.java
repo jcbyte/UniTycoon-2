@@ -15,11 +15,13 @@ public class GameConfig implements Serializable{
     private static boolean VSync = false;
 
 
+    // 30 rows
+    // 56 cols
 
 
     // The single instance of GameConfig (eager initialization)
     private static GameConfig INSTANCE = new GameConfig(
-        1820, 980, true, 60); // Default values
+        1792, 960, true, 60); // Default values
 
     // Private constructor to prevent instantiation from outside
     private GameConfig(int width, int height, boolean skipMenus, float volumeValue) {

@@ -29,12 +29,14 @@ public class BuildMenu{
     private Window currentMenu;
 
 
-    public BuildMenu(GameSkins SkinLoader, BuildingRenderer buildingRenderer) {
+    public BuildMenu(GameSkins SkinLoader, BuildingRenderer buildingRenderer, Stage stage) {
 
 
-        stage = new Stage(new ScreenViewport());
+        //stage = new Stage(new ScreenViewport());
+
+        this.stage = stage;
         //Sets input for LIBGDX ui system to this ui
-        Gdx.input.setInputProcessor(stage);
+        //Gdx.input.setInputProcessor(stage);
 
         this.buildingRenderer =  buildingRenderer;
 

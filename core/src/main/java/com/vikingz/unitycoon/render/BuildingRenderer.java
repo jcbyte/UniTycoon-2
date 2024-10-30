@@ -12,6 +12,7 @@ import com.vikingz.unitycoon.building.buildings.AcademicBuilding;
 import com.vikingz.unitycoon.building.buildings.AccommodationBuilding;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
+import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.Point;
 
@@ -51,6 +52,9 @@ public class BuildingRenderer{
     public BuildingRenderer() {
         // Initialize stage, batch, textures, and UI
         //Gdx.input.setInputProcessor(stage);
+
+        this.width = GameConfig.getInstance().getWindowWidth();
+        this.height = GameConfig.getInstance().getWindowHeight();
 
         atlasBuildingSize = 128;
 
@@ -215,7 +219,13 @@ public class BuildingRenderer{
 
     private Point snapBuildingToGrid(float x, float y){
 
+        // 30 rows
+        // 56 cols
+
+        
+
         int gridSize = 32;
+        System.out.println(gridSize);
 
         float newX = Math.round(x / gridSize) * gridSize;
         float newY = Math.round(y / gridSize) * gridSize;
