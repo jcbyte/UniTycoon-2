@@ -20,6 +20,9 @@ import java.util.List;
 
 public class BuildingRenderer{
 
+    private int width;
+    private int height;
+
     private SpriteBatch batch;
     private float previewX, previewY;
     private boolean isPreviewing;
@@ -229,7 +232,8 @@ public class BuildingRenderer{
     }
 
     public void resize(int width, int height) {
-        
+        this.width = width;
+        this.height = height;
     }
 
     public List<Building> getPlaceBuildings(){

@@ -2,6 +2,7 @@ package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
@@ -9,11 +10,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.vikingz.unitycoon.building.Building;
@@ -24,6 +27,7 @@ import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
+import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.render.BackgroundRenderer;
 import com.vikingz.unitycoon.render.BuildingRenderer;
 import com.vikingz.unitycoon.render.StatsRenderer;
@@ -37,6 +41,9 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private String mapName;
 
+    private Stage stage;
+    private Skin skin;
+    private PopupMenu popupMenu;
 
     // Counter variables
     private float elapsedTime;
@@ -48,7 +55,6 @@ public class GameScreen implements Screen {
     private BackgroundRenderer backgroundRenderer;
     private StatsRenderer statsRenderer;
     private BuildingRenderer buildingRenderer;
-    private Viewport viewPort;
 
     // Menus
     private BuildMenu buildMenu;
@@ -59,10 +65,14 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game game, String mapName, GameSkins SkinLoader) {
 
+        skin = SkinLoader.getQuantumSkin();
+
         this.game = game;
         this.mapName = mapName;
+        
 
-        this.viewPort = new FitViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
+        this.stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
 
         camera = new OrthographicCamera();
         backgroundRenderer = new BackgroundRenderer(mapName);
@@ -71,6 +81,7 @@ public class GameScreen implements Screen {
         buildMenu = new BuildMenu(SkinLoader, buildingRenderer);
         batch = new SpriteBatch();
 
+        this.popupMenu = new PopupMenu(skin);
 
         // Initialize counter and font
         elapsedTime = 0;
@@ -95,6 +106,11 @@ public class GameScreen implements Screen {
         camera.update();
 
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            System.out.println("Pressed ESC");
+
+
+        }
 
 
 
@@ -145,7 +161,7 @@ public class GameScreen implements Screen {
         // Adjust the viewport when the window size changes
 
         buildMenu.resize(width, height);
-        viewPort.update(width, height);
+        backgroundRenderer.resize(width, height);
 
         //camera.setToOrtho(false, width, height);
 
