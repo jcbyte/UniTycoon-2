@@ -5,18 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.vikingz.unitycoon.buildings.AcademicBuilding;
-import com.vikingz.unitycoon.buildings.AccommodationBuilding;
-import com.vikingz.unitycoon.buildings.Building;
-import com.vikingz.unitycoon.buildings.BuildingType;
+import com.vikingz.unitycoon.building.Building;
+import com.vikingz.unitycoon.building.BuildingInfo;
+import com.vikingz.unitycoon.building.BuildingStats;
+import com.vikingz.unitycoon.building.buildings.AcademicBuilding;
+import com.vikingz.unitycoon.building.buildings.AccommodationBuilding;
+import com.vikingz.unitycoon.building.buildings.FoodBuilding;
+import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
+import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.Point;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +21,29 @@ import java.util.List;
 public class BuildingRenderer{
 
     private SpriteBatch batch;
-    private TextureRegion selectedTexture;
     private float previewX, previewY;
     private boolean isPreviewing;
-    private BuildingType buildingType;
     private List<Building> placedBuildings;
-    private boolean justClickedButton;
     private Texture textureAtlas;
+    
+    private TextureRegion selectedTexture;
+
+    // Buildings: Academic
     private TextureRegion piazzaBuilding, ronCookeBuilding;
-    private float currentSatisfactionMultiplier;
+    // Buildings: Accomodation
+    private TextureRegion davidKatoBuilding, anneListerBuilding;
+    // Buildings: Recreational
+    private TextureRegion ysvBuilding;
+    // Buildings: Food
+    private TextureRegion mcdBuilding;
+    
+
 
     private int atlasBuildingSize;
     private int SCREEN_BUILDING_SIZE = 128;
+
+
+    private BuildingInfo currentBuildingInfo;
 
     public BuildingRenderer() {
         // Initialize stage, batch, textures, and UI
@@ -44,22 +52,31 @@ public class BuildingRenderer{
         atlasBuildingSize = 128;
 
 
-
         // Adding texture atlas
         textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildingsAtlas.png")); // Load your 64x64 PNG
-        piazzaBuilding = new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);   // Tile 1 (Top-left)
-        ronCookeBuilding = new TextureRegion(textureAtlas, atlasBuildingSize, 0,atlasBuildingSize, atlasBuildingSize);   // Tile 1 (Top-left)
 
+        // Academic
+        piazzaBuilding = new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);   
+        ronCookeBuilding = new TextureRegion(textureAtlas, atlasBuildingSize, 0,atlasBuildingSize, atlasBuildingSize);   
+
+        // Accomodation
+        davidKatoBuilding = new TextureRegion(textureAtlas, 0, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize);
+        anneListerBuilding = new TextureRegion(textureAtlas, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize);
+
+        // Recreational
+        ysvBuilding = new TextureRegion(textureAtlas, 0, atlasBuildingSize * 2, atlasBuildingSize, atlasBuildingSize);
+
+        // Food
+        mcdBuilding = new TextureRegion(textureAtlas, 0, atlasBuildingSize * 3, atlasBuildingSize, atlasBuildingSize);
 
 
 
         batch = new SpriteBatch();
-        selectedTexture = null;
         isPreviewing = false;
         placedBuildings = new ArrayList<>();
-        justClickedButton = false;
-        buildingType = BuildingType.ACADEMIC;
-        currentSatisfactionMultiplier = 0;
+        
+
+        selectedTexture = null;
 
 
     }
@@ -97,61 +114,97 @@ public class BuildingRenderer{
 
         batch.end();
 
-        // Fixes placing buildings on button which doesnt happen any more due to switch to building menu
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && justClickedButton){
-            justClickedButton = false;
-        }
+
         // Check for left mouse click to place the texture
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null && checkCollisions()) {
 
-            //placedBuildings.add(new AcademicBuilding(selectedTexture, previewX, previewY));
 
-            switch (buildingType) {
+            // Check if the uesr has enough money to buy that building
+            float balanceAfterPurchase = GameGlobals.BALANCE - currentBuildingInfo.getBuildingCost();
+            if(balanceAfterPurchase < 0){
+                System.out.println("Not enough money to buy building!!");
+                
+            }
+
+            else{
+
+                switch (currentBuildingInfo.getBuildingType()) {
                     case ACADEMIC:
-                        placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentSatisfactionMultiplier));
+                        placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier()));
                         break;
-
+    
                     case ACCOMODATION:
-                        placedBuildings.add(new AccommodationBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentSatisfactionMultiplier));
+                        placedBuildings.add(new AccommodationBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getNumberOfStudents()));
                         break;
-
-                    default:
-                        placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentSatisfactionMultiplier));
+    
+    
+                    case RECREATIONAL:
+                        placedBuildings.add(new RecreationalBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
+                        break;
+    
+                    case FOOD:
+                        placedBuildings.add(new FoodBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
                         break;
                 }
+    
+                GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
+                GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
+                GameGlobals.BUILDINGS_COUNT ++;
+
+            }
 
             isPreviewing = false;
+            currentBuildingInfo = null;
             selectedTexture = null;
-            currentSatisfactionMultiplier = 0f;
         }
     }
 
 
-    public void selectBuilding(String buildingID, BuildingType buildingType){
+    public void selectBuilding(BuildingStats.BuildingID buildingID){
 
-        justClickedButton = true;
         isPreviewing = true;
-        this.buildingType = buildingType;
+
+        BuildingInfo newBuilding = BuildingStats.getInfo(buildingID);
+
 
 
         switch (buildingID) {
-            case "piazza":
+
+            // Academic
+            case PZA:
                 selectedTexture = piazzaBuilding;
-                currentSatisfactionMultiplier = 1.2f;
                 break;
 
-            case "rch":
+            case RCH:
                 selectedTexture = ronCookeBuilding;
-                currentSatisfactionMultiplier = 1.1f;
                 break;
+
+            // Accomodation
+            case KATO:
+                selectedTexture = davidKatoBuilding;
+                break;
+
+            case LISTER:
+                selectedTexture = anneListerBuilding;
+                break;
+
+            // Recreational
+            case YSV:
+                selectedTexture = ysvBuilding;
+                break;
+
+            // Food
+            case MCD:
+                selectedTexture = mcdBuilding;
+                break;
+
 
             default:
-                selectedTexture = piazzaBuilding;
-                currentSatisfactionMultiplier = 0f;
+                System.out.println("ERROR: Could not select building: " + buildingID);
                 break;
         }
 
-
+        currentBuildingInfo = newBuilding;
 
 
     }
@@ -179,6 +232,9 @@ public class BuildingRenderer{
         
     }
 
+    public List<Building> getPlaceBuildings(){
+        return placedBuildings;
+    }
 
 
 
@@ -186,7 +242,6 @@ public class BuildingRenderer{
         batch.dispose();
         textureAtlas.dispose();
     }
-
 
 
 }

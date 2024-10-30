@@ -7,9 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class GameGlobals {
 
     public static int BALANCE = 1000;
-    public static int SATISFACTION = 10;
-    public static int STUDENTS = 100;
+    public static int SATISFACTION = 0;
+    public static int STUDENTS = 0;
     public static int BUILDINGS_COUNT = 0;
+
+
 
     // Load map textures (replace with your own textures)
     public static final  Texture map1Texture = new Texture(Gdx.files.internal("png/map1Texture.png"));

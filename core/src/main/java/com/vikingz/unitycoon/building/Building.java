@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.buildings;
+package com.vikingz.unitycoon.building;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.util.Point;
@@ -15,27 +15,31 @@ public abstract class Building {
 
 
     // Building functional properties
+    private BuildingStats.BuildingType buildingType;
+
     private float satisfactionMultiplier;
 
 
 
-    public Building(TextureRegion texture, float x, float y, float satisfactionMultiplier){
+    public Building(TextureRegion texture, float x, float y, BuildingStats.BuildingType buildingType, float satisfactionMultiplier){
         this.x = x;
         this.y = y;
         this.width = 64;
         this.height = 64;
         this.texture = texture;
+        this.buildingType = buildingType;
         this.satisfactionMultiplier = satisfactionMultiplier;
     }
 
 
     
-    public Building(TextureRegion texture, Point p, float satisfactionMultiplier){
+    public Building(TextureRegion texture, Point p, BuildingStats.BuildingType buildingType, float satisfactionMultiplier){
         this.x = p.getX();
         this.y = p.getY();
         this.width = 64;
         this.height = 64;
         this.texture = texture;
+        this.buildingType = buildingType;
         this.satisfactionMultiplier = satisfactionMultiplier;
     }
 
@@ -48,7 +52,6 @@ public abstract class Building {
         return StatsCalculator.calculateSatisfaction(numberOfStudents, this.satisfactionMultiplier);
 
     }
-
 
 
     // Getters and Setters
@@ -94,4 +97,11 @@ public abstract class Building {
     public void setY(float y) {
         this.y = y;
     }
+    public BuildingStats.BuildingType getBuildingType() {
+        return buildingType;
+    }
+
+
+
+
 }

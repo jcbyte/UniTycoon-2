@@ -1,6 +1,5 @@
 package com.vikingz.unitycoon.ui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,26 +9,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.vikingz.unitycoon.buildings.BuildingType;
+import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.render.BuildingRenderer;
+import com.vikingz.unitycoon.screens.GameScreen;
 
-import java.util.ArrayList;
 
 public class BuildMenu{
     private final BuildingRenderer buildingRenderer;
-    private final Skin oldSkin;
     private Stage stage;
     private Skin skin;
-    private Skin quantumSkin;
     private Texture textureAtlas;
     private boolean windowActive = false;
     private int atlasTileSize = 64;
 
-    private int WINDOW_WIDTH = 500;
-    private int WINDOW_HEIGHT = 700;
+    private int MENU_WINDOW_WIDTH = 1000;
+    private int MENU_WINDOW_HEIGHT = 800;
+
+    private Window currentMenu;
+
+    private GameScreen gameScreen;
 
     public BuildMenu(GameSkins SkinLoader, BuildingRenderer buildingRenderer) {
+
+        this.gameScreen = gameScreen;
 
         stage = new Stage(new ScreenViewport());
         //Sets input for LIBGDX ui system to this ui
@@ -38,26 +41,17 @@ public class BuildMenu{
         this.buildingRenderer =  buildingRenderer;
 
         //Imports skins
-        oldSkin = SkinLoader.getDefaultSkin();
         skin = SkinLoader.getQuantumSkin();
-
 
 
         textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
 
-        TextureRegion btn1Texture = new TextureRegion(textureAtlas, 0, 0,                     atlasTileSize, atlasTileSize);   // Tile 1 (Top-left)
-        TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0,            atlasTileSize, atlasTileSize);  // Tile 2 (Top-right)
-        TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);  // Tile 3 (Bottom-left)
-        TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize); // Tile 4 (Bottom-right)
-        TextureRegion btn5Texture = new TextureRegion(textureAtlas, atlasTileSize * 4, 0,         atlasTileSize, atlasTileSize); // Tile 4 (Bottom-right)
+        TextureRegion btn1Texture = new TextureRegion(textureAtlas, 0, 0,                     atlasTileSize, atlasTileSize);  
+        TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0,            atlasTileSize, atlasTileSize);  
+        TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);  
+        TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize); 
+        TextureRegion btn5Texture = new TextureRegion(textureAtlas, atlasTileSize * 4, 0,         atlasTileSize, atlasTileSize); 
 
-
-        // Load textures for buttons (btn1.png to btn5.png)
-        //TextureRegion btn1Texture = new Texture(Gdx.files.internal("btnIcons/btn1.png"));
-        //Texture btn2Texture = new Texture(Gdx.files.internal("btnIcons/btn2.png"));
-        //Texture btn3Texture = new Texture(Gdx.files.internal("btnIcons/btn3.png"));
-        //Texture btn4Texture = new Texture(Gdx.files.internal("btnIcons/btn4.png"));
-        //Texture btn5Texture = new Texture(Gdx.files.internal("btnIcons/btn5.png"));
 
         // Create ImageButtons
         ImageButton btn1 = new ImageButton(new ImageButton.ImageButtonStyle());
@@ -95,126 +89,81 @@ public class BuildMenu{
         btn1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("ACADEMIC");
+                if(currentMenu != null) { currentMenu.remove(); }
+                showMenu(BuildingStats.BuildingType.ACADEMIC);
             }
         });
 
         btn2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("ACCOMODATION");
+                if(currentMenu != null) { currentMenu.remove(); }
+
+                showMenu(BuildingStats.BuildingType.ACCOMODATION);
             }
         });
 
         btn3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("RECREATIONAL");
+                if(currentMenu != null) { currentMenu.remove(); }
+
+                showMenu(BuildingStats.BuildingType.RECREATIONAL);
             }
         });
 
         btn4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("FOOD");
+                if(currentMenu != null) { currentMenu.remove(); }
+
+                showMenu(BuildingStats.BuildingType.FOOD);
             }
         });
 
         btn5.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu("5");
+                if(currentMenu != null) { currentMenu.remove(); }
+
+                showMenu(BuildingStats.BuildingType.NONE);
             }
         });
     }
 
-    private void showMenu(String buttonNumber) {
+    private void showMenu(BuildingStats.BuildingType buildingType) {
         // Create a window (menu)
-        Window window = new Window("Menu", skin);
+        Window window = new Window("Build Menu", skin);
+        this.currentMenu = window;
         window.setMovable(false);
 
-        // Create a Table to organize buttons
-        Table buttonTable = new Table();
 
-        // List of button texts
-        String[] buttonTexts = {
-            "piazza"
-        };
-        BuildingType buttonType = BuildingType.valueOf(buttonNumber);
-        ArrayList<TextButton> buttonStore = new ArrayList<TextButton>();
+        switch (buildingType) {
+            case ACADEMIC:
+                addMenuBtnForABuilding(window, "[Ron Cooke] [Price: 100] [Satisfaciton: 0.5/student/second]", BuildingStats.BuildingID.RCH);
+                addMenuBtnForABuilding(window, "[Piazza]    [Price: 150] [Satisfaciton: 0.8/student/second]", BuildingStats.BuildingID.PZA);
+                break;
 
-        /*
-        // Iterate through the list of button texts and create buttons
-        for (String text : buttonTexts) {
-            // Create a new button with the text
-            TextButton button = new TextButton(text, skin);
+            case ACCOMODATION:
+                addMenuBtnForABuilding(window, "[David Kato]  [Price: 100] [Students: +100]", BuildingStats.BuildingID.KATO);
+                addMenuBtnForABuilding(window, "[Anne Lister] [Price: 100] [Students: +150]", BuildingStats.BuildingID.LISTER);
+                break;
+        
+            case RECREATIONAL:
+                addMenuBtnForABuilding(window, "[YSV]  [Price: 200] [Satisfaciton: 0.5/student/second]", BuildingStats.BuildingID.YSV);
+                break;
 
-            // Set a smaller size for the buttons
-            button.setSize(50, 15); // Set width and height
-            button.scaleBy(0.5f);
+            case FOOD:
+                addMenuBtnForABuilding(window, "[McD]  [Price: 200] [Satisfaciton: 0.5/student/second]", BuildingStats.BuildingID.MCD);
+                break;
 
-            // Add listener to print text when the button is clicked
-            button.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    System.out.println(text + " clicked!");  // Print the text to the console
-                }
-            });
+            case NONE:
 
-            // Add the button to the table
-            window.add(button).pad(5);  // Add padding for spacing
-            window.row();  // Move to the next row after each button
+                break;
+
+            default:
+                break;
         }
-        */
-
-        /*
-        // Create a ScrollPane to hold the button table
-        ScrollPane scrollPane = new ScrollPane(buttonTable, skin);
-        scrollPane.setFillParent(true);  // Make the scroll pane fill the available space
-
-        // Add the scroll pane to the window
-        window.add(scrollPane).expand().fill(); // Fill the window with the scroll pane
-        */
-
-        //For loop button creation
-        for (int i=0;i<buttonTexts.length;i++) {
-            //Button Creation
-            TextButton testButton = new TextButton(buttonTexts[0], skin); //Creates a new Button
-            testButton.setSize(100, 30); // Set size for the close button
-            int finalI = i;
-            testButton.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    buildingRenderer.selectBuilding(buttonTexts[finalI], buttonType); // Adds Building Creator
-                    setWindowActive(false);
-                    window.remove();
-                }
-            });
-            window.row().padTop(10); // Add a row before adding the close button
-            window.add(testButton).center(); // Center the close button
-            buttonStore.add(testButton); // Stores active button
-        }
-
-
-        // ADDED TO TEST MULTIPLE BUILDINGS
-
-        //Ron cooke hub building
-        TextButton rchBtn = new TextButton("Ron Cooke Building", skin);
-        rchBtn.setSize(100, 30); // Set size for the close button
-        rchBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                buildingRenderer.selectBuilding("rch", BuildingType.ACADEMIC);
-
-                // Should close the window after a button in the menu is pressed otherwise the user cant access
-                // the canvas behind the menu - Damian
-                window.remove();
-            }
-        });
-        window.row().padTop(10); // Add a row before adding the close button
-        window.add(rchBtn).center(); // Center the close button
-
-
 
 
 
@@ -222,7 +171,6 @@ public class BuildMenu{
         TextButton closeButton = new TextButton("Close", skin);
         closeButton.setSize(100, 30); // Set size for the close button
 
-        // Add listener to close the window when the close button is clicked
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -236,12 +184,31 @@ public class BuildMenu{
         window.add(closeButton).center(); // Center the close button
 
         // Set size and position of the window
-        window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        window.setPosition(Gdx.graphics.getWidth() / 2f - (WINDOW_WIDTH / 2), Gdx.graphics.getHeight() / 2f - (WINDOW_HEIGHT / 2));
+        window.setSize(MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);
+        window.setPosition(Gdx.graphics.getWidth() / 2f - (MENU_WINDOW_WIDTH / 2), Gdx.graphics.getHeight() / 2f - (MENU_WINDOW_HEIGHT / 2));
 
         // Add window to the stage
         stage.addActor(window);
     }
+
+
+    private void addMenuBtnForABuilding(Window window, String btnText, BuildingStats.BuildingID buildingID){
+
+        TextButton button = new TextButton(btnText, skin);
+        button.setSize(100, 30); 
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                buildingRenderer.selectBuilding(buildingID);
+                window.remove();
+            }
+        });
+        window.row().padTop(10); 
+        window.add(button).center();
+
+    }
+
+
 
 
     public boolean isWindowActive() {

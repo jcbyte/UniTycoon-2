@@ -7,4 +7,8 @@ public class StatsCalculator {
     }
 
 
+    public static float calcuateProfitMade(float coinsPerSecond){
+        return coinsPerSecond;
+    }
+
 }

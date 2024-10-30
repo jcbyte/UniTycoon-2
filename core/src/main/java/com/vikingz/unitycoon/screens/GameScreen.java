@@ -2,13 +2,25 @@ package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.vikingz.unitycoon.building.Building;
+import com.vikingz.unitycoon.building.BuildingStats;
+import com.vikingz.unitycoon.building.BuildingStats.BuildingID;
+import com.vikingz.unitycoon.building.buildings.FoodBuilding;
+import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
@@ -24,6 +36,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private String mapName;
+
 
     // Counter variables
     private float elapsedTime;
@@ -65,6 +78,8 @@ public class GameScreen implements Screen {
         font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
         font.getData().setScale(2.0f);
 
+        System.out.println("Init Game Screen Complete");
+
     }
 
     @Override
@@ -77,40 +92,46 @@ public class GameScreen implements Screen {
         // Clear screen
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        // Update the camera
         camera.update();
 
 
-        backgroundRenderer.render(delta);
 
-        // Update the counter
+
+
         elapsedTime += delta; // delta is the time elapsed since the last frame
         if (elapsedTime >= 1) { // Increment counter every second
 
             // Calculate Game Stats
 
-            GameGlobals.BALANCE++;
-            GameGlobals.SATISFACTION += StatsCalculator.calculateSatisfaction(GameGlobals.STUDENTS, 0.5f);
+            for (Building building : buildingRenderer.getPlaceBuildings()){
+                GameGlobals.SATISFACTION += building.calculateSatisfaction(GameGlobals.STUDENTS);
 
+                if(building.getBuildingType() == BuildingStats.BuildingType.FOOD){
+                    FoodBuilding foodBuilding = (FoodBuilding) building;
+                    GameGlobals.BALANCE += foodBuilding.calcuateProfitMade();
+                }
 
+                if(building.getBuildingType() == BuildingStats.BuildingType.RECREATIONAL){
+                    RecreationalBuilding foodBuilding = (RecreationalBuilding) building;
+                    GameGlobals.BALANCE += foodBuilding.calcuateProfitMade();
+                }
 
-
+            }
 
             elapsedTime = 0; // Reset elapsed time
+        
+
+
         }
 
         //System.out.println((Gdx.input.getY()));
         //System.out.println((Gdx.input.getX()));
 
-
         // Draw game objects
         batch.setProjectionMatrix(camera.combined);
+
         batch.begin();
-
-
-
-
+        backgroundRenderer.render(delta);
         statsRenderer.render(delta);
         buildingRenderer.render(delta);
         buildMenu.render(delta);
@@ -146,4 +167,7 @@ public class GameScreen implements Screen {
         batch.dispose();
         font.dispose(); // Dispose the font
     }
+
+
+
 }
