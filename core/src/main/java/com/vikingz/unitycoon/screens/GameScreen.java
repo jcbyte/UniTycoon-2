@@ -83,7 +83,9 @@ public class GameScreen implements Screen {
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                GameGlobals.ELAPSED_TIME--;
+                if(!isPaused){
+                    GameGlobals.ELAPSED_TIME--;
+                }
             }
         }, 0, 1);
 
@@ -186,6 +188,7 @@ public class GameScreen implements Screen {
         }
 
     }
+
 
     @Override
     public void resume() { }

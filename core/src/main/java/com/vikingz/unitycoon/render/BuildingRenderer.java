@@ -113,6 +113,12 @@ public class BuildingRenderer{
                         case FOOD:
                             placedBuildings.add(new FoodBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
                             break;
+
+                        case NONE:
+                            System.out.println("This shouldnt have happend hmm");
+
+                        default:
+                            break;
                     }
 
                     GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
@@ -169,7 +175,7 @@ public class BuildingRenderer{
         float RoundedX = Math.round(x);
         float RoundedY = Math.round(y);
         boolean flag = true;
-        for (Building building: getPlaceBuildings()) {
+        for (Building building: this.placedBuildings) {
             if (
                 (RoundedX > (building.getX()-SCREEN_BUILDING_SIZE) && RoundedX < (building.getX()+SCREEN_BUILDING_SIZE)) &&
                 (RoundedY > (building.getY()-SCREEN_BUILDING_SIZE) && RoundedY < (building.getY()+SCREEN_BUILDING_SIZE))
