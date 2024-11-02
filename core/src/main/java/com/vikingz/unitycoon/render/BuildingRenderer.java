@@ -86,45 +86,47 @@ public class BuildingRenderer{
 
 
         // Check for left mouse click to place the texture
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null && checkCollisions()) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null) {
+            if (checkCollisions(previewX, previewY)) {
+
+                // Check if the uesr has enough money to buy that building
+                float balanceAfterPurchase = GameGlobals.BALANCE - currentBuildingInfo.getBuildingCost();
+                if (balanceAfterPurchase < 0) {
+                    System.out.println("Not enough money to buy building!!");
+
+                } else {
+
+                    switch (currentBuildingInfo.getBuildingType()) {
+                        case ACADEMIC:
+                            placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier()));
+                            break;
+
+                        case ACCOMODATION:
+                            placedBuildings.add(new AccommodationBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getNumberOfStudents()));
+                            break;
 
 
-            // Check if the uesr has enough money to buy that building
-            float balanceAfterPurchase = GameGlobals.BALANCE - currentBuildingInfo.getBuildingCost();
-            if(balanceAfterPurchase < 0){
-                System.out.println("Not enough money to buy building!!");
+                        case RECREATIONAL:
+                            placedBuildings.add(new RecreationalBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
+                            break;
 
-            }
+                        case FOOD:
+                            placedBuildings.add(new FoodBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
+                            break;
+                    }
 
-            else{
+                    GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
+                    GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
+                    GameGlobals.BUILDINGS_COUNT++;
 
-                switch (currentBuildingInfo.getBuildingType()) {
-                    case ACADEMIC:
-                        placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier()));
-                        break;
-
-                    case ACCOMODATION:
-                        placedBuildings.add(new AccommodationBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getNumberOfStudents()));
-                        break;
-
-
-                    case RECREATIONAL:
-                        placedBuildings.add(new RecreationalBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
-                        break;
-
-                    case FOOD:
-                        placedBuildings.add(new FoodBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
-                        break;
                 }
-
-                GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
-                GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
-                GameGlobals.BUILDINGS_COUNT ++;
-
+                isPreviewing = false;
+                currentBuildingInfo = null;
+                selectedTexture = null;
             }
-            isPreviewing = false;
-            currentBuildingInfo = null;
-            selectedTexture = null;
+            else {
+                System.err.println("Player Trying to place on a collision piece");
+            }
         }
 
     }
@@ -163,9 +165,19 @@ public class BuildingRenderer{
     }
 
 
-    private boolean checkCollisions(){
-
-        return true;
+    private boolean checkCollisions(float x, float y){
+        float RoundedX = Math.round(x);
+        float RoundedY = Math.round(y);
+        boolean flag = true;
+        for (Building building: getPlaceBuildings()) {
+            if (
+                (RoundedX > (building.getX()-SCREEN_BUILDING_SIZE) && RoundedX < (building.getX()+SCREEN_BUILDING_SIZE)) &&
+                (RoundedY > (building.getY()-SCREEN_BUILDING_SIZE) && RoundedY < (building.getY()+SCREEN_BUILDING_SIZE))
+            ){
+                flag = false;
+            }
+        }
+        return flag;
     }
 
     public void resize(int width, int height) {
