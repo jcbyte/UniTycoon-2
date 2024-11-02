@@ -46,6 +46,19 @@ public class BuildingStats {
 
     //Lookup Table for values of buildings
     //TODO make it read all info of a building from a json file
+
+    // TODO Why not have a dictionary per building instead?
+    // Json?
+    // buildingId1:
+    //  name: asdasd
+    //  price: 123
+    //  type: asdasd
+    //  ...
+    //
+    // buildingId2:
+    //  ...
+
+
     public static final  Dictionary<BuildingType, String[]> BuildingNameDict = new Hashtable<BuildingType, String[]>(){{
         put(ACADEMIC, new String[]{"Ron Cooke","Piazza"});
         put(ACCOMODATION, new String[]{"David Kato","Anne Lister"});
@@ -164,6 +177,9 @@ public class BuildingStats {
             // Food
             case MCD:
                 return new TextureRegion(textureAtlas, 0, atlasBuildingSize * 3, atlasBuildingSize, atlasBuildingSize);
+
+            default:
+                break;
         }
         return null;
     }

@@ -3,6 +3,7 @@ package com.vikingz.unitycoon.render;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.building.Building;
@@ -68,6 +69,8 @@ public class BuildingRenderer{
 
             previewX = previewPoint.getX();
             previewY = previewPoint.getY();
+
+            System.out.println("prevX: " + previewX + "  prevY: " + previewY);
         }
 
         batch.begin();
@@ -84,6 +87,19 @@ public class BuildingRenderer{
 
         batch.end();
 
+
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && selectedTexture == null){
+            System.out.println("LeftClick");
+            Point currentPoint = new Point(Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2, Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2);
+            Building buildingToRemove = getBuildingAtPoint(currentPoint.getX(), currentPoint.getY());
+
+            if(buildingToRemove != null){
+                this.placedBuildings.remove(buildingToRemove);
+            }
+            else{
+                System.out.println("building was null: " + buildingToRemove);
+            }
+        }
 
         // Check for left mouse click to place the texture
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && selectedTexture != null) {
@@ -184,6 +200,25 @@ public class BuildingRenderer{
             }
         }
         return flag;
+    }
+
+    private Building getBuildingAtPoint(float mouseX, float mouseY){
+        float x = Math.round(mouseX);
+        float y = Math.round(mouseY);
+
+        for (Building building: this.placedBuildings) {
+
+            System.out.println("x: " + x + "  y: " + y + "  buildingX: " + building.getX() + "  buildingY: " + building.getY());
+
+            float buildBottomLeftX = building.getX() - (building.getWidth() / 2);
+            float buildBottomLeftY = building.getY() - (building.getHeight() / 2);
+
+            if(x > buildBottomLeftX && x < (buildBottomLeftX + building.getWidth()) &&
+                y > buildBottomLeftY && y < (buildBottomLeftY + building.getHeight())){
+                    return building;
+            }
+        }
+        return null;
     }
 
     public void resize(int width, int height) {

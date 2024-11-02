@@ -15,11 +15,17 @@ public class TimeUtil {
             this.hrs = hrs;
         }
 
+        public Time(){
+            this.secs = 0;
+            this.mins = 0;
+            this.hrs = 0;
+        }
+
     }
 
     public Time secondsToTime(int secs){
         return new Time(secs, secs, secs);
-        
+
         
     }
 

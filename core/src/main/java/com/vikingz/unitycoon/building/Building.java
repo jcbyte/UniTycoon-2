@@ -102,6 +102,20 @@ public abstract class Building {
     }
 
 
+    public String toString(){
+        String str = "";
+        
+        str += "x: " + this.x;
+        str += " y: " + this.y;
+        str += " width: " + this.width;
+        str += " height: " + this.height;
+        str += " type: " + this.buildingType;
+
+
+        return str;
+
+    }
+
 
 
 }
