@@ -26,28 +26,12 @@ public class BuildingRenderer{
 
     private SpriteBatch batch;
     private float previewX, previewY;
-    private boolean isPreviewing;
-    private List<Building> placedBuildings;
-    private Texture textureAtlas;
-    
+    private boolean isPreviewing = false;
+    private List<Building> placedBuildings ;
+
     private TextureRegion selectedTexture;
-
-    // Buildings: Academic
-    private TextureRegion piazzaBuilding, ronCookeBuilding;
-    // Buildings: Accomodation
-    private TextureRegion davidKatoBuilding, anneListerBuilding;
-    // Buildings: Recreational
-    private TextureRegion ysvBuilding;
-    // Buildings: Food
-    private TextureRegion mcdBuilding;
-    
-
-
-    private int atlasBuildingSize;
     private int SCREEN_BUILDING_SIZE = 128;
-
-
-    private BuildingInfo currentBuildingInfo;
+    private BuildingInfo currentBuildingInfo = null;
 
     public BuildingRenderer() {
         // Initialize stage, batch, textures, and UI
@@ -56,32 +40,12 @@ public class BuildingRenderer{
         this.width = GameConfig.getInstance().getWindowWidth();
         this.height = GameConfig.getInstance().getWindowHeight();
 
-        atlasBuildingSize = 128;
-
-
-        // Adding texture atlas
-        textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildingsAtlas.png")); // Load your 64x64 PNG
-
-        // Academic
-        piazzaBuilding = new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);   
-        ronCookeBuilding = new TextureRegion(textureAtlas, atlasBuildingSize, 0,atlasBuildingSize, atlasBuildingSize);   
-
-        // Accomodation
-        davidKatoBuilding = new TextureRegion(textureAtlas, 0, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize);
-        anneListerBuilding = new TextureRegion(textureAtlas, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize);
-
-        // Recreational
-        ysvBuilding = new TextureRegion(textureAtlas, 0, atlasBuildingSize * 2, atlasBuildingSize, atlasBuildingSize);
-
-        // Food
-        mcdBuilding = new TextureRegion(textureAtlas, 0, atlasBuildingSize * 3, atlasBuildingSize, atlasBuildingSize);
-
 
 
         batch = new SpriteBatch();
         isPreviewing = false;
         placedBuildings = new ArrayList<>();
-        
+
 
         selectedTexture = null;
 
@@ -89,7 +53,6 @@ public class BuildingRenderer{
     }
 
     public void render(float delta) {
-
         checkAddingBuildings(delta);
     }
 
@@ -130,7 +93,7 @@ public class BuildingRenderer{
             float balanceAfterPurchase = GameGlobals.BALANCE - currentBuildingInfo.getBuildingCost();
             if(balanceAfterPurchase < 0){
                 System.out.println("Not enough money to buy building!!");
-                
+
             }
 
             else{
@@ -139,31 +102,31 @@ public class BuildingRenderer{
                     case ACADEMIC:
                         placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier()));
                         break;
-    
+
                     case ACCOMODATION:
                         placedBuildings.add(new AccommodationBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getNumberOfStudents()));
                         break;
-    
-    
+
+
                     case RECREATIONAL:
                         placedBuildings.add(new RecreationalBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
                         break;
-    
+
                     case FOOD:
                         placedBuildings.add(new FoodBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
                         break;
                 }
-    
+
                 GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
                 GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
                 GameGlobals.BUILDINGS_COUNT ++;
 
             }
-
             isPreviewing = false;
             currentBuildingInfo = null;
             selectedTexture = null;
         }
+
     }
 
 
@@ -173,47 +136,11 @@ public class BuildingRenderer{
 
         BuildingInfo newBuilding = BuildingStats.getInfo(buildingID);
 
-
-
-        switch (buildingID) {
-
-            // Academic
-            case PZA:
-                selectedTexture = piazzaBuilding;
-                break;
-
-            case RCH:
-                selectedTexture = ronCookeBuilding;
-                break;
-
-            // Accomodation
-            case KATO:
-                selectedTexture = davidKatoBuilding;
-                break;
-
-            case LISTER:
-                selectedTexture = anneListerBuilding;
-                break;
-
-            // Recreational
-            case YSV:
-                selectedTexture = ysvBuilding;
-                break;
-
-            // Food
-            case MCD:
-                selectedTexture = mcdBuilding;
-                break;
-
-
-            default:
-                System.out.println("ERROR: Could not select building: " + buildingID);
-                break;
+        selectedTexture = BuildingStats.getTextureOfBuilding(buildingID);
+        if (selectedTexture == null){
+            System.err.println("ERROR: Could not select building: " + buildingID);
         }
-
         currentBuildingInfo = newBuilding;
-
-
     }
 
 
@@ -222,10 +149,10 @@ public class BuildingRenderer{
         // 30 rows
         // 56 cols
 
-        
+
 
         int gridSize = 32;
-        System.out.println(gridSize);
+
 
         float newX = Math.round(x / gridSize) * gridSize;
         float newY = Math.round(y / gridSize) * gridSize;
@@ -254,7 +181,6 @@ public class BuildingRenderer{
 
     public void dispose() {
         batch.dispose();
-        textureAtlas.dispose();
     }
 
 

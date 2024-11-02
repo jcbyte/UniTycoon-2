@@ -1,18 +1,23 @@
 package com.vikingz.unitycoon.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.global.GameSkins;
-import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.render.BuildingRenderer;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
 
 public class BuildMenu{
@@ -27,6 +32,17 @@ public class BuildMenu{
     private int MENU_WINDOW_HEIGHT = 800;
 
     private Window currentMenu;
+
+
+    //Temp
+    private Dictionary<BuildingStats.BuildingType, String[]> BuildingNameDict = BuildingStats.BuildingNameDict;
+    private Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict = BuildingStats.BuildingPriceDict;
+    private Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict = BuildingStats.BuildingStudentDict;
+    private Dictionary<BuildingStats.BuildingType, BuildingStats.BuildingID[]> BuildingDict = BuildingStats.BuildingDict;
+
+
+
+    public int index = 0;
 
 
     public BuildMenu(GameSkins SkinLoader, BuildingRenderer buildingRenderer, Stage stage) {
@@ -46,11 +62,11 @@ public class BuildMenu{
 
         textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
 
-        TextureRegion btn1Texture = new TextureRegion(textureAtlas, 0, 0,                     atlasTileSize, atlasTileSize);  
-        TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0,            atlasTileSize, atlasTileSize);  
-        TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);  
-        TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize); 
-        TextureRegion btn5Texture = new TextureRegion(textureAtlas, atlasTileSize * 4, 0,         atlasTileSize, atlasTileSize); 
+        TextureRegion btn1Texture = new TextureRegion(textureAtlas, 0, 0,                     atlasTileSize, atlasTileSize);
+        TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0,            atlasTileSize, atlasTileSize);
+        TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);
+        TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize);
+        TextureRegion btn5Texture = new TextureRegion(textureAtlas, atlasTileSize * 4, 0,         atlasTileSize, atlasTileSize);
 
 
         // Create ImageButtons
@@ -90,7 +106,7 @@ public class BuildMenu{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
-                showMenu(BuildingStats.BuildingType.ACADEMIC);
+                showMenu(ACADEMIC);
             }
         });
 
@@ -108,7 +124,7 @@ public class BuildMenu{
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
 
-                showMenu(BuildingStats.BuildingType.RECREATIONAL);
+                showMenu(RECREATIONAL);
             }
         });
 
@@ -117,7 +133,7 @@ public class BuildMenu{
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
 
-                showMenu(BuildingStats.BuildingType.FOOD);
+                showMenu(FOOD);
             }
         });
 
@@ -126,21 +142,40 @@ public class BuildMenu{
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
 
-                
+
                 showMenu(BuildingStats.BuildingType.NONE);
             }
         });
     }
+    private void CreateButtons(BuildingStats.BuildingType buildingType, Window window ){
+        BuildingNameDict.put(ACADEMIC, new String[]{"Ron Cooke","Piazza"});
+        BuildingNameDict.put(ACCOMODATION, new String[]{"David Kato","Anne Lister"});
+        BuildingNameDict.put(RECREATIONAL, new String[]{"YSV"});
+        BuildingNameDict.put(FOOD, new String[]{"McD"});
+        BuildingNameDict.put(NONE, new String[]{"NONE"});
 
-    private void showMenu(BuildingStats.BuildingType buildingType) {
-        // Create a window (menu)
-        Window window = new Window("Build Menu", skin);
-        this.currentMenu = window;
-        window.setMovable(false);
+        BuildingPriceDict.put(ACADEMIC, new String[]{"100","150"});
+        BuildingPriceDict.put(ACCOMODATION, new String[]{"100","100"});
+        BuildingPriceDict.put(RECREATIONAL, new String[]{"200"});
+        BuildingPriceDict.put(FOOD, new String[]{"200"});
+        BuildingPriceDict.put(NONE, new String[]{"NONE"});
 
+        BuildingStudentDict.put(ACADEMIC, new String[]{"Satisfaction: 0.5 students/second","Satisfaction: 0.8 students/second"});
+        BuildingStudentDict.put(ACCOMODATION, new String[]{"Students: +100","Students: +150"});
+        BuildingStudentDict.put(RECREATIONAL, new String[]{"Satisfaction: 0.5 students/second"});
+        BuildingStudentDict.put(FOOD, new String[]{"Satisfaction: 0.5 students/second"});
+        BuildingStudentDict.put(NONE, new String[]{"NONE"});
 
+        BuildingDict.put(ACADEMIC,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.RCH, BuildingStats.BuildingID.PZA});
+        BuildingDict.put(ACCOMODATION,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.KATO, BuildingStats.BuildingID.LISTER});
+        BuildingDict.put(RECREATIONAL,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.YSV});
+        BuildingDict.put(FOOD,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.MCD});
+        BuildingDict.put(NONE,new BuildingStats.BuildingID[]{null});
+
+        /*
         switch (buildingType) {
             case ACADEMIC:
+
                 addMenuBtnForABuilding(window, "[Ron Cooke] [Price: 100] [Satisfaciton: 0.5/student/second]", BuildingStats.BuildingID.RCH);
                 addMenuBtnForABuilding(window, "[Piazza]    [Price: 150] [Satisfaciton: 0.8/student/second]", BuildingStats.BuildingID.PZA);
                 break;
@@ -149,7 +184,7 @@ public class BuildMenu{
                 addMenuBtnForABuilding(window, "[David Kato]  [Price: 100] [Students: +100]", BuildingStats.BuildingID.KATO);
                 addMenuBtnForABuilding(window, "[Anne Lister] [Price: 100] [Students: +150]", BuildingStats.BuildingID.LISTER);
                 break;
-        
+
             case RECREATIONAL:
                 addMenuBtnForABuilding(window, "[YSV]  [Price: 200] [Satisfaciton: 0.5/student/second]", BuildingStats.BuildingID.YSV);
                 break;
@@ -165,7 +200,114 @@ public class BuildMenu{
             default:
                 break;
         }
+        */
+    }
 
+
+    private void showMenu(BuildingStats.BuildingType buildingType) {
+        // Create a window (menu)
+        index = 0;
+        Window window = new Window("Build Menu", skin);
+        this.currentMenu = window;
+        window.setMovable(false);
+
+        //Create buttons on menu load
+        //CreateButtons(buildingType, window);
+
+
+
+        Label buildingNameLabel = new Label(BuildingNameDict.get(buildingType)[0], skin);
+        System.out.println(BuildingNameDict);
+
+
+        //Building UI
+
+        //Building name Label
+        window.add((Actor) null);
+        window.add(buildingNameLabel);
+        window.row().padTop(10);
+
+        //Image Of Building
+        window.add((Actor) null);
+        Image buildingImage = new Image(BuildingStats.getTextureOfBuilding(BuildingDict.get(buildingType)[0]));
+        window.add(buildingImage);
+        window.row().padTop(20);
+
+        //satisfaction Label
+        window.add((Actor) null);
+        Label buildingSatisfaction = new Label(BuildingStudentDict.get(buildingType)[0],skin);
+        window.add(buildingSatisfaction).expandX();
+        window.row();
+
+        //Price Label
+        window.add((Actor) null);
+        Label buildingPrice = new Label("Price: " + BuildingPriceDict.get(buildingType)[0],skin);
+        window.add(buildingPrice);
+
+        window.row().padTop(20);
+
+
+
+        //Back Building Button
+        TextButton backButton = new TextButton("Back", skin);
+        backButton.setSize(100, 30); // Set size for the back button
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                try {
+                    index--;
+                    buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
+                    buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
+                    buildingSatisfaction.setText(BuildingStudentDict.get(buildingType)[index]);
+                    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    index = BuildingNameDict.get(buildingType).length-1;
+                    buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
+                    buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
+                    buildingSatisfaction.setText(BuildingStudentDict.get(buildingType)[index]);
+                    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+                }
+            }
+        });
+        window.add(backButton);
+
+        // Create the Buy Button
+        TextButton buyButton = new TextButton("Buy", skin);
+        buyButton.setSize(100, 30);
+        buyButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                buildingRenderer.selectBuilding(BuildingDict.get(buildingType)[index]);
+                window.remove();
+            }
+        });
+        window.add(buyButton);
+
+
+        //Next Building Button
+        TextButton nextButton = new TextButton("Next", skin);
+        nextButton.setSize(100, 30); // Set size for the next button
+        nextButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                try {
+                    index++;
+                    buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
+                    buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
+                    buildingSatisfaction.setText(BuildingStudentDict.get(buildingType)[index]);
+                    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    index = 0;
+                    buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
+                    buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
+                    buildingSatisfaction.setText(BuildingStudentDict.get(buildingType)[index]);
+                    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+                }
+            }
+        });
+        window.add(nextButton);
 
 
         // Create the close button
@@ -173,6 +315,7 @@ public class BuildMenu{
         closeButton.setSize(100, 30); // Set size for the close button
 
         closeButton.addListener(new ClickListener() {
+
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setWindowActive(false);
@@ -182,12 +325,16 @@ public class BuildMenu{
 
         // Add close button to the window
         window.row().padTop(10); // Add a row before adding the close button
-        window.add(closeButton).center(); // Center the close button
+        System.out.println(window.getColumns());
+        window.add((Actor) null);
+        window.add(closeButton);
 
         // Set size and position of the window
         window.setSize(MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);
         window.setPosition(Gdx.graphics.getWidth() / 2f - (MENU_WINDOW_WIDTH / 2), Gdx.graphics.getHeight() / 2f - (MENU_WINDOW_HEIGHT / 2));
 
+        //shows debug lines of window table
+        //window.setDebug(true);
         // Add window to the stage
         stage.addActor(window);
     }
@@ -196,7 +343,7 @@ public class BuildMenu{
     private void addMenuBtnForABuilding(Window window, String btnText, BuildingStats.BuildingID buildingID){
 
         TextButton button = new TextButton(btnText, skin);
-        button.setSize(100, 30); 
+        button.setSize(100, 30);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -204,8 +351,8 @@ public class BuildMenu{
                 window.remove();
             }
         });
-        window.row().padTop(10); 
-        window.add(button).center();
+        window.row().padTop(10);
+        window.add(button);
 
     }
 

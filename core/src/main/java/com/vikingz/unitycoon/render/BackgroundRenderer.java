@@ -43,12 +43,12 @@ public class BackgroundRenderer{
         texture = new Texture(Gdx.files.internal("textureAtlases/backgroundAtlas.png")); // Load your 64x64 PNG
 
         // Create TextureRegions for each tile
-        grassTile = new TextureRegion(texture, 0, 0,                     atlasTileSize, atlasTileSize);  
-        waterTile = new TextureRegion(texture, atlasTileSize, 0,            atlasTileSize, atlasTileSize); 
-        cobbleTile = new TextureRegion(texture, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize); 
-        roadTile = new TextureRegion(texture, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize); 
+        grassTile = new TextureRegion(texture, 0, 0,                     atlasTileSize, atlasTileSize);
+        waterTile = new TextureRegion(texture, atlasTileSize, 0,            atlasTileSize, atlasTileSize);
+        cobbleTile = new TextureRegion(texture, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);
+        roadTile = new TextureRegion(texture, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize);
 
-        
+
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
     }
@@ -127,7 +127,7 @@ public class BackgroundRenderer{
 
                     case ROAD:
                         batch.draw(roadTile, j * tileSize, i * tileSize, tileSize, tileSize);
-                        break;                  
+                        break;
 
 
                 }
@@ -136,6 +136,8 @@ public class BackgroundRenderer{
         }
 
     }
+
+
 
 
     public void resize(int width, int height) {

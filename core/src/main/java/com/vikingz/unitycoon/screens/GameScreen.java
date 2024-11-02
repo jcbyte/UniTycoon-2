@@ -100,19 +100,7 @@ public class GameScreen implements Screen {
 
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            System.out.println("Pressed ESC");
-
-            if(!pauseMenu.hasParent()){
-                stage.addActor(pauseMenu);
-                pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
-                isPaused = true;
-            }
-            else{
-                pauseMenu.remove();
-                isPaused = false;
-            }
-
-
+            game.pause();
         }
 
 
@@ -120,28 +108,28 @@ public class GameScreen implements Screen {
 
             elapsedTime += delta; // delta is the time elapsed since the last frame
             if (elapsedTime >= 1) { // Increment counter every second
-    
+
                 // Calculate Game Stats
-    
+
                 for (Building building : buildingRenderer.getPlaceBuildings()){
                     GameGlobals.SATISFACTION += building.calculateSatisfaction(GameGlobals.STUDENTS);
-    
+
                     if(building.getBuildingType() == BuildingStats.BuildingType.FOOD){
                         FoodBuilding foodBuilding = (FoodBuilding) building;
                         GameGlobals.BALANCE += foodBuilding.calcuateProfitMade();
                     }
-    
+
                     if(building.getBuildingType() == BuildingStats.BuildingType.RECREATIONAL){
                         RecreationalBuilding foodBuilding = (RecreationalBuilding) building;
                         GameGlobals.BALANCE += foodBuilding.calcuateProfitMade();
                     }
-    
+
                 }
-    
+
                 elapsedTime = 0; // Reset elapsed time
-            
-    
-    
+
+
+
             }
 
 
@@ -180,7 +168,20 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void pause() { }
+    public void pause() {
+        System.out.println("Pressed ESC");
+
+        if(!pauseMenu.hasParent()){
+            stage.addActor(pauseMenu);
+            pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
+            isPaused = true;
+        }
+        else{
+            pauseMenu.remove();
+            isPaused = false;
+        }
+
+    }
 
     @Override
     public void resume() { }
