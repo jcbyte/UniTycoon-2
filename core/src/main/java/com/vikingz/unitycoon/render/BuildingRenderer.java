@@ -172,15 +172,10 @@ public class BuildingRenderer{
 
         // 30 rows
         // 56 cols
-
-
-
         int gridSize = 32;
-
 
         float newX = Math.round(x / gridSize) * gridSize;
         float newY = Math.round(y / gridSize) * gridSize;
-
 
         return new Point(newX, newY);
 

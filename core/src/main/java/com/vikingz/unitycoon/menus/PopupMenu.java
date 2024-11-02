@@ -16,7 +16,30 @@ public class PopupMenu extends Window {
  * Make a constructor to create multiple different popups
  */
 
+    private Skin skin;
+
+    private Runnable leftRun;
+    private Runnable rightRun;
+
+
     public PopupMenu(Skin skin, String Message) {
+
+        super("Popup", skin);
+
+        this.setSize(600, 400);
+        this.setModal(true);
+        this.setMovable(false);
+        this.setResizable(false);
+        
+        this.skin = skin;
+
+
+        Label message = new Label(Message, skin);
+        this.add(message).padBottom(20).row();
+
+    }
+
+    public PopupMenu(Skin skin, String Message, Runnable leftRun, String leftText, Runnable rightRun, String rightText) {
 
         super("Popup", skin);
         this.setSize(600, 400);
@@ -24,38 +47,80 @@ public class PopupMenu extends Window {
         this.setMovable(false);
         this.setResizable(false);
 
+        this.skin = skin;
+
+        this.leftRun = leftRun;
+        this.rightRun = rightRun;
 
 
         Label message = new Label(Message, skin);
         this.add(message).padBottom(20).row();
 
-        // Idk change this later
-        TextButton yesButton = new TextButton("Yes", skin);
-        TextButton noButton = new TextButton("No", skin);
+        setupButtons(leftRun, leftText, rightRun, rightText);
 
-        this.add(yesButton).pad(10);
-        this.add(noButton).pad(10);
+
+    }
+
+
+    public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
+        
+        // Idk change this later
+        TextButton leftBtn = new TextButton(leftText, skin);
+        TextButton rightBtn = new TextButton(rightText, skin);
+
+        this.add(leftBtn).pad(10);
+        this.add(rightBtn).pad(10);
 
         // Created for yes - no game events
         // The Popup needs to call back to parent object in someway
 
-        yesButton.addListener(new ClickListener() {
+        leftBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Yes clicked");
-                PopupMenu.this.remove();
+                leftRun.run();
+                //PopupMenu.this.remove();
             }
         });
 
-        noButton.addListener(new ClickListener() {
+        rightBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("No clicked");
-                PopupMenu.this.remove();
+                rightRun.run();
+                //PopupMenu.this.remove();
             }
         });
     }
 
+
+    // Keeps left button as close
+    public void setupRightBtn(Runnable rightRun, String rightText){
+
+
+        // Idk change this later
+        TextButton leftBtn = new TextButton("Close", skin);
+        TextButton rightBtn = new TextButton(rightText, skin);
+
+        this.add(leftBtn).pad(10);
+        this.add(rightBtn).pad(10);
+
+        // Created for yes - no game events
+        // The Popup needs to call back to parent object in someway
+
+        leftBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                PopupMenu.this.remove();
+            }
+        });
+
+        rightBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                rightRun.run();
+            }
+        });
+
+    }
 
     //Getters and Setters
     public String getMessage() {

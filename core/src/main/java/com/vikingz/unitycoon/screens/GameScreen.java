@@ -38,6 +38,8 @@ public class GameScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private PauseMenu pauseMenu;
+    private PopupMenu endOfTimerPopup;
+    private boolean continuingGameAfterTheEnd;
 
     // Counter variables
     private float elapsedTime;
@@ -75,6 +77,7 @@ public class GameScreen implements Screen {
         buildMenu = new BuildMenu(SkinLoader, buildingRenderer, stage);
         batch = new SpriteBatch();
 
+        this.continuingGameAfterTheEnd = false;
         this.pauseMenu = new PauseMenu(skin);
 
         // Initialize counter and font
@@ -115,6 +118,8 @@ public class GameScreen implements Screen {
         }
 
 
+
+
         if(!isPaused){
 
             elapsedTime += delta; // delta is the time elapsed since the last frame
@@ -140,6 +145,13 @@ public class GameScreen implements Screen {
             }
 
 
+        }
+
+        if(GameGlobals.ELAPSED_TIME <= 0){
+            endGame();
+        }
+        if(continuingGameAfterTheEnd){
+            endOfTimerPopup.remove();
         }
 
 
@@ -189,6 +201,47 @@ public class GameScreen implements Screen {
 
     }
 
+
+    private void endGame(){
+        
+        
+        isPaused = true;
+        
+        this.endOfTimerPopup = new PopupMenu(skin, "End of Game");
+
+        Runnable leftBtn = new Runnable() {
+            
+            @Override
+            public void run(){
+                Gdx.app.exit();
+            }
+
+        };
+
+        Runnable rightBtn = new Runnable() {
+            
+            @Override
+            public void run(){
+                // funny
+                GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
+                isPaused = false;
+
+                // TODO: I cant get the end of timer popup to go away even after .remove()ing it ?!?!
+                continuingGameAfterTheEnd = true;
+                boolean res = endOfTimerPopup.remove();
+                System.out.println("result: " + res + "continue:" + continuingGameAfterTheEnd);
+            }
+            
+
+        };
+
+        //endOfTimerPopup.setupRightBtn(rightBtn, "Continue");
+        endOfTimerPopup.setupButtons(leftBtn, "Quit", rightBtn, "Continue");
+        
+        endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
+        stage.addActor(endOfTimerPopup);
+    
+    }
 
     @Override
     public void resume() { }
