@@ -1,49 +1,47 @@
 package com.vikingz.unitycoon.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.building.BuildingStats;
+import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.render.BuildingRenderer;
 
+import java.awt.*;
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
 
 public class BuildMenu{
     private final BuildingRenderer buildingRenderer;
+    private final Skin defaultSkin;
     private Stage stage;
     private Skin skin;
     private Texture textureAtlas;
     private boolean windowActive = false;
     private int atlasTileSize = 64;
-
     private int MENU_WINDOW_WIDTH = 1000;
     private int MENU_WINDOW_HEIGHT = 800;
 
     private Window currentMenu;
-
 
     //Temp
     private Dictionary<BuildingStats.BuildingType, String[]> BuildingNameDict = BuildingStats.BuildingNameDict;
     private Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict = BuildingStats.BuildingPriceDict;
     private Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict = BuildingStats.BuildingStudentDict;
     private Dictionary<BuildingStats.BuildingType, BuildingStats.BuildingID[]> BuildingDict = BuildingStats.BuildingDict;
-
-
-
-    public int index = 0;
-
+    private int index = 0;
 
     public BuildMenu(GameSkins SkinLoader, BuildingRenderer buildingRenderer, Stage stage) {
 
@@ -58,6 +56,7 @@ public class BuildMenu{
 
         //Imports skins
         skin = SkinLoader.getQuantumSkin();
+        defaultSkin = SkinLoader.getDefaultSkin();
 
 
         textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
@@ -207,22 +206,21 @@ public class BuildMenu{
     private void showMenu(BuildingStats.BuildingType buildingType) {
         // Create a window (menu)
         index = 0;
+
         Window window = new Window("Build Menu", skin);
+        window.getTitleTable().padTop(25).padLeft(437);
         this.currentMenu = window;
         window.setMovable(false);
+        window.setBackground(GameGlobals.backGroundDrawable);
 
         //Create buttons on menu load
         //CreateButtons(buildingType, window);
 
 
-
-        Label buildingNameLabel = new Label(BuildingNameDict.get(buildingType)[0], skin);
-        System.out.println(BuildingNameDict);
-
-
         //Building UI
 
         //Building name Label
+        Label buildingNameLabel = new Label(BuildingNameDict.get(buildingType)[0], skin);
         window.add((Actor) null);
         window.add(buildingNameLabel);
         window.row().padTop(10);
@@ -270,7 +268,7 @@ public class BuildMenu{
                 }
             }
         });
-        window.add(backButton);
+        window.add(backButton).padLeft(50);
 
         // Create the Buy Button
         TextButton buyButton = new TextButton("Buy", skin);
@@ -307,7 +305,7 @@ public class BuildMenu{
                 }
             }
         });
-        window.add(nextButton);
+        window.add(nextButton).padRight(50);
 
 
         // Create the close button
@@ -337,6 +335,7 @@ public class BuildMenu{
         //window.setDebug(true);
         // Add window to the stage
         stage.addActor(window);
+
     }
 
 

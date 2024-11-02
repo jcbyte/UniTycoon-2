@@ -81,7 +81,7 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
         // Clear the screen
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(25/255f, 25/255f, 25/255f, 1);
         Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
 
         // Draw the stage

@@ -2,6 +2,7 @@ package com.vikingz.unitycoon.global;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class GameGlobals {
@@ -17,6 +18,8 @@ public class GameGlobals {
     public static final  Texture map1Texture = new Texture(Gdx.files.internal("png/map1Texture.png"));
     public static final  Texture map2Texture = new Texture(Gdx.files.internal("png/map2Texture.png"));
     public static final Texture map3Texture = new Texture(Gdx.files.internal("png/map3Texture.png"));
+
+    public static final TextureRegionDrawable backGroundDrawable = new TextureRegionDrawable(new Texture("png/background.png"));
     public static final  TextureRegionDrawable map1Draw = new TextureRegionDrawable(map1Texture);
     public static final TextureRegionDrawable map2Draw = new TextureRegionDrawable(map2Texture);
     public static final TextureRegionDrawable map3Draw = new TextureRegionDrawable(map3Texture);
