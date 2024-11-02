@@ -38,6 +38,7 @@ public class StatsRenderer {
         font.draw(batch, "Students: " + GameGlobals.STUDENTS, 10, GameConfig.getInstance().getWindowHeight() - 60); // Draw at position (10, 470)
         font.draw(batch, "Satisfaction: " + GameGlobals.SATISFACTION, 10, GameConfig.getInstance().getWindowHeight() - 90); // Draw at position (10, 470)
         font.draw(batch, "Number Of Buildings: " + GameGlobals.BUILDINGS_COUNT, 10, GameConfig.getInstance().getWindowHeight() -120); // Draw at position (10, 470)
+        font.draw(batch, "Time: " + GameGlobals.ELAPSED_TIME, 10, GameConfig.getInstance().getWindowHeight() -150); // Draw at position (10, 470)
 
         batch.end();
     }

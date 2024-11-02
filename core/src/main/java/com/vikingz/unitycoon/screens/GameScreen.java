@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.vikingz.unitycoon.building.Building;
@@ -78,6 +79,13 @@ public class GameScreen implements Screen {
 
         // Initialize counter and font
         elapsedTime = 0;
+        GameGlobals.ELAPSED_TIME = 300;
+        new Timer().scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                GameGlobals.ELAPSED_TIME--;
+            }
+        }, 0, 1);
 
         font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
         font.getData().setScale(2.0f);
@@ -85,6 +93,7 @@ public class GameScreen implements Screen {
         System.out.println("Init Game Screen Complete");
 
     }
+
 
     @Override
     public void show() {
@@ -125,11 +134,7 @@ public class GameScreen implements Screen {
                     }
 
                 }
-
                 elapsedTime = 0; // Reset elapsed time
-
-
-
             }
 
 
@@ -148,7 +153,6 @@ public class GameScreen implements Screen {
         buildingRenderer.render(delta);
         buildMenu.render(delta);
         batch.end();
-
         stage.act();
         stage.draw();
     }

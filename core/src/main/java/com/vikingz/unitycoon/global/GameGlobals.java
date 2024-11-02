@@ -12,6 +12,8 @@ public class GameGlobals {
     public static int STUDENTS = 0;
     public static int BUILDINGS_COUNT = 0;
 
+    public static int ELAPSED_TIME = 0;
+
 
 
     // Load map textures (replace with your own textures)
