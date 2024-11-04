@@ -15,12 +15,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 
-public class MapSelectorScreen implements Screen {
+public class MapSelectorScreen extends SuperScreen implements Screen {
 
     private TextField mapText;
     private TextureRegionDrawable[] mapArray;
     private Game game;
-    private Stage stage;
     private Skin skin;
 
     // Map images (for example purposes, add your own map textures)

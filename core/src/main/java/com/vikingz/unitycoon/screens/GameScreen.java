@@ -25,7 +25,7 @@ import com.vikingz.unitycoon.render.BuildingRenderer;
 import com.vikingz.unitycoon.render.StatsRenderer;
 import com.vikingz.unitycoon.ui.BuildMenu;
 
-public class GameScreen implements Screen {
+public class GameScreen extends SuperScreen implements Screen {
 
 
 
@@ -35,7 +35,6 @@ public class GameScreen implements Screen {
     private String mapName;
     private boolean isPaused;
 
-    private Stage stage;
     private Skin skin;
     private PauseMenu pauseMenu;
     private PopupMenu endOfTimerPopup;
@@ -59,7 +58,7 @@ public class GameScreen implements Screen {
 
 
 
-    public GameScreen(Game game, String mapName, GameSkins SkinLoader) {
+    public GameScreen(Game game, String mapName, GameSkins SkinLoader){
 
         skin = SkinLoader.getQuantumSkin();
 

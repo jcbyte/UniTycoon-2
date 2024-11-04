@@ -16,10 +16,9 @@ import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.screens.MapSelectorScreen;
 import com.vikingz.unitycoon.screens.SettingsScreen;
 
-public class MenuScreen implements Screen {
+public class MenuScreen extends SuperScreen implements Screen {
 
     private Game game;
-    private Stage stage;
     private Skin skin;
 
     public MenuScreen(Game game, GameSkins skinLoader) {
@@ -38,11 +37,10 @@ public class MenuScreen implements Screen {
         // Add listeners to buttons
         playButton.addListener(e -> {
             if (!playButton.isPressed()) return false;
-            game.setScreen(new MapSelectorScreen(game,skinLoader)); // Navigate to GameScreen
+            game.setScreen(GameGlobals.mapSelectorScreen); // Navigate to GameScreen
             return true;
         });
 
-        GameGlobals.settingsScreen = new SettingsScreen(game, skinLoader);
         settingsButton.addListener(e -> {
             if (!settingsButton.isPressed()) return false;
 
