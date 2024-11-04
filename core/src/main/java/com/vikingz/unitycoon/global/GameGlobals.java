@@ -1,9 +1,11 @@
 package com.vikingz.unitycoon.global;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.vikingz.unitycoon.screens.SettingsScreen;
 
 public class GameGlobals {
 
@@ -15,6 +17,9 @@ public class GameGlobals {
     public static int ELAPSED_TIME = 0;
 
 
+
+    // Screens - Instanciate screens here that need global access
+    public static SettingsScreen settingsScreen;
 
     // Load map textures (replace with your own textures)
     public static final  Texture map1Texture = new Texture(Gdx.files.internal("png/map1Texture.png"));

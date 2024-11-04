@@ -78,11 +78,13 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
 
         this.continuingGameAfterTheEnd = false;
-        this.pauseMenu = new PauseMenu(skin);
+        this.pauseMenu = new PauseMenu(skin, game);
+        this.endOfTimerPopup = new PopupMenu(skin, "End of Game");
+
 
         // Initialize counter and font
         elapsedTime = 0;
-        GameGlobals.ELAPSED_TIME = 300;
+        GameGlobals.ELAPSED_TIME = 5;
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
@@ -114,7 +116,7 @@ public class GameScreen implements Screen {
 
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            game.pause();
+            pause();
         }
 
 
@@ -207,7 +209,6 @@ public class GameScreen implements Screen {
         
         isPaused = true;
         
-        this.endOfTimerPopup = new PopupMenu(skin, "End of Game");
 
         Runnable leftBtn = new Runnable() {
             

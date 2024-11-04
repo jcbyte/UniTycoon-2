@@ -163,4 +163,11 @@ public class SettingsScreen implements Screen {
         stage.dispose();
         skin.dispose();
     }
+
+    public void setWindowActive(){
+
+        game.setScreen(this);
+
+
+    }
 }

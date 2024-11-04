@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.screens.MapSelectorScreen;
 import com.vikingz.unitycoon.screens.SettingsScreen;
@@ -41,9 +42,11 @@ public class MenuScreen implements Screen {
             return true;
         });
 
+        GameGlobals.settingsScreen = new SettingsScreen(game, skinLoader);
         settingsButton.addListener(e -> {
             if (!settingsButton.isPressed()) return false;
-            game.setScreen(new SettingsScreen(game, skinLoader)); // Navigate to SettingsScreen
+
+            game.setScreen(GameGlobals.settingsScreen); // Navigate to SettingsScreen
             return true;
         });
 
