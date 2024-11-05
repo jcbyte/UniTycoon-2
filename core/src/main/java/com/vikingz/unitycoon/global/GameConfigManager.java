@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 
 public class GameConfigManager {
 
@@ -31,7 +30,7 @@ public class GameConfigManager {
 
     public static void saveGameConfig(){
         try {
-            FileOutputStream fileOut = new FileOutputStream("gameconfig/gameconf.bin");
+            FileOutputStream fileOut = new FileOutputStream("gameconf.bin");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(GameConfig.getInstance());
             out.close();
@@ -40,7 +39,7 @@ public class GameConfigManager {
 
         } catch (IOException i) {
             System.out.println("FILE NOT FOUND");
-            i.printStackTrace();
+            //i.printStackTrace();
         }
 
 
@@ -51,7 +50,7 @@ public class GameConfigManager {
 
         GameConfig conf = null;
         try {
-            FileInputStream fileIn = new FileInputStream("gameconfig/gameconf.bin");
+            FileInputStream fileIn = new FileInputStream("gameconf.bin");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             conf = (GameConfig) in.readObject();
             in.close();
@@ -67,7 +66,7 @@ public class GameConfigManager {
             return;
         } catch (ClassNotFoundException c) {
             System.out.println("GameConfig class not found");
-            c.printStackTrace();
+            //c.printStackTrace();
             return;
         }
 

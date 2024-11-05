@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -15,11 +16,12 @@ public abstract class SuperScreen {
     
 
     public Stage stage;
-    public Camera  camera;
-    public Viewport viewport;
+    private Camera  camera;
+    private Viewport viewport;
 
     public SpriteBatch batch;
-    public GameSkins skinLoader;
+    private GameSkins skinLoader;
+    public Skin skin;
 
     public SuperScreen(){
         camera = new OrthographicCamera();
@@ -28,6 +30,7 @@ public abstract class SuperScreen {
 
         batch = new SpriteBatch();
         skinLoader = new GameSkins();
+        skin = skinLoader.getQuantumSkin();
 
     }
 

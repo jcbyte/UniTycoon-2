@@ -25,7 +25,10 @@ public class BackgroundRenderer{
     private Texture texture;
     private TextureRegion grassTile, waterTile, cobbleTile, roadTile;
 
-    private final int tileSize = 32; // Size of each tile in game
+    private int tileWidth = 32; // Size of each tile in game
+    private int tileHeight = 32; // Size of each tile in game
+
+    
     private final int atlasTileSize = 64;
     private int screenWidth;
     private int screenHeight;
@@ -76,8 +79,8 @@ public class BackgroundRenderer{
         //int rows = (int) Math.ceil((double) screenHeight / tileSize);
         //int cols = (int) Math.ceil((double) screenWidth / tileSize);
 
-        int rowsMax = 31;
-        int colsMax = 57;
+        int rowsMax = 32;
+        int colsMax = 56;
 
         int rows = map.split("\n").length;
         int cols = map.split("\n")[0].length();
@@ -95,19 +98,19 @@ public class BackgroundRenderer{
 
                 switch (strRowsList.get(i).charAt(j)){
                     case GRASS:
-                        batch.draw(grassTile, j * tileSize, i * tileSize, tileSize, tileSize);
+                        batch.draw(grassTile, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
                         break;
 
                     case WATER:
-                        batch.draw(waterTile, j * tileSize, i * tileSize, tileSize, tileSize);
+                        batch.draw(waterTile, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
                         break;
 
                     case COBBLE_STONE:
-                        batch.draw(cobbleTile, j * tileSize, i * tileSize, tileSize, tileSize);
+                        batch.draw(cobbleTile, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
                         break;
 
                     case ROAD:
-                        batch.draw(roadTile, j * tileSize, i * tileSize, tileSize, tileSize);
+                        batch.draw(roadTile, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
                         break;
 
 
@@ -125,6 +128,9 @@ public class BackgroundRenderer{
         // Update the screen dimensions
         screenWidth = width;
         screenHeight = height;
+
+        //tileWidth = (int)(screenWidth / 57);
+        //tileHeight = (int)(screenHeight / 31.5f);
     }
 
 

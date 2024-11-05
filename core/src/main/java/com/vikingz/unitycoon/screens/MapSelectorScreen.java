@@ -14,7 +14,6 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
 
     private TextField mapText;
     private TextureRegionDrawable[] mapArray;
-    private Skin skin;
 
     // Map images (for example purposes, add your own map textures)
 
@@ -22,7 +21,6 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
 
     public MapSelectorScreen() {
         super();
-        skin = skinLoader.getQuantumSkin();
 
         //Loads maps from global config
         mapArray = GameGlobals.mapArray;

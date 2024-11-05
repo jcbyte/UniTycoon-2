@@ -13,10 +13,13 @@ public class GameConfig implements Serializable{
     private boolean skipMenus;
     private float volumeValue;
     private static boolean VSync = false;
+    private float guiSize = 1;
 
 
-    // 30 rows
+    // 31.5 rows
     // 56 cols
+
+
 
 
     // The single instance of GameConfig (eager initialization)
@@ -71,6 +74,13 @@ public class GameConfig implements Serializable{
 
     public void setVolumeValue(float newVolValue){
         this.volumeValue = newVolValue;
+    }
+    public float getGuiSize() {
+        return guiSize;
+    }
+
+    public void setGuiSize(float guiSize) {
+        this.guiSize = guiSize;
     }
 }
 

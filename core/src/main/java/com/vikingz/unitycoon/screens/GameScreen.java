@@ -1,27 +1,19 @@
 package com.vikingz.unitycoon.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.global.GameSkins;
-import com.vikingz.unitycoon.menus.PauseMenu;
-import com.vikingz.unitycoon.menus.PopupMenu;
-import com.vikingz.unitycoon.render.BackgroundRenderer;
-import com.vikingz.unitycoon.render.BuildingRenderer;
-import com.vikingz.unitycoon.render.StatsRenderer;
-import com.vikingz.unitycoon.ui.BuildMenu;
+import com.vikingz.unitycoon.render.GameRederer;
+import com.vikingz.unitycoon.render.UIRenderer;
 
 public class GameScreen extends SuperScreen implements Screen {
 
@@ -29,9 +21,7 @@ public class GameScreen extends SuperScreen implements Screen {
 
     private boolean isPaused;
 
-    private Skin skin;
-    private PauseMenu pauseMenu;
-    private PopupMenu endOfTimerPopup;
+
 
     // Counter variables
     private float elapsedTime;
@@ -40,31 +30,26 @@ public class GameScreen extends SuperScreen implements Screen {
     private BitmapFont font;
 
     // Renderers
-    private BackgroundRenderer backgroundRenderer;
-    private StatsRenderer statsRenderer;
-    private BuildingRenderer buildingRenderer;
+    GameRederer gameRenderer;
+    UIRenderer uiRenderer;
 
-    // Menus
-    private BuildMenu buildMenu;
 
 
 
     public GameScreen(String mapName){
         super();
 
-        skin = skinLoader.getQuantumSkin();
         this.isPaused = false;
 
+        
+        gameRenderer = new GameRederer(mapName);
+        uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer());
+        
 
-        backgroundRenderer = new BackgroundRenderer(mapName);
-        statsRenderer = new StatsRenderer();
-        buildingRenderer = new BuildingRenderer();
-        buildMenu = new BuildMenu(skinLoader, buildingRenderer, stage);
-
-        pauseMenu = new PauseMenu(skin);
+        font = new BitmapFont(); 
+        font.getData().setScale(2.0f);
 
 
-        // Initialize counter and font
         elapsedTime = 0;
         GameGlobals.ELAPSED_TIME = 300;
         new Timer().scheduleTask(new Timer.Task() {
@@ -76,10 +61,6 @@ public class GameScreen extends SuperScreen implements Screen {
             }
         }, 0, 1);
 
-        font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
-        font.getData().setScale(2.0f);
-
-        System.out.println("Init Game Screen Complete");
 
     }
 
@@ -101,8 +82,6 @@ public class GameScreen extends SuperScreen implements Screen {
         }
 
 
-
-
         if(!isPaused){
 
             elapsedTime += delta; // delta is the time elapsed since the last frame
@@ -110,7 +89,7 @@ public class GameScreen extends SuperScreen implements Screen {
 
                 // Calculate Game Stats
 
-                for (Building building : buildingRenderer.getPlaceBuildings()){
+                for (Building building : gameRenderer.getBuildingRenderer().getPlaceBuildings()){
                     GameGlobals.SATISFACTION += building.calculateSatisfaction(GameGlobals.STUDENTS);
 
                     if(building.getBuildingType() == BuildingStats.BuildingType.FOOD){
@@ -135,20 +114,15 @@ public class GameScreen extends SuperScreen implements Screen {
         }
 
 
-
         //System.out.println((Gdx.input.getY()));
         //System.out.println((Gdx.input.getX()));
 
         // Draw game objects
 
         batch.begin();
-        backgroundRenderer.render(delta);
-        statsRenderer.render(delta);
-        buildingRenderer.render(delta);
-        buildMenu.render(delta);
+        gameRenderer.render(delta);
+        uiRenderer.render(delta);
         batch.end();
-        stage.act();
-        stage.draw();
     }
 
 
@@ -156,69 +130,24 @@ public class GameScreen extends SuperScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         // Adjust the viewport when the window size changes
-
-        buildMenu.resize(width, height);
-        backgroundRenderer.resize(width, height);
-        buildingRenderer.resize(width, height);
-        buildMenu.resize(width, height);
-
+        uiRenderer.resize(width, height);
+        gameRenderer.resize(width, height);
 
     }
 
     @Override
     public void pause() {
-        System.out.println("Pressed ESC");
 
-        if(!pauseMenu.hasParent()){
-            stage.addActor(pauseMenu);
-            pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
-            isPaused = true;
-        }
-        else{
-            pauseMenu.remove();
-            isPaused = false;
-        }
+        uiRenderer.pause(isPaused);
 
     }
 
 
     private void endGame(){
         
-        this.endOfTimerPopup = new PopupMenu(skin, "End of Game");
-        
         isPaused = true;
-        
+        uiRenderer.endGame();
 
-        Runnable leftBtn = new Runnable() {
-            
-            @Override
-            public void run(){
-                Gdx.app.exit();
-            }
-
-        };
-
-        Runnable rightBtn = new Runnable() {
-            
-            @Override
-            public void run(){
-                // funny
-                GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
-                isPaused = false;
-
-                // TODO: I cant get the end of timer popup to go away even after .remove()ing it ?!?!
-                endOfTimerPopup.remove();
-            }
-            
-
-        };
-
-        //endOfTimerPopup.setupRightBtn(rightBtn, "Continue");
-        endOfTimerPopup.setupButtons(leftBtn, "Quit", rightBtn, "Continue");
-        
-        endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
-        stage.addActor(endOfTimerPopup);
-    
     }
 
     @Override
@@ -229,9 +158,14 @@ public class GameScreen extends SuperScreen implements Screen {
 
     @Override
     public void dispose() {
-        // Dispose of resources
+
         batch.dispose();
         font.dispose(); // Dispose the font
+    }
+
+    @Override
+    public void takeInput() {
+        uiRenderer.takeInput();
     }
 
 

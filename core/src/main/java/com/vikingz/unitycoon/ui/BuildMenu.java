@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.building.BuildingStats;
+import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.render.BuildingRenderer;
@@ -25,7 +26,6 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
 public class BuildMenu{
     private final BuildingRenderer buildingRenderer;
-    private final Skin defaultSkin;
     private Stage stage;
     private Skin skin;
     private Texture textureAtlas;
@@ -33,6 +33,9 @@ public class BuildMenu{
     private int atlasTileSize = 64;
     private int MENU_WINDOW_WIDTH = 1000;
     private int MENU_WINDOW_HEIGHT = 800;
+
+    private int width = GameConfig.getInstance().getWindowWidth();
+    private int height = GameConfig.getInstance().getWindowHeight();
 
     private Window currentMenu;
 
@@ -43,20 +46,16 @@ public class BuildMenu{
     private Dictionary<BuildingStats.BuildingType, BuildingStats.BuildingID[]> BuildingDict = BuildingStats.BuildingDict;
     private int index = 0;
 
-    public BuildMenu(GameSkins SkinLoader, BuildingRenderer buildingRenderer, Stage stage) {
+    public BuildMenu(Skin skin, BuildingRenderer buildingRenderer, Stage stage) {
 
 
-        //stage = new Stage(new ScreenViewport());
 
         this.stage = stage;
-        //Sets input for LIBGDX ui system to this ui
-        //Gdx.input.setInputProcessor(stage);
 
         this.buildingRenderer =  buildingRenderer;
 
         //Imports skins
-        skin = SkinLoader.getQuantumSkin();
-        defaultSkin = SkinLoader.getDefaultSkin();
+        this.skin = skin;
 
 
         textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
@@ -373,6 +372,8 @@ public class BuildMenu{
 
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        this.width = width;
+        this.height = height;
     }
 
     public void dispose() {
