@@ -1,7 +1,6 @@
 package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,10 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
-import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 
-public class SettingsScreen implements Screen {
+public class SettingsScreen extends SuperScreen implements Screen {
 
     private Label resolutionLabel;
     private Game game;
