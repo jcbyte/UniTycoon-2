@@ -1,15 +1,12 @@
 package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.util.FileHandler;
 
-import java.io.Console;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -73,22 +70,6 @@ public class BackgroundRenderer{
         batch.end();
     }
 
-    private void drawTiledBackground() {
-        // Calculate the number of tiles needed
-        //int rows = (int) Math.ceil((double) screenHeight / tileSize);
-        //int cols = (int) Math.ceil((double) screenWidth / tileSize);
-
-        int rows = 31;
-        int cols = 57;
-
-        // Render the tiles
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                // Draw each tile at the appropriate position
-                batch.draw(grassTile, col * tileSize, row * tileSize, tileSize, tileSize);
-            }
-        }
-    }
 
     private void drawTiledBackgroundFromMap() {
         // Calculate the number of tiles needed

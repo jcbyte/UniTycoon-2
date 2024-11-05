@@ -11,27 +11,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
-import com.vikingz.unitycoon.global.GameSkins;
 
 public class SettingsScreen extends SuperScreen implements Screen {
 
     private Label resolutionLabel;
-    private Game game;
-    private Stage stage;
     private Skin skin;
     private String volume;
 
     private Slider volumeSlider;
     private Label volumeLabel;
-    private GameSkins skinLoader;
 
-    public SettingsScreen(Game game, GameSkins skinLoader) {
-        this.game = game;
+    private ScreenMultiplexer.Screens previousScreen;
+
+    public SettingsScreen() {
+        super();
+
+        this.previousScreen = ScreenMultiplexer.Screens.MENU;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
         // Get Skins variable from Skin loader
-        this.skinLoader = skinLoader;
         skin = skinLoader.getQuantumSkin();
 
         this.resolutionLabel = new Label(GameConfigManager.CurrentWindowSize(),skin);
@@ -47,7 +46,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
         TextButton backButton = new TextButton("Back", skin);
         backButton.addListener(e -> {
             if (!backButton.isPressed()) return false;
-            game.setScreen(new MenuScreen(game,skinLoader)); // Navigate back to MenuScreen
+            ScreenMultiplexer.switchScreens(previousScreen);
             return true;
         });
 
@@ -95,18 +94,15 @@ public class SettingsScreen extends SuperScreen implements Screen {
         table.add(volumeSlider).fillX().uniformX().pad(10);
         table.row();
 
-
         table.add(fullscreenButton).fillX().uniformX().pad(10);
         table.add(saveGameConfigButton).fillX().pad(10);
         table.add(windowButton).fillX().uniformX().pad(10);
         table.row();
 
 
-
         table.add((Actor) null);
         table.add(backButton).fillX().pad(10);
         table.row();
-
 
 
         table.row();
@@ -130,12 +126,6 @@ public class SettingsScreen extends SuperScreen implements Screen {
         volumeLabel.setText(volume);
         resolutionLabel.setText(GameConfigManager.CurrentWindowSize());
         GameConfig.getInstance().setVolumeValue(volumeSlider.getValue());
-
-
-        //Key bindings Escape
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            game.setScreen(new MenuScreen(game,skinLoader)); // Navigate back to MenuScreen
-        }
 
         stage.act(delta);
         stage.draw();
@@ -162,10 +152,9 @@ public class SettingsScreen extends SuperScreen implements Screen {
         skin.dispose();
     }
 
-    public void setWindowActive(){
-
-        game.setScreen(this);
 
 
+    public void setPrevScreen(ScreenMultiplexer.Screens prevScreen){
+        this.previousScreen = prevScreen;
     }
 }

@@ -15,9 +15,6 @@ public class GameGlobals {
 
 
 
-
-
-
     // Load map textures (replace with your own textures)
     public static final Texture map1Texture = new Texture(Gdx.files.internal("png/map1Texture.png"));
     public static final Texture map2Texture = new Texture(Gdx.files.internal("png/map2Texture.png"));

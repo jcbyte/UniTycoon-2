@@ -1,29 +1,19 @@
 package com.vikingz.unitycoon.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.global.GameSkins;
-import com.vikingz.unitycoon.screens.MapSelectorScreen;
-import com.vikingz.unitycoon.screens.SettingsScreen;
 
 public class MenuScreen extends SuperScreen implements Screen {
 
-    private Game game;
     private Skin skin;
+    //private ScreenMultiplexer screenMux;
 
-    public MenuScreen(Game game, GameSkins skinLoader) {
-        this.game = game;
-        stage = new Stage(new ScreenViewport());
+    public MenuScreen() {
         Gdx.input.setInputProcessor(stage);
 
         // Load a default skin
@@ -37,14 +27,13 @@ public class MenuScreen extends SuperScreen implements Screen {
         // Add listeners to buttons
         playButton.addListener(e -> {
             if (!playButton.isPressed()) return false;
-            game.setScreen(GameGlobals.mapSelectorScreen); // Navigate to GameScreen
+            ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MAPSELECTION);
             return true;
         });
 
         settingsButton.addListener(e -> {
             if (!settingsButton.isPressed()) return false;
-
-            game.setScreen(GameGlobals.settingsScreen); // Navigate to SettingsScreen
+            ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.SETTINGS);
             return true;
         });
 
@@ -105,7 +94,6 @@ public class MenuScreen extends SuperScreen implements Screen {
     @Override
     public void hide() {
         // This removes the bug where the user can still click the buttons from the game screen.
-        stage.dispose();
     }
 
     @Override

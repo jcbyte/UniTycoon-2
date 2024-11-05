@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Timer;
@@ -29,16 +27,11 @@ public class GameScreen extends SuperScreen implements Screen {
 
 
 
-    private Game game;
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private String mapName;
     private boolean isPaused;
 
     private Skin skin;
     private PauseMenu pauseMenu;
     private PopupMenu endOfTimerPopup;
-    private boolean continuingGameAfterTheEnd;
 
     // Counter variables
     private float elapsedTime;
@@ -56,34 +49,24 @@ public class GameScreen extends SuperScreen implements Screen {
 
 
 
+    public GameScreen(String mapName){
+        super();
 
-
-    public GameScreen(Game game, String mapName, GameSkins SkinLoader){
-
-        skin = SkinLoader.getQuantumSkin();
-
-        this.game = game;
-        this.mapName = mapName;
+        skin = skinLoader.getQuantumSkin();
         this.isPaused = false;
 
-        this.stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
 
-        camera = new OrthographicCamera();
         backgroundRenderer = new BackgroundRenderer(mapName);
         statsRenderer = new StatsRenderer();
         buildingRenderer = new BuildingRenderer();
-        buildMenu = new BuildMenu(SkinLoader, buildingRenderer, stage);
-        batch = new SpriteBatch();
+        buildMenu = new BuildMenu(skinLoader, buildingRenderer, stage);
 
-        this.continuingGameAfterTheEnd = false;
-        this.pauseMenu = new PauseMenu(skin, game);
-        this.endOfTimerPopup = new PopupMenu(skin, "End of Game");
+        pauseMenu = new PauseMenu(skin);
 
 
         // Initialize counter and font
         elapsedTime = 0;
-        GameGlobals.ELAPSED_TIME = 5;
+        GameGlobals.ELAPSED_TIME = 300;
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
@@ -111,7 +94,6 @@ public class GameScreen extends SuperScreen implements Screen {
         // Clear screen
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
 
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
@@ -151,16 +133,13 @@ public class GameScreen extends SuperScreen implements Screen {
         if(GameGlobals.ELAPSED_TIME <= 0){
             endGame();
         }
-        if(continuingGameAfterTheEnd){
-            endOfTimerPopup.remove();
-        }
+
 
 
         //System.out.println((Gdx.input.getY()));
         //System.out.println((Gdx.input.getX()));
 
         // Draw game objects
-        batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         backgroundRenderer.render(delta);
@@ -180,10 +159,10 @@ public class GameScreen extends SuperScreen implements Screen {
 
         buildMenu.resize(width, height);
         backgroundRenderer.resize(width, height);
+        buildingRenderer.resize(width, height);
+        buildMenu.resize(width, height);
 
-        //camera.setToOrtho(false, width, height);
 
-        //backgroundRenderer.resize(width, height);
     }
 
     @Override
@@ -205,6 +184,7 @@ public class GameScreen extends SuperScreen implements Screen {
 
     private void endGame(){
         
+        this.endOfTimerPopup = new PopupMenu(skin, "End of Game");
         
         isPaused = true;
         
@@ -227,9 +207,7 @@ public class GameScreen extends SuperScreen implements Screen {
                 isPaused = false;
 
                 // TODO: I cant get the end of timer popup to go away even after .remove()ing it ?!?!
-                continuingGameAfterTheEnd = true;
-                boolean res = endOfTimerPopup.remove();
-                System.out.println("result: " + res + "continue:" + continuingGameAfterTheEnd);
+                endOfTimerPopup.remove();
             }
             
 

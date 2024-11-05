@@ -1,6 +1,5 @@
 package com.vikingz.unitycoon.render;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vikingz.unitycoon.global.GameConfig;
@@ -18,10 +17,6 @@ public class StatsRenderer {
     public StatsRenderer() {
 
         batch = new SpriteBatch();
-
-        // Load the font directly without AssetManager
-        //font = new BitmapFont(Gdx.files.internal("ui/font-big-export.fnt"));
-
 
         font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
         font.getData().setScale(1.5f);

@@ -21,7 +21,7 @@ public class GameConfig implements Serializable{
 
     // The single instance of GameConfig (eager initialization)
     private static GameConfig INSTANCE = new GameConfig(
-        1792, 960, false, 60); // Default values
+        1792, 1008, false, 60); // Default values
 
     // Private constructor to prevent instantiation from outside
     private GameConfig(int width, int height, boolean skipMenus, float volumeValue) {

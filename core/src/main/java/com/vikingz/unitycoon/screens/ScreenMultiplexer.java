@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.vikingz.unitycoon.global.GameSkins;
 
@@ -18,55 +19,61 @@ public class ScreenMultiplexer {
 
 
     private static Game game;
-    private static GameSkins skinLoader;
 
     public static GameScreen gameScreen;
     public static MenuScreen menuScreen;
     public static SettingsScreen settingsScreen;
     public static MapSelectorScreen mapSelectorScreen;
 
+    
 
 
-    public ScreenMultiplexer(Game game, GameSkins skinLoader){
 
-        this.game = game;
-        this.skinLoader = skinLoader;
+    public static void init(Game newGame){
 
-        menuScreen = new MenuScreen(game, skinLoader);
-        settingsScreen = new SettingsScreen(game, skinLoader);
-        mapSelectorScreen = new MapSelectorScreen(game, skinLoader);
+        game = newGame;
+        
+        menuScreen = new MenuScreen();
+        settingsScreen = new SettingsScreen();
+        mapSelectorScreen = new MapSelectorScreen();
 
         
     }
 
-    public void runGame(String map){
-        gameScreen = new GameScreen(game, map, skinLoader);
+    public static void runGame(String map){
+        gameScreen = new GameScreen(map);
         gameScreen.takeInput();
         game.setScreen(gameScreen);
     }
 
+    public static void openSettings(Screens prevScreen){
+        settingsScreen.setPrevScreen(prevScreen);
+        
+        game.setScreen(settingsScreen);
+        settingsScreen.takeInput();
+    }
 
-    public void switchScreens(Screens screen){
+    public static void switchScreens(Screens screen){
 
         switch (screen) {
             case GAME:
-                gameScreen.takeInput();
                 game.setScreen(gameScreen);
+                gameScreen.takeInput();
                 break;
 
             case SETTINGS:
-                settingsScreen.takeInput();
                 game.setScreen(settingsScreen);
+                settingsScreen.takeInput();
                 break;
 
             case MENU:
-                menuScreen.takeInput();
                 game.setScreen(menuScreen);
+                menuScreen.takeInput();
                 break;
 
             case MAPSELECTION:
-                mapSelectorScreen.takeInput();
                 game.setScreen(mapSelectorScreen);
+                mapSelectorScreen.takeInput();
                 break;
             
             default:
