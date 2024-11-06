@@ -87,11 +87,11 @@ public class UIRenderer {
         if(!pauseMenu.hasParent()){
             stage.addActor(pauseMenu);
             pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
-            isPaused = true;
+            gameScreen.setPaused(true);
         }
         else{
             pauseMenu.remove();
-            isPaused = false;
+            gameScreen.setPaused(false);
         }
 
     }
