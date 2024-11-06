@@ -177,8 +177,8 @@ public class BuildingRenderer{
         float newX = Math.round(x / gridSize) * gridSize;
         float newY = Math.round(y / gridSize) * gridSize;
 
-        //return new Point(newX, newY);
-        return(new Point(x, y));
+        return new Point(newX, newY);
+        //return(new Point(x, y));
     }
 
     private Point translateMonitorCoordsToGameCoords(Point p){
