@@ -36,8 +36,8 @@ public class UIRenderer {
         this.skin = skin;
 
         camera = new OrthographicCamera();
-        //viewport = new FillViewport(1824, 1026);
-        viewport = new ScreenViewport();
+        viewport = new FillViewport(1824, 1026);
+        //viewport = new ScreenViewport();
         stage = new Stage(viewport);
         
 
