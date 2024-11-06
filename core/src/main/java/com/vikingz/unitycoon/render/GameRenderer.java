@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
 
-public class GameRederer {
+public class GameRenderer {
     
     private Stage stage;
     private Camera camera;
@@ -22,7 +22,7 @@ public class GameRederer {
     private BuildingRenderer buildingRenderer;
 
 
-    public GameRederer(String mapName){
+    public GameRenderer(String mapName){
 
 
         

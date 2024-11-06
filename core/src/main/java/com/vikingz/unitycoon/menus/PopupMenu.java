@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class PopupMenu extends Window {
 
@@ -32,6 +31,7 @@ public class PopupMenu extends Window {
         this.setResizable(false);
         
         this.skin = skin;
+        this.setBackground(GameGlobals.backGroundDrawable);
 
 
         Label message = new Label(Message, skin);

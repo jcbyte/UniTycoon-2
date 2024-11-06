@@ -49,12 +49,8 @@ public class BuildMenu{
     public BuildMenu(Skin skin, BuildingRenderer buildingRenderer, Stage stage) {
 
 
-
         this.stage = stage;
-
         this.buildingRenderer =  buildingRenderer;
-
-        //Imports skins
         this.skin = skin;
 
 
@@ -66,22 +62,32 @@ public class BuildMenu{
         TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize);
         TextureRegion btn5Texture = new TextureRegion(textureAtlas, atlasTileSize * 4, 0,         atlasTileSize, atlasTileSize);
 
+        TextureRegion btn1Texture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize,                     atlasTileSize, atlasTileSize);
+        TextureRegion btn2Texture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize,            atlasTileSize, atlasTileSize);
+        TextureRegion btn3Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize,    atlasTileSize, atlasTileSize);
+        TextureRegion btn4Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize,         atlasTileSize, atlasTileSize);
+        TextureRegion btn5Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 4, atlasTileSize,         atlasTileSize, atlasTileSize);
 
         // Create ImageButtons
         ImageButton btn1 = new ImageButton(new ImageButton.ImageButtonStyle());
         btn1.getStyle().imageUp = new TextureRegionDrawable(btn1Texture);
+        btn1.getStyle().imageOver = new TextureRegionDrawable(btn1Texture_hover);
 
         ImageButton btn2 = new ImageButton(new ImageButton.ImageButtonStyle());
         btn2.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn2Texture));
+        btn2.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn2Texture_hover));
 
         ImageButton btn3 = new ImageButton(new ImageButton.ImageButtonStyle());
         btn3.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn3Texture));
+        btn3.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn3Texture_hover));
 
         ImageButton btn4 = new ImageButton(new ImageButton.ImageButtonStyle());
         btn4.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn4Texture));
+        btn4.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn4Texture_hover));
 
         ImageButton btn5 = new ImageButton(new ImageButton.ImageButtonStyle());
         btn5.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn5Texture));
+        btn5.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn5Texture_hover));
 
         // Table for layout
         Table table = new Table();
@@ -145,61 +151,7 @@ public class BuildMenu{
             }
         });
     }
-    private void CreateButtons(BuildingStats.BuildingType buildingType, Window window ){
-        BuildingNameDict.put(ACADEMIC, new String[]{"Ron Cooke","Piazza"});
-        BuildingNameDict.put(ACCOMODATION, new String[]{"David Kato","Anne Lister"});
-        BuildingNameDict.put(RECREATIONAL, new String[]{"YSV"});
-        BuildingNameDict.put(FOOD, new String[]{"McD"});
-        BuildingNameDict.put(NONE, new String[]{"NONE"});
 
-        BuildingPriceDict.put(ACADEMIC, new String[]{"100","150"});
-        BuildingPriceDict.put(ACCOMODATION, new String[]{"100","100"});
-        BuildingPriceDict.put(RECREATIONAL, new String[]{"200"});
-        BuildingPriceDict.put(FOOD, new String[]{"200"});
-        BuildingPriceDict.put(NONE, new String[]{"NONE"});
-
-        BuildingStudentDict.put(ACADEMIC, new String[]{"Satisfaction: 0.5 students/second","Satisfaction: 0.8 students/second"});
-        BuildingStudentDict.put(ACCOMODATION, new String[]{"Students: +100","Students: +150"});
-        BuildingStudentDict.put(RECREATIONAL, new String[]{"Satisfaction: 0.5 students/second"});
-        BuildingStudentDict.put(FOOD, new String[]{"Satisfaction: 0.5 students/second"});
-        BuildingStudentDict.put(NONE, new String[]{"NONE"});
-
-        BuildingDict.put(ACADEMIC,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.RCH, BuildingStats.BuildingID.PZA});
-        BuildingDict.put(ACCOMODATION,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.KATO, BuildingStats.BuildingID.LISTER});
-        BuildingDict.put(RECREATIONAL,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.YSV});
-        BuildingDict.put(FOOD,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.MCD});
-        BuildingDict.put(NONE,new BuildingStats.BuildingID[]{null});
-
-        /*
-        switch (buildingType) {
-            case ACADEMIC:
-
-                addMenuBtnForABuilding(window, "[Ron Cooke] [Price: 100] [Satisfaciton: 0.5/student/second]", BuildingStats.BuildingID.RCH);
-                addMenuBtnForABuilding(window, "[Piazza]    [Price: 150] [Satisfaciton: 0.8/student/second]", BuildingStats.BuildingID.PZA);
-                break;
-
-            case ACCOMODATION:
-                addMenuBtnForABuilding(window, "[David Kato]  [Price: 100] [Students: +100]", BuildingStats.BuildingID.KATO);
-                addMenuBtnForABuilding(window, "[Anne Lister] [Price: 100] [Students: +150]", BuildingStats.BuildingID.LISTER);
-                break;
-
-            case RECREATIONAL:
-                addMenuBtnForABuilding(window, "[YSV]  [Price: 200] [Satisfaciton: 0.5/student/second]", BuildingStats.BuildingID.YSV);
-                break;
-
-            case FOOD:
-                addMenuBtnForABuilding(window, "[McD]  [Price: 200] [Satisfaciton: 0.5/student/second]", BuildingStats.BuildingID.MCD);
-                break;
-
-            case NONE:
-
-                break;
-
-            default:
-                break;
-        }
-        */
-    }
 
 
     private void showMenu(BuildingStats.BuildingType buildingType) {

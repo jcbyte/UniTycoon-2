@@ -11,7 +11,7 @@ import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.render.GameRederer;
+import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
 
 public class GameScreen extends SuperScreen implements Screen {
@@ -29,7 +29,7 @@ public class GameScreen extends SuperScreen implements Screen {
     private BitmapFont font;
 
     // Renderers
-    GameRederer gameRenderer;
+    GameRenderer gameRenderer;
     UIRenderer uiRenderer;
 
 
@@ -41,8 +41,8 @@ public class GameScreen extends SuperScreen implements Screen {
         this.isPaused = false;
 
         
-        gameRenderer = new GameRederer(mapName);
-        uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer());
+        gameRenderer = new GameRenderer(mapName);
+        uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
         
 
         font = new BitmapFont(); 
@@ -167,6 +167,9 @@ public class GameScreen extends SuperScreen implements Screen {
         uiRenderer.takeInput();
     }
 
+    public void setPaused(boolean isPaused){
+        this.isPaused = isPaused;
+    }
 
 
 }

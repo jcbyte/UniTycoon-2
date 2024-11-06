@@ -15,8 +15,9 @@ public class GameSkins {
     private final Skin quantumSkin;
 
     public GameSkins(){
-        defaultSkin = new Skin(Gdx.files.internal("ui/glassy-ui.json")); //Default Theme
-        quantumSkin = new Skin(Gdx.files.internal("quantum-ui/skin/quantum-horizon-ui.json")); //Quantum Theme
+        defaultSkin = new Skin(Gdx.files.internal("glassy-ui/skin/glassy-ui.json")); //Default Theme
+        quantumSkin = new Skin(Gdx.files.internal("glassy-ui/skin/glassy-ui.json")); //Default Theme
+        //quantumSkin = new Skin(Gdx.files.internal("quantum-ui/skin/quantum-horizon-ui.json")); //Quantum Theme
     }
 
 

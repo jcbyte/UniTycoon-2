@@ -6,13 +6,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
+import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.ui.BuildMenu;
 
 public class UIRenderer {
@@ -30,10 +28,12 @@ public class UIRenderer {
     private PauseMenu pauseMenu;
     private PopupMenu endOfTimerPopup;
 
+    GameScreen gameScreen;
 
-    public UIRenderer(Skin skin, BuildingRenderer buildingRenderer){
+    public UIRenderer(Skin skin, BuildingRenderer buildingRenderer, GameScreen gameScreen){
 
         this.skin = skin;
+        this.gameScreen = gameScreen;
 
         camera = new OrthographicCamera();
         viewport = new FillViewport(1824, 1026);
@@ -62,9 +62,7 @@ public class UIRenderer {
             public void run(){
                 // funny
                 GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
-                //isPaused = false;
-
-                // TODO: I cant get the end of timer popup to go away even after .remove()ing it ?!?!
+                gameScreen.setPaused(false);
                 endOfTimerPopup.remove();
             }
             

@@ -6,13 +6,11 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
-import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.util.TimeUtil;
@@ -54,6 +52,9 @@ public class StatsRenderer {
     String foodBuildingsStr;
     Label foodBuildings;
 
+    String timerStr;
+    Label timer;
+
 
     List<Label> lables;
 
@@ -78,6 +79,7 @@ public class StatsRenderer {
         academBuildingsStr = "Academic";
         recBuildingsStr = "Recreational";
         foodBuildingsStr = "Food";
+        timerStr = "Timer: ";
         
         balance = new Label(balStr, this.skin);
         students = new Label(studentsStr, this.skin);
@@ -86,6 +88,7 @@ public class StatsRenderer {
         academBuildings = new Label(academBuildingsStr, this.skin);
         recBuildings = new Label(recBuildingsStr, this.skin);
         foodBuildings = new Label(foodBuildingsStr, this.skin);
+        timer = new Label(timerStr, this.skin);
 
         lables.add(balance);
         lables.add(students);
@@ -94,6 +97,7 @@ public class StatsRenderer {
         lables.add(academBuildings);
         lables.add(recBuildings);
         lables.add(foodBuildings);
+        lables.add(timer);
 
         for(Label lbl: lables){
             lbl.setColor(Color.BLACK);
@@ -129,6 +133,8 @@ public class StatsRenderer {
         table.row();
         table.add(foodBuildings).pad(padding).align(Align.left);
 
+        table.row();
+        table.add(timer).pad(padding).align(Align.left);
 
         // Add table to stage
         stage.addActor(table);
@@ -145,14 +151,7 @@ public class StatsRenderer {
         float height = 1080;
 
         batch.begin();
-        // font.draw(batch, "Balance: " + GameGlobals.BALANCE, 10, GameConfig.getInstance().getWindowHeight() - 30); // Draw at position (10, 470)
-        // font.draw(batch, "Students: " + GameGlobals.STUDENTS, 10, GameConfig.getInstance().getWindowHeight() - 60); // Draw at position (10, 470)
-        // font.draw(batch, "Satisfaction: " + GameGlobals.SATISFACTION, 10, GameConfig.getInstance().getWindowHeight() - 90); // Draw at position (10, 470)
-        // font.draw(batch, "Number Of Buildings: " + GameGlobals.BUILDINGS_COUNT, 10, GameConfig.getInstance().getWindowHeight() -120); // Draw at position (10, 470)
-       
-        // TimeUtil.Time timer = TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME);
-        // font.draw(batch, "Time: " + timer, 10, GameConfig.getInstance().getWindowHeight() -150); // Draw at position (10, 470)
-        
+ 
         balStr = "Balance: " + GameGlobals.BALANCE;
         studentsStr = "Students: " + GameGlobals.STUDENTS;
         satisStr = "Satisfaction: " + GameGlobals.SATISFACTION;
@@ -160,7 +159,10 @@ public class StatsRenderer {
         academBuildingsStr = "Academic: " + GameGlobals.ACADEMIC_BUILDINGS_COUNT;
         recBuildingsStr = "Recreational: " + GameGlobals.RECREATIONAL_BUILDINGS_COUNT;
         foodBuildingsStr = "Food: " + GameGlobals.FOOD_BUILDINGS_COUNT;
-
+        
+        TimeUtil.Time timerAmount = TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME);
+        timerStr = "Timer: " + timerAmount;
+        
         balance.setText(balStr);
         students.setText(studentsStr);
         satisfaction.setText(satisStr);
@@ -168,6 +170,7 @@ public class StatsRenderer {
         academBuildings.setText(academBuildingsStr);
         recBuildings.setText(recBuildingsStr);
         foodBuildings.setText(foodBuildingsStr);
+        timer.setText(timerStr);
 
 
         stage.act(delta);

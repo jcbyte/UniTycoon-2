@@ -27,8 +27,8 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
 
         TextButton goBack = new TextButton("Go Back",skin);
         TextButton startGame = new TextButton("Start Game",skin);
-        TextButton nextMap = new TextButton("+",skin);
-        TextButton previousMap = new TextButton("-",skin);
+        TextButton nextMap = new TextButton("->",skin);
+        TextButton previousMap = new TextButton("<-",skin);
 
         //Gp back Button
         goBack.addListener(e -> {
