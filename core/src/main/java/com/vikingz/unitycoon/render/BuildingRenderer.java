@@ -139,7 +139,9 @@ public class BuildingRenderer{
 
                     GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
                     GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
-                    GameGlobals.BUILDINGS_COUNT++;
+
+                    
+                    incrementBuildingsCount(currentBuildingInfo.getBuildingType());
 
                 }
                 isPreviewing = false;
@@ -167,6 +169,33 @@ public class BuildingRenderer{
         currentBuildingInfo = newBuilding;
     }
 
+
+    private void incrementBuildingsCount(BuildingStats.BuildingType type){
+
+        switch (type) {
+            case ACADEMIC:
+                GameGlobals.ACADEMIC_BUILDINGS_COUNT ++;
+                break;
+        
+
+            case ACCOMODATION:
+                GameGlobals.ACCOMODATION_BUILDINGS_COUNT ++;
+                break;
+
+            case RECREATIONAL:
+                GameGlobals.RECREATIONAL_BUILDINGS_COUNT ++;
+                break;
+                
+            case FOOD:
+                GameGlobals.FOOD_BUILDINGS_COUNT ++;
+                break;
+
+            default:
+                System.out.println("Building type doesnt exist!");
+                break;
+        }
+
+    }
 
     private Point snapBuildingToGrid(float x, float y){
 

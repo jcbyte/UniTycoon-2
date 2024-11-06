@@ -9,7 +9,12 @@ public class GameGlobals {
     public static int BALANCE = 1000;
     public static int SATISFACTION = 0;
     public static int STUDENTS = 0;
-    public static int BUILDINGS_COUNT = 0;
+    //public static int BUILDINGS_COUNT = 0;
+
+    public static int ACADEMIC_BUILDINGS_COUNT = 0;
+    public static int ACCOMODATION_BUILDINGS_COUNT = 0;
+    public static int RECREATIONAL_BUILDINGS_COUNT = 0;
+    public static int FOOD_BUILDINGS_COUNT = 0;
 
     public static int ELAPSED_TIME = 0;
 
