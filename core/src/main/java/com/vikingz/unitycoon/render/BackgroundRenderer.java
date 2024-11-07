@@ -18,28 +18,26 @@ public class BackgroundRenderer{
     private final char COBBLE_STONE = 'C';
     private final char ROAD = 'R';
 
+    private final char GRASS2 = 'g';
+    private final char WATER2 = 'w';
+    private final char COBBLE_STONE2 = 'c';
+    private final char ROAD2 = 'r';
 
     private SpriteBatch batch;
-    private String mapName;
     private String map;
     private Texture texture;
     private TextureRegion grassTile, waterTile, cobbleTile, roadTile;
+    private TextureRegion grassTile2, waterTile2, cobbleTile2, roadTile2;
 
     private int tileWidth = 32; // Size of each tile in game
     private int tileHeight = 32; // Size of each tile in game
 
     
     private final int atlasTileSize = 64;
-    private int screenWidth;
-    private int screenHeight;
 
     public BackgroundRenderer(String mapName) {
-        this.mapName = mapName;
-
         this.map = FileHandler.loadMap(mapName);
-
         batch = new SpriteBatch();
-
         texture = new Texture(Gdx.files.internal("textureAtlases/backgroundAtlas.png")); // Load your 64x64 PNG
 
         // Create TextureRegions for each tile
@@ -48,11 +46,12 @@ public class BackgroundRenderer{
         cobbleTile = new TextureRegion(texture, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);
         roadTile = new TextureRegion(texture, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize);
 
+        grassTile2 = new TextureRegion(texture, 0, atlasTileSize,                     atlasTileSize, atlasTileSize);
+        waterTile2 = new TextureRegion(texture, atlasTileSize, atlasTileSize,            atlasTileSize, atlasTileSize);
+        cobbleTile2 = new TextureRegion(texture, atlasTileSize * 2, atlasTileSize,    atlasTileSize, atlasTileSize);
+        roadTile2 = new TextureRegion(texture, atlasTileSize * 3, atlasTileSize,         atlasTileSize, atlasTileSize);
 
-        screenWidth = Gdx.graphics.getWidth();
-        screenHeight = Gdx.graphics.getHeight();
     }
-
 
 
 
@@ -61,31 +60,18 @@ public class BackgroundRenderer{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear the screen
 
         batch.begin();
-
-        //drawTiledBackground();
         drawTiledBackgroundFromMap();
-
-        // Draw the tiles at specific positions
-        //batch.draw(grassTile, 10, 10);  // Draw Tile 1
-        //batch.draw(waterTile, 70, 10);  // Draw Tile 1
-        //batch.draw(cobbleTile, 150, 10);  // Draw Tile 1
-
         batch.end();
     }
 
 
     private void drawTiledBackgroundFromMap() {
-        // Calculate the number of tiles needed
-        //int rows = (int) Math.ceil((double) screenHeight / tileSize);
-        //int cols = (int) Math.ceil((double) screenWidth / tileSize);
 
         int rowsMax = 32;
         int colsMax = 56;
 
         int rows = map.split("\n").length;
         int cols = map.split("\n")[0].length();
-
-
 
         for(int i = 0; i < rows ; i++){
             for(int j = 0; j < cols; j++){
@@ -113,6 +99,21 @@ public class BackgroundRenderer{
                         batch.draw(roadTile, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
                         break;
 
+                    case GRASS2:
+                        batch.draw(grassTile2, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
+                        break;
+
+                    case WATER2:
+                        batch.draw(waterTile2, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
+                        break;
+
+                    case COBBLE_STONE2:
+                        batch.draw(cobbleTile2, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
+                        break;
+
+                    case ROAD2:
+                        batch.draw(roadTile2, j * tileWidth, i * tileHeight, tileWidth, tileHeight);
+                        break;
 
                 }
 
@@ -122,20 +123,9 @@ public class BackgroundRenderer{
     }
 
 
-
-
     public void resize(int width, int height) {
         // Update the screen dimensions
-        screenWidth = width;
-        screenHeight = height;
-
-        //tileWidth = (int)(screenWidth / 57);
-        //tileHeight = (int)(screenHeight / 31.5f);
     }
 
 
-    public void dispose() {
-        // Dispose of resources
-        batch.dispose();
-    }
 }

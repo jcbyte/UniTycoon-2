@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.util.TimeUtil;
 
 public class StatsRenderer {
@@ -20,14 +19,10 @@ public class StatsRenderer {
     private SpriteBatch batch;
     private BitmapFont font;
     private Skin skin;
-
-
     private Stage stage;
 
     float width;
     float height;
-
-    // Background
 
     // Labels
     String balStr;
@@ -45,7 +40,6 @@ public class StatsRenderer {
     String academBuildingsStr;
     Label academBuildings;
 
-
     String recBuildingsStr;
     Label recBuildings;
 
@@ -61,13 +55,11 @@ public class StatsRenderer {
     public StatsRenderer(Skin skin) {
 
         this.skin = skin;
-        
+
         batch = new SpriteBatch();
         stage = new Stage();
-        
-        font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
+        font = new BitmapFont();
         font.getData().setScale(1.5f);
-
         lables = new ArrayList<>();
 
         
@@ -103,51 +95,37 @@ public class StatsRenderer {
             lbl.setFontScale(1.5f);
         }
 
+        int padding = 3;
 
         // Create layout table
         Table table = new Table();
         table.setFillParent(true);
+
         table.top();
         table.left();
 
-        int padding = 3;
-
         table.add(balance).pad(padding).align(Align.left);
-
         table.row();
         table.add(students).pad(padding).align(Align.left);
-
         table.row();
         table.add(satisfaction).pad(padding).align(Align.left);
-
         table.row();
         table.add(accomBuildings).pad(padding).align(Align.left);
-
         table.row();
         table.add(academBuildings).pad(padding).align(Align.left);
-
         table.row();
         table.add(recBuildings).pad(padding).align(Align.left);
-
         table.row();
         table.add(foodBuildings).pad(padding).align(Align.left);
-
         table.row();
         table.add(timer).pad(padding).align(Align.left);
 
-        // Add table to stage
         stage.addActor(table);
 
     }
 
-    public void show() {
-        // Initialize game objects here
-    }
 
     public void render(float delta) {
-
-        float width = 1920;
-        float height = 1080;
 
         batch.begin();
  
@@ -161,7 +139,6 @@ public class StatsRenderer {
         
         TimeUtil.Time timerAmount = TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME);
         timerStr = timerAmount == null? (timerStr = "Timer: Infinity") : (timerStr = "Timer: " + timerAmount);
-
         
         balance.setText(balStr);
         students.setText(studentsStr);
@@ -171,7 +148,6 @@ public class StatsRenderer {
         recBuildings.setText(recBuildingsStr);
         foodBuildings.setText(foodBuildingsStr);
         timer.setText(timerStr);
-
 
         stage.act(delta);
         stage.draw();

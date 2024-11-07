@@ -13,8 +13,6 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 /**
  * This class contains all of the static data of the buildings
  * 
- * TODO:
- * Change this class so that the data is loaded in as JSON
  */
 public class BuildingStats {
 

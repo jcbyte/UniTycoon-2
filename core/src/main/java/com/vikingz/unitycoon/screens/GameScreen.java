@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
@@ -16,39 +15,23 @@ import com.vikingz.unitycoon.render.UIRenderer;
 
 public class GameScreen extends SuperScreen implements Screen {
 
-
-
     private boolean isPaused;
-
-
 
     // Counter variables
     private float elapsedTime;
-
-    // Font to display counter
-    private BitmapFont font;
 
     // Renderers
     GameRenderer gameRenderer;
     UIRenderer uiRenderer;
 
 
-
-
     public GameScreen(String mapName){
         super();
 
         this.isPaused = false;
-
-        
         gameRenderer = new GameRenderer(mapName);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
         
-
-        font = new BitmapFont(); 
-        font.getData().setScale(2.0f);
-
-
         elapsedTime = 0;
         GameGlobals.ELAPSED_TIME = 300000000;
         new Timer().scheduleTask(new Timer.Task() {
@@ -75,11 +58,9 @@ public class GameScreen extends SuperScreen implements Screen {
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             pause();
         }
-
 
         if(!isPaused){
 
@@ -112,12 +93,7 @@ public class GameScreen extends SuperScreen implements Screen {
             endGame();
         }
 
-
-        //System.out.println((Gdx.input.getY()));
-        //System.out.println((Gdx.input.getX()));
-
-        // Draw game objects
-
+        // Draw
         batch.begin();
         gameRenderer.render(delta);
         uiRenderer.render(delta);
@@ -127,8 +103,6 @@ public class GameScreen extends SuperScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        // Adjust the viewport when the window size changes
-        System.out.println("Resized");
         uiRenderer.resize(width, height);
         gameRenderer.resize(width, height);
 
@@ -136,14 +110,11 @@ public class GameScreen extends SuperScreen implements Screen {
 
     @Override
     public void pause() {
-
         uiRenderer.pause(isPaused);
 
     }
 
-
     private void endGame(){
-        
         isPaused = true;
         uiRenderer.endGame();
 
@@ -157,9 +128,7 @@ public class GameScreen extends SuperScreen implements Screen {
 
     @Override
     public void dispose() {
-
         batch.dispose();
-        font.dispose(); // Dispose the font
     }
 
     @Override

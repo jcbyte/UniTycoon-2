@@ -2,8 +2,6 @@ package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.building.Building;
@@ -38,20 +36,14 @@ public class BuildingRenderer{
     private GameRenderer gameRenderer;
 
     public BuildingRenderer(GameRenderer gameRenderer) {
-        // Initialize stage, batch, textures, and UI
-        //Gdx.input.setInputProcessor(stage);
 
         this.width = GameConfig.getInstance().getWindowWidth();
         this.height = GameConfig.getInstance().getWindowHeight();
-
         this.gameRenderer = gameRenderer;
-
 
         batch = new SpriteBatch();
         isPreviewing = false;
         placedBuildings = new ArrayList<>();
-
-
         selectedTexture = null;
 
 
@@ -69,15 +61,9 @@ public class BuildingRenderer{
             // Makes sure that the mouse is in the center of the building texture
             Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2, Gdx.input.getY() + SCREEN_BUILDING_SIZE / 2);
 
-            //Point previewPoint = snapBuildingToGrid(Gdx.input.getX(), Gdx.input.getY());
-
-            //previewX = Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2;
-            //previewY = Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2;
-
             previewX = previewPoint.getX();
             previewY = previewPoint.getY();
 
-            System.out.println("prevX: " + previewX + "  prevY: " + previewY);
         }
 
         batch.begin();
@@ -170,7 +156,6 @@ public class BuildingRenderer{
     public void selectBuilding(BuildingStats.BuildingID buildingID){
 
         isPreviewing = true;
-
         BuildingInfo newBuilding = BuildingStats.getInfo(buildingID);
 
         selectedTexture = BuildingStats.getTextureOfBuilding(buildingID);
@@ -215,16 +200,11 @@ public class BuildingRenderer{
         int gridSize = 32;
         Point translatedPoint = gameRenderer.translateCoords(new Point(x, y));
 
-
         float newX = Math.round(translatedPoint.getX() / gridSize) * gridSize;
         float newY = Math.round(translatedPoint.getY() / gridSize) * gridSize;
 
-
         return new Point(newX, newY);
-        //return(new Point(x, y));
     }
-
-
 
 
     private boolean checkCollisions(float x, float y){
@@ -270,11 +250,6 @@ public class BuildingRenderer{
         return placedBuildings;
     }
 
-
-
-    public void dispose() {
-        batch.dispose();
-    }
 
 
 }

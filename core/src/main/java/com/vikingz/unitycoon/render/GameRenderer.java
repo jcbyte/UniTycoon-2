@@ -15,29 +15,19 @@ public class GameRenderer {
     private Camera camera;
     private Viewport viewport;
 
-
-
     private BackgroundRenderer backgroundRenderer;
     private BuildingRenderer buildingRenderer;
 
 
     public GameRenderer(String mapName){
-
-
-        
         camera = new OrthographicCamera();
         viewport = new FillViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
         //viewport = new FitViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight(), camera);
         //viewport = new ScreenViewport();
         
         stage = new Stage(viewport);
-
-
         backgroundRenderer = new BackgroundRenderer(mapName);
         buildingRenderer = new BuildingRenderer(this);
-
-        
-
 
     }
 
@@ -45,9 +35,7 @@ public class GameRenderer {
 
         viewport.apply();
         stage.getViewport().apply();
-
         camera.update();
-
         backgroundRenderer.render(delta);
         buildingRenderer.render(delta);
 
@@ -61,7 +49,6 @@ public class GameRenderer {
 
     public void resize(int width, int height){
         viewport.update(width, height);
-
         backgroundRenderer.resize(width, height);
         buildingRenderer.resize(width, height);
 

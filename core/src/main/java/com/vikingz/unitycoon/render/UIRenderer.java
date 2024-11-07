@@ -51,16 +51,13 @@ public class UIRenderer {
         endOfTimerPopup = new PopupMenu(skin, "End of Game");
         
         Runnable leftBtn = new Runnable() {
-            
             @Override
             public void run(){
                 Gdx.app.exit();
             }
 
         };
-
         Runnable rightBtn = new Runnable() {
-            
             @Override
             public void run(){
                 // funny
@@ -68,12 +65,9 @@ public class UIRenderer {
                 gameScreen.setPaused(false);
                 endOfTimerPopup.remove();
             }
-            
-
         };
 
         endOfTimerPopup.setupButtons(leftBtn, "Quit", rightBtn, "Continue");
-
 
     }
 
@@ -100,9 +94,7 @@ public class UIRenderer {
     }
 
     public void render(float delta){
-
         viewport.apply();
-
         statsRenderer.render(delta);
         buildMenu.render(delta);
 
@@ -112,7 +104,6 @@ public class UIRenderer {
     public void resize(int width, int height){
         viewport.update(width, height);
         stage.getViewport().update(width, height, true);
-
         buildMenu.resize(width, height);
         statsRenderer.resize(width, height);
 
