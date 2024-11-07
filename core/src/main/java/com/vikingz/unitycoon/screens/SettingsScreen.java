@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
+import com.vikingz.unitycoon.util.GameMusic;
+import com.vikingz.unitycoon.util.GameSounds;
 
 public class SettingsScreen extends SuperScreen implements Screen {
 
@@ -41,7 +43,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
         this.resolutionLabel = new Label(GameConfigManager.CurrentWindowSize(), skin);
 
         // Create volume slider
-        volumeSlider = new Slider(0, 100, 1, false, skin); // Min: 0, Max: 100, Step: 1
+        volumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
         volumeSlider.setValue(GameConfig.getInstance().getVolumeValue());
         volumeLabel = new Label(volume, skin);
         this.volume = "Volume: " + String.valueOf(volumeSlider.getValue());
@@ -149,9 +151,12 @@ public class SettingsScreen extends SuperScreen implements Screen {
 
         // Draw stage
         volume = "Volume: " + String.valueOf(volumeSlider.getValue());
+
+        GameMusic.setVolume(volumeSlider.getValue());
+        GameSounds.volume = volumeSlider.getValue();
+
         volumeLabel.setText(volume);
         resolutionLabel.setText(GameConfigManager.CurrentWindowSize());
-        GameConfig.getInstance().setVolumeValue(volumeSlider.getValue());
 
         stage.act(delta);
         stage.draw();

@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameGlobals;
+import com.vikingz.unitycoon.menus.BuildMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
-import com.vikingz.unitycoon.ui.BuildMenu;
 
 public class UIRenderer {
     
@@ -36,7 +38,8 @@ public class UIRenderer {
         this.gameScreen = gameScreen;
 
         camera = new OrthographicCamera();
-        viewport = new FillViewport(1824, 1026);
+        //viewport = new FillViewport(1824, 1026);
+        viewport = new FitViewport(1824, 1026);
         //viewport = new ScreenViewport();
         stage = new Stage(viewport);
         
@@ -108,6 +111,7 @@ public class UIRenderer {
 
     public void resize(int width, int height){
         viewport.update(width, height);
+        stage.getViewport().update(width, height, true);
 
         buildMenu.resize(width, height);
         statsRenderer.resize(width, height);

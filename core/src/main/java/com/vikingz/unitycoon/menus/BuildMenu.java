@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.ui;
+package com.vikingz.unitycoon.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -280,7 +280,7 @@ public class BuildMenu{
 
         // Set size and position of the window
         window.setSize(MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);
-        window.setPosition(Gdx.graphics.getWidth() / 2f - (MENU_WINDOW_WIDTH / 2), Gdx.graphics.getHeight() / 2f - (MENU_WINDOW_HEIGHT / 2));
+        window.setPosition(this.width / 2f - (MENU_WINDOW_WIDTH / 2), this.height / 2f - (MENU_WINDOW_HEIGHT / 2));
 
         //shows debug lines of window table
         //window.setDebug(true);
@@ -289,30 +289,11 @@ public class BuildMenu{
 
     }
 
-
-    private void addMenuBtnForABuilding(Window window, String btnText, BuildingStats.BuildingID buildingID){
-
-        TextButton button = new TextButton(btnText, skin);
-        button.setSize(100, 30);
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                buildingRenderer.selectBuilding(buildingID);
-                window.remove();
-            }
-        });
-        window.row().padTop(10);
-        window.add(button);
-
-    }
-
-
-
-
     public boolean isWindowActive() {
         return windowActive;
     }
 
+    
     public void setWindowActive(boolean windowActive) {
         this.windowActive = windowActive;
     }

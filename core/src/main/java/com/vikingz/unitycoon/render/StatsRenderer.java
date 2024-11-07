@@ -55,17 +55,16 @@ public class StatsRenderer {
     String timerStr;
     Label timer;
 
-
     List<Label> lables;
+
 
     public StatsRenderer(Skin skin) {
 
+        this.skin = skin;
+        
         batch = new SpriteBatch();
         stage = new Stage();
         
-        this.skin = new GameSkins().getDefaultSkin(); 
-
-
         font = new BitmapFont(); // Create a new BitmapFont (consider loading a specific font if needed)
         font.getData().setScale(1.5f);
 

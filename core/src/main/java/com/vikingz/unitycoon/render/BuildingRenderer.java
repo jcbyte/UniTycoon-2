@@ -15,6 +15,7 @@ import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
+import com.vikingz.unitycoon.util.GameSounds;
 import com.vikingz.unitycoon.util.Point;
 
 import java.util.ArrayList;
@@ -95,9 +96,10 @@ public class BuildingRenderer{
 
 
         if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && selectedTexture == null){
-            System.out.println("LeftClick");
-            Point currentPoint = new Point(Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2, Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2);
-            Building buildingToRemove = getBuildingAtPoint(currentPoint.getX(), currentPoint.getY());
+            System.out.println("RightClick");
+
+            
+            Building buildingToRemove = getBuildingAtPoint(Gdx.input.getX(), Gdx.input.getY());
 
             if(buildingToRemove != null){
                 this.placedBuildings.remove(buildingToRemove);
@@ -115,9 +117,11 @@ public class BuildingRenderer{
                 float balanceAfterPurchase = GameGlobals.BALANCE - currentBuildingInfo.getBuildingCost();
                 if (balanceAfterPurchase < 0) {
                     System.out.println("Not enough money to buy building!!");
+                    GameSounds.playPlaceError();
 
-                } else {
-
+                } 
+                else {
+                    GameSounds.playPlacedBuilding();
                     switch (currentBuildingInfo.getBuildingType()) {
                         case ACADEMIC:
                             placedBuildings.add(new AcademicBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier()));
@@ -156,6 +160,7 @@ public class BuildingRenderer{
             }
             else {
                 System.err.println("Player Trying to place on a collision piece");
+                GameSounds.playPlaceError();
             }
         }
 
@@ -238,18 +243,18 @@ public class BuildingRenderer{
     }
 
     private Building getBuildingAtPoint(float mouseX, float mouseY){
-        float x = Math.round(mouseX);
-        float y = Math.round(mouseY);
+        Point translatedPoint = gameRenderer.translateCoords(new Point(mouseX, mouseY));
+
+        float x = translatedPoint.getX();
+        float y = translatedPoint.getY();
 
         for (Building building: this.placedBuildings) {
 
-            System.out.println("x: " + x + "  y: " + y + "  buildingX: " + building.getX() + "  buildingY: " + building.getY());
+            float bx = building.getX();
+            float by = building.getY();
 
-            float buildBottomLeftX = building.getX() - (building.getWidth() / 2);
-            float buildBottomLeftY = building.getY() - (building.getHeight() / 2);
-
-            if(x > buildBottomLeftX && x < (buildBottomLeftX + building.getWidth()) &&
-                y > buildBottomLeftY && y < (buildBottomLeftY + building.getHeight())){
+            if(  (x > bx && x < (bx + building.getWidth())) &&
+                 (y > by && y < (by + building.getHeight()))  ){
                     return building;
             }
         }
