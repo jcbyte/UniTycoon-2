@@ -44,11 +44,11 @@ public class ScreenMultiplexer {
         gameScreen = new GameScreen(map);
         gameScreen.takeInput();
         game.setScreen(gameScreen);
+        settingsScreen.setGameScreen(gameScreen);
     }
 
     public static void openSettings(Screens prevScreen){
         settingsScreen.setPrevScreen(prevScreen);
-        
         game.setScreen(settingsScreen);
         settingsScreen.takeInput();
     }

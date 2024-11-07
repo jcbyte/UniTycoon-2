@@ -129,6 +129,7 @@ public class GameScreen extends SuperScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         // Adjust the viewport when the window size changes
+        System.out.println("Resized");
         uiRenderer.resize(width, height);
         gameRenderer.resize(width, height);
 

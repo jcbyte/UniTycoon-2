@@ -14,6 +14,7 @@ public class GameConfigManager {
 
     public static void setFullScreen(){
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        
     }
 
     public static void setWindowScreen(){

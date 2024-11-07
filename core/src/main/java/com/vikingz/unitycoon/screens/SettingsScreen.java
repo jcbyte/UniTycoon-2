@@ -2,10 +2,13 @@ package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -21,6 +24,14 @@ public class SettingsScreen extends SuperScreen implements Screen {
     private Label volumeLabel;
 
     private ScreenMultiplexer.Screens previousScreen;
+
+    private TextButton backButton;
+    TextButton fullscreenButton;
+    TextButton windowButton;
+    TextButton saveGameConfigButton;
+
+    private GameScreen gameScreen;
+
 
     public SettingsScreen() {
         super();
@@ -38,23 +49,33 @@ public class SettingsScreen extends SuperScreen implements Screen {
 
 
         // Back button to return to MenuScreen
-        TextButton backButton = new TextButton("Back", skin);
-        backButton.addListener(e -> {
-            if (backButton.isPressed()){
+        backButton = new TextButton("Back", skin);
+        // backButton.addListener(e -> {
+        //     if (backButton.isPressed()){
+        //         ScreenMultiplexer.switchScreens(previousScreen);
+        //     }
+        //     return true;
+        // });
+
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
                 ScreenMultiplexer.switchScreens(previousScreen);
+
             }
-            return true;
         });
 
-        TextButton fullscreenButton = new TextButton("Fullscreen",skin);
+        fullscreenButton = new TextButton("Fullscreen",skin);
         fullscreenButton.addListener(e -> {
             if (fullscreenButton.isPressed()){
                 GameConfigManager.setFullScreen();
+                gameScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                
             }
             return true;
         });
 
-        TextButton windowButton = new TextButton("Window Mode",skin);
+        windowButton = new TextButton("Window Mode",skin);
         windowButton.addListener(e -> {
             if (windowButton.isPressed()){
                 GameConfigManager.setWindowScreen();
@@ -62,7 +83,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
             return true;
         });
 
-        TextButton saveGameConfigButton = new TextButton("Save",skin);
+        saveGameConfigButton = new TextButton("Save",skin);
         saveGameConfigButton.addListener(e -> {
             if (saveGameConfigButton.isPressed()){
                 GameConfigManager.saveGameConfig();
@@ -149,9 +170,26 @@ public class SettingsScreen extends SuperScreen implements Screen {
         skin.dispose();
     }
 
+    public void disableButtons(){
+        System.out.println("Disabled");
+        backButton.setTouchable(Touchable.disabled);
+    }
 
+
+    public void enableButtons(){
+        System.out.println("Enabled");
+        backButton.setTouchable(Touchable.enabled);
+    }
 
     public void setPrevScreen(ScreenMultiplexer.Screens prevScreen){
         this.previousScreen = prevScreen;
     }
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
+
+    public void setGameScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+    }
+
 }
