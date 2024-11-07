@@ -50,7 +50,7 @@ public class GameScreen extends SuperScreen implements Screen {
 
 
         elapsedTime = 0;
-        GameGlobals.ELAPSED_TIME = 300;
+        GameGlobals.ELAPSED_TIME = 300000000;
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {

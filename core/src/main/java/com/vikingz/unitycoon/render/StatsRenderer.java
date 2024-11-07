@@ -161,7 +161,8 @@ public class StatsRenderer {
         foodBuildingsStr = "Food: " + GameGlobals.FOOD_BUILDINGS_COUNT;
         
         TimeUtil.Time timerAmount = TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME);
-        timerStr = "Timer: " + timerAmount;
+        timerStr = timerAmount == null? (timerStr = "Timer: Infinity") : (timerStr = "Timer: " + timerAmount);
+
         
         balance.setText(balStr);
         students.setText(studentsStr);

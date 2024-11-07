@@ -33,6 +33,10 @@ public class TimeUtil {
         int m = secs/ 60;
         int s = secs % 60;
 
+        if(m > 100000){
+            return null;
+        }
+
         return new Time(s, m, 0);
         
     }
