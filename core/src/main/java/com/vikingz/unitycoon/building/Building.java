@@ -4,6 +4,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.util.Point;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
+
+/**
+ * Building
+ * 
+ * Abstract class that represents all of the buildings in the game.
+ */
 public abstract class Building {
 
     // Building drawing properties
@@ -46,7 +52,6 @@ public abstract class Building {
 
 
     // Generate Satisfaciton logic
-
     public int calculateSatisfaction(int numberOfStudents){
 
         return StatsCalculator.calculateSatisfaction(numberOfStudents, this.satisfactionMultiplier);

@@ -2,7 +2,6 @@ package com.vikingz.unitycoon.building;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -11,10 +10,16 @@ import java.util.Hashtable;
 
 import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
-
+/**
+ * This class contains all of the static data of the buildings
+ * 
+ * TODO:
+ * Change this class so that the data is loaded in as JSON
+ */
 public class BuildingStats {
 
 
+    // Types of buildings available
     public enum BuildingType {
         NONE,
         ACADEMIC,
@@ -24,7 +29,7 @@ public class BuildingStats {
 
     }
 
-
+    // Buildings available
     public enum BuildingID {
 
         // Academic
@@ -42,21 +47,6 @@ public class BuildingStats {
         MCD, // Mc Donalds?
 
     }
-
-
-    //Lookup Table for values of buildings
-    //TODO make it read all info of a building from a json file
-
-    // TODO Why not have a dictionary per building instead?
-    // Json?
-    // buildingId1:
-    //  name: asdasd
-    //  price: 123
-    //  type: asdasd
-    //  ...
-    //
-    // buildingId2:
-    //  ...
 
 
     public static final  Dictionary<BuildingType, String[]> BuildingNameDict = new Hashtable<BuildingType, String[]>(){{

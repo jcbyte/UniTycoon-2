@@ -3,6 +3,11 @@ package com.vikingz.unitycoon.building;
 import com.vikingz.unitycoon.building.BuildingStats.BuildingID;
 import com.vikingz.unitycoon.building.BuildingStats.BuildingType;
 
+/**
+ * This class essentially serves as a struct to pass data around regarding buildings. 
+ * When the user presses a button in the menu to buy a building, the data for that building 
+ * is passed around a type BuildingInfo
+ */
 public class BuildingInfo {
     
     BuildingID  buildingID;
@@ -13,6 +18,8 @@ public class BuildingInfo {
     int numberOfStudents;
     float coinsPerSecond;
 
+
+    // Theres alot of different constructors as different buildings have different combinations of attributes
 
     public BuildingInfo(BuildingStats.BuildingID  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents, float coinsPerSecond){
         this.buildingID = buildingID;

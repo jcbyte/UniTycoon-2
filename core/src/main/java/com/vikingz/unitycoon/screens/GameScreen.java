@@ -125,7 +125,6 @@ public class GameScreen extends SuperScreen implements Screen {
     }
 
 
-    //TODO This needs to be fixed due to requirement of resizable screens
     @Override
     public void resize(int width, int height) {
         // Adjust the viewport when the window size changes

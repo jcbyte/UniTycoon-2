@@ -3,14 +3,14 @@ package com.vikingz.unitycoon.building.buildings;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingStats;
-import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.Point;
 
 /**
  * Accomodation building class
  *
- * TODO:
- * Add a way to simulate students?
+ * Represents the Accomodation building in the game
+ * Inherits Building 
+ * 
  */
 public class AccommodationBuilding extends Building{
 
