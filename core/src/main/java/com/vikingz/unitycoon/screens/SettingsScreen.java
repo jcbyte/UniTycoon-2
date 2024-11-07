@@ -26,9 +26,10 @@ public class SettingsScreen extends SuperScreen implements Screen {
     private ScreenMultiplexer.Screens previousScreen;
 
     private TextButton backButton;
-    TextButton fullscreenButton;
-    TextButton windowButton;
-    TextButton saveGameConfigButton;
+    private TextButton quitButton;
+    private TextButton fullscreenButton;
+    private TextButton windowButton;
+    private TextButton saveGameConfigButton;
 
     private GameScreen gameScreen;
 
@@ -50,13 +51,6 @@ public class SettingsScreen extends SuperScreen implements Screen {
 
         // Back button to return to MenuScreen
         backButton = new TextButton("Back", skin);
-        // backButton.addListener(e -> {
-        //     if (backButton.isPressed()){
-        //         ScreenMultiplexer.switchScreens(previousScreen);
-        //     }
-        //     return true;
-        // });
-
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -65,11 +59,19 @@ public class SettingsScreen extends SuperScreen implements Screen {
             }
         });
 
+        quitButton = new TextButton("Quit", skin);
+        quitButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.exit(); // Quit the application
+            }
+        });
+
         fullscreenButton = new TextButton("Fullscreen",skin);
         fullscreenButton.addListener(e -> {
             if (fullscreenButton.isPressed()){
                 GameConfigManager.setFullScreen();
-                gameScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                if(gameScreen != null) { gameScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); }
                 
             }
             return true;
@@ -90,6 +92,8 @@ public class SettingsScreen extends SuperScreen implements Screen {
             }
             return true;
         });
+
+        
 
 
         // Create layout table
@@ -119,9 +123,13 @@ public class SettingsScreen extends SuperScreen implements Screen {
 
 
         table.add((Actor) null);
-        table.add(backButton).fillX().pad(10);
-        table.row();
+        table.add(backButton).fillX().uniformX().pad(10);
 
+        table.row();
+        table.add((Actor) null);
+
+        table.add(quitButton).fillX().pad(10);
+        table.row();
 
         table.row();
 

@@ -2,13 +2,12 @@ package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.util.Point;
 
 public class GameRenderer {
     
@@ -35,7 +34,7 @@ public class GameRenderer {
 
 
         backgroundRenderer = new BackgroundRenderer(mapName);
-        buildingRenderer = new BuildingRenderer();
+        buildingRenderer = new BuildingRenderer(this);
 
         
 
@@ -54,6 +53,11 @@ public class GameRenderer {
 
     }
 
+    public Point translateCoords(Point p){
+        Vector3 vec3 = new Vector3(p.getX(), p.getY(), 0);
+        Vector3 vec3Translated = viewport.unproject(vec3);
+        return new Point(vec3Translated.x, vec3Translated.y);
+    }
 
     public void resize(int width, int height){
         viewport.update(width, height);

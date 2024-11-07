@@ -34,13 +34,16 @@ public class BuildingRenderer{
     private int SCREEN_BUILDING_SIZE = 128;
     private BuildingInfo currentBuildingInfo = null;
 
-    public BuildingRenderer() {
+    private GameRenderer gameRenderer;
+
+    public BuildingRenderer(GameRenderer gameRenderer) {
         // Initialize stage, batch, textures, and UI
         //Gdx.input.setInputProcessor(stage);
 
         this.width = GameConfig.getInstance().getWindowWidth();
         this.height = GameConfig.getInstance().getWindowHeight();
 
+        this.gameRenderer = gameRenderer;
 
 
         batch = new SpriteBatch();
@@ -62,7 +65,10 @@ public class BuildingRenderer{
         // Update preview position to follow the mouse cursor
         if (isPreviewing && selectedTexture != null) {
 
-            Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2, Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2);
+            // Makes sure that the mouse is in the center of the building texture
+            Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2, Gdx.input.getY() + SCREEN_BUILDING_SIZE / 2);
+
+            //Point previewPoint = snapBuildingToGrid(Gdx.input.getX(), Gdx.input.getY());
 
             //previewX = Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2;
             //previewY = Gdx.graphics.getHeight() - Gdx.input.getY() - SCREEN_BUILDING_SIZE / 2;
@@ -114,20 +120,20 @@ public class BuildingRenderer{
 
                     switch (currentBuildingInfo.getBuildingType()) {
                         case ACADEMIC:
-                            placedBuildings.add(new AcademicBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier()));
+                            placedBuildings.add(new AcademicBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier()));
                             break;
 
                         case ACCOMODATION:
-                            placedBuildings.add(new AccommodationBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getNumberOfStudents()));
+                            placedBuildings.add(new AccommodationBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getNumberOfStudents()));
                             break;
 
 
                         case RECREATIONAL:
-                            placedBuildings.add(new RecreationalBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
+                            placedBuildings.add(new RecreationalBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
                             break;
 
                         case FOOD:
-                            placedBuildings.add(new FoodBuilding(selectedTexture, snapBuildingToGrid(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
+                            placedBuildings.add(new FoodBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
                             break;
 
                         case NONE:
@@ -202,18 +208,18 @@ public class BuildingRenderer{
         // 30 rows
         // 56 cols
         int gridSize = 32;
+        Point translatedPoint = gameRenderer.translateCoords(new Point(x, y));
 
-        float newX = Math.round(x / gridSize) * gridSize;
-        float newY = Math.round(y / gridSize) * gridSize;
+
+        float newX = Math.round(translatedPoint.getX() / gridSize) * gridSize;
+        float newY = Math.round(translatedPoint.getY() / gridSize) * gridSize;
+
 
         return new Point(newX, newY);
         //return(new Point(x, y));
     }
 
-    private Point translateMonitorCoordsToGameCoords(Point p){
 
-        return new Point(0, 0);
-    }
 
 
     private boolean checkCollisions(float x, float y){
