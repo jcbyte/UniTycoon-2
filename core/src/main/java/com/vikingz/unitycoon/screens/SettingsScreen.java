@@ -3,15 +3,12 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.util.GameMusic;
@@ -20,6 +17,8 @@ import com.vikingz.unitycoon.util.GameSounds;
 public class SettingsScreen extends SuperScreen implements Screen {
 
     private Label resolutionLabel;
+    private String resolutionString;
+
     private String volume;
 
     private Slider volumeSlider;
@@ -38,6 +37,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
 
     public SettingsScreen() {
         super();
+        resolutionString = GameConfigManager.CurrentWindowSize();
 
         this.previousScreen = ScreenMultiplexer.Screens.MENU;
         this.resolutionLabel = new Label(GameConfigManager.CurrentWindowSize(), skin);
@@ -156,7 +156,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
         GameSounds.volume = volumeSlider.getValue();
 
         volumeLabel.setText(volume);
-        resolutionLabel.setText(GameConfigManager.CurrentWindowSize());
+        resolutionLabel.setText(resolutionString);
 
         stage.act(delta);
         stage.draw();
@@ -165,6 +165,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        resolutionString = "Resolution: " + width + "x" + height;
     }
 
     @Override

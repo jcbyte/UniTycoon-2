@@ -15,10 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.global.GameSkins;
 import com.vikingz.unitycoon.render.BuildingRenderer;
 
-import java.awt.*;
 import java.util.Dictionary;
 
 import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
@@ -60,13 +58,11 @@ public class BuildMenu{
         TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0,            atlasTileSize, atlasTileSize);
         TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);
         TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize);
-        TextureRegion btn5Texture = new TextureRegion(textureAtlas, atlasTileSize * 4, 0,         atlasTileSize, atlasTileSize);
 
         TextureRegion btn1Texture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize,                     atlasTileSize, atlasTileSize);
         TextureRegion btn2Texture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize,            atlasTileSize, atlasTileSize);
         TextureRegion btn3Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize,    atlasTileSize, atlasTileSize);
         TextureRegion btn4Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize,         atlasTileSize, atlasTileSize);
-        TextureRegion btn5Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 4, atlasTileSize,         atlasTileSize, atlasTileSize);
 
         // Create ImageButtons
         ImageButton btn1 = new ImageButton(new ImageButton.ImageButtonStyle());
@@ -85,9 +81,6 @@ public class BuildMenu{
         btn4.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn4Texture));
         btn4.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn4Texture_hover));
 
-        ImageButton btn5 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn5.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn5Texture));
-        btn5.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn5Texture_hover));
 
         // Table for layout
         Table table = new Table();
@@ -100,7 +93,6 @@ public class BuildMenu{
         table.add(btn2).pad(10);
         table.add(btn3).pad(10);
         table.add(btn4).pad(10);
-        table.add(btn5).pad(10);
 
         // Add table to stage
         stage.addActor(table);
@@ -141,15 +133,7 @@ public class BuildMenu{
             }
         });
 
-        btn5.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if(currentMenu != null) { currentMenu.remove(); }
 
-
-                showMenu(BuildingStats.BuildingType.NONE);
-            }
-        });
     }
 
 
