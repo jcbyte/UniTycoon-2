@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 
@@ -33,6 +34,7 @@ public class GameConfigManager {
         try {
             FileOutputStream fileOut = new FileOutputStream("gameconf.bin");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
             out.writeObject(GameConfig.getInstance());
             out.close();
             fileOut.close();
@@ -58,8 +60,8 @@ public class GameConfigManager {
             fileIn.close();
 
             GameConfig.getInstance().setInstance(conf);
-
-
+            System.out.println(GameConfig.getInstance().MusicVolumeValue);
+            System.out.println(GameConfig.getInstance().SoundVolumeValue);
 
 
         } catch (IOException i) {

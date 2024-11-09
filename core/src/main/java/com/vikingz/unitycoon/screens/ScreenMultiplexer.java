@@ -54,9 +54,13 @@ public class ScreenMultiplexer {
 
     public static void closeGame(){
         gameScreen.dispose();
+        openMenu();
+    }
+
+    public static void openMenu(){
         menuScreen.dispose();
         menuScreen = new MenuScreen();
-        switchScreens(Screens.MENU);
+        game.setScreen(menuScreen);
     }
 
     public static void switchScreens(Screens screen){

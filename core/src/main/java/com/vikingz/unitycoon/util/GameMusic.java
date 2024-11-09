@@ -3,12 +3,13 @@ package com.vikingz.unitycoon.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.render.BackgroundRenderer;
 
 public class GameMusic {
 
     private static Music backgroundMusic ;
 
-    public static float volume = GameConfig.getInstance().getMusicVolumeValue();
+    public static float volume = GameConfig.getInstance().MusicVolumeValue;
 
     public GameMusic() {
 
@@ -18,7 +19,8 @@ public class GameMusic {
     }
 
 
-    public void play(){
+    public static void play(){
+        backgroundMusic.setVolume(volume);
         backgroundMusic.play();
     }
 
@@ -27,7 +29,9 @@ public class GameMusic {
     }
 
     public static void setVolume(float volume) {
-        GameMusic.volume = volume;
-        backgroundMusic.setVolume(volume);
+        GameConfig.getInstance().MusicVolumeValue = volume;
+        GameMusic.volume = GameConfig.getInstance().MusicVolumeValue;
+        play();
     }
+
 }

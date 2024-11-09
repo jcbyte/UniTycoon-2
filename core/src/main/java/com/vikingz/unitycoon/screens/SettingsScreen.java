@@ -51,13 +51,13 @@ public class SettingsScreen extends SuperScreen implements Screen {
 
         // Create Sound volume slider
         SoundVolumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
-        SoundVolumeSlider.setValue(GameConfig.getInstance().getSoundVolumeValue());
+        SoundVolumeSlider.setValue(GameSounds.getVolume());
         SoundVolumeLabel = new Label(soundVolume, skin);
         this.soundVolume = "Sound Volume: " + String.valueOf(SoundVolumeSlider.getValue());
 
         // Create Music volume slider
         MusicVolumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
-        MusicVolumeSlider.setValue(GameConfig.getInstance().getSoundVolumeValue());
+        MusicVolumeSlider.setValue(GameMusic.getVolume());
         MusicVolumeLabel = new Label(soundVolume, skin);
         this.musicVolume = "Music Volume: " + String.valueOf(MusicVolumeSlider.getValue());
 
@@ -68,8 +68,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                ScreenMultiplexer.switchScreens(previousScreen);
-
+                goBack();
             }
         });
 
@@ -158,6 +157,16 @@ public class SettingsScreen extends SuperScreen implements Screen {
         stage.addActor(table);
     }
 
+    public void goBack(){
+        System.out.println(previousScreen.name());
+        if (previousScreen.name().equals("GAME")) {
+            ScreenMultiplexer.switchScreens(previousScreen);
+        }
+        else {
+            ScreenMultiplexer.openMenu();
+        }
+    }
+
     @Override
     public void show() { }
 
@@ -167,11 +176,16 @@ public class SettingsScreen extends SuperScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
 
+        //back button
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            goBack();
+        }
+
         // Draw stage
         soundVolume = "Sound Volume: " + String.valueOf(Math.round(SoundVolumeSlider.getValue()*10));
         musicVolume = "Music Volume: " + String.valueOf(Math.round(MusicVolumeSlider.getValue()*10));
 
-        GameSounds.volume = SoundVolumeSlider.getValue();
+        GameSounds.setVolume(SoundVolumeSlider.getValue());
         GameMusic.setVolume(MusicVolumeSlider.getValue());
 
         SoundVolumeLabel.setText(soundVolume);

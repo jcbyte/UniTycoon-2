@@ -9,8 +9,11 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.menus.BuildMenu;
+import com.vikingz.unitycoon.menus.EndMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
@@ -29,8 +32,9 @@ public class UIRenderer {
 
     // Popup Menus
     private PauseMenu pauseMenu;
-    private PopupMenu endOfTimerPopup;
+    private EndMenu endOfTimerPopup;
 
+    private boolean newHighScore = true;
     GameScreen gameScreen;
 
     public UIRenderer(Skin skin, BuildingRenderer buildingRenderer, GameScreen gameScreen){
@@ -49,7 +53,7 @@ public class UIRenderer {
         buildMenu = new BuildMenu(skin, buildingRenderer, stage);
 
         pauseMenu = new PauseMenu(skin);
-        endOfTimerPopup = new PopupMenu(skin, "End of Game");
+        endOfTimerPopup = new EndMenu(skin, "End of Game");
 
         Runnable leftBtn = new Runnable() {
             @Override
@@ -72,9 +76,15 @@ public class UIRenderer {
 
     }
 
-    public void endGame(){
+    public void endGame(boolean newScore){
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
+        if (newScore && newHighScore){
+            endOfTimerPopup.addNewHighScore();
+            GameConfig.getInstance().setTopSatisfaction(GameGlobals.SATISFACTION);
+            GameConfigManager.saveGameConfig();
+            newHighScore = false;
+        }
         stage.addActor(endOfTimerPopup);
 
     }

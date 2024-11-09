@@ -1,27 +1,26 @@
 package com.vikingz.unitycoon.menus;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 
-public class PopupMenu extends Window {
+public class EndMenu extends Window {
 
+    private final Label topSatisfaction;
     private String Message = "";
-
-/*
- * TODO:
- * Make a constructor to create multiple different popups
- */
 
     private Skin skin;
 
     private Runnable leftRun;
     private Runnable rightRun;
+    private Label congrats;
 
 
-    public PopupMenu(Skin skin, String Message) {
+
+    public EndMenu(Skin skin, String Message) {
 
         super("Popup", skin);
 
@@ -35,28 +34,11 @@ public class PopupMenu extends Window {
 
 
         Label message = new Label(Message, skin);
-        this.add(message).padBottom(20).row();
-
-    }
-
-    public PopupMenu(Skin skin, String Message, Runnable leftRun, String leftText, Runnable rightRun, String rightText) {
-
-        super("Popup", skin);
-        this.setSize(600, 400);
-        this.setModal(true);
-        this.setMovable(false);
-        this.setResizable(false);
-
-        this.skin = skin;
-
-        this.leftRun = leftRun;
-        this.rightRun = rightRun;
+        this.add(message).padLeft(-35).row();
 
 
-        Label message = new Label(Message, skin);
-        this.add(message).padBottom(20).row();
-
-        setupButtons(leftRun, leftText, rightRun, rightText);
+        topSatisfaction = new Label("Top Satisfaction: " + GameConfig.getInstance().getTopSatisfaction(),skin);
+        this.add(topSatisfaction).padBottom(20).row();
 
 
     }
@@ -67,9 +49,11 @@ public class PopupMenu extends Window {
         // Idk change this later
         TextButton leftBtn = new TextButton(leftText, skin);
         TextButton rightBtn = new TextButton(rightText, skin);
-
         this.add(leftBtn).pad(10);
         this.add(rightBtn).pad(10);
+
+
+
 
         // Created for yes - no game events
         // The Popup needs to call back to parent object in someway
@@ -92,35 +76,6 @@ public class PopupMenu extends Window {
     }
 
 
-    // Keeps left button as close
-    public void setupRightBtn(Runnable rightRun, String rightText){
-
-
-        // Idk change this later
-        TextButton leftBtn = new TextButton("Close", skin);
-        TextButton rightBtn = new TextButton(rightText, skin);
-
-        this.add(leftBtn).pad(10);
-        this.add(rightBtn).pad(10);
-
-        // Created for yes - no game events
-        // The Popup needs to call back to parent object in someway
-
-        leftBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                PopupMenu.this.remove();
-            }
-        });
-
-        rightBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                rightRun.run();
-            }
-        });
-
-    }
 
     //Getters and Setters
     public String getMessage() {
@@ -131,5 +86,10 @@ public class PopupMenu extends Window {
     }
 
 
+    public void addNewHighScore() {
+        congrats = new Label("You have reached a new high score of satisfaction", skin);
+        this.row();
+        this.add(congrats);
 
+    }
 }

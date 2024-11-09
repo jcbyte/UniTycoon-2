@@ -21,7 +21,7 @@ public class GameSounds {
     private static Sound placeError1 = Gdx.audio.newSound(Gdx.files.internal("audio/place_error_1.ogg"));
     private static Sound placeError2 = Gdx.audio.newSound(Gdx.files.internal("audio/place_error_2.ogg"));
 
-    public static float volume = GameConfig.getInstance().getSoundVolumeValue();
+    public static float volume = GameConfig.getInstance().SoundVolumeValue;
 
     // Could be useful for more sounds later on
     private static ArrayList<Sound> sounds = new ArrayList<Sound>(){
@@ -37,7 +37,7 @@ public class GameSounds {
     // Plays placed building sound
     public static void playPlacedBuilding(){
         int randNum = new Random().nextInt(1, 4);
-
+        System.out.println(volume);
         switch (randNum) {
             case 1:
                 placeBuilding1.play(volume);
@@ -77,8 +77,12 @@ public class GameSounds {
         }
     }
 
+    public static float getVolume() {
+        return volume;
+    }
 
-
-
-
+    public static void setVolume(float volume) {
+        GameSounds.volume = volume;
+        GameConfig.getInstance().SoundVolumeValue = volume;
+    }
 }

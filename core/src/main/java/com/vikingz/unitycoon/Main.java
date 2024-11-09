@@ -10,14 +10,12 @@ import com.vikingz.unitycoon.util.GameMusic;
 public class Main extends Game {
     @Override
     public void create() {
+        GameConfigManager.loadGameConfig();
 
         GameMusic music = new GameMusic();
         music.play();
 
-        GameConfigManager.loadGameConfig();
         ScreenMultiplexer.init(this);
-
-
 
         //Uncomment for funny numbers
         //Gdx.graphics.setForegroundFPS(99999999);

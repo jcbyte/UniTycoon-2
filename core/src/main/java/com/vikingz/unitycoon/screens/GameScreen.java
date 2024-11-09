@@ -1,15 +1,14 @@
 package com.vikingz.unitycoon.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Timer;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
+import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.StatsRenderer;
@@ -25,6 +24,8 @@ public class GameScreen extends SuperScreen implements Screen {
     // Renderers
     GameRenderer gameRenderer;
     UIRenderer uiRenderer;
+
+
 
 
     public GameScreen(String mapName){
@@ -44,8 +45,6 @@ public class GameScreen extends SuperScreen implements Screen {
                 }
             }
         }, 0, 1);
-
-
     }
 
 
@@ -118,7 +117,10 @@ public class GameScreen extends SuperScreen implements Screen {
 
     private void endGame(){
         isPaused = true;
-        uiRenderer.endGame();
+        if (GameConfig.getInstance().getTopSatisfaction() < GameGlobals.SATISFACTION){
+            uiRenderer.endGame(true);
+        }
+        uiRenderer.endGame(false);
 
     }
 
