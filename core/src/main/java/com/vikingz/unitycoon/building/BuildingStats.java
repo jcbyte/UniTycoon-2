@@ -12,16 +12,16 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
 /**
  * This class contains all of the static data of the buildings
- * 
+ *
  * Ideally we would make all of the data in this class be read in from a file
- * 
- * 
+ *
+ *
  */
 public class BuildingStats {
 
 
     /**
-     * Enum of types of buildings available 
+     * Enum of types of buildings available
      */
     public enum BuildingType {
         NONE,
@@ -52,34 +52,10 @@ public class BuildingStats {
     }
 
     // Dicts for build menu
-    public static final  Dictionary<BuildingType, String[]> BuildingNameDict = new Hashtable<BuildingType, String[]>(){{
-        put(ACADEMIC, new String[]{"Ron Cooke","Piazza"});
-        put(ACCOMODATION, new String[]{"David Kato","Anne Lister"});
-        put(RECREATIONAL, new String[]{"YSV"});
-        put(FOOD, new String[]{"McD"});
-        put(NONE, new String[]{"NONE"});
-    }};
-    public static final  Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict = new Hashtable<BuildingStats.BuildingType, String[]>() {{
-        put(ACADEMIC, new String[]{"100","150"});
-        put(ACCOMODATION, new String[]{"100","100"});
-        put(RECREATIONAL, new String[]{"200"});
-        put(FOOD, new String[]{"200"});
-        put(NONE, new String[]{"NONE"});
-    }};
-    public static final  Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict = new Hashtable<BuildingStats.BuildingType, String[]>(){{
-        put(ACADEMIC, new String[]{"Satisfaction: 0.5 students/second","Satisfaction: 0.8 students/second"});
-        put(ACCOMODATION, new String[]{"Students: +100","Students: +150"});
-        put(RECREATIONAL, new String[]{"Satisfaction: 0.5 students/second"});
-        put(FOOD, new String[]{"Satisfaction: 0.5 students/second"});
-        put(NONE, new String[]{"NONE"});
-    }};
-    public static final Dictionary<BuildingStats.BuildingType, BuildingStats.BuildingID[]> BuildingDict = new Hashtable<BuildingStats.BuildingType, BuildingStats.BuildingID[]>(){{
-        put(ACADEMIC,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.RCH, BuildingStats.BuildingID.PZA});
-        put(ACCOMODATION,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.KATO, BuildingStats.BuildingID.LISTER});
-        put(RECREATIONAL,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.YSV});
-        put(FOOD,new BuildingStats.BuildingID[]{BuildingStats.BuildingID.MCD});
-        put(NONE,new BuildingStats.BuildingID[]{null});
-    }};
+    public static Dictionary<BuildingType, String[]> BuildingNameDict;
+    public static Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict;
+    public static Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict;
+    public static Dictionary<BuildingStats.BuildingType, BuildingStats.BuildingID[]> BuildingDict;
 
 
     // Academic
