@@ -97,54 +97,71 @@ public class BuildingInfo {
 
 
     //Getters and Setters
+
+
+    /**
+     * Gets Building ID ENUM
+     * @return BuildingID
+     */
     public BuildingID getBuildingID() {
         return buildingID;
     }
 
+    /**
+     * Sets the Building ID ENUM
+     * @param buildingID
+     */
     public void setBuildingID(BuildingStats.BuildingID buildingID) {
         this.buildingID = buildingID;
     }
 
+    /**
+     * Gets Building ID ENUM
+     * @return BuildingType
+     */
     public BuildingType getBuildingType() {
         return buildingType;
     }
 
+    /**
+     * Sets the BuildingType ENUM
+     * @param buildingType
+     */
     public void setBuildingType(BuildingType buildingType) {
         this.buildingType = buildingType;
     }
 
+    /**
+     * Gets BuildingCost float which is initialized by constructor
+     * @return buildingCost float
+     */
     public float getBuildingCost() {
         return buildingCost;
     }
 
-    public void setBuildingCost(float buildingCost) {
-        this.buildingCost = buildingCost;
-    }
 
+    /**
+     * Gets SatisfactionMultiplier float which is initialized by constructor
+     * @return satisfactionMultiplier float
+     */
     public float getSatisfactionMultiplier() {
         return satisfactionMultiplier;
     }
 
-    public void setSatisfactionMultiplier(float satisfactionMultiplier) {
-        this.satisfactionMultiplier = satisfactionMultiplier;
-    }
-
+    /**
+     * gets the number of students which is initialized by constructor
+     * @return numberOfStudents float
+     */
     public int getNumberOfStudents() {
         return numberOfStudents;
     }
 
-    public void setNumberOfStudents(int numberOfStudents) {
-        this.numberOfStudents = numberOfStudents;
-    }
-
+    /**
+     * Gets the coins per second float which is initialized by constructor
+     * @return coinsPerSecond float
+     */
     public float getCoinsPerSecond() {
         return coinsPerSecond;
     }
-
-    public void setCoinsPerSecond(float coinsPerSecond) {
-        this.coinsPerSecond = coinsPerSecond;
-    }
-
-
 
 }
