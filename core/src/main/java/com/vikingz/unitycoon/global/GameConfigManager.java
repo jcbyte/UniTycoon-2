@@ -6,10 +6,14 @@ import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 
+
+/**
+ * This class allows us to save the GameConfig to a binary file.
+ * It contains methods for saving and loading a game configuration.
+ */
 public class GameConfigManager {
 
 

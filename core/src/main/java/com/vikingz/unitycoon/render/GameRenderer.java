@@ -47,6 +47,18 @@ public class GameRenderer {
         return new Point(vec3Translated.x, vec3Translated.y);
     }
 
+    public float translateX(float x){
+        Vector3 vec3 = new Vector3(x, 0, 0);
+        Vector3 vec3Translated = viewport.unproject(vec3);
+        return vec3Translated.x;
+    }
+
+    public float translateY(float y){
+        Vector3 vec3 = new Vector3(0, y, 0);
+        Vector3 vec3Translated = viewport.unproject(vec3);
+        return vec3Translated.y;
+    }
+
     public void resize(int width, int height){
         viewport.update(width, height);
         backgroundRenderer.resize(width, height);

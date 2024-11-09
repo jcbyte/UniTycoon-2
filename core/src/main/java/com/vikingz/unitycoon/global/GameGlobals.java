@@ -4,6 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+
+/**
+ * This class is used to store all of the constants and global values
+ * that need to be accessed from different classes.
+ * 
+ * This class only provideds public static attributes and public
+ * statc methods. 
+ */
 public class GameGlobals {
 
     public static int BALANCE = 1000;
@@ -17,7 +25,6 @@ public class GameGlobals {
     public static int FOOD_BUILDINGS_COUNT = 0;
 
     public static int ELAPSED_TIME = 0;
-
 
 
     // Load map textures (replace with your own textures)

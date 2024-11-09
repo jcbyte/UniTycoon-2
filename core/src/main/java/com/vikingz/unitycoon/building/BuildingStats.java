@@ -13,6 +13,9 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 /**
  * This class contains all of the static data of the buildings
  * 
+ * Ideally we would make all of the data in this class be read in from a file
+ * 
+ * 
  */
 public class BuildingStats {
 

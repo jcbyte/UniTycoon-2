@@ -237,7 +237,7 @@ public class BuildingRenderer{
             float by = building.getY();
 
             if(  (x > bx && x < (bx + building.getWidth())) &&
-                 (y > by && y < (by + building.getHeight()))  ){
+                 (y > by && y < (by + building.getHeight())) ){
                     return building;
             }
         }

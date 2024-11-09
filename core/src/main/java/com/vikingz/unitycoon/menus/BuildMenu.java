@@ -22,6 +22,14 @@ import java.util.Dictionary;
 import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
 
+/**
+ * This class is what creates the build menu in the game.
+ * 
+ * It contains a single constructor that takes a Skin, BuildingRenderer
+ * and a Stage as parameters to create the Building Menu.
+ * 
+ * The buttons
+ */
 public class BuildMenu{
     private final BuildingRenderer buildingRenderer;
     private Stage stage;
