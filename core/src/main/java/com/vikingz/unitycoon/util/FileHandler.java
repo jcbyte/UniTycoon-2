@@ -4,6 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 
+/**
+ * This class handles loading in files
+ * 
+ * Main use is to load in the map file
+ */
 public class FileHandler {
 
 

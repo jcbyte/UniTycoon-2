@@ -12,9 +12,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameSkins;
 
+/**
+ * This is an abstract class that contains all of the components
+ * that all other screens use, and therefore by creating them in here
+ * we de-clutter all of the other screen classes.
+ */
 public abstract class SuperScreen {
     
-
     public Stage stage;
     private Camera  camera;
     private Viewport viewport;

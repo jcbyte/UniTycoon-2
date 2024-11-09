@@ -9,11 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.util.GameMusic;
 import com.vikingz.unitycoon.util.GameSounds;
 
+/**
+ * This screen represents the settings screen in the game
+ * 
+ * It contains multiple buttons and slider which edit different game settings
+ * 
+ * Inherits Screen, SuperScreen
+ */
 public class SettingsScreen extends SuperScreen implements Screen {
 
 

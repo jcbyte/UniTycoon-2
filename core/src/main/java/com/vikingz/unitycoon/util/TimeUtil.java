@@ -1,7 +1,18 @@
 package com.vikingz.unitycoon.util;
 
+/**
+ * This class contains functions that we use to format time.
+ * 
+ * Contains an inner class {@code Time} simply just to serve as
+ * a return type once the formatting is done
+ */
 public class TimeUtil {
     
+    /**
+     * This class contains three attributes secs, mins and hrs.
+     * 
+     * Only serves as a return type
+     */
     public static class Time{
 
         public int secs;
@@ -26,7 +37,11 @@ public class TimeUtil {
     
     }
 
-
+    /**
+     * Format time from seconds to minutes and seconds
+     * @param secs Time in seconds
+     * @return Time in minutes and seconds
+     */
     public static Time secondsToMinSecs(int secs){
         
 
