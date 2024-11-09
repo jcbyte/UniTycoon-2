@@ -44,8 +44,8 @@ public class RecreationalBuilding extends Building{
      * Calculates profit made
      * @return float of profit made
      */
-    public float calcuateProfitMade(){
-        return StatsCalculator.calcuateProfitMade(this.coinsPerSecond);
+    public float calculateProfitMade(){
+        return StatsCalculator.calculateProfitMade(this.coinsPerSecond);
     }
 
 }

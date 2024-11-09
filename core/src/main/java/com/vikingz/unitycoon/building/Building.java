@@ -78,55 +78,112 @@ public abstract class Building {
 
     // Getters and Setters
 
+
+    /**
+     * gets the building information of the building
+     * @return buildingInfo Building Info
+     */
     public BuildingInfo getBuildingInfo() {
         return buildingInfo;
     }
 
+    /**
+     * returns the float of the building width in pixels
+     * @return width float of building
+     */
     public float getWidth() {
         return width;
     }
 
+
+    /**
+     * Sets the pixel width of the building
+     * @param width float
+     */
     public void setWidth(float width) {
         this.width = width;
     }
 
+
+    /**
+     * returns the float of the building height in pixels
+     * @return height float of building
+     */
     public float getHeight() {
         return height;
     }
 
+    /**
+     * Sets the pixel height of the building
+     * @param height float
+     */
     public void setHeight(float height) {
         this.height = height;
     }
 
 
+    /**
+     * Returns the current texture of the building,
+     * used for seeing a preview of a building and rendering
+     * @return TextureRegion Image of the building
+     */
     public TextureRegion getTexture() {
         return texture;
     }
 
+    /**
+     * Sets the Texture of the building to passed param
+     * @param textureBuilding
+     */
     public void setTexture(TextureRegion textureBuilding) {
         this.texture = textureBuilding;
     }
 
+    /**
+     * gets the current middle point of the building X coordinate
+     * @return x float
+     */
     public float getX() {
         return x;
     }
 
+    /**
+     * Sets the x coordinate of the building to param float
+     * @param x
+     */
     public void setX(float x) {
         this.x = x;
     }
 
+    /**
+     * gets the current middle point of the building Y coordinate
+     * @return y float
+     */
     public float getY() {
         return y;
     }
 
+    /**
+     * Sets the y coordinate of the building to param float
+     * @param y
+     */
     public void setY(float y) {
         this.y = y;
     }
+
+    /**
+     * gets the buildingType ENUM of the building
+     * @return BuildingStats.BuildingType ENUM value
+     */
     public BuildingStats.BuildingType getBuildingType() {
         return buildingType;
     }
 
 
+    /**
+     * output the class to a string
+     * @return str String
+     */
     public String toString(){
         String str = "";
 

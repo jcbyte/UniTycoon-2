@@ -1,8 +1,8 @@
 package com.vikingz.unitycoon.util;
 
 /**
- * This class is used to calculate different statistics such as 
- * satisfaction and balance. 
+ * This class is used to calculate different statistics such as
+ * satisfaction and balance.
  */
 public class StatsCalculator {
 
@@ -11,7 +11,7 @@ public class StatsCalculator {
     }
 
 
-    public static float calcuateProfitMade(float coinsPerSecond){
+    public static float calculateProfitMade(float coinsPerSecond){
         return coinsPerSecond;
     }
 

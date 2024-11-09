@@ -3,7 +3,6 @@ package com.vikingz.unitycoon.building.buildings;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingInfo;
-import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.util.Point;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
@@ -47,7 +46,7 @@ public class FoodBuilding extends Building{
      * Calculates profit of this building
      * @return float coins made
      */
-    public float calcuateProfitMade(){
-        return StatsCalculator.calcuateProfitMade(this.coinsPerSecond);
+    public float calculateProfitMade(){
+        return StatsCalculator.calculateProfitMade(this.coinsPerSecond);
     }
 }

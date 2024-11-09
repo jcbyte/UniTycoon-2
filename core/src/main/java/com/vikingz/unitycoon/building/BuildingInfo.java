@@ -4,12 +4,12 @@ import com.vikingz.unitycoon.building.BuildingStats.BuildingID;
 import com.vikingz.unitycoon.building.BuildingStats.BuildingType;
 
 /**
- * This class essentially serves as a struct to pass data around regarding buildings. 
- * When the user presses a button in the menu to buy a building, the data for that building 
+ * This class essentially serves as a struct to pass data around regarding buildings.
+ * When the user presses a button in the menu to buy a building, the data for that building
  * is passed around a type BuildingInfo
  */
 public class BuildingInfo {
-    
+
     BuildingID  buildingID;
     BuildingType buildingType;
     float buildingCost;
@@ -19,11 +19,13 @@ public class BuildingInfo {
     float coinsPerSecond;
 
 
-    // Theres alot of different constructors as different buildings have different combinations of attributes
+
 
 
     /**
      * Creates new Building Info
+     * The following constructors,
+     * are for different types of building and have different params
      * @param buildingID Building ID
      * @param buildingType Building Type
      * @param buildingCost Building Cost
@@ -94,6 +96,7 @@ public class BuildingInfo {
     }
 
 
+    //Getters and Setters
     public BuildingID getBuildingID() {
         return buildingID;
     }
@@ -143,5 +146,5 @@ public class BuildingInfo {
     }
 
 
-    
+
 }

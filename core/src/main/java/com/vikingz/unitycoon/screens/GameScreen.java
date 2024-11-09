@@ -14,14 +14,14 @@ import com.vikingz.unitycoon.render.UIRenderer;
 
 /**
  * This is the main game class from which the game is ran.
- * 
+ *
  * This game instanciates the 2 renderers which are the GameRenderer
- * and the UIRenderer, as well as contains the game loop that control how the game 
- * runs. 
- * 
+ * and the UIRenderer, as well as contains the game loop that control how the game
+ * runs.
+ *
  * The game loop contains a section where everything in that section is updated
  * every second which is where all of our game stats are updated.
- * 
+ *
  * Inherits Screen, SuperScreen
  */
 public class GameScreen extends SuperScreen implements Screen {
@@ -39,7 +39,7 @@ public class GameScreen extends SuperScreen implements Screen {
 
     /**
      * Creates a new Game Screen
-     * @param mapName The name of the map that will be used 
+     * @param mapName The name of the map that will be used
      */
     public GameScreen(String mapName){
         super();
@@ -49,7 +49,7 @@ public class GameScreen extends SuperScreen implements Screen {
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
         elapsedTime = 0;
         //5 minutes
-        GameGlobals.resetGlobals(3);
+        GameGlobals.resetGlobals(300);
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
@@ -92,12 +92,12 @@ public class GameScreen extends SuperScreen implements Screen {
 
                     if(building.getBuildingType() == BuildingStats.BuildingType.FOOD){
                         FoodBuilding foodBuilding = (FoodBuilding) building;
-                        GameGlobals.BALANCE += foodBuilding.calcuateProfitMade();
+                        GameGlobals.BALANCE += foodBuilding.calculateProfitMade();
                     }
 
                     if(building.getBuildingType() == BuildingStats.BuildingType.RECREATIONAL){
                         RecreationalBuilding foodBuilding = (RecreationalBuilding) building;
-                        GameGlobals.BALANCE += foodBuilding.calcuateProfitMade();
+                        GameGlobals.BALANCE += foodBuilding.calculateProfitMade();
                     }
 
                 }
@@ -130,7 +130,7 @@ public class GameScreen extends SuperScreen implements Screen {
     }
 
     /**
-     * Pauses the game and calls the UI renderer to display the 
+     * Pauses the game and calls the UI renderer to display the
      * pause menu UI
      */
     @Override
