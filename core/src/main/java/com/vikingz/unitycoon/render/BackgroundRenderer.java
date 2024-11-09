@@ -32,7 +32,7 @@ public class BackgroundRenderer{
     private int tileWidth = 32; // Size of each tile in game
     private int tileHeight = 32; // Size of each tile in game
 
-    
+
     private final int atlasTileSize = 64;
 
     public BackgroundRenderer(String mapName) {
@@ -125,6 +125,18 @@ public class BackgroundRenderer{
 
     public void resize(int width, int height) {
         // Update the screen dimensions
+    }
+
+    public void dispose(){
+        batch.dispose();
+        roadTile = null;
+        grassTile = null;
+        waterTile = null;
+        cobbleTile = null;
+        grassTile2 = null;
+        waterTile2 = null;
+        cobbleTile2 = null;
+        roadTile2 = null;
     }
 
 

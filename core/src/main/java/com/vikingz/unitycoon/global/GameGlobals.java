@@ -32,4 +32,15 @@ public class GameGlobals {
     public static final TextureRegionDrawable[] mapArray = new TextureRegionDrawable[]{map1Draw, map2Draw, map3Draw};
 
 
+    public static void resetGlobals(int time){
+        ELAPSED_TIME = time;
+        ACADEMIC_BUILDINGS_COUNT = 0;
+        ACCOMODATION_BUILDINGS_COUNT = 0;
+        RECREATIONAL_BUILDINGS_COUNT = 0;
+        FOOD_BUILDINGS_COUNT = 0;
+        SATISFACTION = 0;
+        STUDENTS = 0;
+        BALANCE = 1000;
+    }
+
 }

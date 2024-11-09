@@ -25,23 +25,30 @@ public class PauseMenu extends Window {
         this.setBackground(GameGlobals.backGroundDrawable);
 
 
-        TextButton leftBtn = new TextButton("Settings", skin);
+        TextButton settingsBtn = new TextButton("Settings", skin);
 
-        this.add(leftBtn).pad(10);
+        TextButton quitBtn = new TextButton("Quit", skin);
+        this.add(settingsBtn).pad(10);
+        this.add(quitBtn).pad(10);
 
         // Created for yes - no game events
         // The Popup needs to call back to parent object in someway
 
-        leftBtn.addListener(new ClickListener() {
+        settingsBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                
+
                 ScreenMultiplexer.openSettings(ScreenMultiplexer.Screens.GAME);
 
                 //PopupMenu.this.remove();
             }
         });
 
-
+        quitBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ScreenMultiplexer.closeGame();
+            }
+        });
     }
 }

@@ -16,13 +16,20 @@ import com.vikingz.unitycoon.util.GameSounds;
 
 public class SettingsScreen extends SuperScreen implements Screen {
 
+
+
     private Label resolutionLabel;
     private String resolutionString;
+    private String musicVolume;
+    private String soundVolume;
 
-    private String volume;
+    private Slider SoundVolumeSlider;
+    private Label SoundVolumeLabel;
 
-    private Slider volumeSlider;
-    private Label volumeLabel;
+    private Slider MusicVolumeSlider;
+
+    private Label MusicVolumeLabel;
+
 
     private ScreenMultiplexer.Screens previousScreen;
 
@@ -42,12 +49,17 @@ public class SettingsScreen extends SuperScreen implements Screen {
         this.previousScreen = ScreenMultiplexer.Screens.MENU;
         this.resolutionLabel = new Label(GameConfigManager.CurrentWindowSize(), skin);
 
-        // Create volume slider
-        volumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
-        volumeSlider.setValue(GameConfig.getInstance().getVolumeValue());
-        volumeLabel = new Label(volume, skin);
-        this.volume = "Volume: " + String.valueOf(volumeSlider.getValue());
+        // Create Sound volume slider
+        SoundVolumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
+        SoundVolumeSlider.setValue(GameConfig.getInstance().getSoundVolumeValue());
+        SoundVolumeLabel = new Label(soundVolume, skin);
+        this.soundVolume = "Sound Volume: " + String.valueOf(SoundVolumeSlider.getValue());
 
+        // Create Music volume slider
+        MusicVolumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
+        MusicVolumeSlider.setValue(GameConfig.getInstance().getSoundVolumeValue());
+        MusicVolumeLabel = new Label(soundVolume, skin);
+        this.musicVolume = "Music Volume: " + String.valueOf(MusicVolumeSlider.getValue());
 
 
 
@@ -74,7 +86,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
             if (fullscreenButton.isPressed()){
                 GameConfigManager.setFullScreen();
                 if(gameScreen != null) { gameScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); }
-                
+
             }
             return true;
         });
@@ -95,7 +107,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
             return true;
         });
 
-        
+
 
 
         // Create layout table
@@ -109,14 +121,20 @@ public class SettingsScreen extends SuperScreen implements Screen {
 
         // Add elements to the table
         table.add((Actor) null);
-        table.add(volumeLabel).uniformX().pad(10);
+        table.add(SoundVolumeLabel).uniformX().pad(10);
         table.row();
-
 
         table.add((Actor) null);
-        table.add(volumeSlider).fillX().uniformX().pad(10);
+        table.add(SoundVolumeSlider).fillX().uniformX().pad(10);
         table.row();
 
+        table.add((Actor) null);
+        table.add(MusicVolumeLabel).uniformX().pad(10);
+        table.row();
+
+        table.add((Actor) null);
+        table.add(MusicVolumeSlider).fillX().uniformX().pad(10);
+        table.row();
 
         table.add(fullscreenButton).fillX().uniformX().pad(10);
         table.add(saveGameConfigButton).fillX().pad(10);
@@ -150,12 +168,14 @@ public class SettingsScreen extends SuperScreen implements Screen {
         Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
 
         // Draw stage
-        volume = "Volume: " + String.valueOf(volumeSlider.getValue());
+        soundVolume = "Sound Volume: " + String.valueOf(Math.round(SoundVolumeSlider.getValue()*10));
+        musicVolume = "Music Volume: " + String.valueOf(Math.round(MusicVolumeSlider.getValue()*10));
 
-        GameMusic.setVolume(volumeSlider.getValue());
-        GameSounds.volume = volumeSlider.getValue();
+        GameSounds.volume = SoundVolumeSlider.getValue();
+        GameMusic.setVolume(MusicVolumeSlider.getValue());
 
-        volumeLabel.setText(volume);
+        SoundVolumeLabel.setText(soundVolume);
+        MusicVolumeLabel.setText(musicVolume);
         resolutionLabel.setText(resolutionString);
 
         stage.act(delta);

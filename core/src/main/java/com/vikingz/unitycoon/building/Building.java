@@ -7,7 +7,7 @@ import com.vikingz.unitycoon.util.StatsCalculator;
 
 /**
  * Building
- * 
+ *
  * Abstract class that represents all of the buildings in the game.
  */
 public abstract class Building {
@@ -25,28 +25,35 @@ public abstract class Building {
 
     private float satisfactionMultiplier;
 
+    private BuildingInfo buildingInfo;
 
 
-    public Building(TextureRegion texture, float x, float y, BuildingStats.BuildingType buildingType, float satisfactionMultiplier){
+
+    public Building(TextureRegion texture, float x, float y, BuildingInfo buildingInfo){
         this.x = x;
         this.y = y;
         this.width = 64;
         this.height = 64;
         this.texture = texture;
-        this.buildingType = buildingType;
-        this.satisfactionMultiplier = satisfactionMultiplier;
+        this.buildingType = buildingInfo.getBuildingType();
+        this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();
+        this.buildingInfo = buildingInfo;
     }
 
 
-    
-    public Building(TextureRegion texture, Point p, BuildingStats.BuildingType buildingType, float satisfactionMultiplier){
+    public BuildingInfo getBuildingInfo() {
+        return buildingInfo;
+    }
+
+    public Building(TextureRegion texture, Point p, BuildingInfo buildingInfo){
         this.x = p.getX();
         this.y = p.getY();
         this.width = 64;
         this.height = 64;
         this.texture = texture;
-        this.buildingType = buildingType;
-        this.satisfactionMultiplier = satisfactionMultiplier;
+        this.buildingType = buildingInfo.getBuildingType();
+        this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();
+        this.buildingInfo = buildingInfo;
     }
 
 
@@ -109,7 +116,7 @@ public abstract class Building {
 
     public String toString(){
         String str = "";
-        
+
         str += "x: " + this.x;
         str += " y: " + this.y;
         str += " width: " + this.width;

@@ -12,7 +12,7 @@ import com.vikingz.unitycoon.global.GameConfig;
  * This class loads and plays all of the sounds effects for the entire game
  */
 public class GameSounds {
-    
+
     // Load the sounds fx
     private static Sound placeBuilding1 = Gdx.audio.newSound(Gdx.files.internal("audio/place_1.ogg"));
     private static Sound placeBuilding2 = Gdx.audio.newSound(Gdx.files.internal("audio/place_2.ogg"));
@@ -21,7 +21,7 @@ public class GameSounds {
     private static Sound placeError1 = Gdx.audio.newSound(Gdx.files.internal("audio/place_error_1.ogg"));
     private static Sound placeError2 = Gdx.audio.newSound(Gdx.files.internal("audio/place_error_2.ogg"));
 
-    public static float volume = GameConfig.getInstance().getVolumeValue();
+    public static float volume = GameConfig.getInstance().getSoundVolumeValue();
 
     // Could be useful for more sounds later on
     private static ArrayList<Sound> sounds = new ArrayList<Sound>(){
@@ -46,15 +46,17 @@ public class GameSounds {
             case 2:
                 placeBuilding2.play(volume);
                 break;
-            
+
             case 3:
                 placeBuilding3.play(volume);
                 break;
-        
+
             default:
                 break;
         }
     }
+
+
 
     // Plays placed error building sound
     public static void playPlaceError(){
@@ -68,7 +70,7 @@ public class GameSounds {
             case 2:
                 placeError2.play(volume);
                 break;
-            
+
 
             default:
                 break;

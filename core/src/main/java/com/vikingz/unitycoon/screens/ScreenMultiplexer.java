@@ -8,7 +8,7 @@ import com.vikingz.unitycoon.global.GameSkins;
 
 
 public class ScreenMultiplexer {
-    
+
     public enum Screens{
         GAME,
         MENU,
@@ -19,25 +19,24 @@ public class ScreenMultiplexer {
 
 
     private static Game game;
-
     public static GameScreen gameScreen;
     public static MenuScreen menuScreen;
     public static SettingsScreen settingsScreen;
     public static MapSelectorScreen mapSelectorScreen;
 
-    
+
 
 
 
     public static void init(Game newGame){
 
         game = newGame;
-        
+
         menuScreen = new MenuScreen();
         settingsScreen = new SettingsScreen();
         mapSelectorScreen = new MapSelectorScreen();
 
-        
+
     }
 
     public static void runGame(String map){
@@ -51,6 +50,13 @@ public class ScreenMultiplexer {
         settingsScreen.setPrevScreen(prevScreen);
         game.setScreen(settingsScreen);
         settingsScreen.takeInput();
+    }
+
+    public static void closeGame(){
+        gameScreen.dispose();
+        menuScreen.dispose();
+        menuScreen = new MenuScreen();
+        switchScreens(Screens.MENU);
     }
 
     public static void switchScreens(Screens screen){
@@ -75,7 +81,7 @@ public class ScreenMultiplexer {
                 game.setScreen(mapSelectorScreen);
                 mapSelectorScreen.takeInput();
                 break;
-            
+
             default:
                 break;
         }

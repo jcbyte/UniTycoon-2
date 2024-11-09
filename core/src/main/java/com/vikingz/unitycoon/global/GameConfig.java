@@ -11,7 +11,9 @@ public class GameConfig implements Serializable{
     private int windowWidth;
     private int windowHeight;
     private boolean skipMenus;
-    private float volumeValue;
+    private float SoundVolumeValue;
+
+    private float MusicVolumeValue;
     private static boolean VSync = false;
     private float guiSize = 1;
 
@@ -24,15 +26,15 @@ public class GameConfig implements Serializable{
 
     // The single instance of GameConfig (eager initialization)
     private static GameConfig INSTANCE = new GameConfig(
-        1792, 1008, false, 1f); // Default values
+        1792, 1008, false, 1f,1f); // Default values
 
     // Private constructor to prevent instantiation from outside
-    private GameConfig(int width, int height, boolean skipMenus, float volumeValue) {
+    private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue) {
         this.windowWidth = width;
         this.windowHeight = height;
         this.skipMenus = skipMenus;
-        this.volumeValue = volumeValue;
-
+        this.SoundVolumeValue = SoundVolumeValue;
+        this.MusicVolumeValue = MusicVolumeValue;
     }
 
     //Sets VSync mode for game on or off
@@ -68,13 +70,18 @@ public class GameConfig implements Serializable{
         return skipMenus;
     }
 
-    public float getVolumeValue() {
-        return volumeValue;
+    //Sound volume Slider
+    public float getSoundVolumeValue() {
+        return SoundVolumeValue;
+    }
+    public void setSoundVolumeValue(float newVolValue){
+        this.SoundVolumeValue = newVolValue;
     }
 
-    public void setVolumeValue(float newVolValue){
-        this.volumeValue = newVolValue;
-    }
+    //Music volume Slider
+    public void setMusicVolumeValue(float musicVolumeValue) { MusicVolumeValue = musicVolumeValue; }
+    public float getMusicVolumeValue() { return MusicVolumeValue; }
+
     public float getGuiSize() {
         return guiSize;
     }
@@ -82,6 +89,11 @@ public class GameConfig implements Serializable{
     public void setGuiSize(float guiSize) {
         this.guiSize = guiSize;
     }
+
+    //
+
+
+
 }
 
 

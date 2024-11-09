@@ -1,5 +1,6 @@
 package com.vikingz.unitycoon.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -11,6 +12,7 @@ import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
+import com.vikingz.unitycoon.render.StatsRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
 
 public class GameScreen extends SuperScreen implements Screen {
@@ -31,9 +33,9 @@ public class GameScreen extends SuperScreen implements Screen {
         this.isPaused = false;
         gameRenderer = new GameRenderer(mapName);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
-        
         elapsedTime = 0;
-        GameGlobals.ELAPSED_TIME = 300000000;
+        //5 minutes
+        GameGlobals.resetGlobals(300);
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
@@ -129,6 +131,8 @@ public class GameScreen extends SuperScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+        gameRenderer.dispose();
+        uiRenderer.dispose();
     }
 
     @Override

@@ -10,7 +10,7 @@ import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.util.Point;
 
 public class GameRenderer {
-    
+
     private Stage stage;
     private Camera camera;
     private Viewport viewport;
@@ -24,7 +24,7 @@ public class GameRenderer {
         viewport = new FillViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
         //viewport = new FitViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight(), camera);
         //viewport = new ScreenViewport();
-        
+
         stage = new Stage(viewport);
         backgroundRenderer = new BackgroundRenderer(mapName);
         buildingRenderer = new BuildingRenderer(this);
@@ -59,5 +59,10 @@ public class GameRenderer {
     }
 
 
+    public void dispose(){
+        stage.dispose();
+        backgroundRenderer.dispose();
+        buildingRenderer.dispose();
+    }
 
 }

@@ -62,7 +62,7 @@ public class StatsRenderer {
         font.getData().setScale(1.5f);
         lables = new ArrayList<>();
 
-        
+
         balStr = "Balance";
         studentsStr = "Students";
         satisStr = "satisfaction";
@@ -71,7 +71,7 @@ public class StatsRenderer {
         recBuildingsStr = "Recreational";
         foodBuildingsStr = "Food";
         timerStr = "Timer: ";
-        
+
         balance = new Label(balStr, this.skin);
         students = new Label(studentsStr, this.skin);
         satisfaction = new Label(satisStr, this.skin);
@@ -128,7 +128,7 @@ public class StatsRenderer {
     public void render(float delta) {
 
         batch.begin();
- 
+
         balStr = "Balance: " + GameGlobals.BALANCE;
         studentsStr = "Students: " + GameGlobals.STUDENTS;
         satisStr = "Satisfaction: " + GameGlobals.SATISFACTION;
@@ -136,10 +136,10 @@ public class StatsRenderer {
         academBuildingsStr = "Academic: " + GameGlobals.ACADEMIC_BUILDINGS_COUNT;
         recBuildingsStr = "Recreational: " + GameGlobals.RECREATIONAL_BUILDINGS_COUNT;
         foodBuildingsStr = "Food: " + GameGlobals.FOOD_BUILDINGS_COUNT;
-        
+
         TimeUtil.Time timerAmount = TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME);
         timerStr = timerAmount == null? (timerStr = "Timer: Infinity") : (timerStr = "Timer: " + timerAmount);
-        
+
         balance.setText(balStr);
         students.setText(studentsStr);
         satisfaction.setText(satisStr);
@@ -157,6 +157,11 @@ public class StatsRenderer {
     public void resize(float width, float height){
         this.width = width;
         this.height = height;
+    }
+    public void dispose(){
+        stage.dispose();
+        batch.dispose();
+        font.dispose();
     }
 
 

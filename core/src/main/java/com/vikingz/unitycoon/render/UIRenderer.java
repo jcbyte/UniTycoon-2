@@ -14,9 +14,10 @@ import com.vikingz.unitycoon.menus.BuildMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
+import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 
 public class UIRenderer {
-    
+
     private Stage stage;
     private Camera camera;
     private Viewport viewport;
@@ -42,18 +43,18 @@ public class UIRenderer {
         viewport = new FitViewport(1824, 1026);
         //viewport = new ScreenViewport();
         stage = new Stage(viewport);
-        
+
 
         statsRenderer = new StatsRenderer(skin);
         buildMenu = new BuildMenu(skin, buildingRenderer, stage);
 
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new PopupMenu(skin, "End of Game");
-        
+
         Runnable leftBtn = new Runnable() {
             @Override
             public void run(){
-                Gdx.app.exit();
+                ScreenMultiplexer.closeGame();
             }
 
         };
@@ -115,5 +116,8 @@ public class UIRenderer {
 
     }
 
+    public void dispose(){
+        stage.dispose();
+    }
 
 }

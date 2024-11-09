@@ -14,7 +14,7 @@ public class GameConfigManager {
 
     public static void setFullScreen(){
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-        
+
     }
 
     public static void setWindowScreen(){
@@ -63,7 +63,8 @@ public class GameConfigManager {
 
 
         } catch (IOException i) {
-            i.printStackTrace();
+            System.out.println("FILE NOT FOUND");
+            //i.printStackTrace();
             return;
         } catch (ClassNotFoundException c) {
             System.out.println("GameConfig class not found");

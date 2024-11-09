@@ -84,11 +84,14 @@ public class BuildingRenderer{
         if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && selectedTexture == null){
             System.out.println("RightClick");
 
-            
+
             Building buildingToRemove = getBuildingAtPoint(Gdx.input.getX(), Gdx.input.getY());
 
+
             if(buildingToRemove != null){
+                float value = buildingToRemove.getBuildingInfo().getBuildingCost();
                 this.placedBuildings.remove(buildingToRemove);
+                GameGlobals.BALANCE += Math.round(value*0.75f);
             }
             else{
                 System.out.println("building was null: " + buildingToRemove);
@@ -105,25 +108,25 @@ public class BuildingRenderer{
                     System.out.println("Not enough money to buy building!!");
                     GameSounds.playPlaceError();
 
-                } 
+                }
                 else {
                     GameSounds.playPlacedBuilding();
                     switch (currentBuildingInfo.getBuildingType()) {
                         case ACADEMIC:
-                            placedBuildings.add(new AcademicBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier()));
+                            placedBuildings.add(new AcademicBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo));
                             break;
 
                         case ACCOMODATION:
-                            placedBuildings.add(new AccommodationBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getNumberOfStudents()));
+                            placedBuildings.add(new AccommodationBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo, currentBuildingInfo.getNumberOfStudents()));
                             break;
 
 
                         case RECREATIONAL:
-                            placedBuildings.add(new RecreationalBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
+                            placedBuildings.add(new RecreationalBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo, currentBuildingInfo.getCoinsPerSecond()));
                             break;
 
                         case FOOD:
-                            placedBuildings.add(new FoodBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo.getBuildingType(), currentBuildingInfo.getSatisfactionMultiplier(), currentBuildingInfo.getCoinsPerSecond()));
+                            placedBuildings.add(new FoodBuilding(selectedTexture, new Point(previewX, previewY),currentBuildingInfo, currentBuildingInfo.getCoinsPerSecond()));
                             break;
 
                         case NONE:
@@ -136,7 +139,7 @@ public class BuildingRenderer{
                     GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
                     GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
 
-                    
+
                     incrementBuildingsCount(currentBuildingInfo.getBuildingType());
 
                 }
@@ -172,7 +175,7 @@ public class BuildingRenderer{
             case ACADEMIC:
                 GameGlobals.ACADEMIC_BUILDINGS_COUNT ++;
                 break;
-        
+
 
             case ACCOMODATION:
                 GameGlobals.ACCOMODATION_BUILDINGS_COUNT ++;
@@ -181,7 +184,7 @@ public class BuildingRenderer{
             case RECREATIONAL:
                 GameGlobals.RECREATIONAL_BUILDINGS_COUNT ++;
                 break;
-                
+
             case FOOD:
                 GameGlobals.FOOD_BUILDINGS_COUNT ++;
                 break;
@@ -250,6 +253,8 @@ public class BuildingRenderer{
         return placedBuildings;
     }
 
-
+    public void dispose(){
+        batch.dispose();
+    }
 
 }
