@@ -24,6 +24,8 @@ import java.util.List;
  */
 public class BackgroundRenderer{
 
+    // Constants that map the tiles used to draw the background
+    // to charaters that can be encoded in the map file
     private final char GRASS = 'G';
     private final char WATER = 'W';
     private final char COBBLE_STONE = 'C';
@@ -37,15 +39,20 @@ public class BackgroundRenderer{
     private SpriteBatch batch;
     private String map;
     private Texture texture;
+
+    // Textures of tiles
     private TextureRegion grassTile, waterTile, cobbleTile, roadTile;
     private TextureRegion grassTile2, waterTile2, cobbleTile2, roadTile2;
 
     private int tileWidth = 32; // Size of each tile in game
     private int tileHeight = 32; // Size of each tile in game
 
-
     private final int atlasTileSize = 64;
 
+    /**
+     * Creates an new background renderer
+     * @param mapName The name of the map that will be drawn
+     */
     public BackgroundRenderer(String mapName) {
         this.map = FileHandler.loadMap(mapName);
         batch = new SpriteBatch();
@@ -65,7 +72,10 @@ public class BackgroundRenderer{
     }
 
 
-
+    /**
+     * Draws the background to the screen
+     * @param delta Time since last frame
+     */
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1); // Set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear the screen
@@ -75,7 +85,9 @@ public class BackgroundRenderer{
         batch.end();
     }
 
-
+    /**
+     * Draws the background to the screen
+     */
     private void drawTiledBackgroundFromMap() {
 
         int rowsMax = 32;

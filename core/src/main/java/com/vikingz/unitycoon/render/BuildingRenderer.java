@@ -43,6 +43,10 @@ public class BuildingRenderer{
 
     private GameRenderer gameRenderer;
 
+    /**
+     * Creates a new Building Renderer
+     * @param gameRenderer Parent renderer {@code GameRenderer} 
+     */
     public BuildingRenderer(GameRenderer gameRenderer) {
 
         this.width = GameConfig.getInstance().getWindowWidth();
@@ -57,12 +61,19 @@ public class BuildingRenderer{
 
     }
 
+    /**
+     * Renders buildings
+     * @param delta Time since last frame
+     */
     public void render(float delta) {
-        checkAddingBuildings(delta);
+        checkBuildings(delta);
     }
 
-
-    private void checkAddingBuildings(float delta){
+    /**
+     * Checks if the user is currently adding or removing buildings
+     * @param delta Time since last frame
+     */
+    private void checkBuildings(float delta){
         // Update preview position to follow the mouse cursor
         if (isPreviewing && selectedTexture != null) {
 
@@ -88,13 +99,11 @@ public class BuildingRenderer{
 
         batch.end();
 
-
+        // Removes the bulding the user right clicks on
         if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && selectedTexture == null){
             System.out.println("RightClick");
 
-
             Building buildingToRemove = getBuildingAtPoint(Gdx.input.getX(), Gdx.input.getY());
-
 
             if(buildingToRemove != null){
                 float value = buildingToRemove.getBuildingInfo().getBuildingCost();
@@ -118,7 +127,11 @@ public class BuildingRenderer{
 
                 }
                 else {
+                    // Plays the sound of a building being places
                     GameSounds.playPlacedBuilding();
+
+                    // Adds a building of the correct type to the list of buildins that are 
+                    // to be drawn to the screen.
                     switch (currentBuildingInfo.getBuildingType()) {
                         case ACADEMIC:
                             placedBuildings.add(new AcademicBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo));
@@ -163,7 +176,10 @@ public class BuildingRenderer{
 
     }
 
-
+    /**
+     * Selects a building by building ID
+     * @param buildingID ID of the building that the user wants to place down
+     */
     public void selectBuilding(BuildingStats.BuildingID buildingID){
 
         isPreviewing = true;
@@ -176,7 +192,11 @@ public class BuildingRenderer{
         currentBuildingInfo = newBuilding;
     }
 
-
+    /**
+     * Increments the counter on the screen for the 
+     * corresponding building that has been placed down
+     * @param type Type of the building that has been added
+     */
     private void incrementBuildingsCount(BuildingStats.BuildingType type){
 
         switch (type) {
@@ -204,6 +224,12 @@ public class BuildingRenderer{
 
     }
 
+    /**
+     * Snaps the coordinates passed in to the grid
+     * @param x X
+     * @param y Y
+     * @return Point new coordinates that occur on an intersection of the tiles in the background
+     */
     private Point snapBuildingToGrid(float x, float y){
 
         // 30 rows
@@ -218,6 +244,13 @@ public class BuildingRenderer{
     }
 
 
+    /**
+     * Checks whether the user is trying to place a building
+     * on another building
+     * @param x X 
+     * @param y Y
+     * @return Boolean if there exists a building at the spot the user is trying to place the building at
+     */
     private boolean checkCollisions(float x, float y){
         float RoundedX = Math.round(x);
         float RoundedY = Math.round(y);
@@ -233,6 +266,12 @@ public class BuildingRenderer{
         return flag;
     }
 
+    /**
+     * Gets the building at the point pased in
+     * @param mouseX Mouse X
+     * @param mouseY Mouse Y
+     * @return Building that was at the coords
+     */
     private Building getBuildingAtPoint(float mouseX, float mouseY){
         Point translatedPoint = gameRenderer.translateCoords(new Point(mouseX, mouseY));
 
@@ -252,6 +291,12 @@ public class BuildingRenderer{
         return null;
     }
 
+    /**
+     * Updates the width and height when the window
+     * is resized
+     * @param width New Width
+     * @param height New Height
+     */
     public void resize(int width, int height) {
         this.width = width;
         this.height = height;

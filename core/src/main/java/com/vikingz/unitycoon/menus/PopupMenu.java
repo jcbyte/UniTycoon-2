@@ -18,13 +18,15 @@ public class PopupMenu extends Window {
     private String Message = "";
 
 
-
+    // Skin for the popup
     private Skin skin;
 
-    private Runnable leftRun;
-    private Runnable rightRun;
 
-
+    /**
+     * Creates a new Popup menu
+     * @param skin Skin for the menu
+     * @param Message Message to be displayed in the popup
+     */
     public PopupMenu(Skin skin, String Message) {
 
         super("Popup", skin);
@@ -43,29 +45,13 @@ public class PopupMenu extends Window {
 
     }
 
-    public PopupMenu(Skin skin, String Message, Runnable leftRun, String leftText, Runnable rightRun, String rightText) {
-
-        super("Popup", skin);
-        this.setSize(600, 400);
-        this.setModal(true);
-        this.setMovable(false);
-        this.setResizable(false);
-
-        this.skin = skin;
-
-        this.leftRun = leftRun;
-        this.rightRun = rightRun;
-
-
-        Label message = new Label(Message, skin);
-        this.add(message).padBottom(20).row();
-
-        setupButtons(leftRun, leftText, rightRun, rightText);
-
-
-    }
-
-
+    /**
+     * Configures the 2 buttons that appear on the popup
+     * @param leftRun Runnable that will be ran if the left button is pressed
+     * @param leftText The text written on the left button
+     * @param rightRun Runnable that will be ran if the right button is pressed
+     * @param rightText The text written on the right button
+     */
     public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
 
         // Idk change this later
@@ -96,7 +82,12 @@ public class PopupMenu extends Window {
     }
 
 
-    // Keeps left button as close
+    /**
+     * Configures on the right button with the left button being 
+     * closing the popup
+     * @param rightRun Button runnable 
+     * @param rightText Button text
+     */
     public void setupRightBtn(Runnable rightRun, String rightText){
 
 

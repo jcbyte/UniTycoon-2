@@ -20,6 +20,12 @@ import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 public class PauseMenu extends Window {
 
 
+    /**
+     * Creates a new pause menu
+     * This menu is shown when the user pauses the game / presses
+     *  the esc button during the game. 
+     * @param skin
+     */
     public PauseMenu(Skin skin) {
 
         super("", skin);

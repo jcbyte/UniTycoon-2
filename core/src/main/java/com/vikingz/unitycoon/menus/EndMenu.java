@@ -20,7 +20,11 @@ public class EndMenu extends Window {
     private Skin skin;
     private Label congrats;
 
-
+    /**
+     * Creates a new EndMenu
+     * @param skin The skin used to style the popup
+     * @param Message The message that will be shown on the popup
+     */
     public EndMenu(Skin skin, String Message) {
 
         super("Popup", skin);

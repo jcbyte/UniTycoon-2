@@ -153,7 +153,12 @@ public class BuildMenu{
     }
 
 
-
+    /**
+     * Creats a new window and sets up all of the contents of the window
+     * so that when the user presses one of the buttons at the bottom of the game
+     * screen the corresponding menu is shown.
+     * @param buildingType
+     */
     private void showMenu(BuildingStats.BuildingType buildingType) {
         // Create a window (menu)
         index = 0;
@@ -163,12 +168,6 @@ public class BuildMenu{
         this.currentMenu = window;
         window.setMovable(false);
         window.setBackground(GameGlobals.backGroundDrawable);
-
-        //Create buttons on menu load
-        //CreateButtons(buildingType, window);
-
-
-        //Building UI
 
         //Building name Label
         Label buildingNameLabel = new Label(BuildingNameDict.get(buildingType)[0], skin);
@@ -282,8 +281,6 @@ public class BuildMenu{
         window.setSize(MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);
         window.setPosition(this.width / 2f - (MENU_WINDOW_WIDTH / 2), this.height / 2f - (MENU_WINDOW_HEIGHT / 2));
 
-        //shows debug lines of window table
-        //window.setDebug(true);
         // Add window to the stage
         stage.addActor(window);
 
@@ -303,12 +300,20 @@ public class BuildMenu{
         stage.draw();
     }
 
+    /**
+     * Called when the window resizes
+     * @param width New width
+     * @param height New height
+     */
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
         this.width = width;
         this.height = height;
     }
 
+    /**
+     * Disposes of the build menu
+     */
     public void dispose() {
         stage.dispose();
 
