@@ -302,6 +302,8 @@ public class BuildingRenderer{
         this.height = height;
     }
 
+    // Getter and setters
+
     public List<Building> getPlaceBuildings(){
         return placedBuildings;
     }

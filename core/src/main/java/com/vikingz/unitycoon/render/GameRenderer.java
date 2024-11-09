@@ -28,8 +28,13 @@ public class GameRenderer {
     private BackgroundRenderer backgroundRenderer;
     private BuildingRenderer buildingRenderer;
 
-
+    /**
+     * Creates and new Game Renderer
+     * @param mapName Name of the map to be drawn as the background
+     */
     public GameRenderer(String mapName){
+
+        // Creates and camera and setsup the viewport
         camera = new OrthographicCamera();
         viewport = new FillViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
         //viewport = new FitViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight(), camera);
@@ -41,6 +46,10 @@ public class GameRenderer {
 
     }
 
+    /**
+     * Draws the game contents to the screen
+     * @param delta Time since last frame
+     */
     public void render(float delta){
 
         viewport.apply();
@@ -51,24 +60,44 @@ public class GameRenderer {
 
     }
 
+    /**
+     * Translates screen coordinates to game canvas coordinates
+     * @param p Point on the screen
+     * @return Point on the game canvas
+     */
     public Point translateCoords(Point p){
         Vector3 vec3 = new Vector3(p.getX(), p.getY(), 0);
         Vector3 vec3Translated = viewport.unproject(vec3);
         return new Point(vec3Translated.x, vec3Translated.y);
     }
 
-    public float translateX(float x){
-        Vector3 vec3 = new Vector3(x, 0, 0);
+    /**
+     * Translates screen width to canvas width
+     * @param width Width
+     * @return float Translated width
+     */
+    public float translateX(float width){
+        Vector3 vec3 = new Vector3(width, 0, 0);
         Vector3 vec3Translated = viewport.unproject(vec3);
         return vec3Translated.x;
     }
 
-    public float translateY(float y){
-        Vector3 vec3 = new Vector3(0, y, 0);
+    /**
+     * Translates screen height to canvas height
+     * @param height Height
+     * @return float Translated height
+     */
+    public float translateY(float height){
+        Vector3 vec3 = new Vector3(0, height, 0);
         Vector3 vec3Translated = viewport.unproject(vec3);
         return vec3Translated.y;
     }
 
+    /**
+     * Updates renderers when the window is resized
+     * @param width New width
+     * @param height New height
+     */
     public void resize(int width, int height){
         viewport.update(width, height);
         backgroundRenderer.resize(width, height);

@@ -37,7 +37,10 @@ public class GameScreen extends SuperScreen implements Screen {
 
 
 
-
+    /**
+     * Creates a new Game Screen
+     * @param mapName The name of the map that will be used 
+     */
     public GameScreen(String mapName){
         super();
 
@@ -63,6 +66,10 @@ public class GameScreen extends SuperScreen implements Screen {
         // Initialize game objects here
     }
 
+    /**
+     * Contains the game loop, renders game all game content from this loop
+     * @param delta Time since last frame
+     */
     @Override
     public void render(float delta) {
         // Clear screen
@@ -112,6 +119,9 @@ public class GameScreen extends SuperScreen implements Screen {
     }
 
 
+    /**
+     * Checks if window has been resized
+     */
     @Override
     public void resize(int width, int height) {
         uiRenderer.resize(width, height);
@@ -119,12 +129,19 @@ public class GameScreen extends SuperScreen implements Screen {
 
     }
 
+    /**
+     * Pauses the game and calls the UI renderer to display the 
+     * pause menu UI
+     */
     @Override
     public void pause() {
         uiRenderer.pause(isPaused);
 
     }
 
+    /**
+     * This is called when the game finishes, ie when the timer runs out
+     */
     private void endGame(){
         isPaused = true;
         if (GameConfig.getInstance().getTopSatisfaction() < GameGlobals.SATISFACTION){

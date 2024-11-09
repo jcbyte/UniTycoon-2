@@ -32,7 +32,6 @@ public class UIRenderer {
     private Camera camera;
     private Viewport viewport;
 
-    private Skin skin;
 
     private BuildMenu buildMenu;
     private StatsRenderer statsRenderer;
@@ -44,9 +43,14 @@ public class UIRenderer {
     private boolean newHighScore = true;
     GameScreen gameScreen;
 
+    /**
+     * Creates a new UIRenderer
+     * @param skin Skin used to style content
+     * @param buildingRenderer Building renderer
+     * @param gameScreen Game screen
+     */
     public UIRenderer(Skin skin, BuildingRenderer buildingRenderer, GameScreen gameScreen){
 
-        this.skin = skin;
         this.gameScreen = gameScreen;
 
         camera = new OrthographicCamera();
@@ -62,6 +66,7 @@ public class UIRenderer {
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
 
+        // Sets what the buttons do on the end of timer window
         Runnable leftBtn = new Runnable() {
             @Override
             public void run(){
@@ -83,6 +88,11 @@ public class UIRenderer {
 
     }
 
+    /**
+     * When the game screen has decided the game has finished the game 
+     * will call this function which will show the end of game popup
+     * @param newScore
+     */
     public void endGame(boolean newScore){
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
@@ -96,6 +106,10 @@ public class UIRenderer {
 
     }
 
+    /**
+     * Pauses the game displays the pause menu
+     * @param isPaused
+     */
     public void pause(boolean isPaused) {
         System.out.println("Pressed ESC");
 
@@ -111,6 +125,10 @@ public class UIRenderer {
 
     }
 
+    /**
+     * Calls all render functions in the renderers
+     * @param delta
+     */
     public void render(float delta){
         viewport.apply();
         statsRenderer.render(delta);
@@ -119,6 +137,11 @@ public class UIRenderer {
     }
 
 
+    /**
+     * Resizes UI content when the window is resized
+     * @param width New width
+     * @param height New height
+     */
     public void resize(int width, int height){
         viewport.update(width, height);
         stage.getViewport().update(width, height, true);
@@ -127,12 +150,17 @@ public class UIRenderer {
 
     }
 
-
+    /**
+     * Sets the input process to this class when called
+     */
     public void takeInput(){
         Gdx.input.setInputProcessor(stage);
 
     }
 
+    /**
+     * Disposes of content in this screen
+     */
     public void dispose(){
         stage.dispose();
     }

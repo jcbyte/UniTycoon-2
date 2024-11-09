@@ -58,7 +58,10 @@ public class StatsRenderer {
 
     List<Label> lables;
 
-
+    /**
+     * Creates a new stats renderer
+     * @param skin Skin that determines the style of the text
+     */
     public StatsRenderer(Skin skin) {
 
         this.skin = skin;
@@ -69,7 +72,7 @@ public class StatsRenderer {
         font.getData().setScale(1.5f);
         lables = new ArrayList<>();
 
-
+        // Lable strings
         balStr = "Balance";
         studentsStr = "Students";
         satisStr = "satisfaction";
@@ -79,6 +82,7 @@ public class StatsRenderer {
         foodBuildingsStr = "Food";
         timerStr = "Timer: ";
 
+        // Creating labels
         balance = new Label(balStr, this.skin);
         students = new Label(studentsStr, this.skin);
         satisfaction = new Label(satisStr, this.skin);
@@ -88,6 +92,7 @@ public class StatsRenderer {
         foodBuildings = new Label(foodBuildingsStr, this.skin);
         timer = new Label(timerStr, this.skin);
 
+        // Adding labels to a list
         lables.add(balance);
         lables.add(students);
         lables.add(satisfaction);
@@ -111,6 +116,7 @@ public class StatsRenderer {
         table.top();
         table.left();
 
+        // Adds the labels to the table
         table.add(balance).pad(padding).align(Align.left);
         table.row();
         table.add(students).pad(padding).align(Align.left);
@@ -132,10 +138,15 @@ public class StatsRenderer {
     }
 
 
+    /**
+     * Draws the labels to the screen
+     * @param delta Time since last frame
+     */
     public void render(float delta) {
 
         batch.begin();
 
+        // Update the label contents each frame
         balStr = "Balance: " + GameGlobals.BALANCE;
         studentsStr = "Students: " + GameGlobals.STUDENTS;
         satisStr = "Satisfaction: " + GameGlobals.SATISFACTION;
@@ -147,6 +158,7 @@ public class StatsRenderer {
         TimeUtil.Time timerAmount = TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME);
         timerStr = timerAmount == null? (timerStr = "Timer: Infinity") : (timerStr = "Timer: " + timerAmount);
 
+        // Sets the new string to the corresponding label
         balance.setText(balStr);
         students.setText(studentsStr);
         satisfaction.setText(satisStr);
@@ -161,6 +173,11 @@ public class StatsRenderer {
         batch.end();
     }
 
+    /**
+     * Sets current width and height to the new values when the window is resized
+     * @param width New width
+     * @param height New height
+     */
     public void resize(float width, float height){
         this.width = width;
         this.height = height;
