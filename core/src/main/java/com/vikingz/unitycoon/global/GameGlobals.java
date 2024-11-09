@@ -27,7 +27,7 @@ public class GameGlobals {
     public static int ELAPSED_TIME = 0;
 
 
-    // Load map textures (replace with your own textures)
+    // Load map textures
     public static final Texture map1Texture = new Texture(Gdx.files.internal("png/map1Texture.png"));
     public static final Texture map2Texture = new Texture(Gdx.files.internal("png/map2Texture.png"));
     public static final Texture map3Texture = new Texture(Gdx.files.internal("png/map3Texture.png"));
@@ -39,6 +39,10 @@ public class GameGlobals {
     public static final TextureRegionDrawable[] mapArray = new TextureRegionDrawable[]{map1Draw, map2Draw, map3Draw};
 
 
+    /**
+     * Resets the game globals to the original values
+     * @param time The ammount of time in minutes the game should last for
+     */
     public static void resetGlobals(int time){
         ELAPSED_TIME = time;
         ACADEMIC_BUILDINGS_COUNT = 0;

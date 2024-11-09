@@ -22,13 +22,17 @@ public abstract class Building {
 
     // Building functional properties
     private BuildingStats.BuildingType buildingType;
-
     private float satisfactionMultiplier;
-
     private BuildingInfo buildingInfo;
 
 
-
+    /**
+     * Creates a new Building
+     * @param texture Texture
+     * @param x X
+     * @param y Y
+     * @param buildingInfo Building Info
+     */
     public Building(TextureRegion texture, float x, float y, BuildingInfo buildingInfo){
         this.x = x;
         this.y = y;
@@ -41,10 +45,12 @@ public abstract class Building {
     }
 
 
-    public BuildingInfo getBuildingInfo() {
-        return buildingInfo;
-    }
-
+    /**
+     * Creates a new Building
+     * @param texture Texture
+     * @param p Point p
+     * @param buildingInfo Building Info
+     */
     public Building(TextureRegion texture, Point p, BuildingInfo buildingInfo){
         this.x = p.getX();
         this.y = p.getY();
@@ -58,7 +64,11 @@ public abstract class Building {
 
 
 
-    // Generate Satisfaciton logic
+    /**
+     * Calculates satisfaction logic
+     * @param numberOfStudents Number of students
+     * @return Amount of satisfaction
+     */
     public int calculateSatisfaction(int numberOfStudents){
 
         return StatsCalculator.calculateSatisfaction(numberOfStudents, this.satisfactionMultiplier);
@@ -68,6 +78,9 @@ public abstract class Building {
 
     // Getters and Setters
 
+    public BuildingInfo getBuildingInfo() {
+        return buildingInfo;
+    }
 
     public float getWidth() {
         return width;

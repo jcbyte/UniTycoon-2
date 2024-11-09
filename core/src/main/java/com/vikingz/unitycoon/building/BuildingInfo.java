@@ -21,6 +21,16 @@ public class BuildingInfo {
 
     // Theres alot of different constructors as different buildings have different combinations of attributes
 
+
+    /**
+     * Creates new Building Info
+     * @param buildingID Building ID
+     * @param buildingType Building Type
+     * @param buildingCost Building Cost
+     * @param satisfactionMultiplier Satisfaction Multiplier
+     * @param numberOfStudents Number of students
+     * @param coinsPerSecond Coins per second the building generates
+     */
     public BuildingInfo(BuildingStats.BuildingID  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents, float coinsPerSecond){
         this.buildingID = buildingID;
         this.buildingType = buildingType;

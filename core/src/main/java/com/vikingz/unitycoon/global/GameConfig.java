@@ -31,11 +31,8 @@ public class GameConfig implements Serializable{
 
     public int TOP_SATISFACTION;
 
-
     // 31.5 rows
     // 56 cols
-
-
 
     // The single instance of GameConfig (eager initialization)
     private static GameConfig INSTANCE = new GameConfig(

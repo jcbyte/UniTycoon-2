@@ -17,11 +17,17 @@ import com.badlogic.gdx.Graphics;
 public class GameConfigManager {
 
 
+    /**
+     * Sets game to fullscreen
+     */
     public static void setFullScreen(){
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
     }
 
+    /**
+     * Sets game to a windowed screen
+     */
     public static void setWindowScreen(){
         Gdx.graphics.setWindowedMode(GameConfig.getInstance().getWindowWidth() ,GameConfig.getInstance().getWindowHeight());
     }
@@ -34,6 +40,9 @@ public class GameConfigManager {
 
 
 
+    /**
+     * Saves game config
+     */
     public static void saveGameConfig(){
         try {
             FileOutputStream fileOut = new FileOutputStream("gameconf.bin");
@@ -46,13 +55,15 @@ public class GameConfigManager {
 
         } catch (IOException i) {
             System.out.println("FILE NOT FOUND");
-            //i.printStackTrace();
         }
 
 
     }
 
 
+    /**
+     * Loads game config
+     */
     public static void loadGameConfig(){
 
         GameConfig conf = null;

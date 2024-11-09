@@ -20,7 +20,9 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 public class BuildingStats {
 
 
-    // Types of buildings available
+    /**
+     * Enum of types of buildings available 
+     */
     public enum BuildingType {
         NONE,
         ACADEMIC,
@@ -49,7 +51,7 @@ public class BuildingStats {
 
     }
 
-
+    // Dicts for build menu
     public static final  Dictionary<BuildingType, String[]> BuildingNameDict = new Hashtable<BuildingType, String[]>(){{
         put(ACADEMIC, new String[]{"Ron Cooke","Piazza"});
         put(ACCOMODATION, new String[]{"David Kato","Anne Lister"});

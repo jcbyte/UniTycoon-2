@@ -16,18 +16,34 @@ public class RecreationalBuilding extends Building{
 
     private float coinsPerSecond;
 
-    // Standard constructor with float x and y
+    /**
+     * Creates a new Recreational Building
+     * @param texture Texture
+     * @param x X
+     * @param y Y
+     * @param buildingInfo Building Info
+     * @param coinsPerSecond The ammount of coins this building makes per second
+     */
     public RecreationalBuilding(TextureRegion texture, float x, float y, BuildingInfo buildingInfo, float coinsPerSecond){
         super(texture, x, y, buildingInfo);
         this.coinsPerSecond = coinsPerSecond;
     }
-
-    // Constructor using Point class
+    /**
+     * Creates a new Recreational Building
+     * @param texture Texture
+     * @param p Point p
+     * @param buildingInfo Building Info
+     * @param coinsPerSecond The ammount of coins this building makes per second
+     */
     public RecreationalBuilding(TextureRegion texture, Point p, BuildingInfo buildingInfo, float coinsPerSecond){
         super(texture, p, buildingInfo);
         this.coinsPerSecond = coinsPerSecond;
     }
 
+    /**
+     * Calculates profit made
+     * @return float of profit made
+     */
     public float calcuateProfitMade(){
         return StatsCalculator.calcuateProfitMade(this.coinsPerSecond);
     }

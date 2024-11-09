@@ -15,13 +15,27 @@ import com.vikingz.unitycoon.util.Point;
 public class AccommodationBuilding extends Building{
 
     private int numberOfStudents;
-    // Standard constructor with float x and y
+
+    /**
+     * Creates a new Acommodation Building
+     * @param texture Texture
+     * @param x X
+     * @param y Y
+     * @param buildingInfo Building Info
+     * @param numberOfStudents Number of students that this building adds
+     */
     public AccommodationBuilding(TextureRegion texture, float x, float y, BuildingInfo buildingInfo, int numberOfStudents){
         super(texture, x, y, buildingInfo);
         this.numberOfStudents = numberOfStudents;
     }
 
-    // Constructor using Point class
+    /**
+     * Creates a new Acommodation Building
+     * @param texture Texture
+     * @param p Point p
+     * @param buildingInfo Building Info
+     * @param numberOfStudents Number of students that this building adds
+     */
     public AccommodationBuilding(TextureRegion texture, Point p,  BuildingInfo buildingInfo, int numberOfStudents){
         super(texture, p,  buildingInfo);
         this.numberOfStudents = numberOfStudents;

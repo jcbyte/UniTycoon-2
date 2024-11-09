@@ -6,14 +6,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 /*
 This class is to simplify the Skin loading process,
 and allow us to make changes without needing to edit every ui element.
-Format:
-Constructor - Loads Skins
-Getters - Gets Skin using function
+
  */
 public class GameSkins {
+    
+    // Skins
     private final Skin defaultSkin;
     private final Skin quantumSkin;
 
+    /**
+     * Creats a new GameSkins instance, reads skins from asset folder
+     */
     public GameSkins(){
         defaultSkin = new Skin(Gdx.files.internal("glassy-ui/skin/glassy-ui.json")); //Default Theme
         quantumSkin = new Skin(Gdx.files.internal("glassy-ui/skin/glassy-ui.json")); //Default Theme

@@ -18,18 +18,35 @@ public class FoodBuilding extends Building{
 
     private float coinsPerSecond;
 
-    // Standard constructor with float x and y
+    /**
+     * Creates new food building
+     * @param texture Texture
+     * @param x X
+     * @param y Y
+     * @param buildingInfo Building Info
+     * @param coinsPerSecond Ammount of coins this building make per second
+     */
     public FoodBuilding(TextureRegion texture, float x, float y, BuildingInfo buildingInfo, float coinsPerSecond){
         super(texture, x, y, buildingInfo);
         this.coinsPerSecond = coinsPerSecond;
     }
 
-    // Constructor using Point class
+    /**
+     * Creates new food building
+     * @param texture Texture
+     * @param p Point p
+     * @param buildingInfo Building Info
+     * @param coinsPerSecond Ammount of coins this building make per second
+     */
     public FoodBuilding(TextureRegion texture, Point p, BuildingInfo buildingInfo, float coinsPerSecond){
         super(texture, p, buildingInfo);
         this.coinsPerSecond = coinsPerSecond;
     }
 
+    /**
+     * Calculates profit of this building
+     * @return float coins made
+     */
     public float calcuateProfitMade(){
         return StatsCalculator.calcuateProfitMade(this.coinsPerSecond);
     }

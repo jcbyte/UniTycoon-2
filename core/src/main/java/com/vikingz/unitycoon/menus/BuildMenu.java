@@ -32,6 +32,7 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
  *  by which the build menu is accessed
  */
 public class BuildMenu{
+
     private final BuildingRenderer buildingRenderer;
     private Stage stage;
     private Skin skin;
@@ -46,7 +47,7 @@ public class BuildMenu{
 
     private Window currentMenu;
 
-    //Temp
+    // Hold data for cycling pages in menu
     private Dictionary<BuildingStats.BuildingType, String[]> BuildingNameDict = BuildingStats.BuildingNameDict;
     private Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict = BuildingStats.BuildingPriceDict;
     private Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict = BuildingStats.BuildingStudentDict;
