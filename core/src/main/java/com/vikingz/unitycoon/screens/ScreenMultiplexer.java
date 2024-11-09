@@ -1,12 +1,25 @@
 package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
-import com.vikingz.unitycoon.global.GameSkins;
 
 
-
+/**
+ * This class allows us to change screens anywhere within the project.
+ * 
+ * On init(Game newGame) this class instanciates all of the classes so that 
+ * they are ready in memory and waiting to be switched to. 
+ * 
+ * This class also contains the enum Screens which is what is used
+ * to differenciate between the diferent screens available so that when the 
+ * user wants to change screen all they have to do is call 
+ * ScreenMultiplexer.switchScreens(Screens screen), which is much easier than
+ * having to keep track at which point each screen is instanciated.
+ * 
+ * This class also enables us to access the settings screen from any screen in the game 
+ * as when the settings screen is displayed, this class keeps track from which screen 
+ * it came from so that the back button on the settings screen will always send the 
+ * user back to the screen they just came from.
+ */
 public class ScreenMultiplexer {
 
     public enum Screens{
@@ -16,16 +29,11 @@ public class ScreenMultiplexer {
         MAPSELECTION,
     }
 
-
-
     private static Game game;
     public static GameScreen gameScreen;
     public static MenuScreen menuScreen;
     public static SettingsScreen settingsScreen;
     public static MapSelectorScreen mapSelectorScreen;
-
-
-
 
 
     public static void init(Game newGame){

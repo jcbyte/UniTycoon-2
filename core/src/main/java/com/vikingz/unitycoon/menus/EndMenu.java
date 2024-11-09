@@ -1,30 +1,31 @@
 package com.vikingz.unitycoon.menus;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 
+/**
+ * This class is the menu that pops up at the end of the game.
+ * 
+ * This menu also contains a quit button that sends the user back to the 
+ * main menu as well as a continue button that lets the user continue the game.
+ */
 public class EndMenu extends Window {
 
     private final Label topSatisfaction;
     private String Message = "";
 
     private Skin skin;
-
-    private Runnable leftRun;
-    private Runnable rightRun;
     private Label congrats;
-
 
 
     public EndMenu(Skin skin, String Message) {
 
         super("Popup", skin);
 
-        this.setSize(600, 400);
+        this.setSize(800, 400);
         this.setModal(true);
         this.setMovable(false);
         this.setResizable(false);
@@ -39,10 +40,7 @@ public class EndMenu extends Window {
 
         topSatisfaction = new Label("Top Satisfaction: " + GameConfig.getInstance().getTopSatisfaction(),skin);
         this.add(topSatisfaction).padBottom(20).row();
-
-
     }
-
 
     public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
 
@@ -51,9 +49,6 @@ public class EndMenu extends Window {
         TextButton rightBtn = new TextButton(rightText, skin);
         this.add(leftBtn).pad(10);
         this.add(rightBtn).pad(10);
-
-
-
 
         // Created for yes - no game events
         // The Popup needs to call back to parent object in someway

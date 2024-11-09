@@ -19,6 +19,14 @@ import com.vikingz.unitycoon.util.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  This class is in charge of drawing Buildings in the game.
+ * 
+ * This class also does the collision calculations for buildings
+ * which make sure that the user is unable to place buildings on top 
+ * of eachother, as well as using rightclick to be able to remove the 
+ * buildings from the game.
+ */
 public class BuildingRenderer{
 
     private int width;

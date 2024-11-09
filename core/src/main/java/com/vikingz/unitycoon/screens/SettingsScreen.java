@@ -25,11 +25,8 @@ public class SettingsScreen extends SuperScreen implements Screen {
 
     private Slider SoundVolumeSlider;
     private Label SoundVolumeLabel;
-
     private Slider MusicVolumeSlider;
-
     private Label MusicVolumeLabel;
-
 
     private ScreenMultiplexer.Screens previousScreen;
 

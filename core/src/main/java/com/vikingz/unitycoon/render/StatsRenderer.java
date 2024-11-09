@@ -14,6 +14,13 @@ import com.badlogic.gdx.utils.Align;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.TimeUtil;
 
+/**
+ * This class is used for drawing game stats to the screen.
+ * 
+ * This class contains all of the labels that are on the 
+ * top right of the screen that display the users balance, 
+ * satisfaction etc.
+ */
 public class StatsRenderer {
 
     private SpriteBatch batch;

@@ -10,6 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.global.GameGlobals;
 
+/**
+ * This class represents the screen where the user chooses the
+ * map they want to play.
+ * 
+ * This class contains a bunch of buttons that allow the user to
+ * cycle through the different maps available as well as go back 
+ * to the main menu or play game.
+ * 
+ * Inherits Screen, SuperScreen
+ * 
+ */
 public class MapSelectorScreen extends SuperScreen implements Screen {
 
     private TextField mapText;

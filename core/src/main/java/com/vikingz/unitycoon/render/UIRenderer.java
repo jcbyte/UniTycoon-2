@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
@@ -15,10 +13,19 @@ import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.menus.BuildMenu;
 import com.vikingz.unitycoon.menus.EndMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
-import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 
+/**
+ * This class renders all of the UI elements to the Screen.
+ * 
+ * This enables us to control how the UI is draw and resized 
+ * differently from how the rest of the game is drawn. 
+ * 
+ * This class essentially forms another layer on the screen that 
+ * renders all of the UI elements on this layer as opposed to the 
+ * game layer.
+ */
 public class UIRenderer {
 
     private Stage stage;

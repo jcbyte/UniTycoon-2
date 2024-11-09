@@ -8,12 +8,22 @@ import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameConfig;
-import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
-import com.vikingz.unitycoon.render.StatsRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
 
+/**
+ * This is the main game class from which the game is ran.
+ * 
+ * This game instanciates the 2 renderers which are the GameRenderer
+ * and the UIRenderer, as well as contains the game loop that control how the game 
+ * runs. 
+ * 
+ * The game loop contains a section where everything in that section is updated
+ * every second which is where all of our game stats are updated.
+ * 
+ * Inherits Screen, SuperScreen
+ */
 public class GameScreen extends SuperScreen implements Screen {
 
     private boolean isPaused;
@@ -36,7 +46,7 @@ public class GameScreen extends SuperScreen implements Screen {
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
         elapsedTime = 0;
         //5 minutes
-        GameGlobals.resetGlobals(300);
+        GameGlobals.resetGlobals(3);
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {

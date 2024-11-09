@@ -28,7 +28,8 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
  * It contains a single constructor that takes a Skin, BuildingRenderer
  * and a Stage as parameters to create the Building Menu.
  * 
- * The buttons
+ * This class also creates the 4 buttons at the bottom of the game screen
+ *  by which the build menu is accessed
  */
 public class BuildMenu{
     private final BuildingRenderer buildingRenderer;
@@ -52,6 +53,12 @@ public class BuildMenu{
     private Dictionary<BuildingStats.BuildingType, BuildingStats.BuildingID[]> BuildingDict = BuildingStats.BuildingDict;
     private int index = 0;
 
+    /**
+     * Creates a new BuildMenu
+     * @param skin SKin of the buttons on the menu
+     * @param buildingRenderer  BuildingRenderer instance that renders the buildings in the game
+     * @param stage The stage on which the menu is drawn
+     */
     public BuildMenu(Skin skin, BuildingRenderer buildingRenderer, Stage stage) {
 
 

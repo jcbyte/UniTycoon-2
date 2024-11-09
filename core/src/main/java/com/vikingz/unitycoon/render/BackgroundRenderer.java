@@ -11,6 +11,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *  This class is in charge of loading and drawing the textured tiles
+ * for the background.
+ * 
+ * The contstrucor is passed a mapName which then can be read using the 
+ * {@code FileHandler} which is then used to draw the map as defined in the 
+ * map file.
+ * 
+ * This class also contains the constants that assign the characters
+ * that represent the tiles in the map file.
+ */
 public class BackgroundRenderer{
 
     private final char GRASS = 'G';

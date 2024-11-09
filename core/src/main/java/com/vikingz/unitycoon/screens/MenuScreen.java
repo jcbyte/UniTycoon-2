@@ -7,6 +7,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+/**
+ * This class represents the main menu of the game.
+ * 
+ * The main menu is where the user begins from. This menu
+ * contains multiple buttons that allow the user to begin the game.
+ * 
+ * Inherits Screen, SuperScreen
+ */
 public class MenuScreen extends SuperScreen implements Screen {
 
 

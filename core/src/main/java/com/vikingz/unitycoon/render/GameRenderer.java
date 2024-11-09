@@ -9,8 +9,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.util.Point;
 
+/**
+ * This class contains all of the renderers that render the game. 
+ * 
+ * This class contains the renderers that draw the background as well
+ * as the buildings. Using this class enables us to have a sepereate viewport 
+ * that controls how the game is rendered as well as what happens when the 
+ * game window is resized, as we wanted the map and the buildings to resize 
+ * differently from the UI, which is what the {@code UIRenderer} is used for.
+ */
 public class GameRenderer {
 
+    // Viewport stuff
     private Stage stage;
     private Camera camera;
     private Viewport viewport;

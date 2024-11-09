@@ -3,17 +3,21 @@ package com.vikingz.unitycoon.menus;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 
+/**
+ * This is a generic PopupMenu class that can create user defined
+ * popups. This class is crucial for the implementation of random events 
+ * in the game during later development.
+ * 
+ * The user can assign everythign in the popup, all of the text displayed
+ * as well as the runnables that run when the 2 buttons are pressed.
+ */
 public class PopupMenu extends Window {
 
     private String Message = "";
 
-/*
- * TODO:
- * Make a constructor to create multiple different popups
- */
+
 
     private Skin skin;
 
