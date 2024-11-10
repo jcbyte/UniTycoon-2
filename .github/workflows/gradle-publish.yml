@@ -13,7 +13,6 @@ env:
 jobs:
   publish-jar:
     runs-on: ubuntu-22.04
-    if: ${{ needs.determine_should_publish_new_version.outputs.PUBLISH_NEW_VERSION == 'true' }}
     permissions:
       contents: read
       packages: write
