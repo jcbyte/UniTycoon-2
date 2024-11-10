@@ -55,6 +55,8 @@ configure(subprojects) {
   }
 }
 
+
+
 subprojects {
   version = '$projectVersion'
   ext.appName = 'UniTycoon'
@@ -66,6 +68,30 @@ subprojects {
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://jitpack.io' }
+  }
+}
+
+apply plugin: 'maven-publish'
+
+publishing {
+  repositories {
+    maven {
+      name = "GitHubPackages"
+      url = "https://maven.pkg.github.com/eng1-Vikingz/UniTycoon"
+      credentials {
+        username = System.getenv("GITHUB_ACTOR")
+        password = System.getenv("GITHUB_TOKEN")
+      }
+    }
+  }
+
+  publications {
+    gpr(MavenPublication) {
+      from components.java
+      groupId = project.group
+      artifactId = project.name
+      version = project.version
+    }
   }
 }
 
