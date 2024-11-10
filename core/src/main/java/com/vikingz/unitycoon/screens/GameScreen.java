@@ -124,9 +124,6 @@ public class GameScreen extends SuperScreen implements Screen {
         }
 
 
-
-
-
         // Draw
         batch.begin();
         gameRenderer.render(delta);
