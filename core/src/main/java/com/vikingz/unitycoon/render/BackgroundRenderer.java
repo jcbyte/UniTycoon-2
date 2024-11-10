@@ -14,11 +14,11 @@ import java.util.List;
 /**
  *  This class is in charge of loading and drawing the textured tiles
  * for the background.
- * 
- * The contstrucor is passed a mapName which then can be read using the 
- * {@code FileHandler} which is then used to draw the map as defined in the 
+ *
+ * The contstrucor is passed a mapName which then can be read using the
+ * {@code FileHandler} which is then used to draw the map as defined in the
  * map file.
- * 
+ *
  * This class also contains the constants that assign the characters
  * that represent the tiles in the map file.
  */
@@ -146,8 +146,53 @@ public class BackgroundRenderer{
     }
 
 
+
     public void resize(int width, int height) {
         // Update the screen dimensions
+    }
+
+    public char getGRASS() {
+        return GRASS;
+    }
+
+    public char getWATER() {
+        return WATER;
+    }
+
+    public char getCOBBLE_STONE() {
+        return COBBLE_STONE;
+    }
+
+    public char getROAD() {
+        return ROAD;
+    }
+
+    public char getGRASS2() {
+        return GRASS2;
+    }
+
+    public char getWATER2() {
+        return WATER2;
+    }
+
+    public char getCOBBLE_STONE2() {
+        return COBBLE_STONE2;
+    }
+
+    public char getROAD2() {
+        return ROAD2;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public int getTileWidth() {
+        return tileWidth;
+    }
+
+    public int getTileHeight() {
+        return tileHeight;
     }
 
     public void dispose(){

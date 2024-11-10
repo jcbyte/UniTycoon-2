@@ -2,6 +2,7 @@ package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.building.Building;
@@ -17,6 +18,7 @@ import com.vikingz.unitycoon.util.GameSounds;
 import com.vikingz.unitycoon.util.Point;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -159,8 +161,6 @@ public class BuildingRenderer{
 
                     GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
                     GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
-
-
                     incrementBuildingsCount(currentBuildingInfo.getBuildingType());
 
                 }
@@ -246,12 +246,14 @@ public class BuildingRenderer{
 
     /**
      * Checks whether the user is trying to place a building
-     * on another building
+     * on another building or not on grass
      * @param x X
      * @param y Y
      * @return Boolean if there exists a building at the spot the user is trying to place the building at
+     *          or if non grass is present in the buildings spot
      */
     private boolean checkCollisions(float x, float y){
+        //Checks building exists in spot
         float RoundedX = Math.round(x);
         float RoundedY = Math.round(y);
         boolean flag = true;
@@ -263,6 +265,33 @@ public class BuildingRenderer{
                 flag = false;
             }
         }
+        BackgroundRenderer checkBackGround = gameRenderer.getBackgroundRenderer();
+        System.out.println(RoundedX);
+        String hold = checkBackGround.getMap();
+
+        //CheckTiles on the ground are grassBlocks
+        int yIndexLow = Math.round((RoundedY-64)/32) + 3;
+        int xIndexLow = Math.round((RoundedX-64)/32) + 2;
+        int lengthTiles = hold.split("\n").length;
+        char TileSet[][] = new char[4][4];
+        for (int yCord=0;yCord<4;yCord++){
+            for (int xCord=0;xCord<4;xCord++){
+                try {
+                    TileSet[yCord][xCord] = hold.split("\n")[lengthTiles - (yIndexLow + yCord)].charAt(xIndexLow + xCord);
+                }catch (Exception e){
+
+                }
+            }
+        }
+        for (char[] itemI: TileSet) {
+            for (char itemJ: itemI) {
+                if (itemJ != checkBackGround.getGRASS() && itemJ != checkBackGround.getGRASS2()){
+                    flag = false;
+                }
+            }
+        }
+
+
         return flag;
     }
 
