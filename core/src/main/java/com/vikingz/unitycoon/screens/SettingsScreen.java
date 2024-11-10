@@ -23,7 +23,7 @@ import com.vikingz.unitycoon.util.GameSounds;
 public class SettingsScreen extends SuperScreen implements Screen {
 
 
-
+    // Components on the settings screen
     private Label resolutionLabel;
     private String resolutionString;
     private String musicVolume;
@@ -45,6 +45,9 @@ public class SettingsScreen extends SuperScreen implements Screen {
     private GameScreen gameScreen;
 
 
+    /**
+     * Creates a new settings screen
+     */
     public SettingsScreen() {
         super();
         resolutionString = GameConfigManager.CurrentWindowSize();
@@ -65,7 +68,8 @@ public class SettingsScreen extends SuperScreen implements Screen {
         this.musicVolume = "Music Volume: " + String.valueOf(MusicVolumeSlider.getValue());
 
 
-
+        // Adds event listeners to buttons 
+        
         // Back button to return to MenuScreen
         backButton = new TextButton("Back", skin);
         backButton.addListener(new ClickListener(){
@@ -160,6 +164,9 @@ public class SettingsScreen extends SuperScreen implements Screen {
         stage.addActor(table);
     }
 
+    /**
+     * Switches screens back to the screen the user access the settings from
+     */
     public void goBack(){
         System.out.println(previousScreen.name());
         if (previousScreen.name().equals("GAME")) {
@@ -173,6 +180,10 @@ public class SettingsScreen extends SuperScreen implements Screen {
     @Override
     public void show() { }
 
+    /**
+     * Draws the components of the settings screen
+     * @param delta Time since last frame
+     */
     @Override
     public void render(float delta) {
         // Clear screen
@@ -184,7 +195,6 @@ public class SettingsScreen extends SuperScreen implements Screen {
             goBack();
         }
 
-        // Draw stage
         soundVolume = "Sound Volume: " + String.valueOf(Math.round(SoundVolumeSlider.getValue()*10));
         musicVolume = "Music Volume: " + String.valueOf(Math.round(MusicVolumeSlider.getValue()*10));
 
@@ -221,20 +231,31 @@ public class SettingsScreen extends SuperScreen implements Screen {
         skin.dispose();
     }
 
+    /**
+     * Disables buttons on the screen 
+     */
     public void disableButtons(){
         System.out.println("Disabled");
         backButton.setTouchable(Touchable.disabled);
     }
 
-
+    /**
+     * Enables buttons on the screen 
+     */
     public void enableButtons(){
         System.out.println("Enabled");
         backButton.setTouchable(Touchable.enabled);
     }
 
+    /**
+     * Sets the previous screen
+     * @param prevScreen Previous screen
+     */
     public void setPrevScreen(ScreenMultiplexer.Screens prevScreen){
         this.previousScreen = prevScreen;
     }
+
+    // Getters and setters
     public GameScreen getGameScreen() {
         return gameScreen;
     }

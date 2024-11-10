@@ -18,6 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 public class MenuScreen extends SuperScreen implements Screen {
 
 
+    /**
+     * Creates a new menu screen
+     */
     public MenuScreen() {
         Gdx.input.setInputProcessor(stage);
 

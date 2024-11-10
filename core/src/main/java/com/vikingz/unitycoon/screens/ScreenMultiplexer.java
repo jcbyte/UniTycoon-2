@@ -3,7 +3,6 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.vikingz.unitycoon.global.GameConfig;
-import com.vikingz.unitycoon.global.GameGlobals;
 
 
 /**
@@ -25,6 +24,9 @@ import com.vikingz.unitycoon.global.GameGlobals;
  */
 public class ScreenMultiplexer {
 
+    /**
+     * This enum contains all of the screens available in the program
+     */
     public enum Screens{
         GAME,
         MENU,
@@ -32,13 +34,20 @@ public class ScreenMultiplexer {
         MAPSELECTION,
     }
 
+    // The main Game that allows us to control input
     private static Game game;
+
+    // All of the screens available
     public static GameScreen gameScreen;
     public static MenuScreen menuScreen;
     public static SettingsScreen settingsScreen;
     public static MapSelectorScreen mapSelectorScreen;
 
 
+    /**
+     * Initializes the Screen Multiplexer
+     * @param newGame Game 
+     */
     public static void init(Game newGame){
 
         game = newGame;
@@ -50,6 +59,10 @@ public class ScreenMultiplexer {
 
     }
 
+    /**
+     * Sets up everything to run a game instance, the changes to the game screen
+     * @param map Map that will be loaded in
+     */
     public static void runGame(String map){
         //This is a cursed way of fixing the fullScreen on startup Bug
         int startHeight = Gdx.graphics.getHeight();
@@ -70,23 +83,38 @@ public class ScreenMultiplexer {
         settingsScreen.setGameScreen(gameScreen);
     }
 
+    /**
+     * Changes the screen to the settings screen
+     * @param prevScreen The screen that the settings screen was invoked from 
+     * so that when the user presses the back button, they will be taken back to where they came from.
+     */
     public static void openSettings(Screens prevScreen){
         settingsScreen.setPrevScreen(prevScreen);
         game.setScreen(settingsScreen);
         settingsScreen.takeInput();
     }
 
+    /**
+     * Stops the game and takes the user back to the main menu
+     */
     public static void closeGame(){
         gameScreen.dispose();
         openMenu();
     }
 
+    /**
+     * Opens the main menu
+     */
     public static void openMenu(){
         menuScreen.dispose();
         menuScreen = new MenuScreen();
         game.setScreen(menuScreen);
     }
 
+    /**
+     * Switches screens 
+     * @param screen The screen you want to switch to
+     */
     public static void switchScreens(Screens screen){
 
         switch (screen) {

@@ -12,6 +12,7 @@ public class TimeUtil {
      * This class contains three attributes secs, mins and hrs.
      * 
      * Only serves as a return type
+     * 
      */
     public static class Time{
 
@@ -31,6 +32,10 @@ public class TimeUtil {
             this.hrs = 0;
         }
 
+        /**
+         * Returns the time in a min:second format where each value will always 
+         * be padded to 2 digits
+         */
         public String toString(){
             return String.format("%02d", mins) + ":" + String.format("%02d", secs);
         }
@@ -44,7 +49,6 @@ public class TimeUtil {
      */
     public static Time secondsToMinSecs(int secs){
         
-
         int m = secs/ 60;
         int s = secs % 60;
 

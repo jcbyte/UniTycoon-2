@@ -34,7 +34,9 @@ public class GameSounds {
         }
     };
 
-    // Plays placed building sound
+    /**
+     * Plays the placed building sound 
+     */
     public static void playPlacedBuilding(){
         int randNum = new Random().nextInt(1, 4);
         switch (randNum) {
@@ -56,8 +58,10 @@ public class GameSounds {
     }
 
 
-
-    // Plays placed error building sound
+    /**
+     * Plays the error sounds when the user tries
+     * placing a building somwhere illegal
+     */
     public static void playPlaceError(){
         int randNum = new Random().nextInt(1, 3);
 
@@ -76,10 +80,18 @@ public class GameSounds {
         }
     }
 
+    /**
+     * Gets the volume
+     * @return Float Volume level
+     */
     public static float getVolume() {
         return volume;
     }
 
+    /**
+     * Sets the volume level
+     * @param volume New volume level
+     */
     public static void setVolume(float volume) {
         GameSounds.volume = volume;
         GameConfig.getInstance().SoundVolumeValue = volume;

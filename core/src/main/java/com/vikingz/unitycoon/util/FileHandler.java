@@ -19,7 +19,11 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
  */
 public class FileHandler {
 
-
+    /**
+     * Loads in the map from a file
+     * @param fileName Name of the file to load in
+     * @return String The map 
+     */
     public static String loadMap(String fileName){
         String mapData = "";
         FileHandle fileHandle = Gdx.files.internal("maps/" + fileName + ".txt");
@@ -42,7 +46,8 @@ public class FileHandler {
     /**
      * Loads Building information maps,
      * into static Dictionaries in BuildingStats
-     * @param fileName String
+     * @param fileName String Name of the file to load
+     * @param textureFileName String Name of the texture file
      */
     public static void loadBuildings(String fileName, String textureFileName)  {
         FileHandle fileHandle = Gdx.files.internal("config/" + fileName + ".json");

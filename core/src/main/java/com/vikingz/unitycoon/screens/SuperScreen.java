@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
@@ -27,9 +28,13 @@ public abstract class SuperScreen {
     private GameSkins skinLoader;
     public Skin skin;
 
+    /**
+     * Defines a Super screen constructor that other buildings
+     * that inherit from this abstract class use as a base case
+     */
     public SuperScreen(){
         camera = new OrthographicCamera();
-        viewport = new FillViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
+        viewport = new FitViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
         stage = new Stage(new ScreenViewport());
 
         batch = new SpriteBatch();
@@ -38,8 +43,10 @@ public abstract class SuperScreen {
 
     }
 
+    /**
+     * Sets the input processor to this screen
+     */
     public void takeInput(){
-
         Gdx.input.setInputProcessor(stage);
     }
 

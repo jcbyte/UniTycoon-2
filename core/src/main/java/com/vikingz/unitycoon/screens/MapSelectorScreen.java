@@ -30,6 +30,9 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
 
     private int mapSelection = 1;
 
+    /**
+     * Creates a new Map selector screen
+     */
     public MapSelectorScreen() {
         super();
 
@@ -121,19 +124,26 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
     }
 
     @Override
+    /**
+     * Renders the stage to the screen
+     * @param delta Time since last frame
+     */
     public void render(float delta) {
         // Clear the screen
         Gdx.gl.glClearColor(25/255f, 25/255f, 25/255f, 1);
         Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
         mapText.setText("Map".concat(Integer.toString(mapSelection)));
 
-
-
-        // Draw the stage (the UI components)
         stage.act(delta);
         stage.draw();
     }
 
+
+    /**
+     * Updates the viewport when the window is resized 
+     * @param width New width
+     * @param height New height
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
