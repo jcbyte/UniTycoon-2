@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Enumeration;
 
 /**
- * This class contains all of the static data of the buildings
- *
- * Ideally we would make all of the data in this class be read in from a file
- *
- *
+ * This class contains all the static data,
+ * or data loaded from a file.
  */
 public class BuildingStats {
 
@@ -29,32 +28,37 @@ public class BuildingStats {
 
     }
 
-    // Buildings available
-    public enum BuildingID {
 
-        // Academic
-        PZA,
-        RCH,
 
-        // Accomodation
-        KATO,
-        LISTER,
 
-        // Recreational
-        YSV, // York sports village
 
-        // Food
-        MCD, // Mc Donalds?
+    /**
+     * dictionaries of all the buildings in files
+     * BuildingNameDict contains the full names of every Building, lookup using BuildingType
+     * BuildingPriceDict contains the price of every building, lookup using BuildingType
+     * BuildingSatisfactionDict contains the satisfaction of every building, lookup using BuildingType
+     * BuildingStudentDict contains the student increase of every building, lookup using BuildingType
+     * BuildingCoinDict contains the coins per second of every building, lookup using BuildingType
+     * BuildingDict contains the ShortHandNames of every building, lookup using BuildingType
+     * BuildingTextureMap contains the positions of every building's Texture,
+     *                           lookup using String of the buildings ShortHandName
+     */
 
-    }
-
-    // Dicts for build menu
+    //Loaded from buildingInfo.json
     public static Dictionary<BuildingType, String[]> BuildingNameDict;
     public static Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict;
     public static Dictionary<BuildingStats.BuildingType, String[]> BuildingSatisfactionDict;
     public static Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict;
     public static Dictionary<BuildingStats.BuildingType, String[]> BuildingCoinDict;
-    public static Dictionary<BuildingStats.BuildingType, BuildingStats.BuildingID[]> BuildingDict;
+    public static Dictionary<BuildingStats.BuildingType, String[]> BuildingDict;
+    public static ArrayList<String> BuildingIDs;
+
+    //Loaded from TextureAtlasMap.json
+    public static Dictionary<String, int[]> BuildingTextureMap;
+
+    //Textures information
+    public static String textureAtlasLocation;
+    public static int atlasBuildingSize = 128;
 
 
     /**
@@ -66,7 +70,7 @@ public class BuildingStats {
      * @return BuildingInfo
      */
     public static BuildingInfo getInfo(BuildingStats.BuildingType buildingType, int index){
-        
+
         int price = 0, student,coins;
         float satisfaction;
 
@@ -100,39 +104,30 @@ public class BuildingStats {
         }
     }
 
-    public static TextureRegion getTextureOfBuilding(BuildingID id){
-        Texture textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildingsAtlas.png")); // Load your 64x64 PNG
-        int atlasBuildingSize = 128;
-        switch (id){
-            // Academic
-            case PZA:
-                return new TextureRegion(textureAtlas, 0, 0,atlasBuildingSize, atlasBuildingSize);
-
-            case RCH:
-                return new TextureRegion(textureAtlas, atlasBuildingSize, 0,atlasBuildingSize, atlasBuildingSize);
-
-            // Academic
-            case KATO:
-                return new TextureRegion(textureAtlas, 0, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize);
-
-            case LISTER:
-                return new TextureRegion(textureAtlas, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize, atlasBuildingSize);
-
-            // Recreational
-            case YSV:
-                return new TextureRegion(textureAtlas, 0, atlasBuildingSize * 2, atlasBuildingSize, atlasBuildingSize);
-
-            // Food
-            case MCD:
-                return new TextureRegion(textureAtlas, 0, atlasBuildingSize * 3, atlasBuildingSize, atlasBuildingSize);
-
-            default:
-                break;
+    /**
+     * This class Creates the Texture Image for the Building
+     * to be drawn with, this uses a lookup Dictionary created from json file.
+     * @param id String name of the building
+     * @return TextureRegion
+     */
+    public static TextureRegion getTextureOfBuilding(String id){
+        Texture textureAtlas = new Texture(Gdx.files.internal(textureAtlasLocation)); // Load your 64x64 PNG
+        try {
+            return new TextureRegion(textureAtlas, atlasBuildingSize * BuildingTextureMap.get(id)[0],
+                atlasBuildingSize * BuildingTextureMap.get(id)[1],
+                atlasBuildingSize, atlasBuildingSize);
         }
-        return null;
+        catch (Exception e){
+            return null;
+        }
     }
 
-    public static TextureRegionDrawable getTextureDrawableOfBuilding(BuildingID id) {
+    /**
+     * Returns a drawable Texture region, used for building ui.
+     * @param id
+     * @return TextureRegionDrawable
+     */
+    public static TextureRegionDrawable getTextureDrawableOfBuilding(String id) {
         return new TextureRegionDrawable(BuildingStats.getTextureOfBuilding(id));
     }
 

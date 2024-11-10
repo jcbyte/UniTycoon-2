@@ -19,8 +19,6 @@ import com.vikingz.unitycoon.util.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vikingz.unitycoon.building.BuildingStats.BuildingDict;
-
 /**
  *  This class is in charge of drawing Buildings in the game.
  *
@@ -187,9 +185,9 @@ public class BuildingRenderer{
 
         isPreviewing = true;
         BuildingInfo newBuilding = BuildingStats.getInfo(buildingType,index);
-        selectedTexture = BuildingStats.getTextureOfBuilding(BuildingDict.get(buildingType)[index]);
+        selectedTexture = BuildingStats.getTextureOfBuilding(BuildingStats.BuildingDict.get(buildingType)[index]);
         if (selectedTexture == null){
-            System.err.println("ERROR: Could not select building: " + BuildingDict.get(buildingType)[index]);
+            System.err.println("ERROR: Could not select building: " + BuildingStats.BuildingDict.get(buildingType)[index]);
         }
         currentBuildingInfo = newBuilding;
     }

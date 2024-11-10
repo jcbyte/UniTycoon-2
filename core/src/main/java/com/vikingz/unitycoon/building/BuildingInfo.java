@@ -1,6 +1,6 @@
 package com.vikingz.unitycoon.building;
 
-import com.vikingz.unitycoon.building.BuildingStats.BuildingID;
+
 import com.vikingz.unitycoon.building.BuildingStats.BuildingType;
 
 /**
@@ -10,7 +10,7 @@ import com.vikingz.unitycoon.building.BuildingStats.BuildingType;
  */
 public class BuildingInfo {
 
-    BuildingID  buildingID;
+    String  buildingID;
     BuildingType buildingType;
     float buildingCost;
 
@@ -33,7 +33,7 @@ public class BuildingInfo {
      * @param numberOfStudents Number of students
      * @param coinsPerSecond Coins per second the building generates
      */
-    public BuildingInfo(BuildingStats.BuildingID  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents, float coinsPerSecond){
+    public BuildingInfo(String  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents, float coinsPerSecond){
         this.buildingID = buildingID;
         this.buildingType = buildingType;
         this.buildingCost = buildingCost;
@@ -46,7 +46,7 @@ public class BuildingInfo {
     }
 
 
-    public BuildingInfo(BuildingStats.BuildingID  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, int numberOfStudents){
+    public BuildingInfo(String  buildingID,  BuildingStats.BuildingType buildingType, float buildingCost, int numberOfStudents){
         this.buildingID = buildingID;
         this.buildingType = buildingType;
         this.buildingCost = buildingCost;
@@ -58,7 +58,7 @@ public class BuildingInfo {
 
     }
 
-    public BuildingInfo(BuildingStats.BuildingID  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents){
+    public BuildingInfo(String  buildingID,  BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents){
         this.buildingID = buildingID;
         this.buildingType = buildingType;
         this.buildingCost = buildingCost;
@@ -70,7 +70,7 @@ public class BuildingInfo {
 
     }
 
-    public BuildingInfo(BuildingStats.BuildingID  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier){
+    public BuildingInfo(String  buildingID,  BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier){
 
         this.buildingID = buildingID;
         this.buildingType = buildingType;
@@ -83,7 +83,7 @@ public class BuildingInfo {
 
     }
 
-    public BuildingInfo(BuildingStats.BuildingID  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, float coinsPerSecond){
+    public BuildingInfo(String  buildingID,  BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, float coinsPerSecond){
         this.buildingID = buildingID;
         this.buildingType = buildingType;
         this.buildingCost = buildingCost;
@@ -101,17 +101,17 @@ public class BuildingInfo {
 
     /**
      * Gets Building ID ENUM
-     * @return BuildingID
+     * @return string of BuildingID
      */
-    public BuildingID getBuildingID() {
+    public String getBuildingID() {
         return buildingID;
     }
 
     /**
      * Sets the Building ID ENUM
-     * @param buildingID
+     * @param buildingID of BuildingID
      */
-    public void setBuildingID(BuildingStats.BuildingID buildingID) {
+    public void setBuildingID(String buildingID) {
         this.buildingID = buildingID;
     }
 

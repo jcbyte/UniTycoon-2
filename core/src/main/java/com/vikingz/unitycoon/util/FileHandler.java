@@ -4,13 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.vikingz.unitycoon.building.BuildingStats;
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Dictionary;
-import java.util.Hashtable;
+
+import java.util.*;
 
 import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
@@ -48,12 +44,14 @@ public class FileHandler {
      * into static Dictionaries in BuildingStats
      * @param fileName String
      */
-    public static void loadBuildings(String fileName)  {
+    public static void loadBuildings(String fileName, String textureFileName)  {
         FileHandle fileHandle = Gdx.files.internal("config/" + fileName + ".json");
-        if (fileHandle.exists()) {
+        FileHandle textureFileHandle = Gdx.files.internal("config/" + textureFileName + ".json");
+        if (fileHandle.exists() && textureFileHandle.exists()) {
 
             //JSON HANDLE
             String fileRead = fileHandle.readString();
+            String textureFileRead = textureFileHandle.readString();
             String[] arrayDict = fileRead.split("\n");
             Gson gson = new Gson();
             if (arrayDict.length != 6){
@@ -112,15 +110,45 @@ public class FileHandler {
                 put(NONE, coinParser.NONE);
             }};
 
-            //ID
-            BuildingParseId idParser = gson.fromJson(arrayDict[5],BuildingParseId.class);
-            BuildingStats.BuildingDict = new Hashtable<BuildingStats.BuildingType, BuildingStats.BuildingID[]>(){{
+
+
+            //IDs
+            BuildingParse idParser = gson.fromJson(arrayDict[5],BuildingParse.class);
+            BuildingStats.BuildingDict = new Hashtable<BuildingStats.BuildingType, String[]>(){{
                 put(ACADEMIC, idParser.ACADEMIC);
                 put(ACCOMODATION, idParser.ACCOMODATION);
                 put(RECREATIONAL, idParser.RECREATIONAL);
                 put(FOOD, idParser.FOOD);
                 put(NONE, idParser.NONE);
             }};
+
+            //passing child elements from types
+            Enumeration<String[]> BuildingIDsIterator = BuildingStats.BuildingDict.elements();
+            BuildingStats.BuildingIDs = new ArrayList<String>();
+            while (BuildingIDsIterator.hasMoreElements()){
+                for (String item :BuildingIDsIterator.nextElement()) {
+                    if (item != null){
+                        BuildingStats.BuildingIDs.add(item);
+                    }
+                }
+            }
+
+
+            //Textures
+            BuildingStats.BuildingTextureMap = new Hashtable<String, int[]>();
+            TextureParse textureParse = gson.fromJson(textureFileRead,TextureParse.class);
+            BuildingStats.textureAtlasLocation = textureParse.textureAtlasLocation;
+            BuildingStats.atlasBuildingSize = textureParse.atlasBuildingSize;
+            System.out.println(textureParse.atlasBuildingSize);
+            System.out.println(textureParse.buildingPos.toString());
+            System.out.println(textureParse.buildings.toString());
+            for (int i=0;i<textureParse.buildings.size();i++){
+                int[] convertValue = new int[]{Integer.parseInt(textureParse.buildingPos.get(i).split(",")[0]),
+                                                Integer.parseInt(textureParse.buildingPos.get(i).split(",")[1]),
+                };
+                BuildingStats.BuildingTextureMap.put(textureParse.buildings.get(i),convertValue);
+            }
+
 
             System.out.println("Successfully Loaded Buildings");
 
@@ -143,12 +171,14 @@ class BuildingParse {
     public String FOOD[];
     public String NONE[];
 }
-class BuildingParseId {
 
-    public BuildingStats.BuildingID ACADEMIC[];
-    public BuildingStats.BuildingID ACCOMODATION[];
-    public BuildingStats.BuildingID RECREATIONAL[];
-    public BuildingStats.BuildingID FOOD[];
-    public BuildingStats.BuildingID NONE[];
+class TextureParse {
+    public String textureAtlasLocation ="textureAtlases/buildingsAtlas.png";
+    public int atlasBuildingSize = 128;
+    ArrayList<String> buildings;
+    ArrayList<String> buildingPos;
+
 }
+
+
 
