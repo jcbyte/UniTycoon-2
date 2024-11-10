@@ -8,6 +8,7 @@ import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
@@ -26,6 +27,7 @@ import com.vikingz.unitycoon.render.UIRenderer;
  */
 public class GameScreen extends SuperScreen implements Screen {
 
+    public boolean fullScreen;
     private boolean isPaused;
 
     // Counter variables
@@ -35,6 +37,10 @@ public class GameScreen extends SuperScreen implements Screen {
     GameRenderer gameRenderer;
     UIRenderer uiRenderer;
 
+    public int startWidth;
+    public int startHeight;
+
+    public boolean FirstTick;
 
 
     /**
@@ -64,6 +70,7 @@ public class GameScreen extends SuperScreen implements Screen {
     @Override
     public void show() {
         // Initialize game objects here
+
     }
 
     /**
@@ -111,11 +118,26 @@ public class GameScreen extends SuperScreen implements Screen {
             endGame();
         }
 
+
+
+
+
         // Draw
         batch.begin();
         gameRenderer.render(delta);
         uiRenderer.render(delta);
         batch.end();
+
+        //resizes to previous starting resolution
+        if (FirstTick){
+            if (fullScreen){
+                GameConfigManager.setFullScreen();
+            }
+            else {
+                Gdx.graphics.setWindowedMode(startWidth, startHeight);
+            }
+            FirstTick = false;
+        }
     }
 
 
@@ -126,6 +148,7 @@ public class GameScreen extends SuperScreen implements Screen {
     public void resize(int width, int height) {
         uiRenderer.resize(width, height);
         gameRenderer.resize(width, height);
+
 
     }
 
