@@ -15,10 +15,8 @@ public class GameMusic {
     public static float volume = GameConfig.getInstance().MusicVolumeValue;
 
     public void init() {
-
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/Background_Music.ogg"));
         backgroundMusic.setLooping(true);
-        //backgroundMusic.setVolume(50f);
     }
 
 
