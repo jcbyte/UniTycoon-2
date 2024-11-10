@@ -23,6 +23,9 @@ jobs:
           distribution: 'temurin' # Here we are using temurin java distribution but can be customized depends on the requirement
           java-version: '17' # Here we are using java 17 but can be customized depends on the requirement
           cache: 'gradle' # Here are enabling gradle cache to cache gradle wrappers, dependencies etc. It can be disabled by simply removing the line
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       - name: Run all tests
         run: ./gradlew clean check --no-daemon
         working-directory: ${{ github.workspace }}/${{ env.SERVICE_NAME }}/
@@ -32,6 +35,8 @@ jobs:
     outputs:
       PUBLISH_NEW_VERSION: ${{ steps.determine_should_publish_new_version.outputs.PUBLISH_NEW_VERSION }}
     steps:
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       - name: Checkout local repository
         uses: actions/checkout@v3
       - name: Determine should publish docker image
@@ -60,6 +65,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       - name: make DIST jar
         run: ./gradlew lwjgl3:dist --no-daemon
       - name: publish jar
