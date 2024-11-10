@@ -27,7 +27,7 @@ jobs:
           java-version: '17'
           cache: 'gradle'
       - name: Make gradlew executable
-        run: chmod +x ./gradlew
+        run: chmod +x gradlew
       - name: make DIST jar
         run: ./gradlew lwjgl3:dist --no-daemon
       - name: publish jar
