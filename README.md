@@ -9,7 +9,7 @@ This is our game for ENG1 software engineering project
 ```
 ./gradlew lwjgl3:dist 
 ```
-```aidl
+```
 gradlew.bat lwjgl3:dist
 ```
 will generate a jar file with the required assets inside:
@@ -22,7 +22,7 @@ Location:
 ```
 ./gradlew lwjgl3:run
 ```
-```aidl
+```
 gradlew.bat lwjgl3:run
 ```
 
