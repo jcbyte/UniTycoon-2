@@ -1,16 +1,16 @@
 package com.vikingz.unitycoon.util;
 
 /**
- * This class represents a simple point in 2D space 
- * 
+ * This class represents a simple point in 2D space
+ *
  * Mainly used as a return type for collision and translation
  * calculations throughout the project
  */
 public class Point {
-    
+
     /**
-     * Makes it easier to create fucntion that returns both x and y
-     * such as the snapToGrid function in BuldingsRenderer.
+     * Makes it easier to create function that returns both x and y
+     * such as the snapToGrid function in BuildingsRenderer.
      */
     float x, y;
 
@@ -36,7 +36,7 @@ public class Point {
 
 
     // Getters and setters
-    
+
     public float getX() {
         return x;
     }

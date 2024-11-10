@@ -8,14 +8,14 @@ import com.vikingz.unitycoon.global.GameConfig;
 /**
  * This class allows us to change screens anywhere within the project.
  *
- * On init(Game newGame) this class instanciates all of the classes so that
+ * On init(Game newGame) this class instantiates all the classes so that
  * they are ready in memory and waiting to be switched to.
  *
  * This class also contains the enum Screens which is what is used
- * to differenciate between the diferent screens available so that when the
+ * to differentiate between the different screens available so that when the
  * user wants to change screen all they have to do is call
  * ScreenMultiplexer.switchScreens(Screens screen), which is much easier than
- * having to keep track at which point each screen is instanciated.
+ * having to keep track at which point each screen is instantiated.
  *
  * This class also enables us to access the settings screen from any screen in the game
  * as when the settings screen is displayed, this class keeps track from which screen
@@ -25,7 +25,7 @@ import com.vikingz.unitycoon.global.GameConfig;
 public class ScreenMultiplexer {
 
     /**
-     * This enum contains all of the screens available in the program
+     * This enum contains all the screens available in the program
      */
     public enum Screens{
         GAME,
@@ -37,7 +37,7 @@ public class ScreenMultiplexer {
     // The main Game that allows us to control input
     private static Game game;
 
-    // All of the screens available
+    // All the screens available
     public static GameScreen gameScreen;
     public static MenuScreen menuScreen;
     public static SettingsScreen settingsScreen;
@@ -46,7 +46,7 @@ public class ScreenMultiplexer {
 
     /**
      * Initializes the Screen Multiplexer
-     * @param newGame Game 
+     * @param newGame Game
      */
     public static void init(Game newGame){
 
@@ -73,11 +73,17 @@ public class ScreenMultiplexer {
             Gdx.graphics.setWindowedMode(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
             firstTickNeed = true;
         }
+
+        //Creates new GameScreen
         gameScreen = new GameScreen(map);
+
+        //Sets previousValues
         gameScreen.startHeight = startHeight;
         gameScreen.startWidth = startWidth;
         gameScreen.fullScreen = fullScreen;
         gameScreen.FirstTick = firstTickNeed;
+
+        //Switches to gameScreen
         gameScreen.takeInput();
         game.setScreen(gameScreen);
         settingsScreen.setGameScreen(gameScreen);
@@ -85,7 +91,7 @@ public class ScreenMultiplexer {
 
     /**
      * Changes the screen to the settings screen
-     * @param prevScreen The screen that the settings screen was invoked from 
+     * @param prevScreen The screen that the settings screen was invoked from
      * so that when the user presses the back button, they will be taken back to where they came from.
      */
     public static void openSettings(Screens prevScreen){
@@ -112,34 +118,30 @@ public class ScreenMultiplexer {
     }
 
     /**
-     * Switches screens 
+     * Switches screens
      * @param screen The screen you want to switch to
      */
     public static void switchScreens(Screens screen){
 
         switch (screen) {
-            case GAME:
+            case GAME -> {
                 game.setScreen(gameScreen);
                 gameScreen.takeInput();
-                break;
-
-            case SETTINGS:
+            }
+            case SETTINGS -> {
                 game.setScreen(settingsScreen);
                 settingsScreen.takeInput();
-                break;
-
-            case MENU:
+            }
+            case MENU -> {
                 game.setScreen(menuScreen);
                 menuScreen.takeInput();
-                break;
-
-            case MAPSELECTION:
+            }
+            case MAPSELECTION -> {
                 game.setScreen(mapSelectorScreen);
                 mapSelectorScreen.takeInput();
-                break;
-
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 

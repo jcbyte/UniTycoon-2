@@ -16,18 +16,19 @@ import com.vikingz.unitycoon.util.TimeUtil;
 
 /**
  * This class is used for drawing game stats to the screen.
- * 
- * This class contains all of the labels that are on the 
- * top right of the screen that display the users balance, 
+ *
+ * This class contains all the labels that are on the
+ * top right of the screen that display the users balance,
  * satisfaction etc.
  */
 public class StatsRenderer {
 
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private Skin skin;
-    private Stage stage;
+    //Used to render UI
+    private final SpriteBatch batch;
+    private final BitmapFont font;
+    private final Stage stage;
 
+    //Used to resize UI renderer to new screen size
     float width;
     float height;
 
@@ -56,7 +57,8 @@ public class StatsRenderer {
     String timerStr;
     Label timer;
 
-    List<Label> lables;
+    //Stores all labels
+    List<Label> labels;
 
     /**
      * Creates a new stats renderer
@@ -64,15 +66,13 @@ public class StatsRenderer {
      */
     public StatsRenderer(Skin skin) {
 
-        this.skin = skin;
-
         batch = new SpriteBatch();
         stage = new Stage();
         font = new BitmapFont();
         font.getData().setScale(1.5f);
-        lables = new ArrayList<>();
+        labels = new ArrayList<>();
 
-        // Lable strings
+        // Label strings
         balStr = "Balance";
         studentsStr = "Students";
         satisStr = "satisfaction";
@@ -83,26 +83,26 @@ public class StatsRenderer {
         timerStr = "Timer: ";
 
         // Creating labels
-        balance = new Label(balStr, this.skin);
-        students = new Label(studentsStr, this.skin);
-        satisfaction = new Label(satisStr, this.skin);
-        accomBuildings = new Label(accomBuildingsStr, this.skin);
-        academBuildings = new Label(academBuildingsStr, this.skin);
-        recBuildings = new Label(recBuildingsStr, this.skin);
-        foodBuildings = new Label(foodBuildingsStr, this.skin);
-        timer = new Label(timerStr, this.skin);
+        balance = new Label(balStr, skin);
+        students = new Label(studentsStr, skin);
+        satisfaction = new Label(satisStr, skin);
+        accomBuildings = new Label(accomBuildingsStr, skin);
+        academBuildings = new Label(academBuildingsStr, skin);
+        recBuildings = new Label(recBuildingsStr, skin);
+        foodBuildings = new Label(foodBuildingsStr, skin);
+        timer = new Label(timerStr, skin);
 
         // Adding labels to a list
-        lables.add(balance);
-        lables.add(students);
-        lables.add(satisfaction);
-        lables.add(accomBuildings);
-        lables.add(academBuildings);
-        lables.add(recBuildings);
-        lables.add(foodBuildings);
-        lables.add(timer);
+        labels.add(balance);
+        labels.add(students);
+        labels.add(satisfaction);
+        labels.add(accomBuildings);
+        labels.add(academBuildings);
+        labels.add(recBuildings);
+        labels.add(foodBuildings);
+        labels.add(timer);
 
-        for(Label lbl: lables){
+        for(Label lbl: labels){
             lbl.setColor(Color.BLACK);
             lbl.setFontScale(1.5f);
         }
@@ -182,6 +182,10 @@ public class StatsRenderer {
         this.width = width;
         this.height = height;
     }
+
+    /**
+     * disposes stats being drawn for garbage collection
+     */
     public void dispose(){
         stage.dispose();
         batch.dispose();

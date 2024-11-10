@@ -32,6 +32,10 @@ public class GameConfigManager {
         Gdx.graphics.setWindowedMode(GameConfig.getInstance().getWindowWidth() ,GameConfig.getInstance().getWindowHeight());
     }
 
+    /**
+     * Returns the display mode string output of the fullScreen or gets current windowed resolution
+     * @return String WIDTH x HEIGHT bpp hz
+     */
     public static String CurrentWindowSize(){
         Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
         if (Gdx.graphics.isFullscreen()) return displayMode.toString();
@@ -41,7 +45,8 @@ public class GameConfigManager {
 
 
     /**
-     * Saves game config
+     * Saves GameConfig Object to binary file,
+     * to save settings and high score.
      */
     public static void saveGameConfig(){
         try {
@@ -62,11 +67,12 @@ public class GameConfigManager {
 
 
     /**
-     * Loads game config
+     * Loads GameConfig Object from binary file,
+     * to load existing settings and high score.
      */
     public static void loadGameConfig(){
 
-        GameConfig conf = null;
+        GameConfig conf;
         try {
             FileInputStream fileIn = new FileInputStream("config/gameconf.bin");
             ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -85,15 +91,10 @@ public class GameConfigManager {
         } catch (IOException i) {
             System.out.println("FILE NOT FOUND");
             //i.printStackTrace();
-            return;
         } catch (ClassNotFoundException c) {
             System.out.println("GameConfig class not found");
             //c.printStackTrace();
-            return;
         }
-
-
-
     }
 
 

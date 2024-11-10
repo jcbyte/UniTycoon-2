@@ -15,7 +15,7 @@ import com.vikingz.unitycoon.util.StatsCalculator;
  */
 public class FoodBuilding extends Building{
 
-    private float coinsPerSecond;
+    private final float coinsPerSecond;
 
     /**
      * Creates new food building
@@ -23,7 +23,7 @@ public class FoodBuilding extends Building{
      * @param x X
      * @param y Y
      * @param buildingInfo Building Info
-     * @param coinsPerSecond Ammount of coins this building make per second
+     * @param coinsPerSecond Amount of coins this building make per second
      */
     public FoodBuilding(TextureRegion texture, float x, float y, BuildingInfo buildingInfo, float coinsPerSecond){
         super(texture, x, y, buildingInfo);
@@ -35,7 +35,7 @@ public class FoodBuilding extends Building{
      * @param texture Texture
      * @param p Point p
      * @param buildingInfo Building Info
-     * @param coinsPerSecond Ammount of coins this building make per second
+     * @param coinsPerSecond Amount of coins this building make per second
      */
     public FoodBuilding(TextureRegion texture, Point p, BuildingInfo buildingInfo, float coinsPerSecond){
         super(texture, p, buildingInfo);

@@ -10,11 +10,14 @@ import com.vikingz.unitycoon.global.GameConfig;
  */
 public class GameMusic {
 
+    //Object that holds backgroundMusic to be played
     private static Music backgroundMusic;
+
+    //Sets the volume of the background music
     public static float volume = GameConfig.getInstance().MusicVolumeValue;
 
     /**
-     * Initialises the Game music class by loading in the 
+     * Initialises the Game music class by loading in the
      * sound files and settings initial settings
      */
     public void init() {
@@ -23,7 +26,7 @@ public class GameMusic {
     }
 
     /**
-     * Plays the game music 
+     * Plays the game music
      */
     public static void play(){
         backgroundMusic.setVolume(volume);

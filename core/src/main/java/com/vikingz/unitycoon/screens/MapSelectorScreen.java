@@ -13,21 +13,23 @@ import com.vikingz.unitycoon.global.GameGlobals;
 /**
  * This class represents the screen where the user chooses the
  * map they want to play.
- * 
+ *
  * This class contains a bunch of buttons that allow the user to
- * cycle through the different maps available as well as go back 
+ * cycle through the different maps available as well as go back
  * to the main menu or play game.
- * 
+ *
  * Inherits Screen, SuperScreen
- * 
+ *
  */
 public class MapSelectorScreen extends SuperScreen implements Screen {
 
-    private TextField mapText;
-    private TextureRegionDrawable[] mapArray;
+    //Text that shows which map is currently selected
+    private final TextField mapText;
 
-    // Map images (for example purposes, add your own map textures)
+    //List of map Image that are used to set the preview image
+    private final TextureRegionDrawable[] mapArray;
 
+    //Current map Selected
     private int mapSelection = 1;
 
     /**
@@ -122,12 +124,11 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
     public void show() {
         // This method is called when the screen is shown
     }
-
-    @Override
     /**
      * Renders the stage to the screen
      * @param delta Time since last frame
      */
+    @Override
     public void render(float delta) {
         // Clear the screen
         Gdx.gl.glClearColor(25/255f, 25/255f, 25/255f, 1);
@@ -140,7 +141,7 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
 
 
     /**
-     * Updates the viewport when the window is resized 
+     * Updates the viewport when the window is resized
      * @param width New width
      * @param height New height
      */
@@ -158,6 +159,9 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
     @Override
     public void hide() { }
 
+    /**
+     * disposes MapScreen for garbage collection
+     */
     @Override
     public void dispose() {
         // Dispose of resources

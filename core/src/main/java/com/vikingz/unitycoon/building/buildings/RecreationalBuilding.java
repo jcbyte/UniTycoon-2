@@ -14,7 +14,7 @@ import com.vikingz.unitycoon.util.StatsCalculator;
  */
 public class RecreationalBuilding extends Building{
 
-    private float coinsPerSecond;
+    private final float coinsPerSecond;
 
     /**
      * Creates a new Recreational Building
@@ -22,7 +22,7 @@ public class RecreationalBuilding extends Building{
      * @param x X
      * @param y Y
      * @param buildingInfo Building Info
-     * @param coinsPerSecond The ammount of coins this building makes per second
+     * @param coinsPerSecond The amount of coins this building makes per second
      */
     public RecreationalBuilding(TextureRegion texture, float x, float y, BuildingInfo buildingInfo, float coinsPerSecond){
         super(texture, x, y, buildingInfo);
@@ -33,7 +33,7 @@ public class RecreationalBuilding extends Building{
      * @param texture Texture
      * @param p Point p
      * @param buildingInfo Building Info
-     * @param coinsPerSecond The ammount of coins this building makes per second
+     * @param coinsPerSecond The amount of coins this building makes per second
      */
     public RecreationalBuilding(TextureRegion texture, Point p, BuildingInfo buildingInfo, float coinsPerSecond){
         super(texture, p, buildingInfo);

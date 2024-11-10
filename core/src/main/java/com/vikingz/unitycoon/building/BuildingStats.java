@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.Enumeration;
 
 /**
  * This class contains all the static data,
@@ -65,21 +64,22 @@ public class BuildingStats {
      * Uses the params to lookup and convert values
      * into creating a new BuildingInfo Object
      * using the lookup dictionaries
-     * @param buildingType
-     * @param index
+     * @param buildingType contains Type of building from BuildingStats
+     * @param index int contains the index of which building is being select from Dictionary
      * @return BuildingInfo
      */
     public static BuildingInfo getInfo(BuildingStats.BuildingType buildingType, int index){
 
-        int price = 0, student,coins;
+        int price, student,coins;
         float satisfaction;
 
+
         //price
-        try {Integer.parseInt(BuildingPriceDict.get(buildingType)[index]);}
+        try {price = Integer.parseInt(BuildingPriceDict.get(buildingType)[index]);}
         catch (Exception e){price = 100;}
 
         //Satisfaction
-        try {satisfaction = Float.valueOf(BuildingSatisfactionDict.get(buildingType)[index]);}
+        try {satisfaction = Float.parseFloat(BuildingSatisfactionDict.get(buildingType)[index]);}
         catch (Exception e){satisfaction = 0f;}
 
         //Student
@@ -124,7 +124,7 @@ public class BuildingStats {
 
     /**
      * Returns a drawable Texture region, used for building ui.
-     * @param id
+     * @param id Selects which building is being used the building StringID
      * @return TextureRegionDrawable
      */
     public static TextureRegionDrawable getTextureDrawableOfBuilding(String id) {

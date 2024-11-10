@@ -9,30 +9,29 @@ and allow us to make changes without needing to edit every ui element.
 
  */
 public class GameSkins {
-    
-    // Skins
+
+    // Skins loaded from assets
     private final Skin defaultSkin;
     private final Skin quantumSkin;
 
     /**
-     * Creats a new GameSkins instance, reads skins from asset folder
+     * Constructor creates and loads GameSkins from assets files
      */
     public GameSkins(){
-        defaultSkin = new Skin(Gdx.files.internal("glassy-ui/skin/glassy-ui.json")); //Default Theme
-        quantumSkin = new Skin(Gdx.files.internal("glassy-ui/skin/glassy-ui.json")); //Default Theme
-        //quantumSkin = new Skin(Gdx.files.internal("quantum-ui/skin/quantum-horizon-ui.json")); //Quantum Theme
+        defaultSkin = new Skin(Gdx.files.internal("glassy-ui/skin/glassy-ui.json")); //Default Theme Glassy ui
+        quantumSkin = new Skin(Gdx.files.internal("quantum-ui/skin/quantum-horizon-ui.json")); //Theme Quantum Horizon ui
     }
 
 
     //Getters
 
 
-    //Default Getter
+    //Default Skin Getter
     public Skin getDefaultSkin(){
         return defaultSkin;
     }
 
-    //Quantum Getter
+    //Quantum Skin Getter
     public Skin getQuantumSkin(){
         return quantumSkin;
     }

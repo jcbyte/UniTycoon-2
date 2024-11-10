@@ -14,9 +14,9 @@ import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
 
 /**
- * This is the main game class from which the game is ran.
+ * This is the main game class from which the game is run.
  *
- * This game instanciates the 2 renderers which are the GameRenderer
+ * This game instantiates the 2 renderers which are the GameRenderer
  * and the UIRenderer, as well as contains the game loop that control how the game
  * runs.
  *
@@ -27,7 +27,10 @@ import com.vikingz.unitycoon.render.UIRenderer;
  */
 public class GameScreen extends SuperScreen implements Screen {
 
+    //Determines if the game had been loaded from fullScreen
     public boolean fullScreen;
+
+    //determines if the game is paused
     private boolean isPaused;
 
     // Counter variables
@@ -37,9 +40,11 @@ public class GameScreen extends SuperScreen implements Screen {
     GameRenderer gameRenderer;
     UIRenderer uiRenderer;
 
+    //Used to fix incorrect initial Renderer size
     public int startWidth;
     public int startHeight;
 
+    //Determines if first tick of game has passed
     public boolean FirstTick;
 
 
@@ -180,6 +185,10 @@ public class GameScreen extends SuperScreen implements Screen {
     @Override
     public void hide() { }
 
+
+    /**
+     * disposes Renderers being drawn for garbage collection
+     */
     @Override
     public void dispose() {
         batch.dispose();
@@ -187,11 +196,18 @@ public class GameScreen extends SuperScreen implements Screen {
         uiRenderer.dispose();
     }
 
+    /**
+     * Sets ui Renderer to having input control
+     */
     @Override
     public void takeInput() {
         uiRenderer.takeInput();
     }
 
+    /**
+     * Sets the game to be paused
+     * @param isPaused boolean of if the game is paused
+     */
     public void setPaused(boolean isPaused){
         this.isPaused = isPaused;
     }

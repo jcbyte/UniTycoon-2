@@ -14,7 +14,7 @@ import com.vikingz.unitycoon.util.Point;
  */
 public class AccommodationBuilding extends Building{
 
-    private int numberOfStudents;
+    private final int numberOfStudents;
 
     /**
      * Creates a new Acommodation Building

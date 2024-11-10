@@ -3,7 +3,7 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -15,32 +15,35 @@ import com.vikingz.unitycoon.util.GameSounds;
 
 /**
  * This screen represents the settings screen in the game
- * 
+ *
  * It contains multiple buttons and slider which edit different game settings
- * 
+ *
  * Inherits Screen, SuperScreen
  */
 public class SettingsScreen extends SuperScreen implements Screen {
 
 
     // Components on the settings screen
-    private Label resolutionLabel;
+    private final Label resolutionLabel;
     private String resolutionString;
     private String musicVolume;
     private String soundVolume;
 
-    private Slider SoundVolumeSlider;
-    private Label SoundVolumeLabel;
-    private Slider MusicVolumeSlider;
-    private Label MusicVolumeLabel;
+    //Music and Sounds Components
+    private final Slider SoundVolumeSlider;
+    private final Label SoundVolumeLabel;
+    private final Slider MusicVolumeSlider;
+    private final Label MusicVolumeLabel;
 
+    //Stores the previous screen before settings
     private ScreenMultiplexer.Screens previousScreen;
 
-    private TextButton backButton;
-    private TextButton quitButton;
-    private TextButton fullscreenButton;
-    private TextButton windowButton;
-    private TextButton saveGameConfigButton;
+    //Button that fullscreen game
+    private final TextButton fullscreenButton;
+    //Button that makes the game window
+    private final TextButton windowButton;
+    //Saves the configuration of GameConfig
+    private final TextButton saveGameConfigButton;
 
     private GameScreen gameScreen;
 
@@ -59,19 +62,19 @@ public class SettingsScreen extends SuperScreen implements Screen {
         SoundVolumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
         SoundVolumeSlider.setValue(GameSounds.getVolume());
         SoundVolumeLabel = new Label(soundVolume, skin);
-        this.soundVolume = "Sound Volume: " + String.valueOf(SoundVolumeSlider.getValue());
+        this.soundVolume = "Sound Volume: " + SoundVolumeSlider.getValue();
 
         // Create Music volume slider
         MusicVolumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
         MusicVolumeSlider.setValue(GameMusic.getVolume());
         MusicVolumeLabel = new Label(soundVolume, skin);
-        this.musicVolume = "Music Volume: " + String.valueOf(MusicVolumeSlider.getValue());
+        this.musicVolume = "Music Volume: " + MusicVolumeSlider.getValue();
 
 
-        // Adds event listeners to buttons 
-        
+        // Adds event listeners to buttons
+
         // Back button to return to MenuScreen
-        backButton = new TextButton("Back", skin);
+        TextButton backButton = new TextButton("Back", skin);
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -79,7 +82,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
             }
         });
 
-        quitButton = new TextButton("Quit", skin);
+        TextButton quitButton = new TextButton("Quit", skin);
         quitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -195,8 +198,8 @@ public class SettingsScreen extends SuperScreen implements Screen {
             goBack();
         }
 
-        soundVolume = "Sound Volume: " + String.valueOf(Math.round(SoundVolumeSlider.getValue()*10));
-        musicVolume = "Music Volume: " + String.valueOf(Math.round(MusicVolumeSlider.getValue()*10));
+        soundVolume = "Sound Volume: " + Math.round(SoundVolumeSlider.getValue() * 10);
+        musicVolume = "Music Volume: " + Math.round(MusicVolumeSlider.getValue() * 10);
 
         GameSounds.setVolume(SoundVolumeSlider.getValue());
         GameMusic.setVolume(MusicVolumeSlider.getValue());
@@ -209,6 +212,12 @@ public class SettingsScreen extends SuperScreen implements Screen {
         stage.draw();
     }
 
+    /**
+     * Changes SettingScreen to new resolution,
+     * and updates resolutionText
+     * @param width int resolution
+     * @param height int resolution
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
@@ -224,6 +233,9 @@ public class SettingsScreen extends SuperScreen implements Screen {
     @Override
     public void hide() { }
 
+    /**
+     * Disposes SettingsScreen for garbage collection
+     */
     @Override
     public void dispose() {
 
@@ -232,32 +244,11 @@ public class SettingsScreen extends SuperScreen implements Screen {
     }
 
     /**
-     * Disables buttons on the screen 
-     */
-    public void disableButtons(){
-        System.out.println("Disabled");
-        backButton.setTouchable(Touchable.disabled);
-    }
-
-    /**
-     * Enables buttons on the screen 
-     */
-    public void enableButtons(){
-        System.out.println("Enabled");
-        backButton.setTouchable(Touchable.enabled);
-    }
-
-    /**
      * Sets the previous screen
      * @param prevScreen Previous screen
      */
     public void setPrevScreen(ScreenMultiplexer.Screens prevScreen){
         this.previousScreen = prevScreen;
-    }
-
-    // Getters and setters
-    public GameScreen getGameScreen() {
-        return gameScreen;
     }
 
     public void setGameScreen(GameScreen gameScreen) {

@@ -7,17 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.BuildingRenderer;
-
-import java.util.Dictionary;
 
 import static com.vikingz.unitycoon.building.BuildingStats.BuildingCoinDict;
 import static com.vikingz.unitycoon.building.BuildingStats.BuildingSatisfactionDict;
@@ -35,25 +30,27 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
  */
 public class BuildMenu{
 
+    //renders buildings and handles placing them
     private final BuildingRenderer buildingRenderer;
-    private Stage stage;
-    private Skin skin;
-    private Texture textureAtlas;
-    private boolean windowActive = false;
-    private int atlasTileSize = 64;
-    private int MENU_WINDOW_WIDTH = 1000;
-    private int MENU_WINDOW_HEIGHT = 800;
 
+    //the stage where the menu will be added to
+    private final Stage stage;
+
+    //The skin of the window
+    private final Skin skin;
+
+    //Determines if there is already an active window open
+    private boolean windowActive = false;
+
+    //Allows BuildMenu to be placed in the center
     private int width = GameConfig.getInstance().getWindowWidth();
     private int height = GameConfig.getInstance().getWindowHeight();
 
+    //Current displayed in game Menu
     private Window currentMenu;
 
-
-
-
-
-
+    //Selects which building of BuildingType,
+    //should be displayed currently
     private int index = 0;
 
     /**
@@ -70,17 +67,20 @@ public class BuildMenu{
         this.skin = skin;
 
 
-        textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
+        //Texture atlas of building menu bar
+        Texture textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
 
-        TextureRegion btn1Texture = new TextureRegion(textureAtlas, 0, 0,                     atlasTileSize, atlasTileSize);
-        TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0,            atlasTileSize, atlasTileSize);
-        TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0,    atlasTileSize, atlasTileSize);
-        TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0,         atlasTileSize, atlasTileSize);
+        //Sets the pixel size of tiles used for build menu bar
+        int atlasTileSize = 64;
+        TextureRegion btn1Texture = new TextureRegion(textureAtlas, 0, 0, atlasTileSize, atlasTileSize);
+        TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0, atlasTileSize, atlasTileSize);
+        TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0, atlasTileSize, atlasTileSize);
+        TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0, atlasTileSize, atlasTileSize);
 
-        TextureRegion btn1Texture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize,                     atlasTileSize, atlasTileSize);
-        TextureRegion btn2Texture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize,            atlasTileSize, atlasTileSize);
-        TextureRegion btn3Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize,    atlasTileSize, atlasTileSize);
-        TextureRegion btn4Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize,         atlasTileSize, atlasTileSize);
+        TextureRegion btn1Texture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion btn2Texture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion btn3Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion btn4Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize, atlasTileSize, atlasTileSize);
 
         // Create ImageButtons
         ImageButton btn1 = new ImageButton(new ImageButton.ImageButtonStyle());
@@ -156,10 +156,10 @@ public class BuildMenu{
 
 
     /**
-     * Creats a new window and sets up all of the contents of the window
+     * Creates a new window and sets up all of the contents of the window
      * so that when the user presses one of the buttons at the bottom of the game
      * screen the corresponding menu is shown.
-     * @param buildingType
+     * @param buildingType contains Type of building from BuildingStats
      */
     private void showMenu(BuildingStats.BuildingType buildingType) {
         // Create a window (menu)
@@ -280,6 +280,9 @@ public class BuildMenu{
         window.add(closeButton);
 
         // Set size and position of the window
+        //Size of the window
+        int MENU_WINDOW_WIDTH = 1000;
+        int MENU_WINDOW_HEIGHT = 800;
         window.setSize(MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);
         window.setPosition(this.width / 2f - (MENU_WINDOW_WIDTH / 2), this.height / 2f - (MENU_WINDOW_HEIGHT / 2));
 
@@ -290,13 +293,13 @@ public class BuildMenu{
 
     /**
      * Sets the text of each label to current index
-     * @param buildingNameLabel
-     * @param buildingType
-     * @param buildingPrice
-     * @param buildingSatisfaction
-     * @param buildingStudent
-     * @param buildingCoins
-     * @param buildingImage
+     * @param buildingNameLabel Name Of building
+     * @param buildingType Type of Building used, for dictionary lookup
+     * @param buildingPrice Price of building
+     * @param buildingSatisfaction Satisfaction rating of building
+     * @param buildingStudent Student space of building
+     * @param buildingCoins coin generated per second by building
+     * @param buildingImage Image of building being, used for preview
      */
     private void SetLabelText(Label buildingNameLabel, BuildingStats.BuildingType buildingType, Label buildingPrice, Label buildingSatisfaction, Label buildingStudent, Label buildingCoins, Image buildingImage) {
         buildingNameLabel.setText(BuildingStats.BuildingNameDict.get(buildingType)[index]);
@@ -307,15 +310,28 @@ public class BuildMenu{
         buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding(BuildingStats.BuildingDict.get(buildingType)[index]));
     }
 
+    /**
+     * returns if the window is currently open
+     * @return windowActive boolean
+     */
     public boolean isWindowActive() {
         return windowActive;
     }
 
 
+    /**
+     * Sets the windowActive, used when the menu is opened or closed,
+     * to prevent two windows being opened at same time.
+     * @param windowActive boolean
+     */
     public void setWindowActive(boolean windowActive) {
         this.windowActive = windowActive;
     }
 
+    /**
+     * BuildingMenu render actors objects
+     * @param delta
+     */
     public void render(float delta) {
         stage.act(delta);
         stage.draw();

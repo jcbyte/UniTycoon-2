@@ -6,24 +6,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 /**
- * This class is used to store all of the constants and global values
+ * This class is used to store all the constants and global values
  * that need to be accessed from different classes.
- * 
- * This class only provideds public static attributes and public
- * statc methods. 
+ *
+ * This class only provides public static attributes and public
+ * static methods.
  */
 public class GameGlobals {
 
-    public static int BALANCE = 1000;
+    //Static stats of the current game
+    private static final int startingBALANCE = 500;
+    public static int BALANCE = startingBALANCE;
     public static int SATISFACTION = 0;
     public static int STUDENTS = 0;
-    //public static int BUILDINGS_COUNT = 0;
-
     public static int ACADEMIC_BUILDINGS_COUNT = 0;
     public static int ACCOMODATION_BUILDINGS_COUNT = 0;
     public static int RECREATIONAL_BUILDINGS_COUNT = 0;
     public static int FOOD_BUILDINGS_COUNT = 0;
-
     public static int ELAPSED_TIME = 0;
 
 
@@ -33,6 +32,8 @@ public class GameGlobals {
     public static final Texture map3Texture = new Texture(Gdx.files.internal("png/map3Texture.png"));
 
     public static final TextureRegionDrawable backGroundDrawable = new TextureRegionDrawable(new Texture("png/background.png"));
+
+    //Loads map as a drawable to allow changing Image Actors to different images
     public static final TextureRegionDrawable map1Draw = new TextureRegionDrawable(map1Texture);
     public static final TextureRegionDrawable map2Draw = new TextureRegionDrawable(map2Texture);
     public static final TextureRegionDrawable map3Draw = new TextureRegionDrawable(map3Texture);
@@ -41,7 +42,7 @@ public class GameGlobals {
 
     /**
      * Resets the game globals to the original values
-     * @param time The ammount of time in minutes the game should last for
+     * @param time The amount of time in minutes the game should last for
      */
     public static void resetGlobals(int time){
         ELAPSED_TIME = time;
@@ -51,7 +52,7 @@ public class GameGlobals {
         FOOD_BUILDINGS_COUNT = 0;
         SATISFACTION = 0;
         STUDENTS = 0;
-        BALANCE = 1000;
+        BALANCE = startingBALANCE;
     }
 
 }

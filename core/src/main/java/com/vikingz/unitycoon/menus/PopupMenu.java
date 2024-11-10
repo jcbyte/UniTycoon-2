@@ -7,11 +7,11 @@ import com.vikingz.unitycoon.global.GameGlobals;
 
 /**
  * This is a generic PopupMenu class that can create user defined
- * popups. This class is crucial for the implementation of random events 
+ * popups. This class is crucial for the implementation of random events
  * in the game during later development.
- * 
- * The user can assign everythign in the popup, all of the text displayed
- * as well as the runnables that run when the 2 buttons are pressed.
+ *
+ * The user can assign everything in the popup, all of the text displayed
+ * as well as the runnable that run when the 2 buttons are pressed.
  */
 public class PopupMenu extends Window {
 
@@ -19,7 +19,7 @@ public class PopupMenu extends Window {
 
 
     // Skin for the popup
-    private Skin skin;
+    private final Skin skin;
 
 
     /**
@@ -47,14 +47,14 @@ public class PopupMenu extends Window {
 
     /**
      * Configures the 2 buttons that appear on the popup
-     * @param leftRun Runnable that will be ran if the left button is pressed
+     * @param leftRun Runnable that will be run if the left button is pressed
      * @param leftText The text written on the left button
-     * @param rightRun Runnable that will be ran if the right button is pressed
+     * @param rightRun Runnable that will be run if the right button is pressed
      * @param rightText The text written on the right button
      */
     public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
 
-        // Idk change this later
+
         TextButton leftBtn = new TextButton(leftText, skin);
         TextButton rightBtn = new TextButton(rightText, skin);
 
@@ -83,15 +83,15 @@ public class PopupMenu extends Window {
 
 
     /**
-     * Configures on the right button with the left button being 
+     * Configures on the right button with the left button being
      * closing the popup
-     * @param rightRun Button runnable 
+     * @param rightRun Button runnable
      * @param rightText Button text
      */
     public void setupRightBtn(Runnable rightRun, String rightText){
 
 
-        // Idk change this later
+
         TextButton leftBtn = new TextButton("Close", skin);
         TextButton rightBtn = new TextButton(rightText, skin);
 

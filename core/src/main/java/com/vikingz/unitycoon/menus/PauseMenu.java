@@ -8,13 +8,13 @@ import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 
 /**
  *  This class represents a PauseMenu in the game.
- * 
+ *
  * This is the menu that appears if the user pressed the esc button
  * during the game.
- * 
+ *
  * This menu contains a settings button which sends the user to the settings
  * screen from which they can edit the settings.
- * 
+ *
  * To close the pause menu, the user has to press the esc button again.
  */
 public class PauseMenu extends Window {
@@ -23,8 +23,8 @@ public class PauseMenu extends Window {
     /**
      * Creates a new pause menu
      * This menu is shown when the user pauses the game / presses
-     *  the esc button during the game. 
-     * @param skin
+     *  the esc button during the game.
+     * @param skin Contains the skin pack to be used with menu
      */
     public PauseMenu(Skin skin) {
 
@@ -51,12 +51,7 @@ public class PauseMenu extends Window {
 
         settingsBtn.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-                ScreenMultiplexer.openSettings(ScreenMultiplexer.Screens.GAME);
-
-                //PopupMenu.this.remove();
-            }
+            public void clicked(InputEvent event, float x, float y) {ScreenMultiplexer.openSettings(ScreenMultiplexer.Screens.GAME);}
         });
 
         quitBtn.addListener(new ClickListener() {

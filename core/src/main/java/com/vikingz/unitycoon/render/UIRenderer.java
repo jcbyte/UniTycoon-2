@@ -1,8 +1,6 @@
 package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -17,28 +15,27 @@ import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 
 /**
- * This class renders all of the UI elements to the Screen.
- * 
- * This enables us to control how the UI is draw and resized 
- * differently from how the rest of the game is drawn. 
- * 
- * This class essentially forms another layer on the screen that 
- * renders all of the UI elements on this layer as opposed to the 
+ * This class renders all the UI elements to the Screen.
+ *
+ * This enables us to control how the UI is draw and resized
+ * differently from how the rest of the game is drawn.
+ *
+ * This class essentially forms another layer on the screen that
+ * renders all the UI elements on this layer as opposed to the
  * game layer.
  */
 public class UIRenderer {
 
-    private Stage stage;
-    private Camera camera;
-    private Viewport viewport;
+    private final Stage stage;
+    private final Viewport viewport;
 
 
-    private BuildMenu buildMenu;
-    private StatsRenderer statsRenderer;
+    private final BuildMenu buildMenu;
+    private final StatsRenderer statsRenderer;
 
     // Popup Menus
-    private PauseMenu pauseMenu;
-    private EndMenu endOfTimerPopup;
+    private final PauseMenu pauseMenu;
+    private final EndMenu endOfTimerPopup;
 
     private boolean newHighScore = true;
     GameScreen gameScreen;
@@ -53,7 +50,6 @@ public class UIRenderer {
 
         this.gameScreen = gameScreen;
 
-        camera = new OrthographicCamera();
         //viewport = new FillViewport(1824, 1026);
         viewport = new FitViewport(1824, 1026);
         //viewport = new ScreenViewport();
@@ -67,21 +63,12 @@ public class UIRenderer {
         endOfTimerPopup = new EndMenu(skin, "End of Game");
 
         // Sets what the buttons do on the end of timer window
-        Runnable leftBtn = new Runnable() {
-            @Override
-            public void run(){
-                ScreenMultiplexer.closeGame();
-            }
-
-        };
-        Runnable rightBtn = new Runnable() {
-            @Override
-            public void run(){
-                // funny
-                GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
-                gameScreen.setPaused(false);
-                endOfTimerPopup.remove();
-            }
+        Runnable leftBtn = ScreenMultiplexer::closeGame;
+        Runnable rightBtn = () -> {
+            // funny
+            GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
+            gameScreen.setPaused(false);
+            endOfTimerPopup.remove();
         };
 
         endOfTimerPopup.setupButtons(leftBtn, "Quit", rightBtn, "Continue");
@@ -89,9 +76,9 @@ public class UIRenderer {
     }
 
     /**
-     * When the game screen has decided the game has finished the game 
+     * When the game screen has decided the game has finished the game
      * will call this function which will show the end of game popup
-     * @param newScore
+     * @param newScore boolean of if new high score has been met
      */
     public void endGame(boolean newScore){
 
@@ -108,7 +95,7 @@ public class UIRenderer {
 
     /**
      * Pauses the game displays the pause menu
-     * @param isPaused
+     * @param isPaused boolean of if the game is paused
      */
     public void pause(boolean isPaused) {
         System.out.println("Pressed ESC");

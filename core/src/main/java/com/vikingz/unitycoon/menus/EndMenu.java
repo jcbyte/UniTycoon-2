@@ -8,17 +8,20 @@ import com.vikingz.unitycoon.global.GameGlobals;
 
 /**
  * This class is the menu that pops up at the end of the game.
- * 
- * This menu also contains a quit button that sends the user back to the 
+ *
+ * This menu also contains a quit button that sends the user back to the
  * main menu as well as a continue button that lets the user continue the game.
  */
 public class EndMenu extends Window {
 
-    private final Label topSatisfaction;
-    private String Message = "";
+    //Message to be displayed at end of the game
+    private final String Message = "";
 
-    private Skin skin;
-    private Label congrats;
+    //skin used for window
+    private final Skin skin;
+
+
+
 
     /**
      * Creates a new EndMenu
@@ -42,13 +45,22 @@ public class EndMenu extends Window {
         this.add(message).padLeft(-35).row();
 
 
-        topSatisfaction = new Label("Top Satisfaction: " + GameConfig.getInstance().getTopSatisfaction(),skin);
+        //used to display the current top stored satisfaction
+        Label topSatisfaction = new Label("Top Satisfaction: " + GameConfig.getInstance().getTopSatisfaction(), skin);
         this.add(topSatisfaction).padBottom(20).row();
     }
 
+    /**
+     * Crates the buttons Left and Right,
+     * sets the actions and text of each button
+     * @param leftRun contains function to be run on click for left button
+     * @param leftText contains text for the left button
+     * @param rightRun contains function to be run on click for right button
+     * @param rightText contains text for the right button
+     */
     public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
 
-        // Idk change this later
+
         TextButton leftBtn = new TextButton(leftText, skin);
         TextButton rightBtn = new TextButton(rightText, skin);
         this.add(leftBtn).pad(10);
@@ -74,19 +86,12 @@ public class EndMenu extends Window {
         });
     }
 
-
-
-    //Getters and Setters
-    public String getMessage() {
-        return Message;
-    }
-    public void setMessage(String message) {
-        Message = message;
-    }
-
-
+    /**
+     * Adds new Label to endMenu,
+     * when a new highScore is reached
+     */
     public void addNewHighScore() {
-        congrats = new Label("You have reached a new high score of satisfaction", skin);
+        Label congrats = new Label("You have reached a new high score of satisfaction", skin);
         this.row();
         this.add(congrats);
 

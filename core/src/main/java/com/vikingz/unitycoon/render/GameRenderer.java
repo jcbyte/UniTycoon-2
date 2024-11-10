@@ -10,10 +10,10 @@ import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.util.Point;
 
 /**
- * This class contains all of the renderers that render the game.
+ * This class contains all the renderers that render the game.
  *
  * This class contains the renderers that draw the background as well
- * as the buildings. Using this class enables us to have a sepereate viewport
+ * as the buildings. Using this class enables us to have a separate viewport
  * that controls how the game is rendered as well as what happens when the
  * game window is resized, as we wanted the map and the buildings to resize
  * differently from the UI, which is what the {@code UIRenderer} is used for.
@@ -21,12 +21,12 @@ import com.vikingz.unitycoon.util.Point;
 public class GameRenderer {
 
     // Viewport stuff
-    private Stage stage;
-    private Camera camera;
-    private Viewport viewport;
+    private final Stage stage;
+    private final Camera camera;
+    private final Viewport viewport;
 
-    private BackgroundRenderer backgroundRenderer;
-    private BuildingRenderer buildingRenderer;
+    private final BackgroundRenderer backgroundRenderer;
+    private final BuildingRenderer buildingRenderer;
 
     /**
      * Creates and new Game Renderer
@@ -34,11 +34,10 @@ public class GameRenderer {
      */
     public GameRenderer(String mapName){
 
-        // Creates and camera and setsup the viewport
+        // Creates and camera and set up the viewport
         camera = new OrthographicCamera();
         viewport = new FillViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight());
-        //viewport = new FitViewport(GameConfig.getInstance().getWindowWidth(), GameConfig.getInstance().getWindowHeight(), camera);
-        //viewport = new ScreenViewport();
+
 
         stage = new Stage(viewport);
         backgroundRenderer = new BackgroundRenderer(mapName);
@@ -100,17 +99,28 @@ public class GameRenderer {
      */
     public void resize(int width, int height){
         viewport.update(width, height);
-        backgroundRenderer.resize(width, height);
-        buildingRenderer.resize(width, height);
+        backgroundRenderer.resize();
+        buildingRenderer.resize();
 
     }
 
+    /**
+     * used to get BuildingRenderer from parent GameRenderer
+     * @return BuildingRenderer
+     */
     public BuildingRenderer getBuildingRenderer(){
         return buildingRenderer;
     }
 
+    /**
+     * used to get BackgroundRenderer from parent GameRenderer
+     * @return BackgroundRenderer
+     */
     public BackgroundRenderer getBackgroundRenderer() {return backgroundRenderer;}
 
+    /**
+     * disposes all renderers being drawn for garbage collection
+     */
     public void dispose(){
         stage.dispose();
         backgroundRenderer.dispose();

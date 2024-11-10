@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * This class represents the main menu of the game.
- * 
+ *
  * The main menu is where the user begins from. This menu
  * contains multiple buttons that allow the user to begin the game.
- * 
+ *
  * Inherits Screen, SuperScreen
  */
 public class MenuScreen extends SuperScreen implements Screen {
@@ -55,7 +55,7 @@ public class MenuScreen extends SuperScreen implements Screen {
         table.setFillParent(true);  // Center table on stage
         table.center();
 
-        Image texture = new Image(new Texture(Gdx.files.internal("gameLogo.png"))); 
+        Image texture = new Image(new Texture(Gdx.files.internal("gameLogo.png")));
         table.add(texture).pad(50);
         table.row();
 
@@ -103,6 +103,9 @@ public class MenuScreen extends SuperScreen implements Screen {
         // This removes the bug where the user can still click the buttons from the game screen.
     }
 
+    /**
+     * disposes MenuScreen for garbage collection
+     */
     @Override
     public void dispose() {
         // Dispose of assets when this screen is no longer used
