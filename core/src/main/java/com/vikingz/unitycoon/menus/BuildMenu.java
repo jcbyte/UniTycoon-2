@@ -49,11 +49,11 @@ public class BuildMenu{
 
     private Window currentMenu;
 
-    // Hold data for cycling pages in menu
-    private Dictionary<BuildingStats.BuildingType, String[]> BuildingNameDict = BuildingStats.BuildingNameDict;
-    private Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict = BuildingStats.BuildingPriceDict;
-    private Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict = BuildingStats.BuildingStudentDict;
-    private Dictionary<BuildingStats.BuildingType, BuildingStats.BuildingID[]> BuildingDict = BuildingStats.BuildingDict;
+
+
+
+
+
     private int index = 0;
 
     /**
@@ -172,14 +172,14 @@ public class BuildMenu{
         window.setBackground(GameGlobals.backGroundDrawable);
 
         //Building name Label
-        Label buildingNameLabel = new Label(BuildingNameDict.get(buildingType)[0], skin);
+        Label buildingNameLabel = new Label(BuildingStats.BuildingNameDict.get(buildingType)[0], skin);
         window.add((Actor) null);
         window.add(buildingNameLabel);
         window.row().padTop(10);
 
         //Image Of Building
         window.add((Actor) null);
-        Image buildingImage = new Image(BuildingStats.getTextureOfBuilding(BuildingDict.get(buildingType)[0]));
+        Image buildingImage = new Image(BuildingStats.getTextureOfBuilding( BuildingStats.BuildingDict.get(buildingType)[0]));
         window.add(buildingImage);
         window.row().padTop(20);
 
@@ -192,7 +192,7 @@ public class BuildMenu{
 
         //Student Label
         window.add((Actor) null);
-        Label buildingStudent = new Label("Student Space: " + BuildingStudentDict.get(buildingType)[0],skin);
+        Label buildingStudent = new Label("Student Space: " + BuildingStats.BuildingStudentDict.get(buildingType)[0],skin);
         window.add(buildingStudent).expandX();
         window.row();
 
@@ -204,7 +204,7 @@ public class BuildMenu{
 
         //Price Label
         window.add((Actor) null);
-        Label buildingPrice = new Label("Price: " + BuildingPriceDict.get(buildingType)[0],skin);
+        Label buildingPrice = new Label("Price: " + BuildingStats.BuildingPriceDict.get(buildingType)[0],skin);
         window.add(buildingPrice);
 
         window.row().padTop(20);
@@ -222,7 +222,7 @@ public class BuildMenu{
                     SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
                 }
                 catch (ArrayIndexOutOfBoundsException e){
-                    index = BuildingNameDict.get(buildingType).length-1;
+                    index = BuildingStats.BuildingNameDict.get(buildingType).length-1;
                     SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
                 }
             }
@@ -276,7 +276,6 @@ public class BuildMenu{
 
         // Add close button to the window
         window.row().padTop(10); // Add a row before adding the close button
-        System.out.println(window.getColumns());
         window.add((Actor) null);
         window.add(closeButton);
 
@@ -300,12 +299,12 @@ public class BuildMenu{
      * @param buildingImage
      */
     private void SetLabelText(Label buildingNameLabel, BuildingStats.BuildingType buildingType, Label buildingPrice, Label buildingSatisfaction, Label buildingStudent, Label buildingCoins, Image buildingImage) {
-        buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
-        buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
+        buildingNameLabel.setText(BuildingStats.BuildingNameDict.get(buildingType)[index]);
+        buildingPrice.setText("Price: " + BuildingStats.BuildingPriceDict.get(buildingType)[index]);
         buildingSatisfaction.setText("Satisfaction: " +BuildingSatisfactionDict.get(buildingType)[index]);
-        buildingStudent.setText("Student Space: " + BuildingStudentDict.get(buildingType)[index]);
+        buildingStudent.setText("Student Space: " + BuildingStats.BuildingStudentDict.get(buildingType)[index]);
         buildingCoins.setText("Coins Per Second: " + BuildingCoinDict.get(buildingType)[index]);
-        buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+        buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding(BuildingStats.BuildingDict.get(buildingType)[index]));
     }
 
     public boolean isWindowActive() {

@@ -37,7 +37,6 @@ public class GameSounds {
     // Plays placed building sound
     public static void playPlacedBuilding(){
         int randNum = new Random().nextInt(1, 4);
-        System.out.println(volume);
         switch (randNum) {
             case 1:
                 placeBuilding1.play(volume);

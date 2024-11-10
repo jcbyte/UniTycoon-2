@@ -66,6 +66,7 @@ public class BuildingStats {
      * @return BuildingInfo
      */
     public static BuildingInfo getInfo(BuildingStats.BuildingType buildingType, int index){
+        
         int price = 0, student,coins;
         float satisfaction;
 
