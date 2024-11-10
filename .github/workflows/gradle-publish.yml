@@ -27,9 +27,9 @@ jobs:
           java-version: '17'
           cache: 'gradle'
       - name: make DIST jar
-        run: ./gradlew lwjgl3:dist --no-daemon
+        run: gradlew lwjgl3:dist --no-daemon
       - name: publish jar
-        run: ./gradlew lwjgl3:publish --no-daemon
+        run: gradlew lwjgl3:publish --no-daemon
         working-directory: ${{ github.workspace }}/${{ env.SERVICE_NAME }}/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
