@@ -19,12 +19,14 @@ import com.vikingz.unitycoon.util.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingDict;
+
 /**
  *  This class is in charge of drawing Buildings in the game.
- * 
+ *
  * This class also does the collision calculations for buildings
- * which make sure that the user is unable to place buildings on top 
- * of eachother, as well as using rightclick to be able to remove the 
+ * which make sure that the user is unable to place buildings on top
+ * of eachother, as well as using rightclick to be able to remove the
  * buildings from the game.
  */
 public class BuildingRenderer{
@@ -45,7 +47,7 @@ public class BuildingRenderer{
 
     /**
      * Creates a new Building Renderer
-     * @param gameRenderer Parent renderer {@code GameRenderer} 
+     * @param gameRenderer Parent renderer {@code GameRenderer}
      */
     public BuildingRenderer(GameRenderer gameRenderer) {
 
@@ -130,7 +132,7 @@ public class BuildingRenderer{
                     // Plays the sound of a building being places
                     GameSounds.playPlacedBuilding();
 
-                    // Adds a building of the correct type to the list of buildins that are 
+                    // Adds a building of the correct type to the list of buildins that are
                     // to be drawn to the screen.
                     switch (currentBuildingInfo.getBuildingType()) {
                         case ACADEMIC:
@@ -178,22 +180,22 @@ public class BuildingRenderer{
 
     /**
      * Selects a building by building ID
-     * @param buildingID ID of the building that the user wants to place down
+     * @param buildingType buildingType of the building that the user wants to place down
+     * @param index int the index of where it is in the dictionary
      */
-    public void selectBuilding(BuildingStats.BuildingID buildingID){
+    public void selectBuilding(BuildingStats.BuildingType buildingType, int index){
 
         isPreviewing = true;
-        BuildingInfo newBuilding = BuildingStats.getInfo(buildingID);
-
-        selectedTexture = BuildingStats.getTextureOfBuilding(buildingID);
+        BuildingInfo newBuilding = BuildingStats.getInfo(buildingType,index);
+        selectedTexture = BuildingStats.getTextureOfBuilding(BuildingDict.get(buildingType)[index]);
         if (selectedTexture == null){
-            System.err.println("ERROR: Could not select building: " + buildingID);
+            System.err.println("ERROR: Could not select building: " + BuildingDict.get(buildingType)[index]);
         }
         currentBuildingInfo = newBuilding;
     }
 
     /**
-     * Increments the counter on the screen for the 
+     * Increments the counter on the screen for the
      * corresponding building that has been placed down
      * @param type Type of the building that has been added
      */
@@ -247,7 +249,7 @@ public class BuildingRenderer{
     /**
      * Checks whether the user is trying to place a building
      * on another building
-     * @param x X 
+     * @param x X
      * @param y Y
      * @return Boolean if there exists a building at the spot the user is trying to place the building at
      */
@@ -311,5 +313,6 @@ public class BuildingRenderer{
     public void dispose(){
         batch.dispose();
     }
+
 
 }

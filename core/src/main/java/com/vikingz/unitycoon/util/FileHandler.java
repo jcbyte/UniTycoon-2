@@ -56,7 +56,7 @@ public class FileHandler {
             String fileRead = fileHandle.readString();
             String[] arrayDict = fileRead.split("\n");
             Gson gson = new Gson();
-            if (arrayDict.length != 4){
+            if (arrayDict.length != 6){
                 System.out.println("FILE CORRUPTION DETECTED");
             }
 
@@ -91,8 +91,29 @@ public class FileHandler {
                 put(NONE, studentParser.NONE);
             }};
 
+            //Satisfaction
+            BuildingParse satisfactionParser = gson.fromJson(arrayDict[3],BuildingParse.class);
+            BuildingStats.BuildingSatisfactionDict = new Hashtable<BuildingStats.BuildingType, String[]>(){{
+                put(ACADEMIC, satisfactionParser.ACADEMIC);
+                put(ACCOMODATION, satisfactionParser.ACCOMODATION);
+                put(RECREATIONAL, satisfactionParser.RECREATIONAL);
+                put(FOOD, satisfactionParser.FOOD);
+                put(NONE, satisfactionParser.NONE);
+            }};
+
+            //Coins
+
+            BuildingParse coinParser = gson.fromJson(arrayDict[4],BuildingParse.class);
+            BuildingStats.BuildingCoinDict = new Hashtable<BuildingStats.BuildingType, String[]>(){{
+                put(ACADEMIC, coinParser.ACADEMIC);
+                put(ACCOMODATION, coinParser.ACCOMODATION);
+                put(RECREATIONAL, coinParser.RECREATIONAL);
+                put(FOOD, coinParser.FOOD);
+                put(NONE, coinParser.NONE);
+            }};
+
             //ID
-            BuildingParseId idParser = gson.fromJson(arrayDict[3],BuildingParseId.class);
+            BuildingParseId idParser = gson.fromJson(arrayDict[5],BuildingParseId.class);
             BuildingStats.BuildingDict = new Hashtable<BuildingStats.BuildingType, BuildingStats.BuildingID[]>(){{
                 put(ACADEMIC, idParser.ACADEMIC);
                 put(ACCOMODATION, idParser.ACCOMODATION);

@@ -19,15 +19,17 @@ import com.vikingz.unitycoon.render.BuildingRenderer;
 
 import java.util.Dictionary;
 
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingCoinDict;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingSatisfactionDict;
 import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
 
 /**
  * This class is what creates the build menu in the game.
- * 
+ *
  * It contains a single constructor that takes a Skin, BuildingRenderer
  * and a Stage as parameters to create the Building Menu.
- * 
+ *
  * This class also creates the 4 buttons at the bottom of the game screen
  *  by which the build menu is accessed
  */
@@ -183,8 +185,21 @@ public class BuildMenu{
 
         //satisfaction Label
         window.add((Actor) null);
-        Label buildingSatisfaction = new Label(BuildingStudentDict.get(buildingType)[0],skin);
+
+        Label buildingSatisfaction = new Label("Satisfaction: " + BuildingSatisfactionDict.get(buildingType)[0],skin);
         window.add(buildingSatisfaction).expandX();
+        window.row();
+
+        //Student Label
+        window.add((Actor) null);
+        Label buildingStudent = new Label("Student Space: " + BuildingStudentDict.get(buildingType)[0],skin);
+        window.add(buildingStudent).expandX();
+        window.row();
+
+        //Coins Label
+        window.add((Actor) null);
+        Label buildingCoins = new Label("Coins Per Second: " + BuildingCoinDict.get(buildingType)[0],skin);
+        window.add(buildingCoins).expandX();
         window.row();
 
         //Price Label
@@ -204,17 +219,11 @@ public class BuildMenu{
             public void clicked(InputEvent event, float x, float y) {
                 try {
                     index--;
-                    buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
-                    buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
-                    buildingSatisfaction.setText(BuildingStudentDict.get(buildingType)[index]);
-                    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+                    SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
                 }
                 catch (ArrayIndexOutOfBoundsException e){
                     index = BuildingNameDict.get(buildingType).length-1;
-                    buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
-                    buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
-                    buildingSatisfaction.setText(BuildingStudentDict.get(buildingType)[index]);
-                    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+                    SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
                 }
             }
         });
@@ -226,7 +235,7 @@ public class BuildMenu{
         buyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                buildingRenderer.selectBuilding(BuildingDict.get(buildingType)[index]);
+                buildingRenderer.selectBuilding(buildingType,index);
                 window.remove();
             }
         });
@@ -241,17 +250,11 @@ public class BuildMenu{
             public void clicked(InputEvent event, float x, float y) {
                 try {
                     index++;
-                    buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
-                    buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
-                    buildingSatisfaction.setText(BuildingStudentDict.get(buildingType)[index]);
-                    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+                    SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
                 }
                 catch (ArrayIndexOutOfBoundsException e){
                     index = 0;
-                    buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
-                    buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
-                    buildingSatisfaction.setText(BuildingStudentDict.get(buildingType)[index]);
-                    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+                    SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
                 }
             }
         });
@@ -286,11 +289,30 @@ public class BuildMenu{
 
     }
 
+    /**
+     * Sets the text of each label to current index
+     * @param buildingNameLabel
+     * @param buildingType
+     * @param buildingPrice
+     * @param buildingSatisfaction
+     * @param buildingStudent
+     * @param buildingCoins
+     * @param buildingImage
+     */
+    private void SetLabelText(Label buildingNameLabel, BuildingStats.BuildingType buildingType, Label buildingPrice, Label buildingSatisfaction, Label buildingStudent, Label buildingCoins, Image buildingImage) {
+        buildingNameLabel.setText(BuildingNameDict.get(buildingType)[index]);
+        buildingPrice.setText("Price: " + BuildingPriceDict.get(buildingType)[index]);
+        buildingSatisfaction.setText("Satisfaction: " +BuildingSatisfactionDict.get(buildingType)[index]);
+        buildingStudent.setText("Student Space: " + BuildingStudentDict.get(buildingType)[index]);
+        buildingCoins.setText("Coins Per Second: " + BuildingCoinDict.get(buildingType)[index]);
+        buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding((BuildingDict.get(buildingType)[index])));
+    }
+
     public boolean isWindowActive() {
         return windowActive;
     }
 
-    
+
     public void setWindowActive(boolean windowActive) {
         this.windowActive = windowActive;
     }
