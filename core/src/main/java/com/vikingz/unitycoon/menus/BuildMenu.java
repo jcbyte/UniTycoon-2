@@ -276,7 +276,6 @@ public class BuildMenu{
 
         // Add close button to the window
         window.row().padTop(10); // Add a row before adding the close button
-        System.out.println(window.getColumns());
         window.add((Actor) null);
         window.add(closeButton);
 

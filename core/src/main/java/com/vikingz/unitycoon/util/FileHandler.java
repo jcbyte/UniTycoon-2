@@ -139,9 +139,6 @@ public class FileHandler {
             TextureParse textureParse = gson.fromJson(textureFileRead,TextureParse.class);
             BuildingStats.textureAtlasLocation = textureParse.textureAtlasLocation;
             BuildingStats.atlasBuildingSize = textureParse.atlasBuildingSize;
-            System.out.println(textureParse.atlasBuildingSize);
-            System.out.println(textureParse.buildingPos.toString());
-            System.out.println(textureParse.buildings.toString());
             for (int i=0;i<textureParse.buildings.size();i++){
                 int[] convertValue = new int[]{Integer.parseInt(textureParse.buildingPos.get(i).split(",")[0]),
                                                 Integer.parseInt(textureParse.buildingPos.get(i).split(",")[1]),
