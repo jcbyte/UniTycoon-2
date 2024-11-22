@@ -65,7 +65,7 @@ public class GameScreen extends SuperScreen implements Screen {
             @Override
             public void run() {
                 if(!isPaused){
-                    GameGlobals.ELAPSED_TIME--;
+                    //GameGlobals.ELAPSED_TIME--;
                 }
             }
         }, 0, 1);
@@ -93,10 +93,10 @@ public class GameScreen extends SuperScreen implements Screen {
         }
 
         if(!isPaused){
-
             elapsedTime += delta; // delta is the time elapsed since the last frame
             if (elapsedTime >= 1) { // Increment counter every second
-
+                GameGlobals.ELAPSED_TIME --;
+                
                 // Calculate Game Stats
 
                 for (Building building : gameRenderer.getBuildingRenderer().getPlaceBuildings()){
