@@ -35,7 +35,7 @@ public class PauseMenu extends Window {
         this.setMovable(false);
         this.setResizable(false);
 
-        Label message = new Label("Game Paused\n(Click esc to un-pause) ", skin);
+        Label message = new Label("Game Paused!\n(Click esc to un-pause) ", skin);
         this.add(message).padBottom(20).row();
         this.setBackground(GameGlobals.backGroundDrawable);
 
