@@ -33,14 +33,15 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Get JAR path
+    - name: Find JAR File
       id: jar-path
       run: |
         JAR_PATH=$(find ${{ github.workspace }}/lwjgl3/build/libs -name "*.jar" -print -quit)
-        echo "JAR_PATH_NAME=$JAR_PATH" >> $GITHUB_OUTPUT
+        echo "JAR_FILENAME=$(basename $JAR_PATH)" >> $GITHUB_OUTPUT
+        echo "JAR_PATH=$JAR_PATH" >> $GITHUB_OUTPUT
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
       with:
-        name: $(basename ${{ steps.jar-path.outputs.JAR_PATH_NAME}})
-        path: ${{ steps.jar-path.outputs.JAR_PATH_NAME }}
+        name: ${{ steps.jar-path.outputs.JAR_FILENAME}}
+        path: ${{ steps.jar-path.outputs.JAR_PATH }}
