@@ -36,12 +36,11 @@ jobs:
     - name: Get JAR path
       id: jar-path
       run: |
-        path=$(find ${{ github.workspace }}/lwjgl3/build/libs -name "*.jar" -print -quit)
-        echo "::set-output name=path::$path"
-#        echo "JAR_FILE_NAME=$JAR_FILE_NAME" >> $GITHUB_ENV
+        JAR_PATH=$(find ${{ github.workspace }}/lwjgl3/build/libs -name "*.jar" -print -quit)
+        echo "JAR_PATH_NAME=$JAR_PATH" >> $GITHUB_OUTPUT
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
       with:
-        name: $(basename ${{ steps.jar-path.outputs.path }})
-        path: ${{ steps.jar-path.outputs.path }}
+        name: $(basename ${{ steps.jar-path.outputs.JAR_PATH_NAME}})
+        path: ${{ steps.jar-path.outputs.JAR_PATH_NAME }}
