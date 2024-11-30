@@ -33,8 +33,15 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
+    - name: Get JAR path
+      id: jar-path
+      run: |
+        path=$(find ${{ github.workspace }}/lwjgl3/build/libs -name "*.jar" -print -quit)
+        echo "::set-output name=path::$path"
+#        echo "JAR_FILE_NAME=$JAR_FILE_NAME" >> $GITHUB_ENV
+
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
       with:
-        name: UniTycoon2
-        path: ${{ github.workspace }}/lwjgl3/build/libs/UniTycoon-1.0.0.jar
+        name: $(basename ${{ steps.jar-path.outputs.path }})
+        path: ${{ steps.jar-path.outputs.path }}
