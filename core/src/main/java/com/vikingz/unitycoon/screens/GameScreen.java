@@ -57,8 +57,6 @@ public class GameScreen extends SuperScreen implements Screen {
     public GameScreen(String mapName){
         super();
 
-        // todo remove this example comment
-
         this.isPaused = false;
         gameRenderer = new GameRenderer(mapName);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
