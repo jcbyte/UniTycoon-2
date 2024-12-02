@@ -1,29 +1,21 @@
-# UniTycoon
+# UniTycoon2
+
+*University of York ENG1 Project - Assessment 2.*
+
+Short single-player game that allows the player to build their own university campus trying to reach the highest student satisfaction possible.
  
-This is our game for ENG1 software engineering project
+A [libGDX](https://libgdx.com/) project.
 
-## Running
-
-### Generating Jar file
+## Running locally
 
 ```
-./gradlew lwjgl3:dist 
-```
-```
-gradlew.bat lwjgl3:dist
-```
-will generate a jar file with the required assets inside:
-
-Location:
-``lwjgl3/lib/UniTycoon-x.x.x.jar``
-
-### Running the game
-
-```
-./gradlew lwjgl3:run
-```
-```
-gradlew.bat lwjgl3:run
+./gradlew lwjgl3:run 
 ```
 
-This will launch the game from build files 
+## Building
+
+```
+./gradlew lwjgl3:build 
+```
+
+Creates the runnable jar file located at `lwjgl3/build/lib`.
