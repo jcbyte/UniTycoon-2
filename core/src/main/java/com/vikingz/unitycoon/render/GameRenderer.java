@@ -128,4 +128,14 @@ public class GameRenderer {
         buildingRenderer.dispose();
     }
 
+    /**
+     * Get the scaling value from the FitViewport
+     */
+    public float getViewportScaling()
+    {
+        float heightScaling = viewport.getScreenHeight() / viewport.getWorldHeight();
+        float widthScaling = viewport.getScreenWidth() / viewport.getWorldWidth();
+        return Math.min(heightScaling, widthScaling);
+    }
+
 }

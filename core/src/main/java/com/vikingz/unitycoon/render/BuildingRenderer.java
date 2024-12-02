@@ -11,6 +11,7 @@ import com.vikingz.unitycoon.building.buildings.AcademicBuilding;
 import com.vikingz.unitycoon.building.buildings.AccommodationBuilding;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
+import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.GameSounds;
 import com.vikingz.unitycoon.util.Point;
@@ -85,7 +86,8 @@ public class BuildingRenderer{
         if (isPreviewing && selectedTexture != null) {
 
             // Makes sure that the mouse is in the center of the building texture
-            Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2, Gdx.input.getY() + SCREEN_BUILDING_SIZE / 2);
+            float centerOffset = ((float) SCREEN_BUILDING_SIZE / 2) * gameRenderer.getViewportScaling();
+            Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - centerOffset, Gdx.input.getY() + centerOffset);
 
             previewX = previewPoint.getX();
             previewY = previewPoint.getY();
