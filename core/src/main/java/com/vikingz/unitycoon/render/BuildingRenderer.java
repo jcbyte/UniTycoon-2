@@ -11,7 +11,6 @@ import com.vikingz.unitycoon.building.buildings.AcademicBuilding;
 import com.vikingz.unitycoon.building.buildings.AccommodationBuilding;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
-import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.GameSounds;
 import com.vikingz.unitycoon.util.Point;
@@ -21,7 +20,7 @@ import java.util.List;
 
 /**
  *  This class is in charge of drawing Buildings in the game.
- *
+ * <p>
  * This class also does the collision calculations for buildings
  * which make sure that the user is unable to place buildings on top
  * of each other, as well as using right click to be able to remove the

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
@@ -12,7 +11,7 @@ import com.vikingz.unitycoon.util.Point;
 
 /**
  * This class contains all the renderers that render the game.
- *
+ * <p>
  * This class contains the renderers that draw the background as well
  * as the buildings. Using this class enables us to have a separate viewport
  * that controls how the game is rendered as well as what happens when the
