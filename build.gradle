@@ -59,7 +59,7 @@ configure(subprojects) {
 
 subprojects {
   version = '$projectVersion'
-  ext.appName = 'UniTycoon'
+  ext.appName = 'UniTycoon2'
   repositories {
     mavenCentral()
     maven { url 'https://s01.oss.sonatype.org' }
