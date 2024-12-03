@@ -3,6 +3,10 @@ package com.vikingz.unitycoon.global;
 import com.badlogic.gdx.Gdx;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * This class contains all of the config for the game,
@@ -20,6 +24,24 @@ import java.io.Serializable;
  */
 public class GameConfig implements Serializable{
 
+    /**
+     * Class to represent a leaderboard record
+     */
+    public static class LeaderboardRecord {
+        public String name;
+        public int score;
+
+        public LeaderboardRecord() {
+            this.name = "Unknown";
+            this.score = 0;
+        }
+
+        public LeaderboardRecord(String name, int score) {
+            this.name = name;
+            this.score = score;
+        }
+    };
+
     // Constants for width and height MUST BE PUBLIC TO BE SERIALIZE
     public int windowWidth;
     public int windowHeight;
@@ -29,20 +51,26 @@ public class GameConfig implements Serializable{
     private static boolean VSync = false;
     public float guiSize = 1;
 
+    public LeaderboardRecord[] leaderboard;
+
     // 31.5 rows
     // 56 cols
 
     // The single instance of GameConfig (eager initialization)
     private static GameConfig INSTANCE = new GameConfig(
-        1792, 1008, false, 1f,1f); // Default values
+        1792, 1008, false, 1f,1f, Stream.generate(LeaderboardRecord::new).limit(5).toArray(LeaderboardRecord[]::new)
+); // Default values
 
     // Private constructor to prevent instantiation from outside
-    private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue) {
+    private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue, LeaderboardRecord[] leaderboard) {
         this.windowWidth = width;
         this.windowHeight = height;
         this.skipMenus = skipMenus;
         this.SoundVolumeValue = SoundVolumeValue;
         this.MusicVolumeValue = MusicVolumeValue;
+        this.leaderboard = leaderboard.clone();
+        // Sort the leaderboard to ensure it is in order
+        Arrays.sort(this.leaderboard, Comparator.comparing(record -> record.score));
     }
 
     //Sets VSync mode for game on or off
@@ -85,6 +113,18 @@ public class GameConfig implements Serializable{
 
     public void setGuiSize(float guiSize) {
         this.guiSize = guiSize;
+    }
+
+    public LeaderboardRecord[] getLeaderboard() {
+        return leaderboard;
+    }
+
+    /**
+     * Update the leaderboard with the new record if it is in the top 5 records
+     * @return true if the leaderboard was updated
+     */
+    public boolean updateLeaderboard(LeaderboardRecord record) {
+        return false; // todo
     }
 }
 
