@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  *  This class is in charge of drawing Buildings in the game.
- *
+ * <p>
  * This class also does the collision calculations for buildings
  * which make sure that the user is unable to place buildings on top
  * of each other, as well as using right click to be able to remove the
@@ -85,7 +85,8 @@ public class BuildingRenderer{
         if (isPreviewing && selectedTexture != null) {
 
             // Makes sure that the mouse is in the center of the building texture
-            Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - SCREEN_BUILDING_SIZE / 2, Gdx.input.getY() + SCREEN_BUILDING_SIZE / 2);
+            float centerOffset = ((float) SCREEN_BUILDING_SIZE / 2) * gameRenderer.getViewportScaling();
+            Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - centerOffset, Gdx.input.getY() + centerOffset);
 
             previewX = previewPoint.getX();
             previewY = previewPoint.getY();
