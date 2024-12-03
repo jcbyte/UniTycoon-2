@@ -98,8 +98,8 @@ public class BuildingRenderer{
             previewX = previewPoint.getX();
             previewY = previewPoint.getY();
 
-            // If we cannot place here then give visual feedback
-            if (!checkCollisions(previewX, previewY))
+            // If we cannot place here due to collision or balance then give visual feedback
+            if (!checkCollisions(previewX, previewY) || GameGlobals.BALANCE < currentBuildingInfo.getBuildingCost())
             {
                 // Add tint to sprite
                 batch.setColor(new Color(1f, 0.25f, 0.25f, 1f));
