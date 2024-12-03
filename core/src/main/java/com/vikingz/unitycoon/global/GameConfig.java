@@ -124,7 +124,29 @@ public class GameConfig implements Serializable{
      * @return true if the leaderboard was updated
      */
     public boolean updateLeaderboard(LeaderboardRecord record) {
-        return false; // todo
+        // If score is worse than worst score then no update
+        if (leaderboard[leaderboard.length - 1].score >= record.score)
+        {
+            return false;
+        }
+
+        // Go though each score from worst to best
+        for (int i = leaderboard.length - 1; i > 0; i--) {
+            // If the score is worse than the score above it then place it here
+            if (leaderboard[i - 1].score > record.score) {
+                leaderboard[i] = record;
+                return true;
+            }
+            // If the score is better than the score above it then move the higher up score down
+            else
+            {
+                leaderboard[i] = leaderboard[i - 1];
+            }
+        }
+
+        // If the for loop ends then this score must be the best so place it at the top
+        leaderboard[0] = record;
+        return true;
     }
 }
 
