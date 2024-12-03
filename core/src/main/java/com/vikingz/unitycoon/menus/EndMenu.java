@@ -43,11 +43,6 @@ public class EndMenu extends Window {
 
         Label message = new Label(Message, skin);
         this.add(message).padLeft(-35).row();
-
-
-        //used to display the current top stored satisfaction
-        Label topSatisfaction = new Label("Top Satisfaction: " + GameConfig.getInstance().getTopSatisfaction(), skin);
-        this.add(topSatisfaction).padBottom(20).row();
     }
 
     /**

@@ -82,7 +82,6 @@ public class GameConfigManager {
 
             GameConfig.getInstance().setInstance(conf);
             System.out.println("\n\nLoaded GameConfig");
-            System.out.println("TOP_SATISFACTION: " + GameConfig.getInstance().TOP_SATISFACTION);
             System.out.println("Music_Volume: " + GameConfig.getInstance().MusicVolumeValue);
             System.out.println("Song_Volume: " + GameConfig.getInstance().SoundVolumeValue);
 

@@ -37,7 +37,6 @@ public class UIRenderer {
     private final PauseMenu pauseMenu;
     private final EndMenu endOfTimerPopup;
 
-    private boolean newHighScore = true;
     GameScreen gameScreen;
 
     /**
@@ -78,17 +77,10 @@ public class UIRenderer {
     /**
      * When the game screen has decided the game has finished the game
      * will call this function which will show the end of game popup
-     * @param newScore boolean of if new high score has been met
      */
-    public void endGame(boolean newScore){
+    public void endGame(){
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
-        if (newScore && newHighScore){
-            endOfTimerPopup.addNewHighScore();
-            GameConfig.getInstance().setTopSatisfaction(GameGlobals.SATISFACTION);
-            GameConfigManager.saveGameConfig();
-            newHighScore = false;
-        }
         stage.addActor(endOfTimerPopup);
 
     }

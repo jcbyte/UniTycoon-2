@@ -62,7 +62,7 @@ public class GameScreen extends SuperScreen implements Screen {
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
         elapsedTime = 0;
         //5 minutes
-        GameGlobals.resetGlobals(300);
+        GameGlobals.resetGlobals(20); // todo reset to 5 * 60
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
@@ -98,7 +98,7 @@ public class GameScreen extends SuperScreen implements Screen {
             elapsedTime += delta; // delta is the time elapsed since the last frame
             if (elapsedTime >= 1) { // Increment counter every second
                 GameGlobals.ELAPSED_TIME --;
-                
+
                 // Calculate Game Stats
 
                 for (Building building : gameRenderer.getBuildingRenderer().getPlaceBuildings()){
@@ -171,10 +171,8 @@ public class GameScreen extends SuperScreen implements Screen {
      */
     private void endGame(){
         isPaused = true;
-        if (GameConfig.getInstance().getTopSatisfaction() < GameGlobals.SATISFACTION){
-            uiRenderer.endGame(true);
-        }
-        uiRenderer.endGame(false);
+        // todo save high scores here
+        uiRenderer.endGame();
 
     }
 
