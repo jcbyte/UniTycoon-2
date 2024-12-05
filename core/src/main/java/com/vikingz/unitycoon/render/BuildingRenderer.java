@@ -2,6 +2,7 @@ package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.building.Building;
@@ -81,6 +82,13 @@ public class BuildingRenderer{
      * @param delta Time since last frame
      */
     private void checkBuildings(float delta){
+        batch.begin();
+
+        // Draw all placed textures
+        for (Building building : placedBuildings) {
+            batch.draw(building.getTexture(), building.getX(), building.getY());
+        }
+
         // Update preview position to follow the mouse cursor
         if (isPreviewing && selectedTexture != null) {
 
@@ -91,18 +99,18 @@ public class BuildingRenderer{
             previewX = previewPoint.getX();
             previewY = previewPoint.getY();
 
-        }
+            // If we cannot place here due to collision or balance then give visual feedback
+            if (!checkCollisions(previewX, previewY) || GameGlobals.BALANCE < currentBuildingInfo.getBuildingCost())
+            {
+                // Add tint to sprite
+                batch.setColor(new Color(1f, 0.25f, 0.25f, 1f));
+            }
 
-        batch.begin();
-
-        // Draw all placed textures
-        for (Building building : placedBuildings) {
-            batch.draw(building.getTexture(), building.getX(), building.getY());
-        }
-
-        // Draw the preview texture if one is selected
-        if (isPreviewing && selectedTexture != null) {
+            // Draw the preview texture if one is selected
             batch.draw(selectedTexture, previewX, previewY);
+
+            // Remove the tint
+            batch.setColor(Color.WHITE);
         }
 
         batch.end();
