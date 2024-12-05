@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.global;
 
 import com.badlogic.gdx.Gdx;
+import com.vikingz.unitycoon.util.LeaderboardManager;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -24,24 +25,6 @@ import java.util.stream.Stream;
  */
 public class GameConfig implements Serializable{
 
-    /**
-     * Class to represent a leaderboard record
-     */
-    public static class LeaderboardRecord {
-        public String name;
-        public int score;
-
-        public LeaderboardRecord() {
-            this.name = "Unknown";
-            this.score = 0;
-        }
-
-        public LeaderboardRecord(String name, int score) {
-            this.name = name;
-            this.score = score;
-        }
-    };
-
     // Constants for width and height MUST BE PUBLIC TO BE SERIALIZE
     public int windowWidth;
     public int windowHeight;
@@ -51,18 +34,18 @@ public class GameConfig implements Serializable{
     private static boolean VSync = false;
     public float guiSize = 1;
 
-    public LeaderboardRecord[] leaderboard;
+    public LeaderboardManager.LeaderboardRecord[] leaderboard;
 
     // 31.5 rows
     // 56 cols
 
     // The single instance of GameConfig (eager initialization)
     private static GameConfig INSTANCE = new GameConfig(
-        1792, 1008, false, 1f,1f, Stream.generate(LeaderboardRecord::new).limit(5).toArray(LeaderboardRecord[]::new)
+        1792, 1008, false, 1f,1f, LeaderboardManager.generateBlankLeaderboard(5)
 ); // Default values
 
     // Private constructor to prevent instantiation from outside
-    private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue, LeaderboardRecord[] leaderboard) {
+    private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue, LeaderboardManager.LeaderboardRecord[] leaderboard) {
         this.windowWidth = width;
         this.windowHeight = height;
         this.skipMenus = skipMenus;
@@ -70,7 +53,7 @@ public class GameConfig implements Serializable{
         this.MusicVolumeValue = MusicVolumeValue;
         this.leaderboard = leaderboard.clone();
         // Sort the leaderboard to ensure it is in order
-        Arrays.sort(this.leaderboard, Comparator.comparing(record -> record.score));
+        LeaderboardManager.sortLeaderboard(this.leaderboard);
     }
 
     //Sets VSync mode for game on or off
@@ -115,7 +98,7 @@ public class GameConfig implements Serializable{
         this.guiSize = guiSize;
     }
 
-    public LeaderboardRecord[] getLeaderboard() {
+    public LeaderboardManager.LeaderboardRecord[] getLeaderboard() {
         return leaderboard;
     }
 
@@ -123,30 +106,13 @@ public class GameConfig implements Serializable{
      * Update the leaderboard with the new record if it is in the top 5 records
      * @return true if the leaderboard was updated
      */
-    public boolean updateLeaderboard(LeaderboardRecord record) {
-        // If score is worse than worst score then no update
-        if (leaderboard[leaderboard.length - 1].score >= record.score)
-        {
-            return false;
-        }
+    public boolean updateLeaderboard(LeaderboardManager.LeaderboardRecord record) {
+        return LeaderboardManager.updateLeaderboard(leaderboard, record);
+    }
 
-        // Go though each score from worst to best
-        for (int i = leaderboard.length - 1; i > 0; i--) {
-            // If the score is worse than the score above it then place it here
-            if (leaderboard[i - 1].score > record.score) {
-                leaderboard[i] = record;
-                return true;
-            }
-            // If the score is better than the score above it then move the higher up score down
-            else
-            {
-                leaderboard[i] = leaderboard[i - 1];
-            }
-        }
-
-        // If the for loop ends then this score must be the best so place it at the top
-        leaderboard[0] = record;
-        return true;
+    public boolean isOnLeaderboard(int score)
+    {
+        return LeaderboardManager.onLeaderboard(leaderboard, score);
     }
 }
 

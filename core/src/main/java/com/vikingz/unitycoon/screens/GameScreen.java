@@ -171,7 +171,6 @@ public class GameScreen extends SuperScreen implements Screen {
      */
     private void endGame(){
         isPaused = true;
-        // todo save high scores here
         uiRenderer.endGame();
 
     }

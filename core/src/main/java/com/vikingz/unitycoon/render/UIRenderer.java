@@ -13,6 +13,7 @@ import com.vikingz.unitycoon.menus.EndMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
+import com.vikingz.unitycoon.util.LeaderboardManager;
 
 /**
  * This class renders all the UI elements to the Screen.
@@ -79,10 +80,18 @@ public class UIRenderer {
      * will call this function which will show the end of game popup
      */
     public void endGame(){
+        // todo show leaderboard
+        if (GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION))
+        {
+        // todo show textbox with name if we are on leaderboard
+        }
+        // todo save if we enter a name and submit
+//        GameConfigManager.saveGameConfig();
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
         stage.addActor(endOfTimerPopup);
 
+        // todo have leaderboard on menu
     }
 
     /**
