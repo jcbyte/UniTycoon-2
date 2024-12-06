@@ -166,12 +166,16 @@ public class GameScreen extends SuperScreen implements Screen {
 
     }
 
+    boolean endCalled = false;
     /**
      * This is called when the game finishes, ie when the timer runs out
      */
     private void endGame(){
-        isPaused = true;
-        uiRenderer.endGame();
+        if (!endCalled) {
+            isPaused = true;
+            uiRenderer.endGame();
+            endCalled = true;
+        }
 
     }
 

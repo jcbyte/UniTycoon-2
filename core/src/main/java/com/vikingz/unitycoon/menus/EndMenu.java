@@ -97,7 +97,6 @@ public class EndMenu extends Window {
                 // Update visual leaderboard and hide the panel to only allow one to be added
                 refreshLeaderboardText();
                 updateLeaderboardTable.setVisible(false);
-                // todo fix this isn't hiding?
             }
         });
 
@@ -116,9 +115,6 @@ public class EndMenu extends Window {
 
     public void refresh(boolean scoreOnLeaderboard)
     {
-        // todo fix this is called continuously?
-//        System.out.println("end refresh called");
-
         refreshLeaderboardText();
         scoreLabel.setText("Your Score: " + GameGlobals.SATISFACTION);
         leaderboardTextField.setText("");
