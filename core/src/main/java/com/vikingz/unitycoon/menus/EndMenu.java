@@ -4,8 +4,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.LeaderboardManager;
+
+import java.lang.constant.Constable;
 
 /**
  * This class is the menu that pops up at the end of the game.
@@ -82,8 +85,21 @@ public class EndMenu extends Window {
 
         yourScoreTable.add(updateLeaderboardTable);
 
-        // todo save if we enter a name and submit
-//        GameConfigManager.saveGameConfig();
+        // If add button is pressed then add to the leaderboard and hide the section
+        addButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Add to leaderboard and save to file
+                LeaderboardManager.LeaderboardRecord record = new LeaderboardManager.LeaderboardRecord(leaderboardTextField.getText(), GameGlobals.SATISFACTION);
+                LeaderboardManager.updateLeaderboard(GameConfig.getInstance().leaderboard, record);
+                GameConfigManager.saveGameConfig();
+
+                // Update visual leaderboard and hide the panel to only allow one to be added
+                refreshLeaderboardText();
+                updateLeaderboardTable.setVisible(false);
+                // todo fix this isn't hiding?
+            }
+        });
 
         this.add(yourScoreTable).row();
     }
@@ -100,9 +116,12 @@ public class EndMenu extends Window {
 
     public void refresh(boolean scoreOnLeaderboard)
     {
+        // todo fix this is called continuously?
+//        System.out.println("end refresh called");
+
         refreshLeaderboardText();
         scoreLabel.setText("Your Score: " + GameGlobals.SATISFACTION);
-
+        leaderboardTextField.setText("");
         updateLeaderboardTable.setVisible(scoreOnLeaderboard);
     }
 
