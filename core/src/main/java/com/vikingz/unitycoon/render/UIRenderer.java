@@ -83,8 +83,6 @@ public class UIRenderer {
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
         stage.addActor(endOfTimerPopup);
-
-        // todo have leaderboard on menu
     }
 
     /**
