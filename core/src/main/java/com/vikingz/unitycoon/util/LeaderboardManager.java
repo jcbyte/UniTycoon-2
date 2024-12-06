@@ -16,7 +16,7 @@ public class LeaderboardManager {
 
         public LeaderboardRecord() {
             this.name = null;
-            this.score = 0;
+            this.score = -1;
         }
 
         public LeaderboardRecord(String name, int score) {
