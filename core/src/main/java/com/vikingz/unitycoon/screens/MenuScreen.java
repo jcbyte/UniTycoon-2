@@ -35,13 +35,7 @@ public class MenuScreen extends SuperScreen implements Screen {
         TextButton settingsButton = new TextButton("Settings", skin);
         TextButton quitButton = new TextButton("Quit", skin);
 
-
-        StringBuilder leaderboardText = new StringBuilder("Leaderboard:\n\n");
-        for (LeaderboardManager.LeaderboardRecord lRec : GameConfig.getInstance().leaderboard)
-        {
-            leaderboardText.append(lRec.name).append(": ").append(lRec.score).append("\n");
-        }
-        Label leaderboardLabel = new Label(leaderboardText, skin);
+        Label leaderboardLabel = new Label("Leaderboard:\n\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().leaderboard), skin);
         leaderboardLabel.setFontScale(1.75f);
 
         // Add listeners to buttons

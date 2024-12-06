@@ -105,12 +105,7 @@ public class EndMenu extends Window {
 
     private void refreshLeaderboardText()
     {
-        StringBuilder leaderboardText = new StringBuilder("Leaderboard:\n");
-        for (LeaderboardManager.LeaderboardRecord lRec : GameConfig.getInstance().leaderboard)
-        {
-            leaderboardText.append(lRec.name).append(": ").append(lRec.score).append("\n");
-        }
-        leaderboardLabel.setText(leaderboardText);
+        leaderboardLabel.setText("Leaderboard:\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().leaderboard));
     }
 
     public void refresh(boolean scoreOnLeaderboard)

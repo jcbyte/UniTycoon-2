@@ -1,5 +1,7 @@
 package com.vikingz.unitycoon.util;
 
+import com.vikingz.unitycoon.global.GameConfig;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Stream;
@@ -13,7 +15,7 @@ public class LeaderboardManager {
         public int score;
 
         public LeaderboardRecord() {
-            this.name = "Unknown";
+            this.name = null;
             this.score = 0;
         }
 
@@ -33,11 +35,18 @@ public class LeaderboardManager {
         Arrays.sort(records, Comparator.comparing(record -> record.score));
     }
 
+    /**
+     * Check if this score could be in the leaderboard
+     */
     public static boolean onLeaderboard(LeaderboardRecord[] leaderboard, int score)
     {
         return leaderboard[leaderboard.length - 1].score < score;
     }
 
+    /**
+     * Update the leaderboard with the new record if it is in the top 5 records
+     * @return true if the leaderboard was updated
+     */
     public static boolean updateLeaderboard(LeaderboardRecord[] leaderboard, LeaderboardRecord record) {
         // If score is worse than worst score then no update
         if (!onLeaderboard(leaderboard, record.score))
@@ -62,5 +71,15 @@ public class LeaderboardManager {
         // If the for loop ends then this score must be the best so place it at the top
         leaderboard[0] = record;
         return true;
+    }
+
+    public static String LeaderboardToString(LeaderboardRecord[] leaderboard)
+    {
+        StringBuilder text = new StringBuilder();
+        for (LeaderboardManager.LeaderboardRecord lRec : leaderboard)
+        {
+            text.append(lRec.name).append(": ").append(lRec.score).append("\n");
+        }
+        return text.toString();
     }
 }
