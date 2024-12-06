@@ -44,6 +44,9 @@ public class GameConfig implements Serializable{
         1792, 1008, false, 1f,1f, LeaderboardManager.generateBlankLeaderboard(5)
 ); // Default values
 
+    // For JSON deserializing
+    private GameConfig() {}
+
     // Private constructor to prevent instantiation from outside
     private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue, LeaderboardManager.LeaderboardRecord[] leaderboard) {
         this.windowWidth = width;
@@ -110,6 +113,9 @@ public class GameConfig implements Serializable{
         return LeaderboardManager.updateLeaderboard(leaderboard, record);
     }
 
+    /**
+     * Check if this score could be in the leaderboard
+     */
     public boolean isOnLeaderboard(int score)
     {
         return LeaderboardManager.onLeaderboard(leaderboard, score);

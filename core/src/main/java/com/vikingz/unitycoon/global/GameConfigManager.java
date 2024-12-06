@@ -46,34 +46,23 @@ public class GameConfigManager {
 
 
 
-    // todo load and save still doesnt seem to be working
     /**
-     * Saves GameConfig Object to binary file,
-     * to save settings and high score.
+     * Saves GameConfig Object to prefs as JSON,
+     * to save settings and leaderboard.
      */
     public static void saveGameConfig(){
-//        try {
-//            FileOutputStream fileOut = new FileOutputStream("config/gameconf.bin");
-//            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//
-//            out.writeObject(GameConfig.getInstance());
-//            out.close();
-//            fileOut.close();
-//            System.out.println("Serialized data is saved.");
-//
-//        } catch (IOException i) {
-//            System.out.println("FILE NOT FOUND");
-//        }
         Json json = new Json();
         String configString = json.toJson(GameConfig.getInstance());
         Preferences prefs = Gdx.app.getPreferences("prefs");
         prefs.putString("config", configString);
+
+        prefs.flush();
     }
 
 
     /**
-     * Loads GameConfig Object from binary file,
-     * to load existing settings and high score.
+     * Loads GameConfig Object from JSON in prefs,
+     * to load existing settings and leaderboard.
      */
     public static void loadGameConfig(){
         GameConfig conf;
@@ -93,31 +82,5 @@ public class GameConfigManager {
         }
 
         GameConfig.getInstance().setInstance(conf);
-
-//        try {
-//            FileInputStream fileIn = new FileInputStream("config/gameconf.bin");
-//            ObjectInputStream in = new ObjectInputStream(fileIn);
-//            conf = (GameConfig) in.readObject();
-//            in.close();
-//            fileIn.close();
-//
-//            GameConfig.getInstance().setInstance(conf);
-//            System.out.println("\n\nLoaded GameConfig");
-//            System.out.println("Music_Volume: " + GameConfig.getInstance().MusicVolumeValue);
-//            System.out.println("Song_Volume: " + GameConfig.getInstance().SoundVolumeValue);
-//
-//
-//
-//        } catch (IOException i) {
-//            System.out.println("FILE NOT FOUND");
-//            //i.printStackTrace();
-//        } catch (ClassNotFoundException c) {
-//            System.out.println("GameConfig class not found");
-//            //c.printStackTrace();
-//        }
     }
-
-
-
-
 }
