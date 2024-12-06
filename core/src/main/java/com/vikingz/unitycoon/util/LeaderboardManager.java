@@ -78,8 +78,11 @@ public class LeaderboardManager {
         StringBuilder text = new StringBuilder();
         for (LeaderboardManager.LeaderboardRecord lRec : leaderboard)
         {
-            text.append(lRec.name).append(": ").append(lRec.score).append("\n");
+            if (lRec.name != null)
+            {
+                text.append(lRec.name).append(": ").append(lRec.score).append("\n");
+            }
         }
-        return text.toString();
+        return text.isEmpty() ? "No Records\n" : text.toString();
     }
 }
