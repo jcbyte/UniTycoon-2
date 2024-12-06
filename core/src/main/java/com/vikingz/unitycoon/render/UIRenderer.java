@@ -62,16 +62,14 @@ public class UIRenderer {
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
 
-        // Sets what the buttons do on the end of timer window
-        Runnable leftBtn = ScreenMultiplexer::closeGame;
+        // Set the timer to infinty and continue
         Runnable rightBtn = () -> {
-            // funny
             GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
             gameScreen.setPaused(false);
             endOfTimerPopup.remove();
         };
 
-        endOfTimerPopup.setupButtons(leftBtn, "Quit", rightBtn, "Continue");
+        endOfTimerPopup.setupButtons(ScreenMultiplexer::closeGame, "Quit", rightBtn, "Continue");
 
     }
 
@@ -80,13 +78,8 @@ public class UIRenderer {
      * will call this function which will show the end of game popup
      */
     public void endGame(){
-        // todo show leaderboard
-        if (GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION))
-        {
-        // todo show textbox with name if we are on leaderboard
-        }
-        // todo save if we enter a name and submit
-//        GameConfigManager.saveGameConfig();
+        // Refresh the end menu showing the leaderboard section if the users score can be added
+        endOfTimerPopup.refresh(GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION));
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
         stage.addActor(endOfTimerPopup);

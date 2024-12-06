@@ -18,6 +18,18 @@ public class EndMenu extends Window {
     //Message to be displayed at end of the game
     private final String Message = "";
 
+    // Label containing the leaderboard text
+    private final Label leaderboardLabel;
+
+    // Label containing your score
+    private final Label scoreLabel;
+
+    // Table containing the component to add our score to the leaderboard
+    private final Table updateLeaderboardTable;
+
+    // TextField containing the name of the user to add to the leaderboard
+    private final TextField leaderboardTextField;
+
     //skin used for window
     private final Skin skin;
 
@@ -42,35 +54,56 @@ public class EndMenu extends Window {
         this.add(message).padLeft(-35).row();
 
         Table leaderboardTable = new Table();
-        String leaderboardText = "Leaderboard:\n";
-        for (LeaderboardManager.LeaderboardRecord lRec : GameConfig.getInstance().leaderboard)
-        {
-            leaderboardText += lRec.name + ": " + lRec.score + "\n";
-        }
-        Label leaderboardLabel = new Label(leaderboardText, skin);
+
+        leaderboardLabel = new Label(null, skin);
         leaderboardTable.add(leaderboardLabel);
         this.add(leaderboardTable);
 
 
         Table yourScoreTable = new Table();
+        updateLeaderboardTable = new Table();
 
-        Label scoreLabel = new Label("Your Score: " + 0, skin);
-        yourScoreTable.add(scoreLabel).row();
+        scoreLabel = new Label("Your Score: NA", skin);
+        yourScoreTable.add(scoreLabel).left().padLeft(35).row();
 
-        Label leaderboardLabelLabel = new Label("Name", skin);
-        TextField textField = new TextField("", skin);
-        textField.setPosition(200, 200);
-        textField.setSize(200, 100);
-        yourScoreTable.add(textField);
+        Label leaderboardLabelLabel = new Label("Name:", skin);
+        updateLeaderboardTable.add(leaderboardLabelLabel).left().padTop(5).padBottom(-5).row();
+        leaderboardTextField = new TextField("", skin);
+        leaderboardTextField.setPosition(200, 200);
+        leaderboardTextField.setSize(200, 100);
+        updateLeaderboardTable.add(leaderboardTextField);
 
         Table addButtonTable = new Table();
         TextButton addButton = new TextButton("Add", skin);
         addButton.setTransform(true);
         addButton.setScale(0.5f);
         addButtonTable.add(addButton).size(200, 100).padLeft(5).padTop(-50);
-        yourScoreTable.add(addButtonTable);
+        updateLeaderboardTable.add(addButtonTable);
+
+        yourScoreTable.add(updateLeaderboardTable);
+
+        // todo save if we enter a name and submit
+//        GameConfigManager.saveGameConfig();
 
         this.add(yourScoreTable).row();
+    }
+
+    private void refreshLeaderboardText()
+    {
+        StringBuilder leaderboardText = new StringBuilder("Leaderboard:\n");
+        for (LeaderboardManager.LeaderboardRecord lRec : GameConfig.getInstance().leaderboard)
+        {
+            leaderboardText.append(lRec.name).append(": ").append(lRec.score).append("\n");
+        }
+        leaderboardLabel.setText(leaderboardText);
+    }
+
+    public void refresh(boolean scoreOnLeaderboard)
+    {
+        refreshLeaderboardText();
+        scoreLabel.setText("Your Score: " + GameGlobals.SATISFACTION);
+
+        updateLeaderboardTable.setVisible(scoreOnLeaderboard);
     }
 
     /**
