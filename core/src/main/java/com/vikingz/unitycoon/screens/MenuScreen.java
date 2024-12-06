@@ -4,8 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
+import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.util.LeaderboardManager;
 
 /**
  * This class represents the main menu of the game.
@@ -30,6 +34,9 @@ public class MenuScreen extends SuperScreen implements Screen {
         TextButton playButton = new TextButton("Play", skin);
         TextButton settingsButton = new TextButton("Settings", skin);
         TextButton quitButton = new TextButton("Quit", skin);
+
+        Label leaderboardLabel = new Label("Leaderboard:\n\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().leaderboard), skin);
+        leaderboardLabel.setFontScale(1.75f);
 
         // Add listeners to buttons
         playButton.addListener(e -> {
@@ -60,11 +67,17 @@ public class MenuScreen extends SuperScreen implements Screen {
         table.row();
 
         // Add buttons to table
-        table.add(playButton).pad(10);
-        table.row();
-        table.add(settingsButton).pad(10);
-        table.row();
-        table.add(quitButton).pad(10);
+        Table buttonsTable = new Table();
+        buttonsTable.add(playButton).pad(10).row();
+        buttonsTable.add(settingsButton).pad(10).row();
+        buttonsTable.add(quitButton).pad(10);
+        table.add(buttonsTable);
+
+        // Add leaderboard to table
+        Table leaderboardTable = new Table();
+        leaderboardTable.add(leaderboardLabel);
+        leaderboardTable.setPosition(0, 0);
+        table.add(leaderboardTable).padRight(100).top();
 
         // Add the table to the stage
         stage.addActor(table);

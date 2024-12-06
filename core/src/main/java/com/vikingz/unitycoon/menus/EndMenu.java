@@ -4,7 +4,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
+import com.vikingz.unitycoon.util.LeaderboardManager;
+
+import java.lang.constant.Constable;
 
 /**
  * This class is the menu that pops up at the end of the game.
@@ -17,11 +21,20 @@ public class EndMenu extends Window {
     //Message to be displayed at end of the game
     private final String Message = "";
 
+    // Label containing the leaderboard text
+    private final Label leaderboardLabel;
+
+    // Label containing your score
+    private final Label scoreLabel;
+
+    // Table containing the component to add our score to the leaderboard
+    private final Table updateLeaderboardTable;
+
+    // TextField containing the name of the user to add to the leaderboard
+    private final TextField leaderboardTextField;
+
     //skin used for window
     private final Skin skin;
-
-
-
 
     /**
      * Creates a new EndMenu
@@ -30,7 +43,7 @@ public class EndMenu extends Window {
      */
     public EndMenu(Skin skin, String Message) {
 
-        super("Popup", skin);
+        super("", skin);
 
         this.setSize(800, 400);
         this.setModal(true);
@@ -40,14 +53,67 @@ public class EndMenu extends Window {
         this.skin = skin;
         this.setBackground(GameGlobals.backGroundDrawable);
 
-
         Label message = new Label(Message, skin);
         this.add(message).padLeft(-35).row();
 
+        Table leaderboardTable = new Table();
 
-        //used to display the current top stored satisfaction
-        Label topSatisfaction = new Label("Top Satisfaction: " + GameConfig.getInstance().getTopSatisfaction(), skin);
-        this.add(topSatisfaction).padBottom(20).row();
+        leaderboardLabel = new Label(null, skin);
+        leaderboardTable.add(leaderboardLabel);
+        this.add(leaderboardTable);
+
+
+        Table yourScoreTable = new Table();
+        updateLeaderboardTable = new Table();
+
+        scoreLabel = new Label("Your Score: NA", skin);
+        yourScoreTable.add(scoreLabel).left().padLeft(35).row();
+
+        Label leaderboardLabelLabel = new Label("Name:", skin);
+        updateLeaderboardTable.add(leaderboardLabelLabel).left().padTop(5).padBottom(-5).row();
+        leaderboardTextField = new TextField("", skin);
+        leaderboardTextField.setPosition(200, 200);
+        leaderboardTextField.setSize(200, 100);
+        updateLeaderboardTable.add(leaderboardTextField);
+
+        Table addButtonTable = new Table();
+        TextButton addButton = new TextButton("Add", skin);
+        addButton.setTransform(true);
+        addButton.setScale(0.5f);
+        addButtonTable.add(addButton).size(200, 100).padLeft(5).padTop(-50);
+        updateLeaderboardTable.add(addButtonTable);
+
+        yourScoreTable.add(updateLeaderboardTable);
+
+        // If add button is pressed then add to the leaderboard and hide the section
+        addButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Add to leaderboard and save to file
+                LeaderboardManager.LeaderboardRecord record = new LeaderboardManager.LeaderboardRecord(leaderboardTextField.getText(), GameGlobals.SATISFACTION);
+                LeaderboardManager.updateLeaderboard(GameConfig.getInstance().leaderboard, record);
+                GameConfigManager.saveGameConfig();
+
+                // Update visual leaderboard and hide the panel to only allow one to be added
+                refreshLeaderboardText();
+                updateLeaderboardTable.setVisible(false);
+            }
+        });
+
+        this.add(yourScoreTable).row();
+    }
+
+    private void refreshLeaderboardText()
+    {
+        leaderboardLabel.setText("Leaderboard:\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().leaderboard));
+    }
+
+    public void refresh(boolean scoreOnLeaderboard)
+    {
+        refreshLeaderboardText();
+        scoreLabel.setText("Your Score: " + GameGlobals.SATISFACTION);
+        leaderboardTextField.setText("");
+        updateLeaderboardTable.setVisible(scoreOnLeaderboard);
     }
 
     /**
@@ -59,8 +125,6 @@ public class EndMenu extends Window {
      * @param rightText contains text for the right button
      */
     public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
-
-
         TextButton leftBtn = new TextButton(leftText, skin);
         TextButton rightBtn = new TextButton(rightText, skin);
         this.add(leftBtn).pad(10);

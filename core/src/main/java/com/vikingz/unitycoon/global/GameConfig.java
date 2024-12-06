@@ -1,21 +1,26 @@
 package com.vikingz.unitycoon.global;
 
 import com.badlogic.gdx.Gdx;
+import com.vikingz.unitycoon.util.LeaderboardManager;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
- * This class contains all of the config for the game, 
+ * This class contains all of the config for the game,
  * things such as width, height, sounds volume etc.
  * This class is also used by the GameConfig Manager to save
  * the current config so that when the user reloads the game
  * their settings are still present.
- * 
+ *
  * This is also a singleton class which means we instanciate it
  * once and then that instance can be fetched statically by calling
- * GameConfig.getInstance() and then from this instance we can retrieve 
- * settings. We have chose to do this because by not making it static we 
- * are able to implement Serializable which lets us save the GameConfig class 
+ * GameConfig.getInstance() and then from this instance we can retrieve
+ * settings. We have chose to do this because by not making it static we
+ * are able to implement Serializable which lets us save the GameConfig class
  * as is without any other logic.
  */
 public class GameConfig implements Serializable{
@@ -29,23 +34,29 @@ public class GameConfig implements Serializable{
     private static boolean VSync = false;
     public float guiSize = 1;
 
-    public int TOP_SATISFACTION;
+    public LeaderboardManager.LeaderboardRecord[] leaderboard;
 
     // 31.5 rows
     // 56 cols
 
     // The single instance of GameConfig (eager initialization)
     private static GameConfig INSTANCE = new GameConfig(
-        1792, 1008, false, 1f,1f, 0); // Default values
+        1792, 1008, false, 1f,1f, LeaderboardManager.generateBlankLeaderboard(5)
+); // Default values
+
+    // For JSON deserializing
+    private GameConfig() {}
 
     // Private constructor to prevent instantiation from outside
-    private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue, int TOP_SATISFACTION) {
+    private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue, LeaderboardManager.LeaderboardRecord[] leaderboard) {
         this.windowWidth = width;
         this.windowHeight = height;
         this.skipMenus = skipMenus;
         this.SoundVolumeValue = SoundVolumeValue;
         this.MusicVolumeValue = MusicVolumeValue;
-        this.TOP_SATISFACTION = TOP_SATISFACTION;
+        this.leaderboard = leaderboard.clone();
+        // Sort the leaderboard to ensure it is in order
+        LeaderboardManager.sortLeaderboard(this.leaderboard);
     }
 
     //Sets VSync mode for game on or off
@@ -90,12 +101,24 @@ public class GameConfig implements Serializable{
         this.guiSize = guiSize;
     }
 
-    public int getTopSatisfaction() {
-        return TOP_SATISFACTION;
+    public LeaderboardManager.LeaderboardRecord[] getLeaderboard() {
+        return leaderboard;
     }
 
-    public void setTopSatisfaction(int topSatisfaction) {
-        TOP_SATISFACTION = topSatisfaction;
+    /**
+     * Update the leaderboard with the new record if it is in the top 5 records
+     * @return true if the leaderboard was updated
+     */
+    public boolean updateLeaderboard(LeaderboardManager.LeaderboardRecord record) {
+        return LeaderboardManager.updateLeaderboard(leaderboard, record);
+    }
+
+    /**
+     * Check if this score could be in the leaderboard
+     */
+    public boolean isOnLeaderboard(int score)
+    {
+        return LeaderboardManager.onLeaderboard(leaderboard, score);
     }
 }
 

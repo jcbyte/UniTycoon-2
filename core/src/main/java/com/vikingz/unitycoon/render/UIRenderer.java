@@ -13,6 +13,7 @@ import com.vikingz.unitycoon.menus.EndMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
+import com.vikingz.unitycoon.util.LeaderboardManager;
 
 /**
  * This class renders all the UI elements to the Screen.
@@ -37,7 +38,6 @@ public class UIRenderer {
     private final PauseMenu pauseMenu;
     private final EndMenu endOfTimerPopup;
 
-    private boolean newHighScore = true;
     GameScreen gameScreen;
 
     /**
@@ -62,35 +62,27 @@ public class UIRenderer {
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
 
-        // Sets what the buttons do on the end of timer window
-        Runnable leftBtn = ScreenMultiplexer::closeGame;
+        // Set the timer to infinty and continue
         Runnable rightBtn = () -> {
-            // funny
             GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
             gameScreen.setPaused(false);
             endOfTimerPopup.remove();
         };
 
-        endOfTimerPopup.setupButtons(leftBtn, "Quit", rightBtn, "Continue");
+        endOfTimerPopup.setupButtons(ScreenMultiplexer::closeGame, "Quit", rightBtn, "Continue");
 
     }
 
     /**
      * When the game screen has decided the game has finished the game
      * will call this function which will show the end of game popup
-     * @param newScore boolean of if new high score has been met
      */
-    public void endGame(boolean newScore){
+    public void endGame(){
+        // Refresh the end menu showing the leaderboard section if the users score can be added
+        endOfTimerPopup.refresh(GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION));
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
-        if (newScore && newHighScore){
-            endOfTimerPopup.addNewHighScore();
-            GameConfig.getInstance().setTopSatisfaction(GameGlobals.SATISFACTION);
-            GameConfigManager.saveGameConfig();
-            newHighScore = false;
-        }
         stage.addActor(endOfTimerPopup);
-
     }
 
     /**
