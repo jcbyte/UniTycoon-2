@@ -63,7 +63,7 @@ public class GameScreen extends SuperScreen implements Screen {
         this.isPaused = false;
         gameRenderer = new GameRenderer(mapName);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
-        eventsManager = new EventsManager(uiRenderer);
+        eventsManager = new EventsManager(this, uiRenderer);
         elapsedTime = 0;
         //5 minutes
         GameGlobals.resetGlobals(15); // todo reset to 5 * 60

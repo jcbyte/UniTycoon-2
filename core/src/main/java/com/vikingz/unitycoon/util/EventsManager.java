@@ -2,9 +2,11 @@ package com.vikingz.unitycoon.util;
 
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.UIRenderer;
+import com.vikingz.unitycoon.screens.GameScreen;
 
 public class EventsManager {
     UIRenderer uiRenderer;
+    GameScreen gameScreen;
 
     public static class Event
     {
@@ -47,9 +49,11 @@ public class EventsManager {
 
     private ManagedEvent[] events;
 
-    public EventsManager(UIRenderer uiRenderer)
+    public EventsManager(GameScreen gameScreen, UIRenderer uiRenderer)
     {
+        this.gameScreen = gameScreen;
         this.uiRenderer = uiRenderer;
+
         events = new ManagedEvent[] {
             new ManagedEvent(
                 new Event("Teset event",
@@ -67,7 +71,7 @@ public class EventsManager {
             if (GameGlobals.ELAPSED_TIME <= event.timeCalled)
             {
                 if (!event.called) {
-//                    isPaused = true; // todo pause
+                    gameScreen.setPaused(true);
                     uiRenderer.showEvent(event.event);
                     event.called = true;
                 }
