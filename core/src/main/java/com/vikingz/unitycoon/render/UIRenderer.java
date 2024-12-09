@@ -6,14 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
-import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.menus.BuildMenu;
 import com.vikingz.unitycoon.menus.EndMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
+import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
-import com.vikingz.unitycoon.util.LeaderboardManager;
+import com.vikingz.unitycoon.util.EventsManager;
 
 /**
  * This class renders all the UI elements to the Screen.
@@ -37,6 +37,7 @@ public class UIRenderer {
     // Popup Menus
     private final PauseMenu pauseMenu;
     private final EndMenu endOfTimerPopup;
+    private final PopupMenu eventsMenu; // For events
 
     GameScreen gameScreen;
 
@@ -61,6 +62,7 @@ public class UIRenderer {
 
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
+        eventsMenu = new PopupMenu(skin, null);
 
         // Set the timer to infinty and continue
         Runnable rightBtn = () -> {
@@ -71,6 +73,13 @@ public class UIRenderer {
 
         endOfTimerPopup.setupButtons(ScreenMultiplexer::closeGame, "Quit", rightBtn, "Continue");
 
+    }
+
+    public void showEvent(EventsManager.Event event)
+    {
+        eventsMenu.setMessage(event.message);
+        eventsMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt2.action, event.opt2.text);
+        stage.addActor(eventsMenu);
     }
 
     /**
@@ -126,7 +135,6 @@ public class UIRenderer {
         stage.getViewport().update(width, height, true);
         buildMenu.resize(width, height);
         statsRenderer.resize(width, height);
-
     }
 
     /**

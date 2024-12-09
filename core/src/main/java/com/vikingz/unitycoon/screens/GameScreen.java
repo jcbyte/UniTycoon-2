@@ -14,6 +14,7 @@ import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
+import com.vikingz.unitycoon.util.EventsManager;
 
 /**
  * This is the main game class from which the game is run.
@@ -49,6 +50,8 @@ public class GameScreen extends SuperScreen implements Screen {
     //Determines if first tick of game has passed
     public boolean FirstTick;
 
+    private EventsManager eventsManager;
+
 
     /**
      * Creates a new Game Screen
@@ -60,9 +63,10 @@ public class GameScreen extends SuperScreen implements Screen {
         this.isPaused = false;
         gameRenderer = new GameRenderer(mapName);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
+        eventsManager = new EventsManager(uiRenderer);
         elapsedTime = 0;
         //5 minutes
-        GameGlobals.resetGlobals(5 * 60);
+        GameGlobals.resetGlobals(15); // todo reset to 5 * 60
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
@@ -120,6 +124,8 @@ public class GameScreen extends SuperScreen implements Screen {
 
 
         }
+
+        eventsManager.render();
 
         if(GameGlobals.ELAPSED_TIME <= 0){
             endGame();
