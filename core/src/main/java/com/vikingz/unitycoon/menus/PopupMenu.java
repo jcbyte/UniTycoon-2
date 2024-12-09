@@ -29,6 +29,7 @@ public class PopupMenu extends Window {
      */
     public PopupMenu(Skin skin, String Message) {
 
+        // todo show message + center
         super("Popup", skin);
 
         this.setSize(600, 400);

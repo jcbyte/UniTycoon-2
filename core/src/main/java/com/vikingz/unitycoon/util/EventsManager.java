@@ -54,11 +54,20 @@ public class EventsManager {
         this.gameScreen = gameScreen;
         this.uiRenderer = uiRenderer;
 
+        // todo create events
         events = new ManagedEvent[] {
             new ManagedEvent(
-                new Event("Teset event",
-                    new Event.Option(() -> {}, "first"),
-                    new Event.Option(() -> {}, "second")
+                new Event("Test event",
+                    new Event.Option(() -> {
+                        // do something
+                        // todo close popup menu
+                        gameScreen.setPaused(false);
+                    }, "first"),
+                    new Event.Option(() -> {
+                        // do something
+                        // todo close popup menu
+                        gameScreen.setPaused(false);
+                    }, "second")
                 ), 10
             )
         };
