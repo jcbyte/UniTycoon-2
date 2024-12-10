@@ -169,7 +169,7 @@ public class BuildingRenderer{
                     //Updates stats
                     GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
                     GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
-                    incrementBuildingsCount(currentBuildingInfo.getBuildingType());
+                    incrementBuildingsCount(currentBuildingInfo.getBuildingType(), 1);
 
                 }
                 //the building is no longer being placed
@@ -189,6 +189,7 @@ public class BuildingRenderer{
     public void removeBuilding(Building buildingToRemove) {
         if(buildingToRemove != null){
             float value = buildingToRemove.getBuildingInfo().getBuildingCost();
+            incrementBuildingsCount(buildingToRemove.getBuildingType(), -1);
             this.placedBuildings.remove(buildingToRemove);
             GameGlobals.BALANCE += Math.round(value*0.75f);
         }
@@ -218,13 +219,13 @@ public class BuildingRenderer{
      * corresponding building that has been placed down
      * @param type Type of the building that has been added
      */
-    private void incrementBuildingsCount(BuildingStats.BuildingType type){
+    private void incrementBuildingsCount(BuildingStats.BuildingType type, int amount){
 
         switch (type) {
-            case ACADEMIC -> GameGlobals.ACADEMIC_BUILDINGS_COUNT++;
-            case ACCOMODATION -> GameGlobals.ACCOMODATION_BUILDINGS_COUNT++;
-            case RECREATIONAL -> GameGlobals.RECREATIONAL_BUILDINGS_COUNT++;
-            case FOOD -> GameGlobals.FOOD_BUILDINGS_COUNT++;
+            case ACADEMIC -> GameGlobals.ACADEMIC_BUILDINGS_COUNT += amount;
+            case ACCOMODATION -> GameGlobals.ACCOMODATION_BUILDINGS_COUNT += amount;
+            case RECREATIONAL -> GameGlobals.RECREATIONAL_BUILDINGS_COUNT += amount;
+            case FOOD -> GameGlobals.FOOD_BUILDINGS_COUNT += amount;
             default -> System.out.println("Building type doesnt exist!");
         }
 
