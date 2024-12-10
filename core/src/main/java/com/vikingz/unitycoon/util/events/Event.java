@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util;
+package com.vikingz.unitycoon.util.events;
 
 import java.util.concurrent.Callable;
 

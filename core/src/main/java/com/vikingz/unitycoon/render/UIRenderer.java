@@ -13,8 +13,7 @@ import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
-import com.vikingz.unitycoon.util.Event;
-import com.vikingz.unitycoon.util.EventsManager;
+import com.vikingz.unitycoon.util.events.Event;
 
 /**
  * This class renders all the UI elements to the Screen.
