@@ -23,11 +23,20 @@ public class EventsManager {
         {
             public final String text;
             public final Runnable action;
+            public final boolean disabled;
 
             public Option(Runnable action, String text)
             {
                 this.action = action;
                 this.text = text;
+                disabled = false;
+            }
+
+            public Option(Runnable action, String text, boolean disabled)
+            {
+                this.action = action;
+                this.text = text;
+                this.disabled = disabled;
             }
         }
 
@@ -208,30 +217,32 @@ public class EventsManager {
                 }, "-3 Buildings")
             );
 
-        Event rallyEvent = new Event("The students begin to organise a peaceful protest.",
-            new Event.Option(() -> {
-                GameGlobals.SATISFACTION -= 1000;
+        CalculatedEvent rallyEvent = new CalculatedEvent(() -> {
+            return new Event("The students begin to organise a peaceful protest.",
+                new Event.Option(() -> {
+                    GameGlobals.SATISFACTION -= 1000;
 
-                gameScreen.setPaused(false);
-            }, "Shut them down\n-1000 Satisfaction"),
-            new Event.Option(() -> {
-                GameGlobals.BALANCE -= 500; // todo what happens if we cant afford
-                GameGlobals.SATISFACTION += 1000;
+                    gameScreen.setPaused(false);
+                }, "Shut them down\n-1000 Satisfaction"),
+                new Event.Option(() -> {
+                    GameGlobals.BALANCE -= 500;
+                    GameGlobals.SATISFACTION += 1000;
 
-                gameScreen.setPaused(false);
-            }, "Fund the rally\n-500 Money\n+1000 Satisfaction")
-        );
+                    gameScreen.setPaused(false);
+                }, "Fund the rally\n-500 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 500)
+            );
+        });
 
         Event partyEvent = new Event("The students want the university to throw a party.",
             new Event.Option(() -> {
                 gameScreen.setPaused(false);
             }, "Don't Throw the party"),
             new Event.Option(() -> {
-                GameGlobals.BALANCE -= 500; // todo what happens if we cant afford
+                GameGlobals.BALANCE -= 500;
                 GameGlobals.SATISFACTION += 1000;
 
                 gameScreen.setPaused(false);
-            }, "Throw the party\n-500 Money\n+1000 Satisfaction")
+            }, "Throw the party\n-500 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 500)
         );
 
         Event sportsWinEvent =
@@ -262,11 +273,11 @@ public class EventsManager {
                 gameScreen.setPaused(false);
             }, "Leave it"),
             new Event.Option(() -> {
-                GameGlobals.BALANCE -= 200; // todo what happens if we cant afford
+                GameGlobals.BALANCE -= 200;
                 GameGlobals.STUDENTS += 200;
 
                 gameScreen.setPaused(false);
-            }, "Change it\n-200 Money\n+200 Students")
+            }, "Change it\n-200 Money\n+200 Students", GameGlobals.BALANCE < 200)
         );
 
         Event bigOilDonor = new Event("Big oil wants to donate to the university, however this could be controversial.",
@@ -285,10 +296,10 @@ public class EventsManager {
 
         Event staffStrike = new Event("Faculty members threaten to strike over pay.",
             new Event.Option(() -> {
-                GameGlobals.BALANCE -= 500; // todo what happens if we cant afford
+                GameGlobals.BALANCE -= 500;
 
                 gameScreen.setPaused(false);
-            }, "Increase pay\n-500 Money"),
+            }, "Increase pay\n-500 Money", GameGlobals.BALANCE < 500),
             new Event.Option(() -> {
                 GameGlobals.SATISFACTION -= 2000;
 
@@ -298,10 +309,7 @@ public class EventsManager {
 
 
         events = new ManagedEvent[] {
-            new ManagedEvent(grantEvent, 14),
-            new ManagedEvent(alumniVisitEvent, 2),
-            new ManagedEvent(longboiDiesEvent, 1),
-            new ManagedEvent(floodingEvent, 8)
+            new ManagedEvent(rallyEvent, 13),
         };
     }
 
