@@ -1,5 +1,6 @@
 package com.vikingz.unitycoon.menus;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -57,29 +58,50 @@ public class PopupMenu extends Window {
      * Configures the 2 buttons that appear on the popup
      * @param leftRun Runnable that will be run if the left button is pressed
      * @param leftText The text written on the left button
+     * @param leftDisabled if the left button is disabled
      * @param rightRun Runnable that will be run if the right button is pressed
      * @param rightText The text written on the right button
+     * @param rightDisabled if the right button is disabled
      */
-    public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText) {
+    public void setupButtons(Runnable leftRun, String leftText, boolean leftDisabled, Runnable rightRun, String rightText, boolean rightDisabled) {
+        if (leftDisabled && rightDisabled)
+        {
+            throw new RuntimeException("Both buttons cannot be disabled");
+        }
+
         leftBtn.setText(leftText);
         leftBtn.clearListeners();
-        leftBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                leftRun.run();
-                PopupMenu.this.remove();
-            }
-        });
+        if (!leftDisabled) {
+            leftBtn.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    leftRun.run();
+                    PopupMenu.this.remove();
+                }
+            });
+            leftBtn.setColor(Color.WHITE);
+        }
+        else
+        {
+            leftBtn.setColor(Color.GRAY);
+        }
 
         rightBtn.setText(rightText);
         rightBtn.clearListeners();
-        rightBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                rightRun.run();
-                PopupMenu.this.remove();
-            }
-        });
+        if (!rightDisabled) {
+            rightBtn.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    rightRun.run();
+                    PopupMenu.this.remove();
+                }
+            });
+            rightBtn.setColor(Color.WHITE);
+        }
+        else
+        {
+            rightBtn.setColor(Color.GRAY);
+        }
 
         rightBtn.setVisible(true);
     }
@@ -100,6 +122,7 @@ public class PopupMenu extends Window {
                 PopupMenu.this.remove();
             }
         });
+        leftBtn.setColor(Color.WHITE);
 
         rightBtn.setVisible(false);
     }

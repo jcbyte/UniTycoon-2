@@ -217,21 +217,21 @@ public class EventsManager {
                 }, "-3 Buildings")
             );
 
-        CalculatedEvent rallyEvent = new CalculatedEvent(() -> {
-            return new Event("The students begin to organise a peaceful protest.",
+        CalculatedEvent rallyEvent = new CalculatedEvent(() ->
+            new Event("The students begin to organise a peaceful protest.",
                 new Event.Option(() -> {
                     GameGlobals.SATISFACTION -= 1000;
 
                     gameScreen.setPaused(false);
                 }, "Shut them down\n-1000 Satisfaction"),
                 new Event.Option(() -> {
-                    GameGlobals.BALANCE -= 500;
+                    GameGlobals.BALANCE -= 600;
                     GameGlobals.SATISFACTION += 1000;
 
                     gameScreen.setPaused(false);
-                }, "Fund the rally\n-500 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 500)
-            );
-        });
+                }, "Fund the rally\n-600 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 600)
+            )
+        );
 
         Event partyEvent = new Event("The students want the university to throw a party.",
             new Event.Option(() -> {

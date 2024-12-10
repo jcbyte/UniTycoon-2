@@ -80,7 +80,7 @@ public class UIRenderer {
 
         eventsMenu.setMessage(event.message);
         if (event.choice) {
-            eventsMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt2.action, event.opt2.text);
+            eventsMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt1.disabled, event.opt2.action, event.opt2.text, event.opt2.disabled);
         } else {
             eventsMenu.setupSingleButton(event.opt1.action, event.opt1.text);
         }
