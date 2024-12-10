@@ -62,6 +62,7 @@ public class PopupMenu extends Window {
      */
     public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText) {
         leftBtn.setText(leftText);
+        leftBtn.clearListeners();
         leftBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -71,6 +72,7 @@ public class PopupMenu extends Window {
         });
 
         rightBtn.setText(rightText);
+        rightBtn.clearListeners();
         rightBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -90,6 +92,7 @@ public class PopupMenu extends Window {
     public void setupSingleButton(Runnable run, String text)
     {
         leftBtn.setText(text);
+        leftBtn.clearListeners();
         leftBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
