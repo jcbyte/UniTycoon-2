@@ -2,6 +2,10 @@ package com.vikingz.unitycoon.util.events;
 
 import java.util.concurrent.Callable;
 
+/**
+ * Class representing an event, with its message options and actions.
+ * This is extended in each of the events which call super to initialise.
+ */
 public class Event
 {
     private final Callable<Event> calculateEvent;
