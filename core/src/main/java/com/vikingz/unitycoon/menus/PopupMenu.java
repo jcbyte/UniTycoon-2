@@ -17,10 +17,8 @@ public class PopupMenu extends Window {
 
     private String Message = "";
 
-
     // Skin for the popup
     private final Skin skin;
-
 
     /**
      * Creates a new Popup menu
@@ -54,57 +52,17 @@ public class PopupMenu extends Window {
      * @param rightText The text written on the right button
      */
     public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
-
-
         TextButton leftBtn = new TextButton(leftText, skin);
         TextButton rightBtn = new TextButton(rightText, skin);
 
         this.add(leftBtn).pad(10);
         this.add(rightBtn).pad(10);
 
-        // Created for yes - no game events
-        // The Popup needs to call back to parent object in someway
 
         leftBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 leftRun.run();
-                //PopupMenu.this.remove();
-            }
-        });
-
-        rightBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                rightRun.run();
-                //PopupMenu.this.remove();
-            }
-        });
-    }
-
-
-    /**
-     * Configures on the right button with the left button being
-     * closing the popup
-     * @param rightRun Button runnable
-     * @param rightText Button text
-     */
-    public void setupRightBtn(Runnable rightRun, String rightText){
-
-
-
-        TextButton leftBtn = new TextButton("Close", skin);
-        TextButton rightBtn = new TextButton(rightText, skin);
-
-        this.add(leftBtn).pad(10);
-        this.add(rightBtn).pad(10);
-
-        // Created for yes - no game events
-        // The Popup needs to call back to parent object in someway
-
-        leftBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
                 PopupMenu.this.remove();
             }
         });
@@ -113,19 +71,19 @@ public class PopupMenu extends Window {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 rightRun.run();
+                PopupMenu.this.remove();
             }
         });
-
     }
 
     //Getters and Setters
     public String getMessage() {
         return Message;
     }
+
     public void setMessage(String message) {
         Message = message;
     }
 
-
-
+    // todo place this properly
 }

@@ -60,12 +60,10 @@ public class EventsManager {
                 new Event("Test event",
                     new Event.Option(() -> {
                         // do something
-                        // todo close popup menu
                         gameScreen.setPaused(false);
                     }, "first"),
                     new Event.Option(() -> {
                         // do something
-                        // todo close popup menu
                         gameScreen.setPaused(false);
                     }, "second")
                 ), 10
