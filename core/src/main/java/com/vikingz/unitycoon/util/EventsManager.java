@@ -111,8 +111,6 @@ public class EventsManager {
             StrikeEvent.class
         });
 
-        // todo balance the events
-
          // This contains the time of each random event which will be shown in the game
         Map.Entry<ClassList, Integer[]>[] gameEvents = new Map.Entry[] {
             new AbstractMap.SimpleEntry(goodEvents, new Integer[] { 4 * 60, 3 * 60, 1 * 60 }),
@@ -131,7 +129,7 @@ public class EventsManager {
         }
 
         // Add static events here
-        events.add(new ManagedEvent(new GraduationEvent(gameScreen), 10));
+        events.add(new ManagedEvent(new GraduationEvent(gameScreen), 5));
     }
 
     public void render()

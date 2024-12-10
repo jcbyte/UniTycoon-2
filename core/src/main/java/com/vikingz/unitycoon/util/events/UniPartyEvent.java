@@ -10,13 +10,13 @@ public class UniPartyEvent extends Event {
                 "The students want the university to throw a party.",
                 new Event.Option(() -> {
                     gameScreen.setPaused(false);
-                }, "Don't Throw the party"),
+                }, "Don't do anything"),
                 new Event.Option(() -> {
-                    GameGlobals.BALANCE -= 500;
-                    GameGlobals.SATISFACTION += 1000;
+                    GameGlobals.BALANCE -= 250;
+                    GameGlobals.SATISFACTION += 100000;
 
                     gameScreen.setPaused(false);
-                }, "Throw the party\n-500 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 500)
+                }, "Throw the party\n-250 Money\n+100000 Satisfaction", GameGlobals.BALANCE < 250)
             )
         );
     }

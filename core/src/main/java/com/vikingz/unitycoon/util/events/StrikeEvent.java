@@ -14,10 +14,10 @@ public class StrikeEvent extends Event {
                     gameScreen.setPaused(false);
                 }, "Increase pay\n-500 Money", GameGlobals.BALANCE < 500),
                 new Event.Option(() -> {
-                    GameGlobals.SATISFACTION -= 2000;
+                    GameGlobals.SATISFACTION -= 200000;
 
                     gameScreen.setPaused(false);
-                }, "Fire the staff\n-2000 Satisfaction")
+                }, "Fire the staff\n-200000 Satisfaction")
             )
         );
     }

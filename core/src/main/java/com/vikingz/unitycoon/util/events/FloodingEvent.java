@@ -11,7 +11,7 @@ import java.util.List;
 public class FloodingEvent extends Event {
     public FloodingEvent(GameScreen gameScreen) {
         super(
-            "Major flooding has occurred, a building have been destroyed and morale is low.",
+            "Major flooding has occurred, a building\nhas been destroyed and morale is low.",
             new Event.Option(() -> {
                 BuildingRenderer buildingRenderer = gameScreen.getGameRenderer().getBuildingRenderer();
                 List<Building> placedBuildings = buildingRenderer.getPlaceBuildings();
@@ -21,10 +21,10 @@ public class FloodingEvent extends Event {
                     buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
                 }
 
-                GameGlobals.STUDENTS = Math.max(0, GameGlobals.STUDENTS - 100);
+                GameGlobals.SATISFACTION -= 50000;
 
                 gameScreen.setPaused(false);
-            }, "-1 Building\n-100 Students")
+            }, "-1 Building\n-50000 Satisfaction")
         );
     }
 }

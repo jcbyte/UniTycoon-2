@@ -30,6 +30,8 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
  */
 public class BuildMenu{
 
+    // todo this is not centered correctly
+
     //renders buildings and handles placing them
     private final BuildingRenderer buildingRenderer;
 

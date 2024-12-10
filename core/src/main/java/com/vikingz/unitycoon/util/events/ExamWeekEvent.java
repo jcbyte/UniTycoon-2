@@ -6,12 +6,12 @@ import com.vikingz.unitycoon.screens.GameScreen;
 public class ExamWeekEvent extends Event {
     public ExamWeekEvent(GameScreen gameScreen) {
         super(
-            "It's exam week, students scramble to study, leading to overcrowded libraries and stressed faculty.",
+            "It's exam week, students are stressed and scramble\n to study leading to overcrowded libraries.",
             new Event.Option(() -> {
-                GameGlobals.SATISFACTION -= 500;
+                GameGlobals.SATISFACTION -= 100000;
 
                 gameScreen.setPaused(false);
-            }, "-500 Satisfaction")
+            }, "-100000 Satisfaction")
         );
     }
 }

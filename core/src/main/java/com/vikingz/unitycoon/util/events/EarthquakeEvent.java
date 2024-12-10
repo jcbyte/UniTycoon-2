@@ -10,12 +10,12 @@ import java.util.List;
 public class EarthquakeEvent extends Event {
     public EarthquakeEvent(GameScreen gameScreen) {
         super(
-            "An earthquake has occurred and 3 buildings have been destroyed.",
+            "An earthquake has occurred and 4 buildings\nhave been destroyed.",
             new Event.Option(() -> {
                 BuildingRenderer buildingRenderer = gameScreen.getGameRenderer().getBuildingRenderer();
                 List<Building> placedBuildings = buildingRenderer.getPlaceBuildings();
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     if (placedBuildings.isEmpty())
                         break;
@@ -25,7 +25,7 @@ public class EarthquakeEvent extends Event {
                 }
 
                 gameScreen.setPaused(false);
-            }, "-3 Buildings")
+            }, "-4 Buildings")
         );
     }
 }

@@ -9,16 +9,16 @@ public class PeacefulProtestEvent extends Event {
             new Event(
                 "The students begin to organise a peaceful protest.",
                 new Event.Option(() -> {
-                    GameGlobals.SATISFACTION -= 1000;
+                    GameGlobals.SATISFACTION -= 50000;
 
                     gameScreen.setPaused(false);
-                }, "Shut them down\n-1000 Satisfaction"),
+                }, "Shut them down\n-50000 Satisfaction"),
                 new Event.Option(() -> {
-                    GameGlobals.BALANCE -= 500;
-                    GameGlobals.SATISFACTION += 1000;
+                    GameGlobals.BALANCE -= 100;
+                    GameGlobals.SATISFACTION += 50000;
 
                     gameScreen.setPaused(false);
-                }, "Fund the rally\n-500 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 500)
+                }, "Fund the rally\n-100 Money\n+50000 Satisfaction", GameGlobals.BALANCE < 100)
             )
         );
     }

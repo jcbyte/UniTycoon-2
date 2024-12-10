@@ -7,10 +7,10 @@ import com.vikingz.unitycoon.screens.GameScreen;
 public class CasinoEvent extends Event {
     public CasinoEvent(GameScreen gameScreen) {
         super(
-            "On your day off you go to the casino\nDo you put it all on red?",
+            "You are at the casino.\nDo you put it all on red?",
             new Event.Option(() -> {
                 gameScreen.setPaused(false);
-            }, "Dont gamble."),
+            }, "Dont gamble"),
             new Event.Option(() -> {
                 if (MathUtils.randomBoolean())
                     GameGlobals.BALANCE *= 2;
@@ -18,7 +18,7 @@ public class CasinoEvent extends Event {
                     GameGlobals.BALANCE = 0;
 
                 gameScreen.setPaused(false);
-            }, "All on red\n0 Money or 2x Money")
+            }, "All on red\n2x Money (50%)\nLose all money (50%)")
         );
     }
 }

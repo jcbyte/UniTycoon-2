@@ -6,12 +6,12 @@ import com.vikingz.unitycoon.screens.GameScreen;
 public class ChampionshipWinEvent extends Event {
     public ChampionshipWinEvent(GameScreen gameScreen) {
         super(
-            "The university's team wins a championship.",
+            "The university team wins a championship.",
             new Event.Option(() -> {
-                GameGlobals.SATISFACTION += 1000;
+                GameGlobals.SATISFACTION += 100000;
 
                 gameScreen.setPaused(false);
-            }, "+1000 Satisfaction")
+            }, "+100000 Satisfaction")
         );
     }
 }
