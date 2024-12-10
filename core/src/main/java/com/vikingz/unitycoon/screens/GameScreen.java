@@ -40,8 +40,8 @@ public class GameScreen extends SuperScreen implements Screen {
     private float elapsedTime;
 
     // Renderers
-    GameRenderer gameRenderer;
-    UIRenderer uiRenderer;
+    private final GameRenderer gameRenderer;
+    private final UIRenderer uiRenderer;
 
     //Used to fix incorrect initial Renderer size
     public int startWidth;
@@ -63,7 +63,7 @@ public class GameScreen extends SuperScreen implements Screen {
         this.isPaused = false;
         gameRenderer = new GameRenderer(mapName);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
-        eventsManager = new EventsManager(this, uiRenderer);
+        eventsManager = new EventsManager(this);
         elapsedTime = 0;
         //5 minutes
         GameGlobals.resetGlobals(15); // todo reset to 5 * 60
@@ -218,5 +218,12 @@ public class GameScreen extends SuperScreen implements Screen {
         this.isPaused = isPaused;
     }
 
+    public GameRenderer getGameRenderer() {
+        return gameRenderer;
+    }
+
+    public UIRenderer getUIRenderer() {
+        return uiRenderer;
+    }
 
 }

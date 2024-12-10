@@ -1,9 +1,15 @@
 package com.vikingz.unitycoon.util;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.global.GameGlobals;
+import com.vikingz.unitycoon.render.BuildingRenderer;
+import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
 import com.vikingz.unitycoon.screens.GameScreen;
 
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 public class EventsManager {
@@ -105,10 +111,10 @@ public class EventsManager {
 
     private ManagedEvent[] events;
 
-    public EventsManager(GameScreen gameScreen, UIRenderer uiRenderer)
+    public EventsManager(GameScreen gameScreen)
     {
         this.gameScreen = gameScreen;
-        this.uiRenderer = uiRenderer;
+        this.uiRenderer = gameScreen.getUIRenderer();
 
         Event grantEvent = new Event("You receive a grant from the government",
             new Event.Option(() -> {
@@ -143,11 +149,31 @@ public class EventsManager {
                 }, "-1000 Satisfaction")
             );
 
+        Event flooding =
+            new Event("Major flooding has occurred and 3 buildings have been destroyed",
+                new Event.Option(() -> {
+                    BuildingRenderer buildingRenderer = gameScreen.getGameRenderer().getBuildingRenderer();
+                    List<Building> placedBuildings = buildingRenderer.getPlaceBuildings();
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (placedBuildings.isEmpty())
+                            break;
+
+                        int randomIndex = MathUtils.random(placedBuildings.size() - 1);
+                        buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
+                    }
+
+                    gameScreen.setPaused(false);
+                }, "-3 Buildings")
+            );
+
 
         events = new ManagedEvent[] {
-            new ManagedEvent(grantEvent, 8),
-            new ManagedEvent(alumniVisit, 5),
-            new ManagedEvent(longboiDies, 1)
+            new ManagedEvent(grantEvent, 14),
+            new ManagedEvent(alumniVisit, 2),
+            new ManagedEvent(longboiDies, 1),
+            new ManagedEvent(flooding, 8)
         };
     }
 

@@ -186,7 +186,7 @@ public class BuildingRenderer{
 
     }
 
-    private void removeBuilding(Building buildingToRemove) {
+    public void removeBuilding(Building buildingToRemove) {
         if(buildingToRemove != null){
             float value = buildingToRemove.getBuildingInfo().getBuildingCost();
             this.placedBuildings.remove(buildingToRemove);
