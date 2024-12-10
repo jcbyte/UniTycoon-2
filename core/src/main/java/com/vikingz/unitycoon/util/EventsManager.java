@@ -115,9 +115,9 @@ public class EventsManager {
 
          // This contains the time of each random event which will be shown in the game
         Map.Entry<ClassList, Integer[]>[] gameEvents = new Map.Entry[] {
-            new AbstractMap.SimpleEntry(goodEvents, new Integer[] { 2, 10 }),
-            new AbstractMap.SimpleEntry(badEvents, new Integer[] { 5, 7 }),
-            new AbstractMap.SimpleEntry(neutralEvents, new Integer[] { 14 }),
+            new AbstractMap.SimpleEntry(goodEvents, new Integer[] { 4 * 60, 3 * 60, 1 * 60 }),
+            new AbstractMap.SimpleEntry(badEvents, new Integer[] { (int)(3.5 * 60), 2 * 60 }),
+            new AbstractMap.SimpleEntry(neutralEvents, new Integer[] { (int)(4.5 * 60), (int)(2.5 * 60), (int)(0.5 * 60) }),
         };
 
         events = new ArrayList<>();

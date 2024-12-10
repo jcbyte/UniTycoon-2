@@ -66,7 +66,7 @@ public class GameScreen extends SuperScreen implements Screen {
         eventsManager = new EventsManager(this);
         elapsedTime = 0;
         //5 minutes
-        GameGlobals.resetGlobals(15); // todo reset to 5 * 60
+        GameGlobals.resetGlobals(5 * 60);
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
