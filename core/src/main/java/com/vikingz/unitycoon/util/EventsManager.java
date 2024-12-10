@@ -145,7 +145,7 @@ public class EventsManager {
 
 
         events = new ManagedEvent[] {
-            new ManagedEvent(grantEvent, 13),
+            new ManagedEvent(grantEvent, 8),
             new ManagedEvent(alumniVisit, 5),
             new ManagedEvent(longboiDies, 1)
         };

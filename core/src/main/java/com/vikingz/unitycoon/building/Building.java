@@ -54,8 +54,8 @@ public abstract class Building {
     public Building(TextureRegion texture, Point p, BuildingInfo buildingInfo){
         this.x = p.getX();
         this.y = p.getY();
-        this.width = 64;
-        this.height = 64;
+        this.width = 128;
+        this.height = 128;
         this.texture = texture;
         this.buildingType = buildingInfo.getBuildingType();
         this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();

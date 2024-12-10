@@ -121,14 +121,7 @@ public class BuildingRenderer{
 
             Building buildingToRemove = getBuildingAtPoint(Gdx.input.getX(), Gdx.input.getY());
 
-            if(buildingToRemove != null){
-                float value = buildingToRemove.getBuildingInfo().getBuildingCost();
-                this.placedBuildings.remove(buildingToRemove);
-                GameGlobals.BALANCE += Math.round(value*0.75f);
-            }
-            else{
-                System.out.println("building was null: " + null);
-            }
+            removeBuilding(buildingToRemove);
         }
 
         // Check for left mouse click to place the texture
@@ -191,6 +184,17 @@ public class BuildingRenderer{
             }
         }
 
+    }
+
+    private void removeBuilding(Building buildingToRemove) {
+        if(buildingToRemove != null){
+            float value = buildingToRemove.getBuildingInfo().getBuildingCost();
+            this.placedBuildings.remove(buildingToRemove);
+            GameGlobals.BALANCE += Math.round(value*0.75f);
+        }
+        else{
+            System.out.println("building was null: " + null);
+        }
     }
 
     /**
