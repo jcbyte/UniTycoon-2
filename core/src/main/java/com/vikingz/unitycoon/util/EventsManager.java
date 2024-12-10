@@ -17,75 +17,9 @@ public class EventsManager {
     UIRenderer uiRenderer;
     GameScreen gameScreen;
 
-    public static class Event
-    {
-        public static class Option
-        {
-            public final String text;
-            public final Runnable action;
-            public final boolean disabled;
-
-            public Option(Runnable action, String text)
-            {
-                this.action = action;
-                this.text = text;
-                disabled = false;
-            }
-
-            public Option(Runnable action, String text, boolean disabled)
-            {
-                this.action = action;
-                this.text = text;
-                this.disabled = disabled;
-            }
-        }
-
-        public final String message;
-        public final Option opt1, opt2;
-        public final boolean choice;
-
-        public Event(String message, Option opt1, Option opt2)
-        {
-            this.message = message;
-            this.opt1 = opt1;
-            this.opt2 = opt2;
-            choice = true;
-        }
-
-        public Event(String message, Option opt)
-        {
-            this.message = message;
-            this.opt1 = opt;
-            this.opt2 = null;
-            choice = false;
-        }
-    }
-
-    public static class CalculatedEvent
-    {
-        private final Callable<Event> calculateEvent;
-
-        CalculatedEvent(Callable<Event> event)
-        {
-            calculateEvent = event;
-        }
-
-        public Event getEvent()
-        {
-            try {
-                return calculateEvent.call();
-            }
-            catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     public static class ManagedEvent
     {
         private final Event event;
-        private final CalculatedEvent calcEvent;
-        private final boolean isEventCalculated;
 
         public final int timeCalled;
         public boolean called;
@@ -93,29 +27,13 @@ public class EventsManager {
         public ManagedEvent(Event event, int timeCalled)
         {
             this.event = event;
-            calcEvent = null;
-            isEventCalculated = false;
-            this.timeCalled = timeCalled;
-            this.called = false;
-        }
-
-        public ManagedEvent(CalculatedEvent event, int timeCalled)
-        {
-            this.event = null;
-            calcEvent = event;
-            isEventCalculated = true;
             this.timeCalled = timeCalled;
             this.called = false;
         }
 
         public Event getEvent()
         {
-            if (isEventCalculated) {
-                assert calcEvent != null;
-                return calcEvent.getEvent();
-            }
-            else
-                return event;
+            return event.getEvent();
         }
     }
 
@@ -126,7 +44,8 @@ public class EventsManager {
         this.gameScreen = gameScreen;
         this.uiRenderer = gameScreen.getUIRenderer();
 
-        Event grantEvent = new Event("You receive a grant from the government.",
+        Event grantEvent = new Event(
+            "You receive a grant from the government.",
             new Event.Option(() -> {
                 GameGlobals.BALANCE += 1000;
 
@@ -139,23 +58,23 @@ public class EventsManager {
             }, "Reduce fees\n+300 Students")
         );
 
-        CalculatedEvent alumniVisitEvent =
-            new CalculatedEvent(() -> {
-                boolean alumniImpressed = GameGlobals.SATISFACTION > 2000;
-                return new Event("Surprise alumni Visit\n" + (alumniImpressed ? "The alumni is impressed with the university and donates" : "The alumni is not impressed and your reputation decreases") + ".",
-                    new Event.Option(() -> {
-                        if (alumniImpressed)
-                            GameGlobals.BALANCE += 1000;
-                        else
-                            GameGlobals.STUDENTS = Math.max(0, GameGlobals.STUDENTS - 200);
+        Event alumniVisitEvent = new Event(() -> {
+            boolean alumniImpressed = GameGlobals.SATISFACTION > 2000;
+            return new Event(
+                "Surprise alumni Visit\n" + (alumniImpressed ? "The alumni is impressed with the university and donates" : "The alumni is not impressed and your reputation decreases") + ".",
+                new Event.Option(() -> {
+                    if (alumniImpressed)
+                        GameGlobals.BALANCE += 1000;
+                    else
+                        GameGlobals.STUDENTS = Math.max(0, GameGlobals.STUDENTS - 200);
 
-                        gameScreen.setPaused(false);
-                    }, alumniImpressed ? "+1000 Money" : "-200 Students")
-                );
-            });
+                    gameScreen.setPaused(false);
+                }, alumniImpressed ? "+1000 Money" : "-200 Students")
+            );
+        });
 
-        Event longboiDiesEvent =
-            new Event("Your university's mascot, Longboi, has passed away.",
+        Event longboiDiesEvent = new Event(
+            "Your university's mascot, Longboi, has passed away.",
                 new Event.Option(() -> {
                     GameGlobals.SATISFACTION -= 1000;
 
@@ -163,62 +82,63 @@ public class EventsManager {
                 }, "-1000 Satisfaction")
             );
 
-        Event guestLectureEvent =
-            new Event("A famous scholar visits, boosting prestige and attracting more students.",
-                new Event.Option(() -> {
-                    GameGlobals.STUDENTS += 100;
+        Event guestLectureEvent = new Event(
+            "A famous scholar visits, boosting prestige and attracting more students.",
+            new Event.Option(() -> {
+                GameGlobals.STUDENTS += 100;
 
-                    gameScreen.setPaused(false);
-                }, "+100 Students")
-            );
+                gameScreen.setPaused(false);
+            }, "+100 Students")
+        );
 
-        Event examWeekEvent =
-            new Event("It's exam week, students scramble to study, leading to overcrowded libraries and stressed faculty.",
-                new Event.Option(() -> {
-                    GameGlobals.SATISFACTION -= 500;
+        Event examWeekEvent = new Event(
+            "It's exam week, students scramble to study, leading to overcrowded libraries and stressed faculty.",
+            new Event.Option(() -> {
+                GameGlobals.SATISFACTION -= 500;
 
-                    gameScreen.setPaused(false);
-                }, "-500 Satisfaction")
-            );
+                gameScreen.setPaused(false);
+            }, "-500 Satisfaction")
+        );
 
-        Event floodingEvent =
-            new Event("Major flooding has occurred, a building have been destroyed and morale is low.",
-                new Event.Option(() -> {
-                    BuildingRenderer buildingRenderer = gameScreen.getGameRenderer().getBuildingRenderer();
-                    List<Building> placedBuildings = buildingRenderer.getPlaceBuildings();
+        Event floodingEvent = new Event(
+            "Major flooding has occurred, a building have been destroyed and morale is low.",
+            new Event.Option(() -> {
+                BuildingRenderer buildingRenderer = gameScreen.getGameRenderer().getBuildingRenderer();
+                List<Building> placedBuildings = buildingRenderer.getPlaceBuildings();
 
-                    if (!placedBuildings.isEmpty()) {
-                        int randomIndex = MathUtils.random(placedBuildings.size() - 1);
-                        buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
-                    }
+                if (!placedBuildings.isEmpty()) {
+                    int randomIndex = MathUtils.random(placedBuildings.size() - 1);
+                    buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
+                }
 
-                    GameGlobals.STUDENTS = Math.max(0, GameGlobals.STUDENTS - 100);
+                GameGlobals.STUDENTS = Math.max(0, GameGlobals.STUDENTS - 100);
 
-                    gameScreen.setPaused(false);
-                }, "-1 Building\n-100 Students")
-            );
+                gameScreen.setPaused(false);
+            }, "-1 Building\n-100 Students")
+        );
 
-        Event earthquakeEvent =
-            new Event("An earthquake has occurred and 3 buildings have been destroyed.",
-                new Event.Option(() -> {
-                    BuildingRenderer buildingRenderer = gameScreen.getGameRenderer().getBuildingRenderer();
-                    List<Building> placedBuildings = buildingRenderer.getPlaceBuildings();
+        Event earthquakeEvent = new Event(
+        "An earthquake has occurred and 3 buildings have been destroyed.",
+            new Event.Option(() -> {
+                BuildingRenderer buildingRenderer = gameScreen.getGameRenderer().getBuildingRenderer();
+                List<Building> placedBuildings = buildingRenderer.getPlaceBuildings();
 
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if (placedBuildings.isEmpty())
-                            break;
+                for (int i = 0; i < 3; i++)
+                {
+                    if (placedBuildings.isEmpty())
+                        break;
 
-                        int randomIndex = MathUtils.random(placedBuildings.size() - 1);
-                        buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
-                    }
+                    int randomIndex = MathUtils.random(placedBuildings.size() - 1);
+                    buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
+                }
 
-                    gameScreen.setPaused(false);
-                }, "-3 Buildings")
-            );
+                gameScreen.setPaused(false);
+            }, "-3 Buildings")
+        );
 
-        CalculatedEvent rallyEvent = new CalculatedEvent(() ->
-            new Event("The students begin to organise a peaceful protest.",
+        Event rallyEvent = new Event(() ->
+            new Event(
+                "The students begin to organise a peaceful protest.",
                 new Event.Option(() -> {
                     GameGlobals.SATISFACTION -= 1000;
 
@@ -233,8 +153,9 @@ public class EventsManager {
             )
         );
 
-        CalculatedEvent partyEvent = new CalculatedEvent(() ->
-            new Event("The students want the university to throw a party.",
+        Event partyEvent = new Event(() ->
+            new Event(
+                "The students want the university to throw a party.",
                 new Event.Option(() -> {
                     gameScreen.setPaused(false);
                 }, "Don't Throw the party"),
@@ -247,16 +168,17 @@ public class EventsManager {
             )
         );
 
-        Event sportsWinEvent =
-            new Event("The university's team wins a championship.",
-                new Event.Option(() -> {
-                    GameGlobals.SATISFACTION += 1000;
+        Event sportsWinEvent = new Event(
+            "The university's team wins a championship.",
+            new Event.Option(() -> {
+                GameGlobals.SATISFACTION += 1000;
 
-                    gameScreen.setPaused(false);
-                }, "+1000 Satisfaction")
-            );
+                gameScreen.setPaused(false);
+            }, "+1000 Satisfaction")
+        );
 
-        Event gambleEvent = new Event("On your day off you go to the casino\nDo you put it all on red?",
+        Event gambleEvent = new Event(
+            "On your day off you go to the casino\nDo you put it all on red?",
             new Event.Option(() -> {
                 gameScreen.setPaused(false);
             }, "Dont gamble."),
@@ -270,8 +192,9 @@ public class EventsManager {
             }, "All on red\n0 Money or 2x Money")
         );
 
-        CalculatedEvent curriculumChangeEvent = new CalculatedEvent(() ->
-            new Event("A faculty member suggests a major change to the university's curriculum to make it more cutting-edge.",
+        Event curriculumChangeEvent = new Event(() ->
+            new Event(
+                "A faculty member suggests a major change to the university's curriculum to make it more cutting-edge.",
                 new Event.Option(() -> {
                     gameScreen.setPaused(false);
                 }, "Leave it"),
@@ -284,7 +207,8 @@ public class EventsManager {
             )
         );
 
-        Event bigOilDonor = new Event("Big oil wants to donate to the university, however this could be controversial.",
+        Event bigOilDonor = new Event(
+            "Big oil wants to donate to the university, however this could be controversial.",
             new Event.Option(() -> {
                 GameGlobals.SATISFACTION += 100;
 
@@ -298,8 +222,9 @@ public class EventsManager {
             }, "Accept the money\n+2000 Money\n-400 Students")
         );
 
-        CalculatedEvent staffStrike = new CalculatedEvent(() ->
-            new Event("Faculty members threaten to strike over pay.",
+        Event staffStrike = new Event(() ->
+            new Event(
+                "Faculty members threaten to strike over pay.",
                 new Event.Option(() -> {
                     GameGlobals.BALANCE -= 500;
 
@@ -313,9 +238,9 @@ public class EventsManager {
             )
         );
 
-
         events = new ManagedEvent[] {
-            new ManagedEvent(rallyEvent, 13),
+            new ManagedEvent(sportsWinEvent, 13),
+            new ManagedEvent(rallyEvent, 8),
         };
     }
 
