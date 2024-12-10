@@ -30,7 +30,7 @@ public class PopupMenu extends Window {
         // todo show message + center
         super("Popup", skin);
 
-        this.setSize(600, 400);
+        this.setSize(800, 400);
         this.setModal(true);
         this.setMovable(false);
         this.setResizable(false);
@@ -38,10 +38,8 @@ public class PopupMenu extends Window {
         this.skin = skin;
         this.setBackground(GameGlobals.backGroundDrawable);
 
-
         Label message = new Label(Message, skin);
         this.add(message).padBottom(20).row();
-
     }
 
     /**
@@ -52,6 +50,7 @@ public class PopupMenu extends Window {
      * @param rightText The text written on the right button
      */
     public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
+
         TextButton leftBtn = new TextButton(leftText, skin);
         TextButton rightBtn = new TextButton(rightText, skin);
 
@@ -84,6 +83,4 @@ public class PopupMenu extends Window {
     public void setMessage(String message) {
         Message = message;
     }
-
-    // todo place this properly
 }
