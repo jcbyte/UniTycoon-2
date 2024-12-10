@@ -51,9 +51,6 @@ public class PopupMenu extends Window {
         buttonTable.add(leftBtn).expandX().fillX().pad(10);
         buttonTable.add(rightBtn).expandX().fillX().pad(10);
         this.add(buttonTable);
-
-
-        this.debugAll();
     }
 
     /**
