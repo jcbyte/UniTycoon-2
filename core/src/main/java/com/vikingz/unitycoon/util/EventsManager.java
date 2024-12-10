@@ -225,24 +225,26 @@ public class EventsManager {
                     gameScreen.setPaused(false);
                 }, "Shut them down\n-1000 Satisfaction"),
                 new Event.Option(() -> {
-                    GameGlobals.BALANCE -= 600;
+                    GameGlobals.BALANCE -= 500;
                     GameGlobals.SATISFACTION += 1000;
 
                     gameScreen.setPaused(false);
-                }, "Fund the rally\n-600 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 600)
+                }, "Fund the rally\n-500 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 500)
             )
         );
 
-        Event partyEvent = new Event("The students want the university to throw a party.",
-            new Event.Option(() -> {
-                gameScreen.setPaused(false);
-            }, "Don't Throw the party"),
-            new Event.Option(() -> {
-                GameGlobals.BALANCE -= 500;
-                GameGlobals.SATISFACTION += 1000;
+        CalculatedEvent partyEvent = new CalculatedEvent(() ->
+            new Event("The students want the university to throw a party.",
+                new Event.Option(() -> {
+                    gameScreen.setPaused(false);
+                }, "Don't Throw the party"),
+                new Event.Option(() -> {
+                    GameGlobals.BALANCE -= 500;
+                    GameGlobals.SATISFACTION += 1000;
 
-                gameScreen.setPaused(false);
-            }, "Throw the party\n-500 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 500)
+                    gameScreen.setPaused(false);
+                }, "Throw the party\n-500 Money\n+1000 Satisfaction", GameGlobals.BALANCE < 500)
+            )
         );
 
         Event sportsWinEvent =
@@ -268,16 +270,18 @@ public class EventsManager {
             }, "All on red\n0 Money or 2x Money")
         );
 
-        Event ciriculumChangeEvent = new Event("A faculty member suggests a major change to the university's curriculum to make it more cutting-edge.",
-            new Event.Option(() -> {
-                gameScreen.setPaused(false);
-            }, "Leave it"),
-            new Event.Option(() -> {
-                GameGlobals.BALANCE -= 200;
-                GameGlobals.STUDENTS += 200;
+        CalculatedEvent curriculumChangeEvent = new CalculatedEvent(() ->
+            new Event("A faculty member suggests a major change to the university's curriculum to make it more cutting-edge.",
+                new Event.Option(() -> {
+                    gameScreen.setPaused(false);
+                }, "Leave it"),
+                new Event.Option(() -> {
+                    GameGlobals.BALANCE -= 200;
+                    GameGlobals.STUDENTS += 200;
 
-                gameScreen.setPaused(false);
-            }, "Change it\n-200 Money\n+200 Students", GameGlobals.BALANCE < 200)
+                    gameScreen.setPaused(false);
+                }, "Change it\n-200 Money\n+200 Students", GameGlobals.BALANCE < 200)
+            )
         );
 
         Event bigOilDonor = new Event("Big oil wants to donate to the university, however this could be controversial.",
@@ -294,17 +298,19 @@ public class EventsManager {
             }, "Accept the money\n+2000 Money\n-400 Students")
         );
 
-        Event staffStrike = new Event("Faculty members threaten to strike over pay.",
-            new Event.Option(() -> {
-                GameGlobals.BALANCE -= 500;
+        CalculatedEvent staffStrike = new CalculatedEvent(() ->
+            new Event("Faculty members threaten to strike over pay.",
+                new Event.Option(() -> {
+                    GameGlobals.BALANCE -= 500;
 
-                gameScreen.setPaused(false);
-            }, "Increase pay\n-500 Money", GameGlobals.BALANCE < 500),
-            new Event.Option(() -> {
-                GameGlobals.SATISFACTION -= 2000;
+                    gameScreen.setPaused(false);
+                }, "Increase pay\n-500 Money", GameGlobals.BALANCE < 500),
+                new Event.Option(() -> {
+                    GameGlobals.SATISFACTION -= 2000;
 
-                gameScreen.setPaused(false);
-            }, "Fire the staff\n-2000 Satisfaction")
+                    gameScreen.setPaused(false);
+                }, "Fire the staff\n-2000 Satisfaction")
+            )
         );
 
 
