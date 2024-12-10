@@ -57,6 +57,9 @@ public class EventsManager {
                 this.events = events;
             }
 
+            /**
+             * Get a random event from the declared event classes
+             */
             public Event GetRandomEvent()
             {
                 if (events.length == 0)
@@ -66,8 +69,20 @@ public class EventsManager {
 
                 try {
                     int randomIndex = MathUtils.random(0, events.length - 1);
+                    return getEvent(events[randomIndex]);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            /**
+             * Create an event instance from a class object
+             */
+            private Event getEvent(Class<? extends Event> eventClass)
+            {
+                try {
                     // Create an instance of a random event from the array
-                    return events[0].getConstructor(GameScreen.class).newInstance(gameScreen);
+                    return eventClass.getConstructor(GameScreen.class).newInstance(gameScreen);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -96,7 +111,6 @@ public class EventsManager {
             StrikeEvent.class
         });
 
-        // todo create static event (exam week + graduation?)
         // todo balance the events
 
          // This contains the time of each random event which will be shown in the game
@@ -115,6 +129,9 @@ public class EventsManager {
                 events.add(new ManagedEvent(classList.GetRandomEvent(), time));
             }
         }
+
+        // Add static events here
+        events.add(new ManagedEvent(new GraduationEvent(gameScreen), 10));
     }
 
     public void render()
