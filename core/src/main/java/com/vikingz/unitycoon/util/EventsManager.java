@@ -24,12 +24,21 @@ public class EventsManager {
 
         public String message;
         public Option opt1, opt2;
+        public boolean choice;
 
         public Event(String message, Option opt1, Option opt2)
         {
             this.message = message;
             this.opt1 = opt1;
             this.opt2 = opt2;
+            choice = true;
+        }
+
+        public Event(String message, Option opt)
+        {
+            this.message = message;
+            this.opt1 = opt;
+            choice = false;
         }
     }
 
@@ -57,7 +66,7 @@ public class EventsManager {
         // todo create events
         events = new ManagedEvent[] {
             new ManagedEvent(
-                new Event("Test event",
+                new Event("Test event 1, multiple choice",
                     new Event.Option(() -> {
                         // do something
                         gameScreen.setPaused(false);
@@ -67,6 +76,14 @@ public class EventsManager {
                         gameScreen.setPaused(false);
                     }, "second")
                 ), 13
+            ),
+            new ManagedEvent(
+                new Event("Test event 2, single choice",
+                    new Event.Option(() -> {
+                        // do something
+                        gameScreen.setPaused(false);
+                    }, "Close")
+                ), 8
             )
         };
     }

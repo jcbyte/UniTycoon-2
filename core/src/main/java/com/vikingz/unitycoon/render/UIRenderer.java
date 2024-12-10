@@ -75,12 +75,15 @@ public class UIRenderer {
 
     }
 
-    public void showEvent(EventsManager.Event event)
-    {
+    public void showEvent(EventsManager.Event event) {
         eventsMenu.setPosition((stage.getWidth() - eventsMenu.getWidth()) / 2, (stage.getHeight() - eventsMenu.getHeight()) / 2);
 
         eventsMenu.setMessage(event.message);
-        eventsMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt2.action, event.opt2.text);
+        if (event.choice) {
+            eventsMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt2.action, event.opt2.text);
+        } else {
+            eventsMenu.setupSingleButton(event.opt1.action, event.opt1.text);
+        }
         stage.addActor(eventsMenu);
     }
 

@@ -74,6 +74,22 @@ public class PopupMenu extends Window {
                 PopupMenu.this.remove();
             }
         });
+
+        rightBtn.setVisible(true);
+    }
+
+    public void setupSingleButton(Runnable run, String text)
+    {
+        leftBtn.setText(text);
+        leftBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                run.run();
+                PopupMenu.this.remove();
+            }
+        });
+
+        rightBtn.setVisible(false);
     }
 
     public void setMessage(String message) {
