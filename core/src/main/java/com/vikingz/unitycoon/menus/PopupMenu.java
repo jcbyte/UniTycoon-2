@@ -3,6 +3,7 @@ package com.vikingz.unitycoon.menus;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.vikingz.unitycoon.global.GameGlobals;
 
 /**
@@ -15,7 +16,9 @@ import com.vikingz.unitycoon.global.GameGlobals;
  */
 public class PopupMenu extends Window {
 
-    private String Message = "";
+    private final Label message;
+    private final TextButton leftBtn;
+    private final TextButton rightBtn;
 
     // Skin for the popup
     private final Skin skin;
@@ -23,12 +26,9 @@ public class PopupMenu extends Window {
     /**
      * Creates a new Popup menu
      * @param skin Skin for the menu
-     * @param Message Message to be displayed in the popup
      */
-    public PopupMenu(Skin skin, String Message) {
-
-        // todo show message + center
-        super("Popup", skin);
+    public PopupMenu(Skin skin) {
+        super("", skin);
 
         this.setSize(800, 400);
         this.setModal(true);
@@ -38,8 +38,15 @@ public class PopupMenu extends Window {
         this.skin = skin;
         this.setBackground(GameGlobals.backGroundDrawable);
 
-        Label message = new Label(Message, skin);
+        message = new Label("", skin);
+        message.setFontScale(1.3f);
         this.add(message).padBottom(20).row();
+
+        leftBtn = new TextButton("", skin);
+        rightBtn = new TextButton("", skin);
+
+        this.add(leftBtn).pad(10);
+        this.add(rightBtn).pad(10);
     }
 
     /**
@@ -49,15 +56,8 @@ public class PopupMenu extends Window {
      * @param rightRun Runnable that will be run if the right button is pressed
      * @param rightText The text written on the right button
      */
-    public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
-
-        TextButton leftBtn = new TextButton(leftText, skin);
-        TextButton rightBtn = new TextButton(rightText, skin);
-
-        this.add(leftBtn).pad(10);
-        this.add(rightBtn).pad(10);
-
-
+    public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText) {
+        leftBtn.setText(leftText);
         leftBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -66,6 +66,7 @@ public class PopupMenu extends Window {
             }
         });
 
+        rightBtn.setText(rightText);
         rightBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -75,12 +76,7 @@ public class PopupMenu extends Window {
         });
     }
 
-    //Getters and Setters
-    public String getMessage() {
-        return Message;
-    }
-
     public void setMessage(String message) {
-        Message = message;
+        this.message.setText(message);
     }
 }

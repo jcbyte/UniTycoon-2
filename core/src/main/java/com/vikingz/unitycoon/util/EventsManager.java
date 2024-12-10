@@ -66,7 +66,7 @@ public class EventsManager {
                         // do something
                         gameScreen.setPaused(false);
                     }, "second")
-                ), 10
+                ), 13
             )
         };
     }

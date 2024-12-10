@@ -62,7 +62,7 @@ public class UIRenderer {
 
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
-        eventsMenu = new PopupMenu(skin, null);
+        eventsMenu = new PopupMenu(skin);
 
         // Set the timer to infinty and continue
         Runnable rightBtn = () -> {
