@@ -40,13 +40,20 @@ public class PopupMenu extends Window {
 
         message = new Label("", skin);
         message.setFontScale(1.3f);
-        this.add(message).padBottom(20).row();
+        this.add(message).align(Align.center).pad(50).row();
 
         leftBtn = new TextButton("", skin);
+        leftBtn.getLabel().setFontScale(0.5f);
         rightBtn = new TextButton("", skin);
+        rightBtn.getLabel().setFontScale(0.5f);
 
-        this.add(leftBtn).pad(10);
-        this.add(rightBtn).pad(10);
+        Table buttonTable = new Table();
+        buttonTable.add(leftBtn).expandX().fillX().pad(10);
+        buttonTable.add(rightBtn).expandX().fillX().pad(10);
+        this.add(buttonTable);
+
+
+        this.debugAll();
     }
 
     /**
@@ -78,6 +85,11 @@ public class PopupMenu extends Window {
         rightBtn.setVisible(true);
     }
 
+    /**
+     * Configures 1 button that appears on the popup
+     * @param run Runnable that will be run when the button is pressed
+     * @param text The text written on the button
+     */
     public void setupSingleButton(Runnable run, String text)
     {
         leftBtn.setText(text);
