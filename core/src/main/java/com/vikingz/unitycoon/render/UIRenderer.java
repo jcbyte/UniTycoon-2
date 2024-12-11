@@ -13,6 +13,7 @@ import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
+import com.vikingz.unitycoon.util.Achievement;
 import com.vikingz.unitycoon.util.events.Event;
 
 /**
@@ -37,7 +38,7 @@ public class UIRenderer {
     // Popup Menus
     private final PauseMenu pauseMenu;
     private final EndMenu endOfTimerPopup;
-    private final PopupMenu eventsMenu; // For events
+    private final PopupMenu popupMenu; // For events
 
     GameScreen gameScreen;
 
@@ -62,7 +63,7 @@ public class UIRenderer {
 
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
-        eventsMenu = new PopupMenu(skin);
+        popupMenu = new PopupMenu(skin);
 
         // Set the timer to infinty and continue
         // No more events will happen in this mode, could be added later
@@ -77,15 +78,24 @@ public class UIRenderer {
     }
 
     public void showEvent(Event event) {
-        eventsMenu.setPosition((stage.getWidth() - eventsMenu.getWidth()) / 2, (stage.getHeight() - eventsMenu.getHeight()) / 2);
+        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
 
-        eventsMenu.setMessage(event.message);
+        popupMenu.setMessage(event.message);
         if (event.choice) {
-            eventsMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt1.disabled, event.opt2.action, event.opt2.text, event.opt2.disabled);
+            popupMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt1.disabled, event.opt2.action, event.opt2.text, event.opt2.disabled);
         } else {
-            eventsMenu.setupSingleButton(event.opt1.action, event.opt1.text);
+            popupMenu.setupSingleButton(event.opt1.action, event.opt1.text);
         }
-        stage.addActor(eventsMenu);
+        stage.addActor(popupMenu);
+    }
+
+    public void showAchievement(Achievement achievement)
+    {
+        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+
+        popupMenu.setMessage("Achievement Unlocked\n\n" + achievement.name);
+        popupMenu.setupSingleButton(achievement.reward, achievement.rewardText);
+        stage.addActor(popupMenu);
     }
 
     /**

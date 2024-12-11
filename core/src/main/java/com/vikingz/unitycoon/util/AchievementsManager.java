@@ -1,59 +1,16 @@
 package com.vikingz.unitycoon.util;
 
 import com.vikingz.unitycoon.global.GameGlobals;
-
-import java.util.concurrent.Callable;
+import com.vikingz.unitycoon.render.UIRenderer;
+import com.vikingz.unitycoon.screens.GameScreen;
 
 public class AchievementsManager {
-    public class Achievement
-    {
-        public static String name;
-        private boolean got;
-        private static Callable<Boolean> has;
-
-        public static Runnable reward;
-        public static String rewardText;
-
-        public Achievement(String name, Callable<Boolean> has, Runnable reward, String rewardText)
-        {
-            this.name = name;
-            got = false;
-            this.has = has;
-            this.reward = reward;
-            this.rewardText = rewardText;
-        }
-
-        /**
-         * CHeck if the achievement has been archived
-         */
-        public boolean hasAchieved()
-        {
-            return got;
-        }
-
-        /**
-         * Calculate if the achievement has been reached
-         * @return true only the first time it is reached
-         */
-        public boolean calculate() {
-            if (got)
-                return false;
-
-            try {
-                got = has.call();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-            return got;
-        }
-    }
-
+    private UIRenderer uiRenderer;
     public Achievement[] achievements;
 
-    // todo implement these
+    public AchievementsManager(GameScreen gameScreen) {
+        uiRenderer = gameScreen.getUIRenderer();
 
-    public AchievementsManager() {
         achievements = new Achievement[] {
             new Achievement(
                 "Dean of Dollars\nHave a balance over 15k",
@@ -98,5 +55,16 @@ public class AchievementsManager {
                 "+100000 Satisfaction"
             ),
         };
+    }
+
+    public void update()
+    {
+        for (Achievement achievement : achievements)
+        {
+            if (achievement.calculate())
+            {
+                uiRenderer.showAchievement(achievement);
+            }
+        }
     }
 }
