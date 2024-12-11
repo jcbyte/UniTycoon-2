@@ -6,19 +6,12 @@ import com.vikingz.unitycoon.render.UIRenderer;
 import com.vikingz.unitycoon.screens.GameScreen;
 
 public class AchievementsManager {
-    private UIRenderer uiRenderer;
+    private GameScreen gameScreen;
     public Achievement[] achievements;
 
-    /**
-     * Used to set the uiRenderer as it is not required until updates.
-     * Deferred Initialization as the UIRenderer requires an instance of this to initialise.
-     */
-    public void setUIRenderer(UIRenderer uiRenderer)
-    {
-        this.uiRenderer = uiRenderer;
-    }
+    public AchievementsManager(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
 
-    public AchievementsManager() {
         achievements = new Achievement[] {
             new Achievement(
                 "Dean of Dollars\nHave a balance over 15k",
@@ -26,6 +19,7 @@ public class AchievementsManager {
                 new Texture("achievements/dean-of-dollars.png"),
                 () -> {
                     GameGlobals.SATISFACTION += 100000;
+                    gameScreen.setPaused(false);
                 },
                 "+100000 Satisfaction"
             ),
@@ -35,6 +29,7 @@ public class AchievementsManager {
                 new Texture("achievements/aplus-atmosphere.png"),
                 () -> {
                     GameGlobals.BALANCE += 400;
+                    gameScreen.setPaused(false);
                 },
                 "+400 Money"
             ),
@@ -45,6 +40,7 @@ public class AchievementsManager {
                 () -> {
                     GameGlobals.BALANCE += 150;
                     GameGlobals.STUDENTS += 150;
+                    gameScreen.setPaused(false);
                 },
                 "+150 Money\n+150 Students"
             ),
@@ -55,6 +51,7 @@ public class AchievementsManager {
                 () -> {
                     GameGlobals.SATISFACTION += 50000;
                     GameGlobals.STUDENTS += 100;
+                    gameScreen.setPaused(false);
                 },
                 "+50000 Satisfaction\n+100 Students"
             ),
@@ -64,6 +61,7 @@ public class AchievementsManager {
                 new Texture("achievements/work-play.png"),
                 () -> {
                     GameGlobals.SATISFACTION += 100000;
+                    gameScreen.setPaused(false);
                 },
                 "+100000 Satisfaction"
             ),
@@ -76,7 +74,8 @@ public class AchievementsManager {
         {
             if (achievement.calculate())
             {
-                uiRenderer.showAchievement(achievement);
+                gameScreen.setPaused(true);
+                gameScreen.getUIRenderer().showAchievement(achievement);
             }
         }
     }
