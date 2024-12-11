@@ -66,7 +66,6 @@ public class BuildMenu{
         this.buildingRenderer =  buildingRenderer;
         this.skin = skin;
 
-
         //Texture atlas of building menu bar
         Texture textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
 
@@ -156,7 +155,7 @@ public class BuildMenu{
 
 
     /**
-     * Creates a new window and sets up all of the contents of the window
+     * Creates a new window and sets up all the contents of the window
      * so that when the user presses one of the buttons at the bottom of the game
      * screen the corresponding menu is shown.
      * @param buildingType contains Type of building from BuildingStats
@@ -168,7 +167,9 @@ public class BuildMenu{
         Window window = new Window("Build Menu", skin);
         window.getTitleTable().padTop(25).padLeft(437);
         this.currentMenu = window;
+        window.setModal(true);
         window.setMovable(false);
+        window.setResizable(false);
         window.setBackground(GameGlobals.backGroundDrawable);
 
         //Building name Label
@@ -280,11 +281,8 @@ public class BuildMenu{
         window.add(closeButton);
 
         // Set size and position of the window
-        //Size of the window
-        int MENU_WINDOW_WIDTH = 1000;
-        int MENU_WINDOW_HEIGHT = 800;
-        window.setSize(MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);
-        window.setPosition(this.width / 2f - (MENU_WINDOW_WIDTH / 2), this.height / 2f - (MENU_WINDOW_HEIGHT / 2));
+        window.setSize(1000, 800);
+        window.setPosition((stage.getWidth() - window.getWidth()) / 2, (stage.getHeight() - window.getHeight()) / 2);
 
         // Add window to the stage
         stage.addActor(window);
