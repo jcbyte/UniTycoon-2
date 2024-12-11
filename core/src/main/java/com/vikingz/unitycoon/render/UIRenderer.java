@@ -34,6 +34,7 @@ public class UIRenderer {
 
     private final BuildMenu buildMenu;
     private final StatsRenderer statsRenderer;
+    private final AchievementsRenderer achievementsRenderer;
 
     // Popup Menus
     private final PauseMenu pauseMenu;
@@ -59,6 +60,8 @@ public class UIRenderer {
 
 
         statsRenderer = new StatsRenderer(skin);
+        achievementsRenderer = new AchievementsRenderer(gameScreen.getAchievementsManager(), skin);
+
         buildMenu = new BuildMenu(skin, buildingRenderer, stage);
 
         pauseMenu = new PauseMenu(skin);
@@ -96,6 +99,8 @@ public class UIRenderer {
         popupMenu.setMessage("Achievement Unlocked\n\n" + achievement.name);
         popupMenu.setupSingleButton(achievement.reward, achievement.rewardText);
         stage.addActor(popupMenu);
+
+        achievementsRenderer.update();
     }
 
     /**
@@ -136,8 +141,8 @@ public class UIRenderer {
     public void render(float delta){
         viewport.apply();
         statsRenderer.render(delta);
+        achievementsRenderer.render(delta);
         buildMenu.render(delta);
-
     }
 
 
@@ -166,6 +171,7 @@ public class UIRenderer {
      */
     public void dispose(){
         stage.dispose();
+        achievementsRenderer.dispose();
     }
 
 }

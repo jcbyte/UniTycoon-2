@@ -1,5 +1,7 @@
 package com.vikingz.unitycoon.util;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import java.util.concurrent.Callable;
 
 public class Achievement
@@ -8,14 +10,17 @@ public class Achievement
     private boolean got;
     private Callable<Boolean> has;
 
+    public Texture logo;
+
     public Runnable reward;
     public String rewardText;
 
-    public Achievement(String name, Callable<Boolean> has, Runnable reward, String rewardText)
+    public Achievement(String name, Callable<Boolean> has, Texture logo, Runnable reward, String rewardText)
     {
         this.name = name;
         got = false;
         this.has = has;
+        this.logo = logo;
         this.reward = reward;
         this.rewardText = rewardText;
     }
