@@ -14,6 +14,7 @@ import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
+import com.vikingz.unitycoon.util.EventsManager;
 
 /**
  * This is the main game class from which the game is run.
@@ -39,8 +40,8 @@ public class GameScreen extends SuperScreen implements Screen {
     private float elapsedTime;
 
     // Renderers
-    GameRenderer gameRenderer;
-    UIRenderer uiRenderer;
+    private final GameRenderer gameRenderer;
+    private final UIRenderer uiRenderer;
 
     //Used to fix incorrect initial Renderer size
     public int startWidth;
@@ -48,6 +49,8 @@ public class GameScreen extends SuperScreen implements Screen {
 
     //Determines if first tick of game has passed
     public boolean FirstTick;
+
+    private EventsManager eventsManager;
 
 
     /**
@@ -60,6 +63,7 @@ public class GameScreen extends SuperScreen implements Screen {
         this.isPaused = false;
         gameRenderer = new GameRenderer(mapName);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
+        eventsManager = new EventsManager(this);
         elapsedTime = 0;
         //5 minutes
         GameGlobals.resetGlobals(5 * 60);
@@ -120,6 +124,8 @@ public class GameScreen extends SuperScreen implements Screen {
 
 
         }
+
+        eventsManager.render();
 
         if(GameGlobals.ELAPSED_TIME <= 0){
             endGame();
@@ -212,5 +218,12 @@ public class GameScreen extends SuperScreen implements Screen {
         this.isPaused = isPaused;
     }
 
+    public GameRenderer getGameRenderer() {
+        return gameRenderer;
+    }
+
+    public UIRenderer getUIRenderer() {
+        return uiRenderer;
+    }
 
 }

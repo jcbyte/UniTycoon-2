@@ -18,8 +18,6 @@ import com.vikingz.unitycoon.screens.ScreenMultiplexer;
  * To close the pause menu, the user has to press the esc button again.
  */
 public class PauseMenu extends Window {
-
-
     /**
      * Creates a new pause menu
      * This menu is shown when the user pauses the game / presses

@@ -1,8 +1,10 @@
 package com.vikingz.unitycoon.menus;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.vikingz.unitycoon.global.GameGlobals;
 
 /**
@@ -15,23 +17,21 @@ import com.vikingz.unitycoon.global.GameGlobals;
  */
 public class PopupMenu extends Window {
 
-    private String Message = "";
-
+    private final Label message;
+    private final TextButton leftBtn;
+    private final TextButton rightBtn;
 
     // Skin for the popup
     private final Skin skin;
 
-
     /**
      * Creates a new Popup menu
      * @param skin Skin for the menu
-     * @param Message Message to be displayed in the popup
      */
-    public PopupMenu(Skin skin, String Message) {
+    public PopupMenu(Skin skin) {
+        super("", skin);
 
-        super("Popup", skin);
-
-        this.setSize(600, 400);
+        this.setSize(800, 400);
         this.setModal(true);
         this.setMovable(false);
         this.setResizable(false);
@@ -39,92 +39,95 @@ public class PopupMenu extends Window {
         this.skin = skin;
         this.setBackground(GameGlobals.backGroundDrawable);
 
+        message = new Label("", skin);
+        message.setFontScale(1.3f);
+        this.add(message).align(Align.center).pad(50).row();
 
-        Label message = new Label(Message, skin);
-        this.add(message).padBottom(20).row();
+        leftBtn = new TextButton("", skin);
+        leftBtn.getLabel().setFontScale(0.5f);
+        rightBtn = new TextButton("", skin);
+        rightBtn.getLabel().setFontScale(0.5f);
 
+        Table buttonTable = new Table();
+        buttonTable.add(leftBtn).expandX().fillX().pad(10);
+        buttonTable.add(rightBtn).expandX().fillX().pad(10);
+        this.add(buttonTable);
     }
 
     /**
      * Configures the 2 buttons that appear on the popup
      * @param leftRun Runnable that will be run if the left button is pressed
      * @param leftText The text written on the left button
+     * @param leftDisabled if the left button is disabled
      * @param rightRun Runnable that will be run if the right button is pressed
      * @param rightText The text written on the right button
+     * @param rightDisabled if the right button is disabled
      */
-    public void setupButtons(Runnable leftRun, String leftText, Runnable rightRun, String rightText){
+    public void setupButtons(Runnable leftRun, String leftText, boolean leftDisabled, Runnable rightRun, String rightText, boolean rightDisabled) {
+        if (leftDisabled && rightDisabled)
+        {
+            throw new RuntimeException("Both buttons cannot be disabled");
+        }
 
+        leftBtn.setText(leftText);
+        leftBtn.clearListeners();
+        if (!leftDisabled) {
+            leftBtn.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    leftRun.run();
+                    PopupMenu.this.remove();
+                }
+            });
+            leftBtn.setColor(Color.WHITE);
+        }
+        else
+        {
+            leftBtn.setColor(Color.GRAY);
+        }
 
-        TextButton leftBtn = new TextButton(leftText, skin);
-        TextButton rightBtn = new TextButton(rightText, skin);
+        rightBtn.setText(rightText);
+        rightBtn.clearListeners();
+        if (!rightDisabled) {
+            rightBtn.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    rightRun.run();
+                    PopupMenu.this.remove();
+                }
+            });
+            rightBtn.setColor(Color.WHITE);
+        }
+        else
+        {
+            rightBtn.setColor(Color.GRAY);
+        }
 
-        this.add(leftBtn).pad(10);
-        this.add(rightBtn).pad(10);
-
-        // Created for yes - no game events
-        // The Popup needs to call back to parent object in someway
-
-        leftBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                leftRun.run();
-                //PopupMenu.this.remove();
-            }
-        });
-
-        rightBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                rightRun.run();
-                //PopupMenu.this.remove();
-            }
-        });
+        rightBtn.setVisible(true);
     }
 
-
     /**
-     * Configures on the right button with the left button being
-     * closing the popup
-     * @param rightRun Button runnable
-     * @param rightText Button text
+     * Configures 1 button that appears on the popup
+     * @param run Runnable that will be run when the button is pressed
+     * @param text The text written on the button
      */
-    public void setupRightBtn(Runnable rightRun, String rightText){
-
-
-
-        TextButton leftBtn = new TextButton("Close", skin);
-        TextButton rightBtn = new TextButton(rightText, skin);
-
-        this.add(leftBtn).pad(10);
-        this.add(rightBtn).pad(10);
-
-        // Created for yes - no game events
-        // The Popup needs to call back to parent object in someway
-
+    public void setupSingleButton(Runnable run, String text)
+    {
+        leftBtn.setText(text);
+        leftBtn.clearListeners();
         leftBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                run.run();
                 PopupMenu.this.remove();
             }
         });
+        leftBtn.setColor(Color.WHITE);
 
-        rightBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                rightRun.run();
-            }
-        });
-
+        rightBtn.setVisible(false);
     }
 
-    //Getters and Setters
-    public String getMessage() {
-        return Message;
-    }
     public void setMessage(String message) {
-        Message = message;
+        this.message.setText(message);
     }
-
-
-
 }

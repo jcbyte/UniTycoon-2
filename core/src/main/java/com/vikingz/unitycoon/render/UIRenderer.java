@@ -6,14 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
-import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.menus.BuildMenu;
 import com.vikingz.unitycoon.menus.EndMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
+import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
-import com.vikingz.unitycoon.util.LeaderboardManager;
+import com.vikingz.unitycoon.util.events.Event;
 
 /**
  * This class renders all the UI elements to the Screen.
@@ -37,6 +37,7 @@ public class UIRenderer {
     // Popup Menus
     private final PauseMenu pauseMenu;
     private final EndMenu endOfTimerPopup;
+    private final PopupMenu eventsMenu; // For events
 
     GameScreen gameScreen;
 
@@ -61,8 +62,10 @@ public class UIRenderer {
 
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
+        eventsMenu = new PopupMenu(skin);
 
         // Set the timer to infinty and continue
+        // No more events will happen in this mode, could be added later
         Runnable rightBtn = () -> {
             GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
             gameScreen.setPaused(false);
@@ -71,6 +74,18 @@ public class UIRenderer {
 
         endOfTimerPopup.setupButtons(ScreenMultiplexer::closeGame, "Quit", rightBtn, "Continue");
 
+    }
+
+    public void showEvent(Event event) {
+        eventsMenu.setPosition((stage.getWidth() - eventsMenu.getWidth()) / 2, (stage.getHeight() - eventsMenu.getHeight()) / 2);
+
+        eventsMenu.setMessage(event.message);
+        if (event.choice) {
+            eventsMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt1.disabled, event.opt2.action, event.opt2.text, event.opt2.disabled);
+        } else {
+            eventsMenu.setupSingleButton(event.opt1.action, event.opt1.text);
+        }
+        stage.addActor(eventsMenu);
     }
 
     /**
@@ -126,7 +141,6 @@ public class UIRenderer {
         stage.getViewport().update(width, height, true);
         buildMenu.resize(width, height);
         statsRenderer.resize(width, height);
-
     }
 
     /**

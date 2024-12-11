@@ -29,7 +29,6 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
  *  by which the build menu is accessed
  */
 public class BuildMenu{
-
     //renders buildings and handles placing them
     private final BuildingRenderer buildingRenderer;
 
