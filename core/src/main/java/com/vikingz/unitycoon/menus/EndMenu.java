@@ -149,15 +149,4 @@ public class EndMenu extends Window {
             }
         });
     }
-
-    /**
-     * Adds new Label to endMenu,
-     * when a new highScore is reached
-     */
-    public void addNewHighScore() {
-        Label congrats = new Label("You have reached a new high score of satisfaction", skin);
-        this.row();
-        this.add(congrats);
-
-    }
 }
