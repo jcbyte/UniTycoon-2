@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AchievementsRenderer {
+    final Color DISABLED_COLOUR = new Color(0.3f, 0.3f, 0.3f, 0.85f);
 
     private Stage stage;
     private List<Image> achievementLogos;
@@ -32,9 +33,9 @@ public class AchievementsRenderer {
         for (Achievement achievement : achievementsManager.achievements)
         {
             Image achievementLogo = new Image(achievement.logo);
-            achievementLogo.setColor(Color.BLACK);
+            achievementLogo.setColor(DISABLED_COLOUR);
             achievementLogos.add(achievementLogo);
-            container.add(achievementLogo).pad(5);
+            container.add(achievementLogo).size(100, 100).pad(5);
         }
 
         stage.addActor(container);
@@ -49,7 +50,7 @@ public class AchievementsRenderer {
     {
         for (int i = 0; i < achievementsManager.achievements.length; i++)
         {
-            achievementLogos.get(i).setColor(achievementsManager.achievements[i].hasAchieved() ? Color.WHITE : Color.BLACK);
+            achievementLogos.get(i).setColor(achievementsManager.achievements[i].hasAchieved() ? Color.WHITE : DISABLED_COLOUR);
         }
     }
 
