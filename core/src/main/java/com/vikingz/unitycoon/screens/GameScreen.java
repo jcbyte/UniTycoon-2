@@ -14,7 +14,6 @@ import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
-import com.vikingz.unitycoon.util.AchievementsManager;
 import com.vikingz.unitycoon.util.EventsManager;
 
 /**
@@ -52,7 +51,6 @@ public class GameScreen extends SuperScreen implements Screen {
     public boolean FirstTick;
 
     private EventsManager eventsManager;
-    private AchievementsManager achievementsManager;
 
 
     /**
@@ -64,10 +62,8 @@ public class GameScreen extends SuperScreen implements Screen {
 
         this.isPaused = false;
         gameRenderer = new GameRenderer(mapName);
-        achievementsManager = new AchievementsManager(this);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
         eventsManager = new EventsManager(this);
-
         elapsedTime = 0;
         //5 minutes
         GameGlobals.resetGlobals(5 * 60);
@@ -130,7 +126,6 @@ public class GameScreen extends SuperScreen implements Screen {
         }
 
         eventsManager.render();
-        achievementsManager.update();
 
         if(GameGlobals.ELAPSED_TIME <= 0){
             endGame();
@@ -231,7 +226,4 @@ public class GameScreen extends SuperScreen implements Screen {
         return uiRenderer;
     }
 
-    public AchievementsManager getAchievementsManager() {
-        return achievementsManager;
-    }
 }
