@@ -13,7 +13,6 @@ import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
-import com.vikingz.unitycoon.util.Achievement;
 import com.vikingz.unitycoon.util.events.Event;
 
 /**
@@ -34,12 +33,11 @@ public class UIRenderer {
 
     private final BuildMenu buildMenu;
     private final StatsRenderer statsRenderer;
-    private final AchievementsRenderer achievementsRenderer;
 
     // Popup Menus
     private final PauseMenu pauseMenu;
     private final EndMenu endOfTimerPopup;
-    private final PopupMenu popupMenu; // For events
+    private final PopupMenu eventsMenu; // For events
 
     GameScreen gameScreen;
 
@@ -60,13 +58,11 @@ public class UIRenderer {
 
 
         statsRenderer = new StatsRenderer(skin);
-        achievementsRenderer = new AchievementsRenderer(gameScreen.getAchievementsManager(), skin);
-
         buildMenu = new BuildMenu(skin, buildingRenderer, stage);
 
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
-        popupMenu = new PopupMenu(skin);
+        eventsMenu = new PopupMenu(skin);
 
         // Set the timer to infinty and continue
         // No more events will happen in this mode, could be added later
@@ -81,26 +77,15 @@ public class UIRenderer {
     }
 
     public void showEvent(Event event) {
-        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+        eventsMenu.setPosition((stage.getWidth() - eventsMenu.getWidth()) / 2, (stage.getHeight() - eventsMenu.getHeight()) / 2);
 
-        popupMenu.setMessage(event.message);
+        eventsMenu.setMessage(event.message);
         if (event.choice) {
-            popupMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt1.disabled, event.opt2.action, event.opt2.text, event.opt2.disabled);
+            eventsMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt1.disabled, event.opt2.action, event.opt2.text, event.opt2.disabled);
         } else {
-            popupMenu.setupSingleButton(event.opt1.action, event.opt1.text);
+            eventsMenu.setupSingleButton(event.opt1.action, event.opt1.text);
         }
-        stage.addActor(popupMenu);
-    }
-
-    public void showAchievement(Achievement achievement)
-    {
-        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
-
-        popupMenu.setMessage("Achievement Unlocked\n\n" + achievement.name);
-        popupMenu.setupSingleButton(achievement.reward, achievement.rewardText);
-        stage.addActor(popupMenu);
-
-        achievementsRenderer.update();
+        stage.addActor(eventsMenu);
     }
 
     /**
@@ -141,8 +126,8 @@ public class UIRenderer {
     public void render(float delta){
         viewport.apply();
         statsRenderer.render(delta);
-        achievementsRenderer.render(delta);
         buildMenu.render(delta);
+
     }
 
 
@@ -171,7 +156,6 @@ public class UIRenderer {
      */
     public void dispose(){
         stage.dispose();
-        achievementsRenderer.dispose();
     }
 
 }
