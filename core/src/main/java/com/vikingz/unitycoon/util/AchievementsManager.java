@@ -46,7 +46,7 @@ public class AchievementsManager {
             ),
             new Achievement(
                 "Crowded Campus\nHave over 1000 Students",
-                () -> GameGlobals.STUDENTS > 50, // todo return to 1000
+                () -> GameGlobals.STUDENTS > 1000,
                 new Texture("achievements/crowded-campus.png"),
                 () -> {
                     GameGlobals.SATISFACTION += 50000;
