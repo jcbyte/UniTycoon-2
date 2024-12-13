@@ -46,39 +46,39 @@ public class EventsManager {
         this.gameScreen = gameScreen;
         this.uiRenderer = gameScreen.getUIRenderer();
 
-        Class<? extends Event>[] goodEvents = new Class[] {
+        List<Class<? extends Event>> goodEvents = List.of(
             GrantEvent.class,
             ScolarEvent.class,
-            ChampionshipWinEvent.class,
-        };
+            ChampionshipWinEvent.class
+        );
 
-        Class<? extends Event>[] badEvents = new Class[] {
+        List<Class<? extends Event>> badEvents = List.of(
             LongboiDeathEvent.class,
             ExamWeekEvent.class,
             FloodingEvent.class,
-            EarthquakeEvent.class,
-        };
+            EarthquakeEvent.class
+        );
 
-        Class<? extends Event>[] neutralEvents = new Class[] {
+        List<Class<? extends Event>> neutralEvents = List.of(
             AlumniVisitEvent.class,
             PeacefulProtestEvent.class,
             UniPartyEvent.class,
             CasinoEvent.class,
             CurriculumChangeEvent.class,
             StrikeEvent.class
-        };
+        );
 
         // This contains the time of each random event which will be shown in the game
-        Map.Entry<Class<? extends Event>[], Integer[]>[] gameEvents = new Map.Entry[] {
+        Map.Entry<List<Class<? extends Event>>, Integer[]>[] gameEvents = new Map.Entry[] {
             new AbstractMap.SimpleEntry<>(goodEvents, new Integer[] { 4 * 60, 3 * 60, 1 * 60 }),
             new AbstractMap.SimpleEntry<>(badEvents, new Integer[] { (int)(3.5 * 60), 2 * 60 }),
             new AbstractMap.SimpleEntry<>(neutralEvents, new Integer[] { (int)(4.5 * 60), (int)(2.5 * 60), (int)(0.5 * 60) }),
         };
 
         events = new ArrayList<>();
-        for (Map.Entry<Class<? extends Event>[], Integer[]> entry : gameEvents)
+        for (Map.Entry<List<Class<? extends Event>>, Integer[]> entry : gameEvents)
         {
-            Class<? extends Event>[] classList = entry.getKey();
+            List<Class<? extends Event>> classList = entry.getKey();
             for (Integer time : entry.getValue())
             {
                 events.add(new ManagedEvent(GetRandomEvent(classList), time));
@@ -104,26 +104,30 @@ public class EventsManager {
         }
     }
 
-    public Event GetRandomEvent(Class<? extends Event>[] eventList)
+    /**
+     * Get a random instance of an event from a list of possible event classes
+     */
+    public Event GetRandomEvent(List<Class<? extends Event>> eventList)
     {
-        if (eventList.length == 0)
+        if (eventList.isEmpty())
         {
             throw new RuntimeException("There are no events");
         }
 
         try {
-            int randomIndex = MathUtils.random(0, eventList.length - 1);
-            return createEvent(eventList[randomIndex]);
+            int randomIndex = MathUtils.random(0, eventList.size() - 1);
+            return createEvent(eventList.get(randomIndex));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-
+    /**
+     * Create an instance of an event from the class
+     */
     private Event createEvent(Class<? extends Event> eventClass)
     {
         try {
-            // Create an instance of a random event from the array
             return eventClass.getConstructor(GameScreen.class).newInstance(gameScreen);
         } catch (Exception e) {
             throw new RuntimeException(e);
