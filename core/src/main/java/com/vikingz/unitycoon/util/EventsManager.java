@@ -69,17 +69,17 @@ public class EventsManager {
         );
 
         // This contains the time of each random event which will be shown in the game
-        Map.Entry<List<Class<? extends Event>>, Integer[]>[] gameEvents = new Map.Entry[] {
-            new AbstractMap.SimpleEntry<>(goodEvents, new Integer[] { 4 * 60, 3 * 60, 1 * 60 }),
-            new AbstractMap.SimpleEntry<>(badEvents, new Integer[] { (int)(3.5 * 60), 2 * 60 }),
-            new AbstractMap.SimpleEntry<>(neutralEvents, new Integer[] { (int)(4.5 * 60), (int)(2.5 * 60), (int)(0.5 * 60) }),
-        };
+        List<Pair<List<Class<? extends Event>>, Integer[]>> gameEvents = List.of(
+            new Pair<>(goodEvents, new Integer[] { 4 * 60, 3 * 60, 1 * 60 }),
+            new Pair<>(badEvents, new Integer[] { (int)(3.5 * 60), 2 * 60 }),
+            new Pair<>(neutralEvents, new Integer[] { (int)(4.5 * 60), (int)(2.5 * 60), (int)(0.5 * 60) })
+        );
 
         events = new ArrayList<>();
-        for (Map.Entry<List<Class<? extends Event>>, Integer[]> entry : gameEvents)
+        for (Pair<List<Class<? extends Event>>, Integer[]> entry : gameEvents)
         {
-            List<Class<? extends Event>> classList = entry.getKey();
-            for (Integer time : entry.getValue())
+            List<Class<? extends Event>> classList = entry.first;
+            for (Integer time : entry.second)
             {
                 events.add(new ManagedEvent(GetRandomEvent(classList), time));
             }
