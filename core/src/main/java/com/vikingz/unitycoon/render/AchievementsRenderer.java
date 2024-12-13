@@ -35,7 +35,7 @@ public class AchievementsRenderer {
             Image achievementLogo = new Image(achievement.logo);
             achievementLogo.setColor(DISABLED_COLOUR);
             achievementLogos.add(achievementLogo);
-            container.add(achievementLogo).size(100, 100).pad(5);
+            container.add(achievementLogo).size(90, 90).pad(5).row();
         }
 
         stage.addActor(container);
