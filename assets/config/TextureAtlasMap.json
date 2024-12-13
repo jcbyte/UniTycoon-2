@@ -1,1 +1,1 @@
-{"textureAtlasLocation":"textureAtlases/buildingsAtlas.png","atlasBuildingSize":128,"buildings":["PZA","RCH","KATO","LISTER","YSV","MCD"],"buildingPos":["0,0","1,0","0,1","1,1","0,2","0,3"]}
+{"textureAtlasLocation":"textureAtlases/buildingsAtlas.png","atlasBuildingSize":128,"buildings":["PZA","RCH","KATO","LISTER","YSV","MCD", "Greggs","Long BOi Statue"],"buildingPos":["0,0","1,0","0,1","1,1","0,2","0,3","1,3","1,2"]}
