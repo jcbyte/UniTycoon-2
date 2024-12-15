@@ -87,6 +87,7 @@ public class EventsManager {
 
         // Add static events here
         events.add(new ManagedEvent(new GraduationEvent(gameScreen), 5));
+        events.add(new ManagedEvent(new LongboiDeathEvent(gameScreen), 60 * 5 - 10));
     }
 
     public void render()
