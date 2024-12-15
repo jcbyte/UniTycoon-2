@@ -11,7 +11,7 @@ public class ChampionshipWinEvent extends Event {
                 GameGlobals.SATISFACTION += 100000;
 
                 gameScreen.setPaused(false);
-            }, "+100000 Satisfaction")
+            }, "+Satisfaction")
         );
     }
 }

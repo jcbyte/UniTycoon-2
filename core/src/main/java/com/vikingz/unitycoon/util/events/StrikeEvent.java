@@ -17,7 +17,7 @@ public class StrikeEvent extends Event {
                     GameGlobals.SATISFACTION -= 200000;
 
                     gameScreen.setPaused(false);
-                }, "Fire the staff\n-200000 Satisfaction")
+                }, "Fire the staff\n-Satisfaction")
             )
         );
     }

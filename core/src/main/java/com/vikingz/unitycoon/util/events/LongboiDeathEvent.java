@@ -12,7 +12,7 @@ public class LongboiDeathEvent extends Event {
                 GameGlobals.SATISFACTION -= 250000;
 
                 gameScreen.setPaused(false);
-            }, "-250000 Satisfaction")
+            }, "-Satisfaction")
         );
     }
 }

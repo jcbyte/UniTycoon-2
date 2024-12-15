@@ -14,6 +14,7 @@ public class GraduationEvent extends Event {
 
                     gameScreen.setPaused(false);
                 }, "+" + satisfactionIncrease + " Satisfaction")
+                // todo work out how to change this
             );
         });
     }
