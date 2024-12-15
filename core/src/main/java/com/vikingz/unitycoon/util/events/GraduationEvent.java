@@ -5,17 +5,13 @@ import com.vikingz.unitycoon.screens.GameScreen;
 
 public class GraduationEvent extends Event {
     public GraduationEvent(GameScreen gameScreen) {
-        super(() -> {
-            int satisfactionIncrease = Math.round(GameGlobals.SATISFACTION / 10000f) * 10000;
-            return new Event(
-                "Graduation Day!\nThe hard work of your students, faculty, and staff has lead\nup to this moment. Proud graduates, dressed in caps and\ngowns, step into the world carrying the knowledge and\nexperiences gained under your leadership.",
-                new Event.Option(() -> {
-                    GameGlobals.SATISFACTION += satisfactionIncrease;
+        super(
+            "Graduation Day!\nThe hard work of your students, faculty, and staff has lead\nup to this moment. Proud graduates, dressed in caps and\ngowns, step into the world carrying the knowledge and\nexperiences gained under your leadership.",
+            new Event.Option(() -> {
+                GameGlobals.SATISFACTION += 1000000;
 
-                    gameScreen.setPaused(false);
-                }, "+" + satisfactionIncrease + " Satisfaction")
-                // todo work out how to change this
-            );
-        });
+                gameScreen.setPaused(false);
+            }, "+Satisfaction")
+        );
     }
 }
