@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util.events;
+package com.vikingz.unitycoon.events;
 
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.GameScreen;
@@ -16,7 +16,7 @@ public class UniPartyEvent extends Event {
                     GameGlobals.SATISFACTION += 100000;
 
                     gameScreen.setPaused(false);
-                }, "Throw the party\n-250 Money\n+100000 Satisfaction", GameGlobals.BALANCE < 250)
+                }, "Throw the party\n-250 Money\n+Satisfaction", GameGlobals.BALANCE < 250)
             )
         );
     }

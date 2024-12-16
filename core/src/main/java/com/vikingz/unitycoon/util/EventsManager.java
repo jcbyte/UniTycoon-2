@@ -1,16 +1,13 @@
 package com.vikingz.unitycoon.util;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.vikingz.unitycoon.events.*;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.UIRenderer;
 import com.vikingz.unitycoon.screens.GameScreen;
-import com.vikingz.unitycoon.util.events.*;
 
-import java.lang.reflect.Constructor;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class EventsManager {
     UIRenderer uiRenderer;
@@ -87,6 +84,7 @@ public class EventsManager {
 
         // Add static events here
         events.add(new ManagedEvent(new GraduationEvent(gameScreen), 5));
+        events.add(new ManagedEvent(new LongboiDeathEvent(gameScreen), 60 * 5 - 10));
     }
 
     public void render()

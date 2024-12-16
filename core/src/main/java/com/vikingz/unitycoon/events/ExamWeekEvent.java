@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util.events;
+package com.vikingz.unitycoon.events;
 
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.GameScreen;
@@ -11,7 +11,7 @@ public class ExamWeekEvent extends Event {
                 GameGlobals.SATISFACTION -= 100000;
 
                 gameScreen.setPaused(false);
-            }, "-100000 Satisfaction")
+            }, "-Satisfaction")
         );
     }
 }

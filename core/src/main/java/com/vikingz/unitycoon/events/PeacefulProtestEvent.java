@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util.events;
+package com.vikingz.unitycoon.events;
 
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.GameScreen;
@@ -12,13 +12,13 @@ public class PeacefulProtestEvent extends Event {
                     GameGlobals.SATISFACTION -= 50000;
 
                     gameScreen.setPaused(false);
-                }, "Shut them down\n-50000 Satisfaction"),
+                }, "Shut them down\n-Satisfaction"),
                 new Event.Option(() -> {
                     GameGlobals.BALANCE -= 100;
                     GameGlobals.SATISFACTION += 50000;
 
                     gameScreen.setPaused(false);
-                }, "Fund the rally\n-100 Money\n+50000 Satisfaction", GameGlobals.BALANCE < 100)
+                }, "Fund the rally\n-100 Money\n+Satisfaction", GameGlobals.BALANCE < 100)
             )
         );
     }

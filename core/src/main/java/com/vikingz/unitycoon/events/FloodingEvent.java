@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util.events;
+package com.vikingz.unitycoon.events;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.vikingz.unitycoon.building.Building;
@@ -24,7 +24,7 @@ public class FloodingEvent extends Event {
                 GameGlobals.SATISFACTION -= 50000;
 
                 gameScreen.setPaused(false);
-            }, "-1 Building\n-50000 Satisfaction")
+            }, "-1 Building\n-Satisfaction")
         );
     }
 }

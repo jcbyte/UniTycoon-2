@@ -8,7 +8,7 @@ import com.vikingz.unitycoon.util.StatsCalculator;
 
 /**
  * RecreationalBuilding
- *
+ *<p>
  * Represents the recreational building class in the game
  * Inherits Building
  */

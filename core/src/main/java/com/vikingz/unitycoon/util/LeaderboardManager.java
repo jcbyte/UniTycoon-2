@@ -80,7 +80,7 @@ public class LeaderboardManager {
         {
             if (lRec.name != null)
             {
-                text.append(lRec.name).append(": ").append(lRec.score).append("\n");
+                text.append(lRec.name).append(": ").append(StatsCalculator.getFormattedSatisfaction(lRec.score)).append("\n");
             }
         }
         return text.isEmpty() ? "No Records\n" : text.toString();

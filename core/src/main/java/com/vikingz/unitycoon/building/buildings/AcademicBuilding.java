@@ -8,7 +8,7 @@ import com.vikingz.unitycoon.util.Point;
 
 /**
  * AcademicBuilding
- *
+ * <p>
  * Represents the academic building in the game
  * Inherits Building
  *

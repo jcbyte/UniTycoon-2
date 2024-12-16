@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util.events;
+package com.vikingz.unitycoon.events;
 
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.GameScreen;
@@ -17,7 +17,7 @@ public class StrikeEvent extends Event {
                     GameGlobals.SATISFACTION -= 200000;
 
                     gameScreen.setPaused(false);
-                }, "Fire the staff\n-200000 Satisfaction")
+                }, "Fire the staff\n-Satisfaction")
             )
         );
     }

@@ -2,7 +2,6 @@ package com.vikingz.unitycoon.util;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.render.UIRenderer;
 import com.vikingz.unitycoon.screens.GameScreen;
 
 public class AchievementsManager {
@@ -21,10 +20,10 @@ public class AchievementsManager {
                     GameGlobals.SATISFACTION += 100000;
                     gameScreen.setPaused(false);
                 },
-                "+100000 Satisfaction"
+                "+Satisfaction"
             ),
             new Achievement(
-                "A+ Atmosphere\nHave over 1 Million Satisfaction",
+                "A+ Atmosphere\nHave over " + StatsCalculator.getFormattedSatisfaction(1_000_000) + " Satisfaction",
                 () -> GameGlobals.SATISFACTION > 1000000,
                 new Texture("achievements/aplus-atmosphere.png"),
                 () -> {
@@ -53,7 +52,7 @@ public class AchievementsManager {
                     GameGlobals.STUDENTS += 100;
                     gameScreen.setPaused(false);
                 },
-                "+50000 Satisfaction\n+100 Students"
+                "+Satisfaction\n+100 Students"
             ),
             new Achievement(
                 "Work Hard, Play Harder\nHave over 5 recreational buildings",
@@ -63,7 +62,7 @@ public class AchievementsManager {
                     GameGlobals.SATISFACTION += 100000;
                     gameScreen.setPaused(false);
                 },
-                "+100000 Satisfaction"
+                "+Satisfaction"
             ),
         };
     }
