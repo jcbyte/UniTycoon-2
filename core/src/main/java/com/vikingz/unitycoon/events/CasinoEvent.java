@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util.events;
+package com.vikingz.unitycoon.events;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.vikingz.unitycoon.global.GameGlobals;

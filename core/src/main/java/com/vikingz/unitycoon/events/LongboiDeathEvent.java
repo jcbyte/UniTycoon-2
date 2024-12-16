@@ -1,6 +1,5 @@
-package com.vikingz.unitycoon.util.events;
+package com.vikingz.unitycoon.events;
 
-import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.GameScreen;
 
