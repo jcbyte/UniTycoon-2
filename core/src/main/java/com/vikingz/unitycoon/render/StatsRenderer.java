@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.vikingz.unitycoon.global.GameGlobals;
+import com.vikingz.unitycoon.util.StatsCalculator;
 import com.vikingz.unitycoon.util.TimeUtil;
 
 /**
@@ -149,7 +150,7 @@ public class StatsRenderer {
         // Update the label contents each frame
         balStr = "Balance: " + GameGlobals.BALANCE;
         studentsStr = "Students: " + GameGlobals.STUDENTS;
-        satisStr = "Satisfaction: " + GameGlobals.SATISFACTION;
+        satisStr = "Satisfaction: " + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION);
         accomBuildingsStr = "Accomodation: " + GameGlobals.ACCOMODATION_BUILDINGS_COUNT;
         academBuildingsStr = "Academic: " + GameGlobals.ACADEMIC_BUILDINGS_COUNT;
         recBuildingsStr = "Recreational: " + GameGlobals.RECREATIONAL_BUILDINGS_COUNT;

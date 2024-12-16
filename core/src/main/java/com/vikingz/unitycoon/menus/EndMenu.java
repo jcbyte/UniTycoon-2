@@ -7,6 +7,7 @@ import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.LeaderboardManager;
+import com.vikingz.unitycoon.util.StatsCalculator;
 
 import java.lang.constant.Constable;
 
@@ -111,7 +112,7 @@ public class EndMenu extends Window {
     public void refresh(boolean scoreOnLeaderboard)
     {
         refreshLeaderboardText();
-        scoreLabel.setText("Your Score: " + GameGlobals.SATISFACTION);
+        scoreLabel.setText("Your Score: " + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION));
         leaderboardTextField.setText("");
         updateLeaderboardTable.setVisible(scoreOnLeaderboard);
     }
