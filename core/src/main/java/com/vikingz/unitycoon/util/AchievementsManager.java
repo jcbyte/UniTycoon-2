@@ -2,7 +2,6 @@ package com.vikingz.unitycoon.util;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.render.UIRenderer;
 import com.vikingz.unitycoon.screens.GameScreen;
 
 public class AchievementsManager {

@@ -6,9 +6,9 @@ import com.vikingz.unitycoon.building.BuildingInfo;
 import com.vikingz.unitycoon.util.Point;
 
 /**
- * Accomodation building class
- *
- * Represents the Accomodation building in the game
+ * Accommodation building class
+ * <p>
+ * Represents the Accommodation building in the game
  * Inherits Building
  *
  */
@@ -17,7 +17,7 @@ public class AccommodationBuilding extends Building{
     private final int numberOfStudents;
 
     /**
-     * Creates a new Acommodation Building
+     * Creates a new Accommodation Building
      * @param texture Texture
      * @param x X
      * @param y Y
@@ -30,7 +30,7 @@ public class AccommodationBuilding extends Building{
     }
 
     /**
-     * Creates a new Acommodation Building
+     * Creates a new Accommodation Building
      * @param texture Texture
      * @param p Point p
      * @param buildingInfo Building Info

@@ -9,7 +9,7 @@ import com.vikingz.unitycoon.util.StatsCalculator;
 
 /**
  * FoodBuilding
- *
+ *<p>
  * Represents the food building class in the game
  * Inherits Building
  */
