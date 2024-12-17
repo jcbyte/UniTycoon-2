@@ -3,6 +3,7 @@ package com.vikingz.unitycoon.render;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.vikingz.unitycoon.util.Achievement;
@@ -29,6 +30,9 @@ public class AchievementsRenderer {
         container.setFillParent(true);
         container.top();
         container.right();
+
+        Label label = new Label("Achievements", skin);
+        container.add(label).pad(10).row();
 
         for (Achievement achievement : achievementsManager.achievements)
         {
