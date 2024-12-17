@@ -3,6 +3,7 @@ package com.vikingz.unitycoon.render;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.vikingz.unitycoon.util.Achievement;
@@ -14,9 +15,9 @@ import java.util.List;
 public class AchievementsRenderer {
     final Color DISABLED_COLOUR = new Color(0.3f, 0.3f, 0.3f, 0.85f);
 
-    private Stage stage;
-    private List<Image> achievementLogos;
-    private AchievementsManager achievementsManager;
+    private final Stage stage;
+    private final List<Image> achievementLogos;
+    private final AchievementsManager achievementsManager;
 
 
     public AchievementsRenderer(AchievementsManager achievementsManager, Skin skin) {
@@ -29,6 +30,11 @@ public class AchievementsRenderer {
         container.setFillParent(true);
         container.top();
         container.right();
+
+        Label label = new Label("Achievements", skin);
+        label.setColor(Color.BLACK);
+        label.setFontScale(1.5f);
+        container.add(label).pad(10).row();
 
         for (Achievement achievement : achievementsManager.achievements)
         {
