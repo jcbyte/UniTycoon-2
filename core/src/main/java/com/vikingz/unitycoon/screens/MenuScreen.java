@@ -7,16 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.util.LeaderboardManager;
 
 /**
  * This class represents the main menu of the game.
- *
+ * <p>
  * The main menu is where the user begins from. This menu
  * contains multiple buttons that allow the user to begin the game.
- *
+ * <p>
  * Inherits Screen, SuperScreen
  */
 public class MenuScreen extends SuperScreen implements Screen {
