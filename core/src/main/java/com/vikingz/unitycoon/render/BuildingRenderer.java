@@ -117,17 +117,19 @@ public class BuildingRenderer{
 
             Building buildingToRemove = getBuildingAtPoint(Gdx.input.getX(), Gdx.input.getY());
 
-            // Show confirm box before removing
-            gameRenderer.getGameScreen().setPaused(true);
-            gameRenderer.getGameScreen().getUIRenderer().showPopup(
-                "Confirm " + buildingToRemove.getBuildingInfo().getName() + " Removal",
-                "Cancel",
-                () -> { gameRenderer.getGameScreen().setPaused(false); },
-                "Remove\n+" + getBuildingRefundAmount(buildingToRemove) + " Money", () -> {
-                    removeBuilding(buildingToRemove);
-                    gameRenderer.getGameScreen().setPaused(false);
-                }
-            );
+            if (buildingToRemove != null) {
+                // Show confirm box before removing
+                gameRenderer.getGameScreen().setPaused(true);
+                gameRenderer.getGameScreen().getUIRenderer().showPopup(
+                    "Confirm " + buildingToRemove.getBuildingInfo().getName() + " Removal",
+                    "Cancel",
+                    () -> gameRenderer.getGameScreen().setPaused(false),
+                    "Remove\n+" + getBuildingRefundAmount(buildingToRemove) + " Money", () -> {
+                        removeBuilding(buildingToRemove);
+                        gameRenderer.getGameScreen().setPaused(false);
+                    }
+                );
+            }
         }
 
         // Check for left mouse click to place the texture
