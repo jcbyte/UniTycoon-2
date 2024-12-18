@@ -18,10 +18,10 @@ import com.vikingz.unitycoon.events.Event;
 
 /**
  * This class renders all the UI elements to the Screen.
- *
+ * <p>
  * This enables us to control how the UI is draw and resized
  * differently from how the rest of the game is drawn.
- *
+ * <p>
  * This class essentially forms another layer on the screen that
  * renders all the UI elements on this layer as opposed to the
  * game layer.
@@ -30,7 +30,6 @@ public class UIRenderer {
 
     private final Stage stage;
     private final Viewport viewport;
-
 
     private final BuildMenu buildMenu;
     private final StatsRenderer statsRenderer;
@@ -50,7 +49,6 @@ public class UIRenderer {
      * @param gameScreen Game screen
      */
     public UIRenderer(Skin skin, BuildingRenderer buildingRenderer, GameScreen gameScreen){
-
         this.gameScreen = gameScreen;
 
         //viewport = new FillViewport(1824, 1026);
@@ -81,6 +79,9 @@ public class UIRenderer {
     }
 
     public void showEvent(Event event) {
+        // Remove current selected building to place
+        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+
         popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
 
         popupMenu.setMessage(event.message);
@@ -94,6 +95,9 @@ public class UIRenderer {
 
     public void showAchievement(Achievement achievement)
     {
+        // Remove current selected building to place
+        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+
         popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
 
         popupMenu.setMessage("Achievement Unlocked\n\n" + achievement.name);
@@ -108,6 +112,9 @@ public class UIRenderer {
      * will call this function which will show the end of game popup
      */
     public void endGame(){
+        // Remove current selected building to place
+        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+
         // Refresh the end menu showing the leaderboard section if the users score can be added
         endOfTimerPopup.refresh(GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION));
 
@@ -123,6 +130,9 @@ public class UIRenderer {
         System.out.println("Pressed ESC");
 
         if(!pauseMenu.hasParent()){
+            // Remove current selected building to place
+            gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+
             stage.addActor(pauseMenu);
             pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
             gameScreen.setPaused(true);
@@ -136,7 +146,6 @@ public class UIRenderer {
 
     /**
      * Calls all render functions in the renderers
-     * @param delta
      */
     public void render(float delta){
         viewport.apply();
