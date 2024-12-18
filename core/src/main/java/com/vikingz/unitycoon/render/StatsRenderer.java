@@ -2,11 +2,16 @@ package com.vikingz.unitycoon.render;
 
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.StatsCalculator;
 import com.vikingz.unitycoon.util.TimeUtil;
@@ -69,10 +74,20 @@ public class StatsRenderer {
         timerLabel.setColor(Color.BLACK);
         timerLabel.setFontScale(2f);
 
+        // Create a background color texture
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(1, 1, 1f, 0.85f);
+        pixmap.fill();
+        Drawable background = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
+
+        Table outerTable = new Table();
+        outerTable.setFillParent(true);
+        outerTable.top().left();
+
         // Create layout table
         Table table = new Table();
-        table.setFillParent(true);
-        table.top().left();
+        table.setBackground(background);
 
         // Adds the labels to the table
         table.add(balanceLabel).left().row();
@@ -80,7 +95,8 @@ public class StatsRenderer {
         table.add(satisfactionLabel).left().row();
         table.add(timerLabel).left().row();
 
-        stage.addActor(table);
+        outerTable.add(table).top().left();
+        stage.addActor(outerTable);
     }
 
     /**
