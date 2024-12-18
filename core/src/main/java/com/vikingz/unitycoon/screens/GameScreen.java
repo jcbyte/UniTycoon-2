@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.utils.Timer;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
-import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
@@ -19,14 +17,14 @@ import com.vikingz.unitycoon.util.EventsManager;
 
 /**
  * This is the main game class from which the game is run.
- *
+ * <p>
  * This game instantiates the 2 renderers which are the GameRenderer
  * and the UIRenderer, as well as contains the game loop that control how the game
  * runs.
- *
+ * <p>
  * The game loop contains a section where everything in that section is updated
  * every second which is where all of our game stats are updated.
- *
+ * <p>
  * Inherits Screen, SuperScreen
  */
 public class GameScreen extends SuperScreen implements Screen {
@@ -51,8 +49,8 @@ public class GameScreen extends SuperScreen implements Screen {
     //Determines if first tick of game has passed
     public boolean FirstTick;
 
-    private EventsManager eventsManager;
-    private AchievementsManager achievementsManager;
+    private final EventsManager eventsManager;
+    private final AchievementsManager achievementsManager;
 
 
     /**
@@ -70,7 +68,7 @@ public class GameScreen extends SuperScreen implements Screen {
 
         elapsedTime = 0;
         //5 minutes
-        GameGlobals.resetGlobals(4); //5 * 60); // todo return to 5 mins
+        GameGlobals.resetGlobals(5 * 60);
     }
 
 
@@ -106,12 +104,12 @@ public class GameScreen extends SuperScreen implements Screen {
 
                     if(building.getBuildingType() == BuildingStats.BuildingType.FOOD){
                         FoodBuilding foodBuilding = (FoodBuilding) building;
-                        GameGlobals.BALANCE += foodBuilding.calculateProfitMade();
+                        GameGlobals.BALANCE += (int) foodBuilding.calculateProfitMade();
                     }
 
                     if(building.getBuildingType() == BuildingStats.BuildingType.RECREATIONAL){
                         RecreationalBuilding foodBuilding = (RecreationalBuilding) building;
-                        GameGlobals.BALANCE += foodBuilding.calculateProfitMade();
+                        GameGlobals.BALANCE += (int) foodBuilding.calculateProfitMade();
                     }
 
                 }
