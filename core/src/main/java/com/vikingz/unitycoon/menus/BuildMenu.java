@@ -263,6 +263,9 @@ public class BuildMenu{
 
         // Add window to the stage
         stage.addActor(window);
+
+        // Remove current selected building to place
+        buildingRenderer.clearSelectedBuilding();
     }
 
     /**

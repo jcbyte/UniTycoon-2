@@ -18,7 +18,6 @@ import com.vikingz.unitycoon.menus.EndMenu;
 import com.vikingz.unitycoon.menus.PauseMenu;
 import com.vikingz.unitycoon.menus.PopupMenu;
 import com.vikingz.unitycoon.screens.GameScreen;
-import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 import com.vikingz.unitycoon.util.Achievement;
 import com.vikingz.unitycoon.events.Event;
 
@@ -88,9 +87,6 @@ public class UIRenderer {
     }
 
     public void showEvent(Event event) {
-        // Remove current selected building to place
-        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-
         popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
 
         popupMenu.setMessage(event.message);
@@ -100,13 +96,13 @@ public class UIRenderer {
             popupMenu.setupSingleButton(event.opt1.action, event.opt1.text);
         }
         stage.addActor(popupMenu);
+
+        // Remove current selected building to place
+        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
     }
 
     public void showAchievement(Achievement achievement)
     {
-        // Remove current selected building to place
-        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-
         popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
 
         popupMenu.setMessage("Achievement Unlocked\n\n" + achievement.name);
@@ -114,6 +110,9 @@ public class UIRenderer {
         stage.addActor(popupMenu);
 
         achievementsRenderer.update();
+
+        // Remove current selected building to place
+        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
     }
 
     /**
@@ -121,14 +120,14 @@ public class UIRenderer {
      * will call this function which will show the end of game popup
      */
     public void endGame(){
-        // Remove current selected building to place
-        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-
         // Refresh the end menu showing the leaderboard section if the users score can be added
         endOfTimerPopup.refresh(GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION));
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
         stage.addActor(endOfTimerPopup);
+
+        // Remove current selected building to place
+        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
     }
 
     /**
@@ -138,12 +137,12 @@ public class UIRenderer {
         System.out.println("Pressed ESC");
 
         if(!pauseMenu.hasParent()){
-            // Remove current selected building to place
-            gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-
             stage.addActor(pauseMenu);
             pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
             gameScreen.setPaused(true);
+
+            // Remove current selected building to place
+            gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
         }
         else{
             pauseMenu.remove();
