@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -18,10 +19,10 @@ import com.vikingz.unitycoon.events.Event;
 
 /**
  * This class renders all the UI elements to the Screen.
- *
+ * <p>
  * This enables us to control how the UI is draw and resized
  * differently from how the rest of the game is drawn.
- *
+ * <p>
  * This class essentially forms another layer on the screen that
  * renders all the UI elements on this layer as opposed to the
  * game layer.
@@ -136,10 +137,11 @@ public class UIRenderer {
 
     /**
      * Calls all render functions in the renderers
-     * @param delta
      */
     public void render(float delta){
         viewport.apply();
+        stage.act(delta);
+        stage.draw();
         statsRenderer.render(delta);
         achievementsRenderer.render(delta);
         buildMenu.render(delta);
@@ -152,18 +154,20 @@ public class UIRenderer {
      * @param height New height
      */
     public void resize(int width, int height){
-        viewport.update(width, height);
-        stage.getViewport().update(width, height, true);
+        viewport.update(width, height, true);
         buildMenu.resize(width, height);
         statsRenderer.resize(width, height);
+        achievementsRenderer.resize(width, height);
     }
 
     /**
      * Sets the input process to this class when called
      */
-    public void takeInput(){
-        Gdx.input.setInputProcessor(stage);
-
+    public void takeInput() {
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(achievementsRenderer.getInputProcessor());
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     /**
