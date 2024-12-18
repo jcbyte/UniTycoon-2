@@ -93,6 +93,7 @@ public class BuildingStats {
 
         try {
             return new BuildingInfo(BuildingDict.get(buildingType)[index],
+                BuildingNameDict.get(buildingType)[index],
                 buildingType,
                 price,
                 satisfaction,

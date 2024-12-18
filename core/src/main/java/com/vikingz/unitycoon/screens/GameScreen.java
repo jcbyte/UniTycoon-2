@@ -61,7 +61,7 @@ public class GameScreen extends SuperScreen implements Screen {
         super();
 
         this.isPaused = false;
-        gameRenderer = new GameRenderer(mapName);
+        gameRenderer = new GameRenderer(this, mapName);
         achievementsManager = new AchievementsManager(this);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
         eventsManager = new EventsManager(this);

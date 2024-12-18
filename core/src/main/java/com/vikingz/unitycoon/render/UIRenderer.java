@@ -115,6 +115,30 @@ public class UIRenderer {
         gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
     }
 
+    public void showPopup(String text, String btnText, Runnable runnable)
+    {
+        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+
+        popupMenu.setMessage(text);
+        popupMenu.setupSingleButton(runnable, btnText);
+        stage.addActor(popupMenu);
+
+        // Remove current selected building to place
+        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+    }
+
+    public void showPopup(String text, String leftBtnText, Runnable leftRunnable, String rightBtnText, Runnable rightRunnable)
+    {
+        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+
+        popupMenu.setMessage(text);
+        popupMenu.setupButtons(leftRunnable, leftBtnText, false, rightRunnable, rightBtnText, false);
+        stage.addActor(popupMenu);
+
+        // Remove current selected building to place
+        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+    }
+
     /**
      * When the game screen has decided the game has finished the game
      * will call this function which will show the end of game popup

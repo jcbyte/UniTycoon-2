@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.util.Point;
 
 /**
@@ -20,6 +21,8 @@ import com.vikingz.unitycoon.util.Point;
  */
 public class GameRenderer {
 
+    private final GameScreen gameScreen;
+
     // Viewport stuff
     private final Stage stage;
     private final Camera camera;
@@ -32,7 +35,8 @@ public class GameRenderer {
      * Creates and new Game Renderer
      * @param mapName Name of the map to be drawn as the background
      */
-    public GameRenderer(String mapName){
+    public GameRenderer(GameScreen gameScreen, String mapName){
+        this.gameScreen = gameScreen;
 
         // Creates and camera and set up the viewport
         camera = new OrthographicCamera();
@@ -137,4 +141,7 @@ public class GameRenderer {
         return Math.min(heightScaling, widthScaling);
     }
 
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
 }

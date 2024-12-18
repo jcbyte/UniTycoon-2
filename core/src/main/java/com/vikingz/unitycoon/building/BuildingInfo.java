@@ -9,8 +9,8 @@ import com.vikingz.unitycoon.building.BuildingStats.BuildingType;
  * is passed around a type BuildingInfo
  */
 public class BuildingInfo {
-
     String  buildingID;
+    String name;
     BuildingType buildingType;
     float buildingCost;
 
@@ -18,86 +18,39 @@ public class BuildingInfo {
     int numberOfStudents;
     float coinsPerSecond;
 
-
-
-
-
     /**
      * Creates new Building Info
      * The following constructors,
      * are for different types of building and have different params
      * @param buildingID Building ID
+     * @param buildingName Building name
      * @param buildingType Building Type
      * @param buildingCost Building Cost
      * @param satisfactionMultiplier Satisfaction Multiplier
      * @param numberOfStudents Number of students
      * @param coinsPerSecond Coins per second the building generates
      */
-    public BuildingInfo(String  buildingID, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents, float coinsPerSecond){
+    public BuildingInfo(String buildingID, String buildingName, BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents, float coinsPerSecond){
+        this.name = buildingName;
         this.buildingID = buildingID;
         this.buildingType = buildingType;
         this.buildingCost = buildingCost;
-
         this.satisfactionMultiplier = satisfactionMultiplier;
         this.numberOfStudents = numberOfStudents;
         this.coinsPerSecond = coinsPerSecond;
 
 
     }
-
-
-    public BuildingInfo(String  buildingID,  BuildingStats.BuildingType buildingType, float buildingCost, int numberOfStudents){
-        this.buildingID = buildingID;
-        this.buildingType = buildingType;
-        this.buildingCost = buildingCost;
-
-        this.satisfactionMultiplier = 0;
-        this.numberOfStudents = numberOfStudents;
-        this.coinsPerSecond = 0;
-
-
-    }
-
-    public BuildingInfo(String  buildingID,  BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, int numberOfStudents){
-        this.buildingID = buildingID;
-        this.buildingType = buildingType;
-        this.buildingCost = buildingCost;
-
-        this.satisfactionMultiplier = satisfactionMultiplier;
-        this.numberOfStudents = numberOfStudents;
-        this.coinsPerSecond = 0;
-
-
-    }
-
-    public BuildingInfo(String  buildingID,  BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier){
-
-        this.buildingID = buildingID;
-        this.buildingType = buildingType;
-        this.buildingCost = buildingCost;
-
-        this.satisfactionMultiplier = satisfactionMultiplier;
-        this.numberOfStudents = 0;
-        this.coinsPerSecond = 0;
-
-
-    }
-
-    public BuildingInfo(String  buildingID,  BuildingStats.BuildingType buildingType, float buildingCost, float satisfactionMultiplier, float coinsPerSecond){
-        this.buildingID = buildingID;
-        this.buildingType = buildingType;
-        this.buildingCost = buildingCost;
-
-        this.satisfactionMultiplier = satisfactionMultiplier;
-        this.numberOfStudents = 0;
-        this.coinsPerSecond = coinsPerSecond;
-
-
-    }
-
 
     //Getters and Setters
 
+    /**
+     * Gets Friendly Building name
+     * @return string of the friendly building name
+     */
+    public String getName() {
+        return name;
+    }
 
     /**
      * Gets Building ID ENUM
@@ -108,27 +61,11 @@ public class BuildingInfo {
     }
 
     /**
-     * Sets the Building ID ENUM
-     * @param buildingID of BuildingID
-     */
-    public void setBuildingID(String buildingID) {
-        this.buildingID = buildingID;
-    }
-
-    /**
      * Gets Building ID ENUM
      * @return BuildingType
      */
     public BuildingType getBuildingType() {
         return buildingType;
-    }
-
-    /**
-     * Sets the BuildingType ENUM
-     * @param buildingType
-     */
-    public void setBuildingType(BuildingType buildingType) {
-        this.buildingType = buildingType;
     }
 
     /**
