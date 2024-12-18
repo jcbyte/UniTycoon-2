@@ -1,16 +1,12 @@
 package com.vikingz.unitycoon.render;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.util.StatsCalculator;
 import com.vikingz.unitycoon.util.TimeUtil;
@@ -25,117 +21,81 @@ import com.vikingz.unitycoon.util.TimeUtil;
 public class StatsRenderer {
 
     //Used to render UI
-    private final SpriteBatch batch;
-    private final BitmapFont font;
     private final Stage stage;
+    private final BitmapFont font;
 
     // Labels
     String balStr;
-    Label balance;
+    Label balanceLabel;
 
     String studentsStr;
-    Label students;
+    Label studentsLabel;
 
     String satisStr;
-    Label satisfaction;
+    Label satisfactionLabel;
 
     String timerStr;
-    Label timer;
-
-    //Stores all labels
-    List<Label> labels;
+    Label timerLabel;
 
     /**
      * Creates a new stats renderer
      * @param skin Skin that determines the style of the text
      */
     public StatsRenderer(Skin skin) {
-
-        batch = new SpriteBatch();
         stage = new Stage();
         font = new BitmapFont();
         font.getData().setScale(1.5f);
-        labels = new ArrayList<>();
 
         // Label strings
-        balStr = "Balance";
-        studentsStr = "Students";
-        satisStr = "satisfaction";
+        balStr = "Balance: ";
+        studentsStr = "Students: ";
+        satisStr = "satisfaction: ";
         timerStr = "Timer: ";
 
         // Creating labels
-        balance = new Label(balStr, skin);
-        students = new Label(studentsStr, skin);
-        satisfaction = new Label(satisStr, skin);
-        timer = new Label(timerStr, skin);
+        balanceLabel = new Label(balStr, skin);
+        balanceLabel.setColor(Color.BLACK);
+        balanceLabel.setFontScale(2f);
 
-        // Adding labels to a list
-        labels.add(balance);
-        labels.add(students);
-        labels.add(satisfaction);
-        labels.add(timer);
+        studentsLabel = new Label(studentsStr, skin);
+        studentsLabel.setColor(Color.BLACK);
+        studentsLabel.setFontScale(2f);
 
-        for(Label lbl: labels){
-            lbl.setColor(Color.BLACK);
-            lbl.setFontScale(1.5f);
-        }
+        satisfactionLabel = new Label(satisStr, skin);
+        satisfactionLabel.setColor(Color.BLACK);
+        satisfactionLabel.setFontScale(2f);
 
-        int padding = 3;
+        timerLabel = new Label(timerStr, skin);
+        timerLabel.setColor(Color.BLACK);
+        timerLabel.setFontScale(2f);
 
         // Create layout table
         Table table = new Table();
         table.setFillParent(true);
-
-        table.top();
-        table.left();
+        table.top().left();
 
         // Adds the labels to the table
-        table.add(balance).pad(padding).align(Align.left);
-        table.row();
-        table.add(students).pad(padding).align(Align.left);
-        table.row();
-        table.add(satisfaction).pad(padding).align(Align.left);
-        table.row();
-        table.add(timer).pad(padding).align(Align.left);
+        table.add(balanceLabel).left().row();
+        table.add(studentsLabel).left().row();
+        table.add(satisfactionLabel).left().row();
+        table.add(timerLabel).left().row();
 
         stage.addActor(table);
-
     }
-
 
     /**
      * Draws the labels to the screen
      * @param delta Time since last frame
      */
     public void render(float delta) {
-
-        batch.begin();
-
         // Update the label contents each frame
-        balStr = "Balance: " + GameGlobals.BALANCE;
-        studentsStr = "Students: " + GameGlobals.STUDENTS;
-        satisStr = "Satisfaction: " + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION);
-
-        TimeUtil.Time timerAmount = TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME);
-        timerStr = timerAmount == null? (timerStr = "Timer: Infinity") : (timerStr = "Timer: " + timerAmount);
-
-        // Sets the new string to the corresponding label
-        balance.setText(balStr);
-        students.setText(studentsStr);
-        satisfaction.setText(satisStr);
-        timer.setText(timerStr);
+        balanceLabel.setText(balStr + GameGlobals.BALANCE);
+        studentsLabel.setText(studentsStr + GameGlobals.STUDENTS);
+        satisfactionLabel.setText(satisStr + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION));
+        timerLabel.setText(timerStr + TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME));
 
         stage.act(delta);
         stage.draw();
-        batch.end();
-    }
-
-    /**
-     * Sets current width and height to the new values when the window is resized
-     * @param width New width
-     * @param height New height
-     */
-    public void resize(float width, float height){
     }
 
     /**
@@ -143,7 +103,6 @@ public class StatsRenderer {
      */
     public void dispose(){
         stage.dispose();
-        batch.dispose();
         font.dispose();
     }
 }

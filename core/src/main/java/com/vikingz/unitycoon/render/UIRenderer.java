@@ -172,7 +172,6 @@ public class UIRenderer {
     public void resize(int width, int height){
         viewport.update(width, height, true);
         buildMenu.resize(width, height);
-        statsRenderer.resize(width, height);
         achievementsRenderer.resize(width, height);
     }
 
