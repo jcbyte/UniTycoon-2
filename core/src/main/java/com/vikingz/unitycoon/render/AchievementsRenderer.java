@@ -1,5 +1,6 @@
 package com.vikingz.unitycoon.render;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.util.Achievement;
 import com.vikingz.unitycoon.util.AchievementsManager;
 
@@ -18,14 +21,15 @@ import java.util.List;
 public class AchievementsRenderer {
     final Color DISABLED_COLOUR = new Color(0.3f, 0.3f, 0.3f, 0.85f);
 
+    private final Viewport viewport;
     private final Stage stage;
     private final List<Image> achievementLogos;
     private final AchievementsManager achievementsManager;
 
 
     public AchievementsRenderer(AchievementsManager achievementsManager, Skin skin) {
-
-        stage = new Stage();
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage = new Stage(viewport);
         achievementLogos = new ArrayList<>();
         this.achievementsManager = achievementsManager;
 
@@ -44,6 +48,7 @@ public class AchievementsRenderer {
             Image achievementLogo = new Image(achievement.logo);
             Label achivementLabel = new Label(achievement.name, skin);
             achivementLabel.setColor(Color.BLACK);
+            achivementLabel.setFontScale(1.2f);
             achivementLabel.setVisible(false);
 
             achievementLogo.addListener(new ClickListener() {
@@ -72,6 +77,7 @@ public class AchievementsRenderer {
     }
 
     public void render(float delta) {
+        viewport.apply();
         stage.act(delta);
         stage.draw();
     }
@@ -93,4 +99,10 @@ public class AchievementsRenderer {
     {
         return stage;
     }
+
+    public void resize(int width, int height) {
+        // Update the viewport when the window is resized
+        viewport.update(width, height, true);
+    }
+
 }

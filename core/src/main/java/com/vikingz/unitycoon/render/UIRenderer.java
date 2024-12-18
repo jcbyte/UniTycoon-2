@@ -141,6 +141,8 @@ public class UIRenderer {
      */
     public void render(float delta){
         viewport.apply();
+        stage.act(delta);
+        stage.draw();
         statsRenderer.render(delta);
         achievementsRenderer.render(delta);
         buildMenu.render(delta);
@@ -153,10 +155,10 @@ public class UIRenderer {
      * @param height New height
      */
     public void resize(int width, int height){
-        viewport.update(width, height);
-        stage.getViewport().update(width, height, true);
+        viewport.update(width, height, true);
         buildMenu.resize(width, height);
         statsRenderer.resize(width, height);
+        achievementsRenderer.resize(width, height);
     }
 
     /**
