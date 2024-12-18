@@ -104,7 +104,8 @@ public class EndMenu extends Window {
 
         this.add(yourScoreTable).row();
 
-        TextButton quitBtn = new TextButton("Quit", skin);
+        TextButton quitBtn = new TextButton("Exit (to menu)", skin);
+        quitBtn.getLabel().setFontScale(0.7f);
         this.add(quitBtn).pad(10);
         quitBtn.addListener(new ClickListener() {
             @Override
