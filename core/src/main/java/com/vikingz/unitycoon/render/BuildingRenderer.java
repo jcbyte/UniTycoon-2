@@ -173,9 +173,7 @@ public class BuildingRenderer{
 
                 }
                 //the building is no longer being placed
-                isPreviewing = false;
-                currentBuildingInfo = null;
-                selectedTexture = null;
+                clearSelectedBuilding();
             }
             else {
                 //if building is colliding with something
@@ -333,7 +331,15 @@ public class BuildingRenderer{
     public void resize() {
     }
 
-    // Getter and setters
+    /**
+     * Clear currently selected building to place
+     */
+    public void clearSelectedBuilding()
+    {
+        isPreviewing = false;
+        currentBuildingInfo = null;
+        selectedTexture = null;
+    }
 
     /**
      * gets the current list of placed buildings
