@@ -48,10 +48,6 @@ public class BuildMenu{
     //Current displayed in game Menu
     private Window currentMenu;
 
-    //Selects which building of BuildingType,
-    //should be displayed currently
-    private int index = 0;
-
     /**
      * Creates a new BuildMenu
      * @param skin SKin of the buttons on the menu
@@ -127,7 +123,7 @@ public class BuildMenu{
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
 
-                showMenu(BuildingStats.BuildingType.ACCOMODATION);
+                showMenu(ACCOMODATION);
             }
         });
 
@@ -152,6 +148,15 @@ public class BuildMenu{
 
     }
 
+    //Selects which building of BuildingType,
+    //should be displayed currently
+    private int index = 0;
+    Label buildingNameLabel;
+    Image buildingImage;
+    Label buildingPriceValue;
+    Label buildingSatisfactionValue;
+    Label buildingStudentsValue;
+    Label buildingCoinsValue;
 
     /**
      * Creates a new window and sets up all the contents of the window
@@ -171,67 +176,72 @@ public class BuildMenu{
         window.setResizable(false);
         window.setBackground(GameGlobals.backGroundDrawable);
 
-        //Building name Label
-        Label buildingNameLabel = new Label(BuildingStats.BuildingNameDict.get(buildingType)[0], skin);
-        window.add((Actor) null);
-        window.add(buildingNameLabel);
-        window.row().padTop(10);
+        // Building name Label
+        buildingNameLabel = new Label("", skin);
 
-        //Image Of Building
-        window.add((Actor) null);
-        Image buildingImage = new Image(BuildingStats.getTextureOfBuilding( BuildingStats.BuildingDict.get(buildingType)[0]));
-        window.add(buildingImage);
-        window.row().padTop(20);
+        // Image Of Building
+        buildingImage = new Image();
 
-        //satisfaction Label
-        window.add((Actor) null);
+        Table statsTable = new Table();
 
-        Label buildingSatisfaction = new Label("Satisfaction: " + BuildingSatisfactionDict.get(buildingType)[0],skin);
-        window.add(buildingSatisfaction).expandX();
-        window.row();
+        // Price
+        Label buildingPriceLabel = new Label("Price:",skin);
+        buildingPriceValue = new Label("",skin);
+        statsTable.add(buildingPriceLabel);
+        statsTable.add(buildingPriceValue).row();
 
-        //Student Label
-        window.add((Actor) null);
-        Label buildingStudent = new Label("Student Space: " + BuildingStats.BuildingStudentDict.get(buildingType)[0],skin);
-        window.add(buildingStudent).expandX();
-        window.row();
+        // Satisfaction
+        Label buildingSatisfactionLabel = new Label("Satisfaction:", skin);
+        buildingSatisfactionValue = new Label("",skin);
+        statsTable.add(buildingSatisfactionLabel);
+        statsTable.add(buildingSatisfactionValue).row();
 
-        //Coins Label
-        window.add((Actor) null);
-        Label buildingCoins = new Label("Coins Per Second: " + BuildingCoinDict.get(buildingType)[0],skin);
-        window.add(buildingCoins).expandX();
-        window.row();
+        // Students
+        Label buildingStudentsLabel = new Label("Student Space:", skin);
+        buildingStudentsValue = new Label("",skin);
+        statsTable.add(buildingStudentsLabel);
+        statsTable.add(buildingStudentsValue).row();
 
-        //Price Label
-        window.add((Actor) null);
-        Label buildingPrice = new Label("Price: " + BuildingStats.BuildingPriceDict.get(buildingType)[0],skin);
-        window.add(buildingPrice);
-
-        window.row().padTop(20);
-
-
+        // Coins
+        Label buildingCoinsLabel = new Label("Coins Per Second:",skin);
+        buildingCoinsValue = new Label("", skin);
+        statsTable.add(buildingCoinsLabel);
+        statsTable.add(buildingCoinsValue).row();
 
         //Back Building Button
-        TextButton backButton = new TextButton("Back", skin);
-        backButton.setSize(100, 30); // Set size for the back button
-        backButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                try {
-                    index--;
-                    SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
-                }
-                catch (ArrayIndexOutOfBoundsException e){
-                    index = BuildingStats.BuildingNameDict.get(buildingType).length-1;
-                    SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
-                }
-            }
-        });
-        window.add(backButton).padLeft(50);
+        TextButton backButton = new TextButton("<", skin);
+//        backButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                try {
+//                    index--;
+//                    SetLabelText(buildingNameLabel, buildingType, buildingPriceValue, buildingSatisfactionValue, buildingStudentValue, buildingCoinsValue, buildingImage);
+//                }
+//                catch (ArrayIndexOutOfBoundsException e){
+//                    index = BuildingStats.BuildingNameDict.get(buildingType).length-1;
+//                    SetLabelText(buildingNameLabel, buildingType, buildingPriceValue, buildingSatisfactionValue, buildingStudentValue, buildingCoinsValue, buildingImage);
+//                }
+//            }
+//        });
+
+        //Next Building Button
+        TextButton nextButton = new TextButton(">", skin);
+//        nextButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                try {
+//                    index++;
+//                    SetLabelText(buildingNameLabel, buildingType, buildingPriceValue, buildingSatisfactionValue, buildingStudentValue, buildingCoinsValue, buildingImage);
+//                }
+//                catch (ArrayIndexOutOfBoundsException e){
+//                    index = 0;
+//                    SetLabelText(buildingNameLabel, buildingType, buildingPriceValue, buildingSatisfactionValue, buildingStudentValue, buildingCoinsValue, buildingImage);
+//                }
+//            }
+//        });
 
         // Create the Buy Button
         TextButton buyButton = new TextButton("Buy", skin);
-        buyButton.setSize(100, 30);
         buyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -239,31 +249,9 @@ public class BuildMenu{
                 window.remove();
             }
         });
-        window.add(buyButton);
-
-
-        //Next Building Button
-        TextButton nextButton = new TextButton("Next", skin);
-        nextButton.setSize(100, 30); // Set size for the next button
-        nextButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                try {
-                    index++;
-                    SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
-                }
-                catch (ArrayIndexOutOfBoundsException e){
-                    index = 0;
-                    SetLabelText(buildingNameLabel, buildingType, buildingPrice, buildingSatisfaction, buildingStudent, buildingCoins, buildingImage);
-                }
-            }
-        });
-        window.add(nextButton).padRight(50);
-
 
         // Create the close button
         TextButton closeButton = new TextButton("Close", skin);
-        closeButton.setSize(100, 30); // Set size for the close button
 
         closeButton.addListener(new ClickListener() {
 
@@ -274,10 +262,15 @@ public class BuildMenu{
             }
         });
 
-        // Add close button to the window
-        window.row().padTop(10); // Add a row before adding the close button
-        window.add((Actor) null);
-        window.add(closeButton);
+        updateBuildingWindow(buildingType);
+
+        window.add(buildingNameLabel).colspan(3).row();
+        window.add(backButton);
+        window.add(buildingImage);
+        window.add(nextButton).row();
+        window.add(statsTable).colspan(3).expandX().row();
+        window.add(buyButton).colspan(3).row();
+        window.add(closeButton).colspan(3);
 
         // Set size and position of the window
         window.setSize(1000, 800);
@@ -286,25 +279,20 @@ public class BuildMenu{
         // Add window to the stage
         stage.addActor(window);
 
+//        window.debugAll(); // todo remove, for debugging only
     }
 
     /**
      * Sets the text of each label to current index
-     * @param buildingNameLabel Name Of building
      * @param buildingType Type of Building used, for dictionary lookup
-     * @param buildingPrice Price of building
-     * @param buildingSatisfaction Satisfaction rating of building
-     * @param buildingStudent Student space of building
-     * @param buildingCoins coin generated per second by building
-     * @param buildingImage Image of building being, used for preview
      */
-    private void SetLabelText(Label buildingNameLabel, BuildingStats.BuildingType buildingType, Label buildingPrice, Label buildingSatisfaction, Label buildingStudent, Label buildingCoins, Image buildingImage) {
+    private void updateBuildingWindow(BuildingStats.BuildingType buildingType) {
         buildingNameLabel.setText(BuildingStats.BuildingNameDict.get(buildingType)[index]);
-        buildingPrice.setText("Price: " + BuildingStats.BuildingPriceDict.get(buildingType)[index]);
-        buildingSatisfaction.setText("Satisfaction: " +BuildingSatisfactionDict.get(buildingType)[index]);
-        buildingStudent.setText("Student Space: " + BuildingStats.BuildingStudentDict.get(buildingType)[index]);
-        buildingCoins.setText("Coins Per Second: " + BuildingCoinDict.get(buildingType)[index]);
         buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding(BuildingStats.BuildingDict.get(buildingType)[index]));
+        buildingPriceValue.setText(BuildingStats.BuildingPriceDict.get(buildingType)[index]);
+        buildingSatisfactionValue.setText(BuildingSatisfactionDict.get(buildingType)[index]);
+        buildingStudentsValue.setText(BuildingStats.BuildingStudentDict.get(buildingType)[index]);
+        buildingCoinsValue.setText(BuildingCoinDict.get(buildingType)[index]);
     }
 
     /**
