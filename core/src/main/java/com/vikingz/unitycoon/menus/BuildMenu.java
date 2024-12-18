@@ -3,14 +3,12 @@ package com.vikingz.unitycoon.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.building.BuildingStats;
-import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.BuildingRenderer;
 
@@ -21,10 +19,10 @@ import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
 
 /**
  * This class is what creates the build menu in the game.
- *
+ * <p>
  * It contains a single constructor that takes a Skin, BuildingRenderer
  * and a Stage as parameters to create the Building Menu.
- *
+ * <p>
  * This class also creates the 4 buttons at the bottom of the game screen
  *  by which the build menu is accessed
  */
@@ -37,9 +35,6 @@ public class BuildMenu{
 
     //The skin of the window
     private final Skin skin;
-
-    //Determines if there is already an active window open
-    private boolean windowActive = false;
 
     //Current displayed in game Menu
     private Window currentMenu;
