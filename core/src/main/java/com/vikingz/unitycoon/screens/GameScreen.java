@@ -173,7 +173,7 @@ public class GameScreen extends SuperScreen implements Screen {
      */
     @Override
     public void pause() {
-        uiRenderer.pause(isPaused);
+        uiRenderer.pause();
 
     }
 

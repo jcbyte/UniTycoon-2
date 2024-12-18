@@ -1,8 +1,14 @@
 package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
@@ -68,6 +74,20 @@ public class UIRenderer {
         endOfTimerPopup = new EndMenu(skin, "End of Game");
         popupMenu = new PopupMenu(skin);
 
+        Table pauseContainer = new Table();
+        pauseContainer.setFillParent(true);
+        pauseContainer.bottom().left();
+        Texture pauseTex = new Texture(Gdx.files.internal("png/pause.png"));
+        Image pauseButton = new Image(pauseTex);
+        pauseButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                pause();
+            }
+        });
+        pauseContainer.add(pauseButton).size(90, 90).pad(10);
+        stage.addActor(pauseContainer);
+
         // Set the timer to infinty and continue
         // No more events will happen in this mode, could be added later
         Runnable rightBtn = () -> {
@@ -117,9 +137,8 @@ public class UIRenderer {
 
     /**
      * Pauses the game displays the pause menu
-     * @param isPaused boolean of if the game is paused
      */
-    public void pause(boolean isPaused) {
+    public void pause() {
         System.out.println("Pressed ESC");
 
         if(!pauseMenu.hasParent()){
