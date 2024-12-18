@@ -70,7 +70,7 @@ public class UIRenderer {
 
         buildMenu = new BuildMenu(skin, buildingRenderer, stage);
 
-        pauseMenu = new PauseMenu(skin);
+        pauseMenu = new PauseMenu(skin, this);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
         popupMenu = new PopupMenu(skin);
 
