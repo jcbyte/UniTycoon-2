@@ -76,7 +76,7 @@ public class StatsRenderer {
 
         // Create a background color texture
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(1, 1, 1f, 0.85f);
+        pixmap.setColor(0.95f, 0.95f, 1f, 0.9f);
         pixmap.fill();
         Drawable background = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
         pixmap.dispose();

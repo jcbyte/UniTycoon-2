@@ -35,13 +35,11 @@ public class AchievementsRenderer {
 
         Table container = new Table();
         container.setFillParent(true);
-        container.top();
         container.right();
 
-        Label label = new Label("Achievements:", skin);
+        Label label = new Label("Achievements", skin);
         label.setColor(Color.BLACK);
-        label.setFontScale(1.5f);
-        container.add(label).pad(10).colspan(2).right().row();
+        container.add(label).colspan(2).pad(5).right().row();
 
         for (Achievement achievement : achievementsManager.achievements)
         {
@@ -69,8 +67,8 @@ public class AchievementsRenderer {
 
             achievementLogo.setColor(DISABLED_COLOUR);
             achievementLogos.add(achievementLogo);
-            container.add(achivementLabel).pad(10);
-            container.add(achievementLogo).size(90, 90).pad(5).row();
+            container.add(achivementLabel).right().pad(5, 0, 5, 10);
+            container.add(achievementLogo).size(90, 90).pad(5, 10, 5, 15).row();
         }
 
         stage.addActor(container);
