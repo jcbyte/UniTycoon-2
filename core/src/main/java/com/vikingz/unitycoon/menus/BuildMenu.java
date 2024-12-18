@@ -205,8 +205,7 @@ public class BuildMenu{
         this.buildingType = buildingType;
         index = 0;
 
-        Window window = new Window("Build Menu", skin);
-        window.getTitleTable().padTop(25).padLeft(437);
+        Window window = new Window("", skin);
         this.currentMenu = window;
         window.setModal(true);
         window.setMovable(false);
