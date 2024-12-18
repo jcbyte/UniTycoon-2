@@ -82,7 +82,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
             }
         });
 
-        TextButton quitButton = new TextButton("Quit", skin);
+        TextButton quitButton = new TextButton("Quit Game", skin);
         quitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
