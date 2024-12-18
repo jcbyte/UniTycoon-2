@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -39,10 +40,10 @@ public class BuildMenu{
     //Current displayed in game Menu
     private Window currentMenu;
 
-    private Label academicBuildingsCount;
-    private Label accommodationBuildingsCount;
-    private Label recreationalBuildingsCount;
-    private Label foodBuildingsCount;
+    private final Label academicBuildingsCount;
+    private final Label accommodationBuildingsCount;
+    private final Label recreationalBuildingsCount;
+    private final Label foodBuildingsCount;
 
     /**
      * Creates a new BuildMenu
@@ -55,10 +56,22 @@ public class BuildMenu{
         this.buildingRenderer =  buildingRenderer;
         this.skin = skin;
 
+        // Building count labels
         academicBuildingsCount = new Label("0", skin);
+        academicBuildingsCount.setColor(Color.BLACK);
+        academicBuildingsCount.setFontScale(1.8f);
+
         accommodationBuildingsCount = new Label("0", skin);
+        accommodationBuildingsCount.setColor(Color.BLACK);
+        accommodationBuildingsCount.setFontScale(1.8f);
+
         recreationalBuildingsCount = new Label("0", skin);
+        recreationalBuildingsCount.setColor(Color.BLACK);
+        recreationalBuildingsCount.setFontScale(1.8f);
+
         foodBuildingsCount = new Label("0", skin);
+        foodBuildingsCount.setColor(Color.BLACK);
+        foodBuildingsCount.setFontScale(1.8f);
 
         //Texture atlas of building menu bar
         Texture textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
