@@ -67,17 +67,6 @@ public class UIRenderer {
         pauseMenu = new PauseMenu(skin);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
         popupMenu = new PopupMenu(skin);
-
-        // Set the timer to infinty and continue
-        // No more events will happen in this mode, could be added later
-        Runnable rightBtn = () -> {
-            GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
-            gameScreen.setPaused(false);
-            endOfTimerPopup.remove();
-        };
-
-        endOfTimerPopup.setupButtons(ScreenMultiplexer::closeGame, "Quit", rightBtn, "Continue");
-
     }
 
     public void showEvent(Event event) {
@@ -136,7 +125,6 @@ public class UIRenderer {
 
     /**
      * Calls all render functions in the renderers
-     * @param delta
      */
     public void render(float delta){
         viewport.apply();
