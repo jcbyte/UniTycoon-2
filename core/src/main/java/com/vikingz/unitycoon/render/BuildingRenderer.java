@@ -117,7 +117,18 @@ public class BuildingRenderer{
 
             Building buildingToRemove = getBuildingAtPoint(Gdx.input.getX(), Gdx.input.getY());
 
-            removeBuilding(buildingToRemove);
+            // todo show name of building to remove
+            // Show confirm box before removing
+            gameRenderer.getGameScreen().setPaused(true);
+            gameRenderer.getGameScreen().getUIRenderer().showPopup(
+                "Confirm " + BuildingStats.BuildingNameDict.get(buildingToRemove.getBuildingType()).toString() + " Removal",
+                "Cancel",
+                () -> { gameRenderer.getGameScreen().setPaused(false); },
+                "Remove\n+" + getBuildingRefundAmount(buildingToRemove) + " Money", () -> {
+                    removeBuilding(buildingToRemove);
+                    gameRenderer.getGameScreen().setPaused(false);
+                }
+            );
         }
 
         // Check for left mouse click to place the texture
@@ -180,12 +191,16 @@ public class BuildingRenderer{
 
     }
 
+    private int getBuildingRefundAmount(Building building)
+    {
+        return Math.round(building.getBuildingInfo().getBuildingCost() * 0.75f);
+    }
+
     public void removeBuilding(Building buildingToRemove) {
         if(buildingToRemove != null){
-            float value = buildingToRemove.getBuildingInfo().getBuildingCost();
             incrementBuildingsCount(buildingToRemove.getBuildingType(), -1);
-            this.placedBuildings.remove(buildingToRemove);
-            GameGlobals.BALANCE += Math.round(value*0.75f);
+            placedBuildings.remove(buildingToRemove);
+            GameGlobals.BALANCE += getBuildingRefundAmount(buildingToRemove);
         }
         else{
             System.out.println("building was null: " + null);
