@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -161,9 +162,11 @@ public class UIRenderer {
     /**
      * Sets the input process to this class when called
      */
-    public void takeInput(){
-        Gdx.input.setInputProcessor(stage);
-
+    public void takeInput() {
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(achievementsRenderer.getInputProcessor());
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     /**
