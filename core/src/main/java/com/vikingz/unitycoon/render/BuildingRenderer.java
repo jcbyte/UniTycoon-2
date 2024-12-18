@@ -58,15 +58,12 @@ public class BuildingRenderer{
      * @param gameRenderer Parent renderer {@code GameRenderer}
      */
     public BuildingRenderer(GameRenderer gameRenderer) {
-
         this.gameRenderer = gameRenderer;
 
         batch = new SpriteBatch();
         isPreviewing = false;
         placedBuildings = new ArrayList<>();
         selectedTexture = null;
-
-
     }
 
     /**
@@ -74,14 +71,13 @@ public class BuildingRenderer{
      * @param delta Time since last frame
      */
     public void render(float delta) {
-        checkBuildings(delta);
+        checkBuildings();
     }
 
     /**
      * Checks if the user is currently adding or removing buildings
-     * @param delta Time since last frame
      */
-    private void checkBuildings(float delta){
+    private void checkBuildings(){
         batch.begin();
 
         // Draw all placed textures
@@ -202,7 +198,6 @@ public class BuildingRenderer{
      * @param index int the index of where it is in the dictionary
      */
     public void selectBuilding(BuildingStats.BuildingType buildingType, int index){
-
         isPreviewing = true;
         BuildingInfo newBuilding = BuildingStats.getInfo(buildingType,index);
         selectedTexture = BuildingStats.getTextureOfBuilding(BuildingStats.BuildingDict.get(buildingType)[index]);
@@ -218,7 +213,6 @@ public class BuildingRenderer{
      * @param type Type of the building that has been added
      */
     private void incrementBuildingsCount(BuildingStats.BuildingType type, int amount){
-
         switch (type) {
             case ACADEMIC -> GameGlobals.ACADEMIC_BUILDINGS_COUNT += amount;
             case ACCOMODATION -> GameGlobals.ACCOMODATION_BUILDINGS_COUNT += amount;
@@ -226,7 +220,6 @@ public class BuildingRenderer{
             case FOOD -> GameGlobals.FOOD_BUILDINGS_COUNT += amount;
             default -> System.out.println("Building type doesnt exist!");
         }
-
     }
 
     /**
@@ -236,7 +229,6 @@ public class BuildingRenderer{
      * @return Point new coordinates that occur on an intersection of the tiles in the background
      */
     private Point snapBuildingToGrid(float x, float y){
-
         // 30 rows
         // 56 cols
         int gridSize = 32;
@@ -247,7 +239,6 @@ public class BuildingRenderer{
 
         return new Point(newX, newY);
     }
-
 
     /**
      * Checks whether the user is trying to place a building
