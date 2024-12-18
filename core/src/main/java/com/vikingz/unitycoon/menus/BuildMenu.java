@@ -105,23 +105,45 @@ public class BuildMenu{
         foodBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(foodBtnTexture));
         foodBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(foodBtnTexture_hover));
 
+        // Building category labels
+        Label acedemicBuildingsLabel = new Label("Academic", skin);
+        acedemicBuildingsLabel.setColor(Color.BLACK);
+        acedemicBuildingsLabel.setFontScale(1.2f);
+
+        Label accommodationBuildingsLabel = new Label("Accom", skin);
+        accommodationBuildingsLabel.setColor(Color.BLACK);
+        accommodationBuildingsLabel.setFontScale(1.2f);
+
+        Label recreationalBuildingsLabel = new Label("Recreational", skin);
+        recreationalBuildingsLabel.setColor(Color.BLACK);
+        recreationalBuildingsLabel.setFontScale(1.2f);
+
+        Label foodBuildingsLabel = new Label("Food", skin);
+        foodBuildingsLabel.setColor(Color.BLACK);
+        foodBuildingsLabel.setFontScale(1.2f);
 
         // Table for layout
         Table table = new Table();
         table.setFillParent(true);
         table.bottom();
 
-        // Add labels to table
+        // Add count labels to table
         table.add(academicBuildingsCount);
         table.add(accommodationBuildingsCount);
         table.add(recreationalBuildingsCount);
         table.add(foodBuildingsCount).row();
 
         // Add buttons to table
-        table.add(academicBtn).pad(10);
-        table.add(accommodationBtn).pad(10);
-        table.add(recreationalBtn).pad(10);
-        table.add(foodBtn).pad(10);
+        table.add(academicBtn).pad(5, 0, 5, 0);
+        table.add(accommodationBtn).pad(5, 0, 5, 0);
+        table.add(recreationalBtn).pad(5, 0, 5, 0);
+        table.add(foodBtn).pad(5, 0, 5, 0).row();
+
+        // Add category labels to table
+        table.add(acedemicBuildingsLabel).pad(0, 10, 5, 10).uniformX();
+        table.add(accommodationBuildingsLabel).pad(0, 10, 5, 10).uniformX();
+        table.add(recreationalBuildingsLabel).pad(0, 10, 5, 10).uniformX();
+        table.add(foodBuildingsLabel).pad(0, 10, 5, 10).uniformX();
 
         // Add table to stage
         stage.addActor(table);
