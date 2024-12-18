@@ -54,7 +54,7 @@ public class StatsRenderer {
         // Label strings
         balStr = "Balance: ";
         studentsStr = "Students: ";
-        satisStr = "satisfaction: ";
+        satisStr = "Satisfaction: ";
         timerStr = "Timer: ";
 
         // Creating labels
@@ -81,21 +81,22 @@ public class StatsRenderer {
         Drawable background = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
         pixmap.dispose();
 
+        // Create layout tables
         Table outerTable = new Table();
         outerTable.setFillParent(true);
-        outerTable.top().left();
+        outerTable.top();
 
-        // Create layout table
         Table table = new Table();
         table.setBackground(background);
+        table.defaults().pad(5, 10, 5, 10).width(380);
 
         // Adds the labels to the table
-        table.add(balanceLabel).left().row();
-        table.add(studentsLabel).left().row();
-        table.add(satisfactionLabel).left().row();
-        table.add(timerLabel).left().row();
+        table.add(balanceLabel);
+        table.add(studentsLabel);
+        table.add(satisfactionLabel);
+        table.add(timerLabel);
 
-        outerTable.add(table).top().left();
+        outerTable.add(table).expandX().fillX();
         stage.addActor(outerTable);
     }
 
