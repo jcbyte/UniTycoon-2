@@ -1,8 +1,14 @@
 package com.vikingz.unitycoon.render;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
@@ -18,10 +24,10 @@ import com.vikingz.unitycoon.events.Event;
 
 /**
  * This class renders all the UI elements to the Screen.
- *
+ * <p>
  * This enables us to control how the UI is draw and resized
  * differently from how the rest of the game is drawn.
- *
+ * <p>
  * This class essentially forms another layer on the screen that
  * renders all the UI elements on this layer as opposed to the
  * game layer.
@@ -64,9 +70,23 @@ public class UIRenderer {
 
         buildMenu = new BuildMenu(skin, buildingRenderer, stage);
 
-        pauseMenu = new PauseMenu(skin);
+        pauseMenu = new PauseMenu(skin, this);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
         popupMenu = new PopupMenu(skin);
+
+        Table pauseContainer = new Table();
+        pauseContainer.setFillParent(true);
+        pauseContainer.bottom().left();
+        Texture pauseTex = new Texture(Gdx.files.internal("png/pause.png"));
+        Image pauseButton = new Image(pauseTex);
+        pauseButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                pause();
+            }
+        });
+        pauseContainer.add(pauseButton).size(90, 90).pad(10);
+        stage.addActor(pauseContainer);
     }
 
     public void showEvent(Event event) {
@@ -106,9 +126,8 @@ public class UIRenderer {
 
     /**
      * Pauses the game displays the pause menu
-     * @param isPaused boolean of if the game is paused
      */
-    public void pause(boolean isPaused) {
+    public void pause() {
         System.out.println("Pressed ESC");
 
         if(!pauseMenu.hasParent()){
@@ -128,6 +147,8 @@ public class UIRenderer {
      */
     public void render(float delta){
         viewport.apply();
+        stage.act(delta);
+        stage.draw();
         statsRenderer.render(delta);
         achievementsRenderer.render(delta);
         buildMenu.render(delta);
@@ -140,18 +161,20 @@ public class UIRenderer {
      * @param height New height
      */
     public void resize(int width, int height){
-        viewport.update(width, height);
-        stage.getViewport().update(width, height, true);
+        viewport.update(width, height, true);
         buildMenu.resize(width, height);
         statsRenderer.resize(width, height);
+        achievementsRenderer.resize(width, height);
     }
 
     /**
      * Sets the input process to this class when called
      */
-    public void takeInput(){
-        Gdx.input.setInputProcessor(stage);
-
+    public void takeInput() {
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(achievementsRenderer.getInputProcessor());
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     /**

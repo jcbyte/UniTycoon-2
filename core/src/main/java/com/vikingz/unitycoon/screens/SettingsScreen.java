@@ -15,9 +15,9 @@ import com.vikingz.unitycoon.util.GameSounds;
 
 /**
  * This screen represents the settings screen in the game
- *
+ * <p>
  * It contains multiple buttons and slider which edit different game settings
- *
+ * <p>
  * Inherits Screen, SuperScreen
  */
 public class SettingsScreen extends SuperScreen implements Screen {
@@ -82,7 +82,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
             }
         });
 
-        TextButton quitButton = new TextButton("Quit", skin);
+        TextButton quitButton = new TextButton("Quit Game", skin);
         quitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
