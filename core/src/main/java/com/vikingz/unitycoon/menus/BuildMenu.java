@@ -39,6 +39,11 @@ public class BuildMenu{
     //Current displayed in game Menu
     private Window currentMenu;
 
+    private Label academicBuildingsCount;
+    private Label accommodationBuildingsCount;
+    private Label recreationalBuildingsCount;
+    private Label foodBuildingsCount;
+
     /**
      * Creates a new BuildMenu
      * @param skin SKin of the buttons on the menu
@@ -49,6 +54,11 @@ public class BuildMenu{
         this.stage = stage;
         this.buildingRenderer =  buildingRenderer;
         this.skin = skin;
+
+        academicBuildingsCount = new Label("0", skin);
+        accommodationBuildingsCount = new Label("0", skin);
+        recreationalBuildingsCount = new Label("0", skin);
+        foodBuildingsCount = new Label("0", skin);
 
         //Texture atlas of building menu bar
         Texture textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
@@ -86,8 +96,13 @@ public class BuildMenu{
         // Table for layout
         Table table = new Table();
         table.setFillParent(true);
-        table.bottom().center();
         table.bottom();
+
+        // Add labels to table
+        table.add(academicBuildingsCount);
+        table.add(accommodationBuildingsCount);
+        table.add(recreationalBuildingsCount);
+        table.add(foodBuildingsCount).row();
 
         // Add buttons to table
         table.add(academicBtn).pad(10);
@@ -284,6 +299,11 @@ public class BuildMenu{
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
+
+        academicBuildingsCount.setText(GameGlobals.ACADEMIC_BUILDINGS_COUNT);
+        accommodationBuildingsCount.setText(GameGlobals.ACCOMODATION_BUILDINGS_COUNT);
+        recreationalBuildingsCount.setText(GameGlobals.RECREATIONAL_BUILDINGS_COUNT);
+        foodBuildingsCount.setText(GameGlobals.FOOD_BUILDINGS_COUNT);
     }
 
     /**
