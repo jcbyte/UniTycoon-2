@@ -167,6 +167,7 @@ public class BuildMenu{
 
         // Building name Label
         buildingNameLabel = new Label("", skin);
+        buildingNameLabel.setFontScale(1.8f);
 
         // Image Of Building
         buildingImage = new Image();
@@ -174,28 +175,36 @@ public class BuildMenu{
         Table statsTable = new Table();
 
         // Price
-        Label buildingPriceLabel = new Label("Price:",skin);
+        Label buildingPriceLabel = new Label("Cost:",skin);
+        buildingPriceLabel.setFontScale(1.4f);
         buildingPriceValue = new Label("",skin);
-        statsTable.add(buildingPriceLabel);
-        statsTable.add(buildingPriceValue).row();
+        buildingPriceValue.setFontScale(1.4f);
+        statsTable.add(buildingPriceLabel).left().padBottom(2).padRight(15);
+        statsTable.add(buildingPriceValue).left().row();
 
         // Satisfaction
-        Label buildingSatisfactionLabel = new Label("Satisfaction:", skin);
+        Label buildingSatisfactionLabel = new Label("Satisfaction/s:", skin);
+        buildingSatisfactionLabel.setFontScale(1.4f);
         buildingSatisfactionValue = new Label("",skin);
-        statsTable.add(buildingSatisfactionLabel);
-        statsTable.add(buildingSatisfactionValue).row();
+        buildingSatisfactionValue.setFontScale(1.4f);
+        statsTable.add(buildingSatisfactionLabel).left().padBottom(2).padRight(15);
+        statsTable.add(buildingSatisfactionValue).left().row();
 
         // Students
-        Label buildingStudentsLabel = new Label("Student Space:", skin);
+        Label buildingStudentsLabel = new Label("Student Capacity:", skin);
+        buildingStudentsLabel.setFontScale(1.4f);
         buildingStudentsValue = new Label("",skin);
-        statsTable.add(buildingStudentsLabel);
-        statsTable.add(buildingStudentsValue).row();
+        buildingStudentsValue.setFontScale(1.4f);
+        statsTable.add(buildingStudentsLabel).left().padBottom(2).padRight(15);
+        statsTable.add(buildingStudentsValue).left().row();
 
         // Coins
-        Label buildingCoinsLabel = new Label("Coins Per Second:",skin);
+        Label buildingCoinsLabel = new Label("Coins/s:",skin);
+        buildingCoinsLabel.setFontScale(1.4f);
         buildingCoinsValue = new Label("", skin);
-        statsTable.add(buildingCoinsLabel);
-        statsTable.add(buildingCoinsValue).row();
+        buildingCoinsValue.setFontScale(1.4f);
+        statsTable.add(buildingCoinsLabel).left().padBottom(2).padRight(15);
+        statsTable.add(buildingCoinsValue).left().row();
 
         //Back Building Button
         TextButton backButton = new TextButton("<", skin);
@@ -219,6 +228,7 @@ public class BuildMenu{
 
         // Create the Buy Button
         TextButton buyButton = new TextButton("Buy", skin);
+        buyButton.getLabel().setFontScale(0.8f);
         buyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -229,6 +239,7 @@ public class BuildMenu{
 
         // Create the close button
         TextButton closeButton = new TextButton("Close", skin);
+        closeButton.getLabel().setFontScale(0.8f);
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -238,16 +249,16 @@ public class BuildMenu{
 
         updateBuildingWindow();
 
-        window.add(buildingNameLabel).colspan(3).row();
-        window.add(backButton);
-        window.add(buildingImage);
-        window.add(nextButton).row();
-        window.add(statsTable).colspan(3).expandX().row();
-        window.add(buyButton).colspan(3).row();
+        window.add(buildingNameLabel).colspan(3).padBottom(10).row();
+        window.add(backButton).size(100, 100);
+        window.add(buildingImage).size(200, 200).padRight(25).padLeft(25);
+        window.add(nextButton).size(100, 100).row();
+        window.add(statsTable).colspan(3).padTop(20).padBottom(25).row();
+        window.add(buyButton).colspan(3).padBottom(10).row();
         window.add(closeButton).colspan(3);
 
         // Set size and position of the window
-        window.setSize(1000, 800);
+        window.setSize(800, 800);
         window.setPosition((stage.getWidth() - window.getWidth()) / 2, (stage.getHeight() - window.getHeight()) / 2);
 
         // Add window to the stage
