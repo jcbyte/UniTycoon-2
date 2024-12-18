@@ -148,15 +148,15 @@ public class BuildMenu{
 
     }
 
-    //Selects which building of BuildingType,
-    //should be displayed currently
+    // Variables for the build menu window,
     private int index = 0;
-    Label buildingNameLabel;
-    Image buildingImage;
-    Label buildingPriceValue;
-    Label buildingSatisfactionValue;
-    Label buildingStudentsValue;
-    Label buildingCoinsValue;
+    private BuildingStats.BuildingType buildingType;
+    private Label buildingNameLabel;
+    private Image buildingImage;
+    private Label buildingPriceValue;
+    private Label buildingSatisfactionValue;
+    private Label buildingStudentsValue;
+    private Label buildingCoinsValue;
 
     /**
      * Creates a new window and sets up all the contents of the window
@@ -165,7 +165,7 @@ public class BuildMenu{
      * @param buildingType contains Type of building from BuildingStats
      */
     private void showMenu(BuildingStats.BuildingType buildingType) {
-        // Create a window (menu)
+        this.buildingType = buildingType;
         index = 0;
 
         Window window = new Window("Build Menu", skin);
@@ -210,35 +210,23 @@ public class BuildMenu{
 
         //Back Building Button
         TextButton backButton = new TextButton("<", skin);
-//        backButton.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                try {
-//                    index--;
-//                    SetLabelText(buildingNameLabel, buildingType, buildingPriceValue, buildingSatisfactionValue, buildingStudentValue, buildingCoinsValue, buildingImage);
-//                }
-//                catch (ArrayIndexOutOfBoundsException e){
-//                    index = BuildingStats.BuildingNameDict.get(buildingType).length-1;
-//                    SetLabelText(buildingNameLabel, buildingType, buildingPriceValue, buildingSatisfactionValue, buildingStudentValue, buildingCoinsValue, buildingImage);
-//                }
-//            }
-//        });
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                index = Math.floorMod(index - 1, BuildingStats.BuildingNameDict.get(buildingType).length);
+                updateBuildingWindow();
+            }
+        });
 
         //Next Building Button
         TextButton nextButton = new TextButton(">", skin);
-//        nextButton.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                try {
-//                    index++;
-//                    SetLabelText(buildingNameLabel, buildingType, buildingPriceValue, buildingSatisfactionValue, buildingStudentValue, buildingCoinsValue, buildingImage);
-//                }
-//                catch (ArrayIndexOutOfBoundsException e){
-//                    index = 0;
-//                    SetLabelText(buildingNameLabel, buildingType, buildingPriceValue, buildingSatisfactionValue, buildingStudentValue, buildingCoinsValue, buildingImage);
-//                }
-//            }
-//        });
+        nextButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                index = Math.floorMod(index + 1, BuildingStats.BuildingNameDict.get(buildingType).length);
+                updateBuildingWindow();
+            }
+        });
 
         // Create the Buy Button
         TextButton buyButton = new TextButton("Buy", skin);
@@ -252,17 +240,14 @@ public class BuildMenu{
 
         // Create the close button
         TextButton closeButton = new TextButton("Close", skin);
-
         closeButton.addListener(new ClickListener() {
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setWindowActive(false);
-                window.remove();  // Remove window from the stage
+                window.remove();
             }
         });
 
-        updateBuildingWindow(buildingType);
+        updateBuildingWindow();
 
         window.add(buildingNameLabel).colspan(3).row();
         window.add(backButton);
@@ -278,15 +263,12 @@ public class BuildMenu{
 
         // Add window to the stage
         stage.addActor(window);
-
-//        window.debugAll(); // todo remove, for debugging only
     }
 
     /**
      * Sets the text of each label to current index
-     * @param buildingType Type of Building used, for dictionary lookup
      */
-    private void updateBuildingWindow(BuildingStats.BuildingType buildingType) {
+    private void updateBuildingWindow() {
         buildingNameLabel.setText(BuildingStats.BuildingNameDict.get(buildingType)[index]);
         buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding(BuildingStats.BuildingDict.get(buildingType)[index]));
         buildingPriceValue.setText(BuildingStats.BuildingPriceDict.get(buildingType)[index]);
