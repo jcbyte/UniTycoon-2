@@ -17,7 +17,7 @@ import com.vikingz.unitycoon.util.TimeUtil;
 
 /**
  * This class is used for drawing game stats to the screen.
- *
+ * <p>
  * This class contains all the labels that are on the
  * top right of the screen that display the users balance,
  * satisfaction etc.
@@ -29,10 +29,6 @@ public class StatsRenderer {
     private final BitmapFont font;
     private final Stage stage;
 
-    //Used to resize UI renderer to new screen size
-    float width;
-    float height;
-
     // Labels
     String balStr;
     Label balance;
@@ -42,18 +38,6 @@ public class StatsRenderer {
 
     String satisStr;
     Label satisfaction;
-
-    String accomBuildingsStr;
-    Label accomBuildings;
-
-    String academBuildingsStr;
-    Label academBuildings;
-
-    String recBuildingsStr;
-    Label recBuildings;
-
-    String foodBuildingsStr;
-    Label foodBuildings;
 
     String timerStr;
     Label timer;
@@ -77,30 +61,18 @@ public class StatsRenderer {
         balStr = "Balance";
         studentsStr = "Students";
         satisStr = "satisfaction";
-        accomBuildingsStr = "Accodomation";
-        academBuildingsStr = "Academic";
-        recBuildingsStr = "Recreational";
-        foodBuildingsStr = "Food";
         timerStr = "Timer: ";
 
         // Creating labels
         balance = new Label(balStr, skin);
         students = new Label(studentsStr, skin);
         satisfaction = new Label(satisStr, skin);
-        accomBuildings = new Label(accomBuildingsStr, skin);
-        academBuildings = new Label(academBuildingsStr, skin);
-        recBuildings = new Label(recBuildingsStr, skin);
-        foodBuildings = new Label(foodBuildingsStr, skin);
         timer = new Label(timerStr, skin);
 
         // Adding labels to a list
         labels.add(balance);
         labels.add(students);
         labels.add(satisfaction);
-        labels.add(accomBuildings);
-        labels.add(academBuildings);
-        labels.add(recBuildings);
-        labels.add(foodBuildings);
         labels.add(timer);
 
         for(Label lbl: labels){
@@ -124,14 +96,6 @@ public class StatsRenderer {
         table.row();
         table.add(satisfaction).pad(padding).align(Align.left);
         table.row();
-        table.add(accomBuildings).pad(padding).align(Align.left);
-        table.row();
-        table.add(academBuildings).pad(padding).align(Align.left);
-        table.row();
-        table.add(recBuildings).pad(padding).align(Align.left);
-        table.row();
-        table.add(foodBuildings).pad(padding).align(Align.left);
-        table.row();
         table.add(timer).pad(padding).align(Align.left);
 
         stage.addActor(table);
@@ -151,10 +115,6 @@ public class StatsRenderer {
         balStr = "Balance: " + GameGlobals.BALANCE;
         studentsStr = "Students: " + GameGlobals.STUDENTS;
         satisStr = "Satisfaction: " + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION);
-        accomBuildingsStr = "Accomodation: " + GameGlobals.ACCOMODATION_BUILDINGS_COUNT;
-        academBuildingsStr = "Academic: " + GameGlobals.ACADEMIC_BUILDINGS_COUNT;
-        recBuildingsStr = "Recreational: " + GameGlobals.RECREATIONAL_BUILDINGS_COUNT;
-        foodBuildingsStr = "Food: " + GameGlobals.FOOD_BUILDINGS_COUNT;
 
         TimeUtil.Time timerAmount = TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME);
         timerStr = timerAmount == null? (timerStr = "Timer: Infinity") : (timerStr = "Timer: " + timerAmount);
@@ -163,10 +123,6 @@ public class StatsRenderer {
         balance.setText(balStr);
         students.setText(studentsStr);
         satisfaction.setText(satisStr);
-        accomBuildings.setText(accomBuildingsStr);
-        academBuildings.setText(academBuildingsStr);
-        recBuildings.setText(recBuildingsStr);
-        foodBuildings.setText(foodBuildingsStr);
         timer.setText(timerStr);
 
         stage.act(delta);
@@ -180,8 +136,6 @@ public class StatsRenderer {
      * @param height New height
      */
     public void resize(float width, float height){
-        this.width = width;
-        this.height = height;
     }
 
     /**
@@ -192,6 +146,4 @@ public class StatsRenderer {
         batch.dispose();
         font.dispose();
     }
-
-
 }
