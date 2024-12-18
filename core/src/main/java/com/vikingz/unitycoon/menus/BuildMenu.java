@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -39,6 +40,11 @@ public class BuildMenu{
     //Current displayed in game Menu
     private Window currentMenu;
 
+    private final Label academicBuildingsCount;
+    private final Label accommodationBuildingsCount;
+    private final Label recreationalBuildingsCount;
+    private final Label foodBuildingsCount;
+
     /**
      * Creates a new BuildMenu
      * @param skin SKin of the buttons on the menu
@@ -50,56 +56,100 @@ public class BuildMenu{
         this.buildingRenderer =  buildingRenderer;
         this.skin = skin;
 
+        // Building count labels
+        academicBuildingsCount = new Label("0", skin);
+        academicBuildingsCount.setColor(Color.BLACK);
+        academicBuildingsCount.setFontScale(1.8f);
+
+        accommodationBuildingsCount = new Label("0", skin);
+        accommodationBuildingsCount.setColor(Color.BLACK);
+        accommodationBuildingsCount.setFontScale(1.8f);
+
+        recreationalBuildingsCount = new Label("0", skin);
+        recreationalBuildingsCount.setColor(Color.BLACK);
+        recreationalBuildingsCount.setFontScale(1.8f);
+
+        foodBuildingsCount = new Label("0", skin);
+        foodBuildingsCount.setColor(Color.BLACK);
+        foodBuildingsCount.setFontScale(1.8f);
+
         //Texture atlas of building menu bar
         Texture textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
 
         //Sets the pixel size of tiles used for build menu bar
         int atlasTileSize = 64;
-        TextureRegion btn1Texture = new TextureRegion(textureAtlas, 0, 0, atlasTileSize, atlasTileSize);
-        TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0, atlasTileSize, atlasTileSize);
-        TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0, atlasTileSize, atlasTileSize);
-        TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0, atlasTileSize, atlasTileSize);
+        TextureRegion academicBtnTexture = new TextureRegion(textureAtlas, 0, 0, atlasTileSize, atlasTileSize);
+        TextureRegion accommodationTexture = new TextureRegion(textureAtlas, atlasTileSize, 0, atlasTileSize, atlasTileSize);
+        TextureRegion recreationalBtnTexture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0, atlasTileSize, atlasTileSize);
+        TextureRegion foodBtnTexture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0, atlasTileSize, atlasTileSize);
 
-        TextureRegion btn1Texture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize, atlasTileSize, atlasTileSize);
-        TextureRegion btn2Texture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize, atlasTileSize, atlasTileSize);
-        TextureRegion btn3Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize, atlasTileSize, atlasTileSize);
-        TextureRegion btn4Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion academicBtnTexture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion accommodationTexture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion recreationalBtnTexture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion foodBtnTexture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize, atlasTileSize, atlasTileSize);
 
         // Create ImageButtons
-        ImageButton btn1 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn1.getStyle().imageUp = new TextureRegionDrawable(btn1Texture);
-        btn1.getStyle().imageOver = new TextureRegionDrawable(btn1Texture_hover);
+        ImageButton academicBtn = new ImageButton(new ImageButton.ImageButtonStyle());
+        academicBtn.getStyle().imageUp = new TextureRegionDrawable(academicBtnTexture);
+        academicBtn.getStyle().imageOver = new TextureRegionDrawable(academicBtnTexture_hover);
 
-        ImageButton btn2 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn2.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn2Texture));
-        btn2.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn2Texture_hover));
+        ImageButton accommodationBtn = new ImageButton(new ImageButton.ImageButtonStyle());
+        accommodationBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(accommodationTexture));
+        accommodationBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(accommodationTexture_hover));
 
-        ImageButton btn3 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn3.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn3Texture));
-        btn3.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn3Texture_hover));
+        ImageButton recreationalBtn = new ImageButton(new ImageButton.ImageButtonStyle());
+        recreationalBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(recreationalBtnTexture));
+        recreationalBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(recreationalBtnTexture_hover));
 
-        ImageButton btn4 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn4.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn4Texture));
-        btn4.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn4Texture_hover));
+        ImageButton foodBtn = new ImageButton(new ImageButton.ImageButtonStyle());
+        foodBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(foodBtnTexture));
+        foodBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(foodBtnTexture_hover));
 
+        // Building category labels
+        Label acedemicBuildingsLabel = new Label("Academic", skin);
+        acedemicBuildingsLabel.setColor(Color.BLACK);
+        acedemicBuildingsLabel.setFontScale(1.2f);
+
+        Label accommodationBuildingsLabel = new Label("Accom", skin);
+        accommodationBuildingsLabel.setColor(Color.BLACK);
+        accommodationBuildingsLabel.setFontScale(1.2f);
+
+        Label recreationalBuildingsLabel = new Label("Recreational", skin);
+        recreationalBuildingsLabel.setColor(Color.BLACK);
+        recreationalBuildingsLabel.setFontScale(1.2f);
+
+        Label foodBuildingsLabel = new Label("Food", skin);
+        foodBuildingsLabel.setColor(Color.BLACK);
+        foodBuildingsLabel.setFontScale(1.2f);
 
         // Table for layout
         Table table = new Table();
         table.setFillParent(true);
-        table.bottom().center();
         table.bottom();
 
+        // Add count labels to table
+        table.add(academicBuildingsCount);
+        table.add(accommodationBuildingsCount);
+        table.add(recreationalBuildingsCount);
+        table.add(foodBuildingsCount).row();
+
         // Add buttons to table
-        table.add(btn1).pad(10);
-        table.add(btn2).pad(10);
-        table.add(btn3).pad(10);
-        table.add(btn4).pad(10);
+        table.add(academicBtn).pad(5, 0, 5, 0);
+        table.add(accommodationBtn).pad(5, 0, 5, 0);
+        table.add(recreationalBtn).pad(5, 0, 5, 0);
+        table.add(foodBtn).pad(5, 0, 5, 0).row();
+
+        // Add category labels to table
+        table.add(acedemicBuildingsLabel).pad(0, 10, 5, 10).uniformX();
+        table.add(accommodationBuildingsLabel).pad(0, 10, 5, 10).uniformX();
+        table.add(recreationalBuildingsLabel).pad(0, 10, 5, 10).uniformX();
+        table.add(foodBuildingsLabel).pad(0, 10, 5, 10).uniformX();
 
         // Add table to stage
         stage.addActor(table);
 
         // Set up click listeners for buttons
-        btn1.addListener(new ClickListener() {
+        academicBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
@@ -107,7 +157,7 @@ public class BuildMenu{
             }
         });
 
-        btn2.addListener(new ClickListener() {
+        accommodationBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
@@ -116,7 +166,7 @@ public class BuildMenu{
             }
         });
 
-        btn3.addListener(new ClickListener() {
+        recreationalBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
@@ -125,7 +175,7 @@ public class BuildMenu{
             }
         });
 
-        btn4.addListener(new ClickListener() {
+        foodBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
@@ -133,8 +183,6 @@ public class BuildMenu{
                 showMenu(FOOD);
             }
         });
-
-
     }
 
     // Variables for the build menu window,
@@ -286,6 +334,11 @@ public class BuildMenu{
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
+
+        academicBuildingsCount.setText(GameGlobals.ACADEMIC_BUILDINGS_COUNT);
+        accommodationBuildingsCount.setText(GameGlobals.ACCOMODATION_BUILDINGS_COUNT);
+        recreationalBuildingsCount.setText(GameGlobals.RECREATIONAL_BUILDINGS_COUNT);
+        foodBuildingsCount.setText(GameGlobals.FOOD_BUILDINGS_COUNT);
     }
 
     /**
