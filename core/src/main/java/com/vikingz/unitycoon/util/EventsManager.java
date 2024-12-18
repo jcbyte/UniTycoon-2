@@ -83,7 +83,7 @@ public class EventsManager {
         }
 
         // Add static events here
-        events.add(new ManagedEvent(new GraduationEvent(gameScreen), 5));
+        events.add(new ManagedEvent(new GraduationEvent(gameScreen), 1));
     }
 
     public void render()

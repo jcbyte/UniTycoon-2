@@ -87,17 +87,6 @@ public class UIRenderer {
         });
         pauseContainer.add(pauseButton).size(90, 90).pad(10);
         stage.addActor(pauseContainer);
-
-        // Set the timer to infinty and continue
-        // No more events will happen in this mode, could be added later
-        Runnable rightBtn = () -> {
-            GameGlobals.ELAPSED_TIME = (int) Double.POSITIVE_INFINITY;
-            gameScreen.setPaused(false);
-            endOfTimerPopup.remove();
-        };
-
-        endOfTimerPopup.setupButtons(ScreenMultiplexer::closeGame, "Quit", rightBtn, "Continue");
-
     }
 
     public void showEvent(Event event) {
