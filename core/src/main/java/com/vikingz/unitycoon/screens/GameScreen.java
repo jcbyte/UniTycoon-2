@@ -70,15 +70,7 @@ public class GameScreen extends SuperScreen implements Screen {
 
         elapsedTime = 0;
         //5 minutes
-        GameGlobals.resetGlobals(5 * 60);
-        new Timer().scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                if(!isPaused){
-                    //GameGlobals.ELAPSED_TIME--;
-                }
-            }
-        }, 0, 1);
+        GameGlobals.resetGlobals(4); //5 * 60); // todo return to 5 mins
     }
 
 
