@@ -35,9 +35,6 @@ public class MenuScreen extends SuperScreen implements Screen {
         TextButton settingsButton = new TextButton("Settings", skin);
         TextButton quitButton = new TextButton("Quit", skin);
 
-        Label leaderboardLabel = new Label("Leaderboard:\n\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().leaderboard), skin);
-        leaderboardLabel.setFontScale(1.75f);
-
         // Add listeners to buttons
         playButton.addListener(e -> {
             if (!playButton.isPressed()) return false;
@@ -73,14 +70,20 @@ public class MenuScreen extends SuperScreen implements Screen {
         buttonsTable.add(quitButton).pad(10);
         table.add(buttonsTable);
 
-        // Add leaderboard to table
-        Table leaderboardTable = new Table();
-        leaderboardTable.add(leaderboardLabel);
-        leaderboardTable.setPosition(0, 0);
-        table.add(leaderboardTable).padRight(100).top();
-
         // Add the table to the stage
         stage.addActor(table);
+
+        Label leaderboardLabel = new Label("Leaderboard:\n\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().leaderboard), skin);
+        leaderboardLabel.setFontScale(1.75f);
+
+        // Add leaderboard to table
+        Table leaderboardTable = new Table();
+        leaderboardTable.setFillParent(true);
+        leaderboardTable.bottom().right();
+        leaderboardTable.add(leaderboardLabel).padBottom(20).padRight(100).bottom().right();
+
+        // Add the table to the stage
+        stage.addActor(leaderboardTable);
     }
 
     @Override
