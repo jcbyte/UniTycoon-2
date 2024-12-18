@@ -41,10 +41,6 @@ public class BuildMenu{
     //Determines if there is already an active window open
     private boolean windowActive = false;
 
-    //Allows BuildMenu to be placed in the center
-    private int width = GameConfig.getInstance().getWindowWidth();
-    private int height = GameConfig.getInstance().getWindowHeight();
-
     //Current displayed in game Menu
     private Window currentMenu;
 
@@ -55,8 +51,6 @@ public class BuildMenu{
      * @param stage The stage on which the menu is drawn
      */
     public BuildMenu(Skin skin, BuildingRenderer buildingRenderer, Stage stage) {
-
-
         this.stage = stage;
         this.buildingRenderer =  buildingRenderer;
         this.skin = skin;
@@ -278,26 +272,7 @@ public class BuildMenu{
     }
 
     /**
-     * returns if the window is currently open
-     * @return windowActive boolean
-     */
-    public boolean isWindowActive() {
-        return windowActive;
-    }
-
-
-    /**
-     * Sets the windowActive, used when the menu is opened or closed,
-     * to prevent two windows being opened at same time.
-     * @param windowActive boolean
-     */
-    public void setWindowActive(boolean windowActive) {
-        this.windowActive = windowActive;
-    }
-
-    /**
      * BuildingMenu render actors objects
-     * @param delta
      */
     public void render(float delta) {
         stage.act(delta);
@@ -311,8 +286,6 @@ public class BuildMenu{
      */
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        this.width = width;
-        this.height = height;
     }
 
     /**
