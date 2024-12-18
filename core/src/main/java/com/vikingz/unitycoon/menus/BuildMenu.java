@@ -55,32 +55,32 @@ public class BuildMenu{
 
         //Sets the pixel size of tiles used for build menu bar
         int atlasTileSize = 64;
-        TextureRegion btn1Texture = new TextureRegion(textureAtlas, 0, 0, atlasTileSize, atlasTileSize);
-        TextureRegion btn2Texture = new TextureRegion(textureAtlas, atlasTileSize, 0, atlasTileSize, atlasTileSize);
-        TextureRegion btn3Texture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0, atlasTileSize, atlasTileSize);
-        TextureRegion btn4Texture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0, atlasTileSize, atlasTileSize);
+        TextureRegion academicBtnTexture = new TextureRegion(textureAtlas, 0, 0, atlasTileSize, atlasTileSize);
+        TextureRegion accommodationTexture = new TextureRegion(textureAtlas, atlasTileSize, 0, atlasTileSize, atlasTileSize);
+        TextureRegion recreationalBtnTexture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0, atlasTileSize, atlasTileSize);
+        TextureRegion foodBtnTexture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0, atlasTileSize, atlasTileSize);
 
-        TextureRegion btn1Texture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize, atlasTileSize, atlasTileSize);
-        TextureRegion btn2Texture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize, atlasTileSize, atlasTileSize);
-        TextureRegion btn3Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize, atlasTileSize, atlasTileSize);
-        TextureRegion btn4Texture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion academicBtnTexture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion accommodationTexture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion recreationalBtnTexture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize, atlasTileSize, atlasTileSize);
+        TextureRegion foodBtnTexture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize, atlasTileSize, atlasTileSize);
 
         // Create ImageButtons
-        ImageButton btn1 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn1.getStyle().imageUp = new TextureRegionDrawable(btn1Texture);
-        btn1.getStyle().imageOver = new TextureRegionDrawable(btn1Texture_hover);
+        ImageButton academicBtn = new ImageButton(new ImageButton.ImageButtonStyle());
+        academicBtn.getStyle().imageUp = new TextureRegionDrawable(academicBtnTexture);
+        academicBtn.getStyle().imageOver = new TextureRegionDrawable(academicBtnTexture_hover);
 
-        ImageButton btn2 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn2.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn2Texture));
-        btn2.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn2Texture_hover));
+        ImageButton accommodationBtn = new ImageButton(new ImageButton.ImageButtonStyle());
+        accommodationBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(accommodationTexture));
+        accommodationBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(accommodationTexture_hover));
 
-        ImageButton btn3 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn3.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn3Texture));
-        btn3.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn3Texture_hover));
+        ImageButton recreationalBtn = new ImageButton(new ImageButton.ImageButtonStyle());
+        recreationalBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(recreationalBtnTexture));
+        recreationalBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(recreationalBtnTexture_hover));
 
-        ImageButton btn4 = new ImageButton(new ImageButton.ImageButtonStyle());
-        btn4.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(btn4Texture));
-        btn4.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(btn4Texture_hover));
+        ImageButton foodBtn = new ImageButton(new ImageButton.ImageButtonStyle());
+        foodBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(foodBtnTexture));
+        foodBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(foodBtnTexture_hover));
 
 
         // Table for layout
@@ -90,16 +90,16 @@ public class BuildMenu{
         table.bottom();
 
         // Add buttons to table
-        table.add(btn1).pad(10);
-        table.add(btn2).pad(10);
-        table.add(btn3).pad(10);
-        table.add(btn4).pad(10);
+        table.add(academicBtn).pad(10);
+        table.add(accommodationBtn).pad(10);
+        table.add(recreationalBtn).pad(10);
+        table.add(foodBtn).pad(10);
 
         // Add table to stage
         stage.addActor(table);
 
         // Set up click listeners for buttons
-        btn1.addListener(new ClickListener() {
+        academicBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
@@ -107,7 +107,7 @@ public class BuildMenu{
             }
         });
 
-        btn2.addListener(new ClickListener() {
+        accommodationBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
@@ -116,7 +116,7 @@ public class BuildMenu{
             }
         });
 
-        btn3.addListener(new ClickListener() {
+        recreationalBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
@@ -125,7 +125,7 @@ public class BuildMenu{
             }
         });
 
-        btn4.addListener(new ClickListener() {
+        foodBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(currentMenu != null) { currentMenu.remove(); }
@@ -133,8 +133,6 @@ public class BuildMenu{
                 showMenu(FOOD);
             }
         });
-
-
     }
 
     // Variables for the build menu window,
