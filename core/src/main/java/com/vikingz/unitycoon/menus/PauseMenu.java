@@ -9,13 +9,13 @@ import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 
 /**
  *  This class represents a PauseMenu in the game.
- *
+ * <p>
  * This is the menu that appears if the user pressed the esc button
  * during the game.
- *
+ * <p>
  * This menu contains a settings button which sends the user to the settings
  * screen from which they can edit the settings.
- *
+ * <p>
  * To close the pause menu, the user has to press the esc button again.
  */
 public class PauseMenu extends Window {

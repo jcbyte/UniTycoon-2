@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -24,10 +23,10 @@ import com.vikingz.unitycoon.events.Event;
 
 /**
  * This class renders all the UI elements to the Screen.
- *
+ * <p>
  * This enables us to control how the UI is draw and resized
  * differently from how the rest of the game is drawn.
- *
+ * <p>
  * This class essentially forms another layer on the screen that
  * renders all the UI elements on this layer as opposed to the
  * game layer.
@@ -155,7 +154,6 @@ public class UIRenderer {
 
     /**
      * Calls all render functions in the renderers
-     * @param delta
      */
     public void render(float delta){
         viewport.apply();
