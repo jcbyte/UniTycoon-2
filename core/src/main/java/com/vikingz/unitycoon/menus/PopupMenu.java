@@ -133,6 +133,10 @@ public class PopupMenu extends Window {
         this.message.setText(message);
     }
 
+    /**
+     * Disable the popup temporarily, so the user does not immediately click on a button
+     * @param ms time before re-enabling in milliseconds
+     */
     public void enableAfter(int ms) {
         setTouchable(Touchable.disabled);
 

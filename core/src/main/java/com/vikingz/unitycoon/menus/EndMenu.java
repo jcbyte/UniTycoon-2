@@ -1,8 +1,10 @@
 package com.vikingz.unitycoon.menus;
 
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Timer;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
@@ -126,5 +128,22 @@ public class EndMenu extends Window {
         scoreLabel.setText("Your Score: " + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION));
         leaderboardTextField.setText("");
         updateLeaderboardTable.setVisible(scoreOnLeaderboard);
+    }
+
+    /**
+     * Disable the popup temporarily, so the user does not immediately click on a button
+     * @param ms time before re-enabling in milliseconds
+     */
+    public void enableAfter(int ms) {
+        setTouchable(Touchable.disabled);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println("enabled");
+                setTouchable(Touchable.enabled);
+
+            }
+        }, (float)ms / 1000f);
     }
 }
