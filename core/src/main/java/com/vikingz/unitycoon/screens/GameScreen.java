@@ -60,7 +60,6 @@ public class GameScreen extends SuperScreen implements Screen {
     public GameScreen(String mapName){
         super();
 
-        this.isPaused = false;
         gameRenderer = new GameRenderer(this, mapName);
         achievementsManager = new AchievementsManager(this);
         uiRenderer = new UIRenderer(skin, gameRenderer.getBuildingRenderer(), this);
@@ -69,6 +68,10 @@ public class GameScreen extends SuperScreen implements Screen {
         elapsedTime = 0;
         //5 minutes
         GameGlobals.resetGlobals(5 * 60);
+
+        // Show instructions
+        isPaused = true;
+        uiRenderer.startGame();
     }
 
 
