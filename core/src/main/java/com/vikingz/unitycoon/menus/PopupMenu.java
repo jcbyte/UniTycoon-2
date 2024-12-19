@@ -13,7 +13,7 @@ import com.vikingz.unitycoon.global.GameGlobals;
  * This is a generic PopupMenu class that can create user defined
  * popups. This class is crucial for the implementation of random events
  * in the game during later development.
- *
+ * <p>
  * The user can assign everything in the popup, all of the text displayed
  * as well as the runnable that run when the 2 buttons are pressed.
  */
@@ -22,9 +22,6 @@ public class PopupMenu extends Window {
     private final Label message;
     private final TextButton leftBtn;
     private final TextButton rightBtn;
-
-    // Skin for the popup
-    private final Skin skin;
 
     /**
      * Creates a new Popup menu
@@ -38,7 +35,6 @@ public class PopupMenu extends Window {
         this.setMovable(false);
         this.setResizable(false);
 
-        this.skin = skin;
         this.setBackground(GameGlobals.backGroundDrawable);
 
         message = new Label("", skin);
