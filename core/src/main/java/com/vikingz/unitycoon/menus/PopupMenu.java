@@ -1,10 +1,12 @@
 package com.vikingz.unitycoon.menus;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.vikingz.unitycoon.global.GameGlobals;
 
 /**
@@ -129,5 +131,18 @@ public class PopupMenu extends Window {
 
     public void setMessage(String message) {
         this.message.setText(message);
+    }
+
+    public void enableAfter(int ms) {
+        setTouchable(Touchable.disabled);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println("enabled");
+                setTouchable(Touchable.enabled);
+
+            }
+        }, (float)ms / 1000f);
     }
 }
