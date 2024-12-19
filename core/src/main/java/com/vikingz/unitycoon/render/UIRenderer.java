@@ -32,6 +32,7 @@ import com.vikingz.unitycoon.events.Event;
  * game layer.
  */
 public class UIRenderer {
+    private static final int POPUP_DISABLED_MS = 500;
 
     private final Stage stage;
     private final Viewport viewport;
@@ -95,6 +96,7 @@ public class UIRenderer {
         } else {
             popupMenu.setupSingleButton(event.opt1.action, event.opt1.text);
         }
+        popupMenu.enableAfter(POPUP_DISABLED_MS);
         stage.addActor(popupMenu);
 
         // Remove current selected building to place
@@ -107,6 +109,7 @@ public class UIRenderer {
 
         popupMenu.setMessage("Achievement Unlocked\n\n" + achievement.name);
         popupMenu.setupSingleButton(achievement.reward, achievement.rewardText);
+        popupMenu.enableAfter(POPUP_DISABLED_MS);
         stage.addActor(popupMenu);
 
         achievementsRenderer.update();
@@ -121,6 +124,7 @@ public class UIRenderer {
 
         popupMenu.setMessage(text);
         popupMenu.setupSingleButton(runnable, btnText);
+        popupMenu.enableAfter(POPUP_DISABLED_MS);
         stage.addActor(popupMenu);
 
         // Remove current selected building to place
@@ -133,6 +137,7 @@ public class UIRenderer {
 
         popupMenu.setMessage(text);
         popupMenu.setupButtons(leftRunnable, leftBtnText, false, rightRunnable, rightBtnText, false);
+        popupMenu.enableAfter(POPUP_DISABLED_MS);
         stage.addActor(popupMenu);
 
         // Remove current selected building to place
@@ -148,6 +153,7 @@ public class UIRenderer {
         endOfTimerPopup.refresh(GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION));
 
         endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
+        endOfTimerPopup.enableAfter(POPUP_DISABLED_MS);
         stage.addActor(endOfTimerPopup);
 
         // Remove current selected building to place
@@ -161,6 +167,7 @@ public class UIRenderer {
         System.out.println("Pressed ESC");
 
         if(!pauseMenu.hasParent()){
+            // Do not need to `enableAfter` as the user should know that they are pausing
             stage.addActor(pauseMenu);
             pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
             gameScreen.setPaused(true);
