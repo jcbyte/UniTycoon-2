@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - "main"
+      - "42-code-format-style-tests" # todo remove after testing
   pull_request:
     branches:
       - "main"
@@ -28,6 +29,10 @@ jobs:
 
     - name: Grant execute permissions for Gradle wrapper
       run: chmod +x ./gradlew
+
+    - name: Run Checkstyle
+      run: ./gradlew checkstyleMain
+      continue-on-error: false # Fail the workflow if there are Checkstyle issues
 
     - name: Build with Gradle
       run: ./gradlew build
