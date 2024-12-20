@@ -34,7 +34,7 @@ configure(subprojects) {
   checkstyle {
     toolVersion = '10.21.0' // Use the desired Checkstyle version
     configFile = rootProject.file('checkstyle.xml') // Path to the Checkstyle config
-    ignoreFailures = false // Ensure the build fails on Checkstyle violations
+    maxWarnings = 0 // Ensure the build fails on Checkstyle violations including warnings
   }
 
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
