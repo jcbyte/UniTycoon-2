@@ -5,9 +5,13 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.vikingz.unitycoon.Main;
 import com.vikingz.unitycoon.global.GameConfig;
 
-/** Launches the desktop (lwjgl3) application. */
+/**
+ * Launches the desktop (lwjgl3) application.
+ */
 public class Lwjgl3Launcher {
-  /** App entry. */
+  /**
+   * App entry.
+   */
   public static void main(String[] args) {
     // This handles macOS support and helps on Windows.
     if (StartupHelper.startNewJvmIfRequired()) {
