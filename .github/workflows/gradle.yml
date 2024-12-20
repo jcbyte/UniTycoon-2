@@ -31,8 +31,15 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Run Checkstyle
-      run: ./gradlew checkstyleMain
+      run: ./gradlew core:checkstyleMain
       continue-on-error: false # Fail the workflow if there are Checkstyle issues
+
+    - name: Upload Checkstyle Report
+      if: always() # This ensures the Checkstyle report is uploaded regardless of whether checkstyle fails the build
+      uses: actions/upload-artifact@v4
+      with:
+        name: checkstyle-report
+        path: ./core/build/reports/checkstyle/* # Adjust the path based on your Checkstyle report output
 
     - name: Build with Gradle
       run: ./gradlew build
