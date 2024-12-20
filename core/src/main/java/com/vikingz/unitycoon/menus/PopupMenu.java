@@ -1,17 +1,19 @@
 package com.vikingz.unitycoon.menus;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.vikingz.unitycoon.global.GameGlobals;
 
 /**
  * This is a generic PopupMenu class that can create user defined
  * popups. This class is crucial for the implementation of random events
  * in the game during later development.
- *
+ * <p>
  * The user can assign everything in the popup, all of the text displayed
  * as well as the runnable that run when the 2 buttons are pressed.
  */
@@ -20,9 +22,6 @@ public class PopupMenu extends Window {
     private final Label message;
     private final TextButton leftBtn;
     private final TextButton rightBtn;
-
-    // Skin for the popup
-    private final Skin skin;
 
     /**
      * Creates a new Popup menu
@@ -36,7 +35,6 @@ public class PopupMenu extends Window {
         this.setMovable(false);
         this.setResizable(false);
 
-        this.skin = skin;
         this.setBackground(GameGlobals.backGroundDrawable);
 
         message = new Label("", skin);
@@ -129,5 +127,22 @@ public class PopupMenu extends Window {
 
     public void setMessage(String message) {
         this.message.setText(message);
+    }
+
+    /**
+     * Disable the popup temporarily, so the user does not immediately click on a button
+     * @param ms time before re-enabling in milliseconds
+     */
+    public void enableAfter(int ms) {
+        setTouchable(Touchable.disabled);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println("enabled");
+                setTouchable(Touchable.enabled);
+
+            }
+        }, (float)ms / 1000f);
     }
 }

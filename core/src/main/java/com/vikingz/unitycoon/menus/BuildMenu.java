@@ -149,6 +149,7 @@ public class BuildMenu{
         stage.addActor(table);
 
         // Set up click listeners for buttons
+        // Do not need to `enableAfter` as the user should know that they are opening the build menu
         academicBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

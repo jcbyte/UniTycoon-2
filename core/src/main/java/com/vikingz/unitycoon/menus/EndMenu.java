@@ -1,8 +1,10 @@
 package com.vikingz.unitycoon.menus;
 
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Timer;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
@@ -10,19 +12,13 @@ import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 import com.vikingz.unitycoon.util.LeaderboardManager;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
-import java.lang.constant.Constable;
-
 /**
  * This class is the menu that pops up at the end of the game.
- *
+ * <p>
  * This menu also contains a quit button that sends the user back to the
  * main menu as well as a continue button that lets the user continue the game.
  */
 public class EndMenu extends Window {
-
-    //Message to be displayed at end of the game
-    private final String Message = "";
-
     // Label containing the leaderboard text
     private final Label leaderboardLabel;
 
@@ -35,24 +31,18 @@ public class EndMenu extends Window {
     // TextField containing the name of the user to add to the leaderboard
     private final TextField leaderboardTextField;
 
-    //skin used for window
-    private final Skin skin;
-
     /**
      * Creates a new EndMenu
      * @param skin The skin used to style the popup
      * @param Message The message that will be shown on the popup
      */
     public EndMenu(Skin skin, String Message) {
-
         super("", skin);
 
         this.setSize(800, 400);
         this.setModal(true);
         this.setMovable(false);
         this.setResizable(false);
-
-        this.skin = skin;
         this.setBackground(GameGlobals.backGroundDrawable);
 
         Label message = new Label(Message, skin);
@@ -126,5 +116,22 @@ public class EndMenu extends Window {
         scoreLabel.setText("Your Score: " + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION));
         leaderboardTextField.setText("");
         updateLeaderboardTable.setVisible(scoreOnLeaderboard);
+    }
+
+    /**
+     * Disable the popup temporarily, so the user does not immediately click on a button
+     * @param ms time before re-enabling in milliseconds
+     */
+    public void enableAfter(int ms) {
+        setTouchable(Touchable.disabled);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println("enabled");
+                setTouchable(Touchable.enabled);
+
+            }
+        }, (float)ms / 1000f);
     }
 }
