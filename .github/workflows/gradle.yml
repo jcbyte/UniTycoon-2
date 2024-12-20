@@ -33,8 +33,12 @@ jobs:
     - name: Run Checkstyle
       run: ./gradlew checkstyleMain
 
+    - name: Aggregate Checkstyle Reports
+      if: always() # This ensures the Checkstyle reports are aggregated regardless of whether checkstyle fails the build
+      run: ./gradlew aggregateCheckstyleReports
+
     - name: Upload Checkstyle Report
-      if: always() # This ensures the Checkstyle report is uploaded regardless of whether checkstyle fails the build
+      if: always() # This ensures the Checkstyle reports is uploaded regardless of whether checkstyle fails the build
       uses: actions/upload-artifact@v4
       with:
         name: checkstyle-report
