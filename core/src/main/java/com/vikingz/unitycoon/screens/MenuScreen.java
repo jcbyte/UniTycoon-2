@@ -3,10 +3,12 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.util.LeaderboardManager;
 
@@ -35,22 +37,25 @@ public class MenuScreen extends SuperScreen implements Screen {
         TextButton quitButton = new TextButton("Quit", skin);
 
         // Add listeners to buttons
-        playButton.addListener(e -> {
-            if (!playButton.isPressed()) return false;
-            ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MAPSELECTION);
-            return true;
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MAPSELECTION);
+            }
         });
 
-        settingsButton.addListener(e -> {
-            if (!settingsButton.isPressed()) return false;
-            ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.SETTINGS);
-            return true;
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.SETTINGS);
+            }
         });
 
-        quitButton.addListener(e -> {
-            if (!quitButton.isPressed()) return false;
-            Gdx.app.exit(); // Quit the application
-            return true;
+        quitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit(); // Quit the application
+            }
         });
 
         // Create a table for layout
