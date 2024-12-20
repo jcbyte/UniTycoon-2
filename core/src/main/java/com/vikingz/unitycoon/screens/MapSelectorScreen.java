@@ -47,10 +47,12 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
         TextButton previousMap = new TextButton("<-",skin);
 
         //Gp back Button
-        goBack.addListener(e -> {
-            if (!goBack.isPressed()) return false;
+        goBack.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
             return true;
+            }
         });
 
 
@@ -86,12 +88,13 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
 
         mapText = new TextField("map".concat(Integer.toString(mapSelection)),skin);
 
-        startGame.addListener(e -> {
-            if (!startGame.isPressed()) return false;
+        startGame.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                ScreenMultiplexer.runGame(mapText.getText().toLowerCase());
 
-            ScreenMultiplexer.runGame(mapText.getText().toLowerCase());
-
-            return true;
+                return true;
+            }
         });
 
         // Create table for layout
