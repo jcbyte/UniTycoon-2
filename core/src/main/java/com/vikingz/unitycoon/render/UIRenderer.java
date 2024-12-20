@@ -29,207 +29,204 @@ import com.vikingz.unitycoon.event.Event;
  * game layer.
  */
 public class UIRenderer {
-    private static final int POPUP_DISABLED_MS = 500;
+  private static final int POPUP_DISABLED_MS = 500;
 
-    private final Stage stage;
-    private final Viewport viewport;
+  private final Stage stage;
+  private final Viewport viewport;
 
-    private final BuildMenu buildMenu;
-    private final StatsRenderer statsRenderer;
-    private final AchievementsRenderer achievementsRenderer;
+  private final BuildMenu buildMenu;
+  private final StatsRenderer statsRenderer;
+  private final AchievementsRenderer achievementsRenderer;
 
-    // Popup Menus
-    private final PauseMenu pauseMenu;
-    private final EndMenu endOfTimerPopup;
-    private final PopupMenu popupMenu;
-    private final IntroductionMenu introductionMenu;
+  // Popup Menus
+  private final PauseMenu pauseMenu;
+  private final EndMenu endOfTimerPopup;
+  private final PopupMenu popupMenu;
+  private final IntroductionMenu introductionMenu;
 
-    GameScreen gameScreen;
+  GameScreen gameScreen;
 
-    /**
-     * Creates a new UIRenderer
-     * @param skin Skin used to style content
-     * @param buildingRenderer Building renderer
-     * @param gameScreen Game screen
-     */
-    public UIRenderer(Skin skin, BuildingRenderer buildingRenderer, GameScreen gameScreen){
-        this.gameScreen = gameScreen;
+  /**
+   * Creates a new UIRenderer
+   *
+   * @param skin             Skin used to style content
+   * @param buildingRenderer Building renderer
+   * @param gameScreen       Game screen
+   */
+  public UIRenderer(Skin skin, BuildingRenderer buildingRenderer, GameScreen gameScreen) {
+    this.gameScreen = gameScreen;
 
-        //viewport = new FillViewport(1824, 1026);
-        viewport = new FitViewport(1824, 1026);
-        //viewport = new ScreenViewport();
-        stage = new Stage(viewport);
+    //viewport = new FillViewport(1824, 1026);
+    viewport = new FitViewport(1824, 1026);
+    //viewport = new ScreenViewport();
+    stage = new Stage(viewport);
 
 
-        statsRenderer = new StatsRenderer(skin);
-        achievementsRenderer = new AchievementsRenderer(gameScreen.getAchievementsManager(), skin);
+    statsRenderer = new StatsRenderer(skin);
+    achievementsRenderer = new AchievementsRenderer(gameScreen.getAchievementsManager(), skin);
 
-        buildMenu = new BuildMenu(skin, buildingRenderer, stage);
+    buildMenu = new BuildMenu(skin, buildingRenderer, stage);
 
-        pauseMenu = new PauseMenu(skin, this);
-        endOfTimerPopup = new EndMenu(skin, "End of Game");
-        popupMenu = new PopupMenu(skin);
-        introductionMenu = new IntroductionMenu(skin, () -> gameScreen.setPaused(false));
+    pauseMenu = new PauseMenu(skin, this);
+    endOfTimerPopup = new EndMenu(skin, "End of Game");
+    popupMenu = new PopupMenu(skin);
+    introductionMenu = new IntroductionMenu(skin, () -> gameScreen.setPaused(false));
 
-        Table pauseContainer = new Table();
-        pauseContainer.setFillParent(true);
-        pauseContainer.bottom().left();
-        Texture pauseTex = new Texture(Gdx.files.internal("png/pause.png"));
-        Image pauseButton = new Image(pauseTex);
-        pauseButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                pause();
-            }
-        });
-        pauseContainer.add(pauseButton).size(90, 90).pad(10);
-        stage.addActor(pauseContainer);
+    Table pauseContainer = new Table();
+    pauseContainer.setFillParent(true);
+    pauseContainer.bottom().left();
+    Texture pauseTex = new Texture(Gdx.files.internal("png/pause.png"));
+    Image pauseButton = new Image(pauseTex);
+    pauseButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        pause();
+      }
+    });
+    pauseContainer.add(pauseButton).size(90, 90).pad(10);
+    stage.addActor(pauseContainer);
+  }
+
+  public void showEvent(Event event) {
+    popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+
+    popupMenu.setMessage(event.getMessage());
+    if (event.hasChoice()) {
+      popupMenu.setupButtons(event.getOpt1().getAction(), event.getOpt1().getText(), event.getOpt1().isDisabled(), event.getOpt2().getAction(), event.getOpt2().getText(), event.getOpt2().isDisabled());
+    } else {
+      popupMenu.setupSingleButton(event.getOpt1().getAction(), event.getOpt1().getText());
+    }
+    popupMenu.enableAfter(POPUP_DISABLED_MS);
+    stage.addActor(popupMenu);
+
+    // Remove current selected building to place
+    gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+  }
+
+  public void showAchievement(Achievement achievement) {
+    popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+
+    popupMenu.setMessage("Achievement Unlocked\n\n" + achievement.name);
+    popupMenu.setupSingleButton(achievement.reward, achievement.rewardText);
+    popupMenu.enableAfter(POPUP_DISABLED_MS);
+    stage.addActor(popupMenu);
+
+    achievementsRenderer.update();
+
+    // Remove current selected building to place
+    gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+  }
+
+  public void showPopup(String text, String btnText, Runnable runnable) {
+    popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+
+    popupMenu.setMessage(text);
+    popupMenu.setupSingleButton(runnable, btnText);
+    popupMenu.enableAfter(POPUP_DISABLED_MS);
+    stage.addActor(popupMenu);
+
+    // Remove current selected building to place
+    gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+  }
+
+  public void showPopup(String text, String leftBtnText, Runnable leftRunnable, String rightBtnText, Runnable rightRunnable) {
+    popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+
+    popupMenu.setMessage(text);
+    popupMenu.setupButtons(leftRunnable, leftBtnText, false, rightRunnable, rightBtnText, false);
+    popupMenu.enableAfter(POPUP_DISABLED_MS);
+    stage.addActor(popupMenu);
+
+    // Remove current selected building to place
+    gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+  }
+
+  /**
+   * When the game screen has decided the game has finished the game
+   * will call this function which will show the end of game popup
+   */
+  public void endGame() {
+    // Refresh the end menu showing the leaderboard section if the users score can be added
+    endOfTimerPopup.refresh(GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION));
+
+    endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
+    endOfTimerPopup.enableAfter(POPUP_DISABLED_MS);
+    stage.addActor(endOfTimerPopup);
+
+    // Remove current selected building to place
+    gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+  }
+
+  /**
+   * Call when the game is starting, to show introduction popup
+   */
+  public void startGame() {
+    introductionMenu.setPosition((stage.getWidth() - introductionMenu.getWidth()) / 2, (stage.getHeight() - introductionMenu.getHeight()) / 2);
+    stage.addActor(introductionMenu);
+  }
+
+  /**
+   * Pauses the game displays the pause menu
+   */
+  public void pause() {
+    System.out.println("Pressed ESC");
+
+    if (!pauseMenu.hasParent()) {
+      // Do not need to `enableAfter` as the user should know that they are pausing
+      stage.addActor(pauseMenu);
+      pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
+      gameScreen.setPaused(true);
+
+      // Remove current selected building to place
+      gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+    } else {
+      pauseMenu.remove();
+      gameScreen.setPaused(false);
     }
 
-    public void showEvent(Event event) {
-        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
+  }
 
-        popupMenu.setMessage(event.message);
-        if (event.choice) {
-            popupMenu.setupButtons(event.opt1.action, event.opt1.text, event.opt1.disabled, event.opt2.action, event.opt2.text, event.opt2.disabled);
-        } else {
-            popupMenu.setupSingleButton(event.opt1.action, event.opt1.text);
-        }
-        popupMenu.enableAfter(POPUP_DISABLED_MS);
-        stage.addActor(popupMenu);
-
-        // Remove current selected building to place
-        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-    }
-
-    public void showAchievement(Achievement achievement)
-    {
-        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
-
-        popupMenu.setMessage("Achievement Unlocked\n\n" + achievement.name);
-        popupMenu.setupSingleButton(achievement.reward, achievement.rewardText);
-        popupMenu.enableAfter(POPUP_DISABLED_MS);
-        stage.addActor(popupMenu);
-
-        achievementsRenderer.update();
-
-        // Remove current selected building to place
-        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-    }
-
-    public void showPopup(String text, String btnText, Runnable runnable)
-    {
-        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
-
-        popupMenu.setMessage(text);
-        popupMenu.setupSingleButton(runnable, btnText);
-        popupMenu.enableAfter(POPUP_DISABLED_MS);
-        stage.addActor(popupMenu);
-
-        // Remove current selected building to place
-        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-    }
-
-    public void showPopup(String text, String leftBtnText, Runnable leftRunnable, String rightBtnText, Runnable rightRunnable)
-    {
-        popupMenu.setPosition((stage.getWidth() - popupMenu.getWidth()) / 2, (stage.getHeight() - popupMenu.getHeight()) / 2);
-
-        popupMenu.setMessage(text);
-        popupMenu.setupButtons(leftRunnable, leftBtnText, false, rightRunnable, rightBtnText, false);
-        popupMenu.enableAfter(POPUP_DISABLED_MS);
-        stage.addActor(popupMenu);
-
-        // Remove current selected building to place
-        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-    }
-
-    /**
-     * When the game screen has decided the game has finished the game
-     * will call this function which will show the end of game popup
-     */
-    public void endGame(){
-        // Refresh the end menu showing the leaderboard section if the users score can be added
-        endOfTimerPopup.refresh(GameConfig.getInstance().isOnLeaderboard(GameGlobals.SATISFACTION));
-
-        endOfTimerPopup.setPosition((stage.getWidth() - endOfTimerPopup.getWidth()) / 2, (stage.getHeight() - endOfTimerPopup.getHeight()) / 2);
-        endOfTimerPopup.enableAfter(POPUP_DISABLED_MS);
-        stage.addActor(endOfTimerPopup);
-
-        // Remove current selected building to place
-        gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-    }
-
-    /**
-     * Call when the game is starting, to show introduction popup
-     */
-    public void startGame()
-    {
-        introductionMenu.setPosition((stage.getWidth() - introductionMenu.getWidth()) / 2, (stage.getHeight() - introductionMenu.getHeight()) / 2);
-        stage.addActor(introductionMenu);
-    }
-
-    /**
-     * Pauses the game displays the pause menu
-     */
-    public void pause() {
-        System.out.println("Pressed ESC");
-
-        if(!pauseMenu.hasParent()){
-            // Do not need to `enableAfter` as the user should know that they are pausing
-            stage.addActor(pauseMenu);
-            pauseMenu.setPosition((stage.getWidth() - pauseMenu.getWidth()) / 2, (stage.getHeight() - pauseMenu.getHeight()) / 2);
-            gameScreen.setPaused(true);
-
-            // Remove current selected building to place
-            gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
-        }
-        else{
-            pauseMenu.remove();
-            gameScreen.setPaused(false);
-        }
-
-    }
-
-    /**
-     * Calls all render functions in the renderers
-     */
-    public void render(float delta){
-        viewport.apply();
-        stage.act(delta);
-        stage.draw();
-        statsRenderer.render(delta);
-        achievementsRenderer.render(delta);
-        buildMenu.render(delta);
-    }
+  /**
+   * Calls all render functions in the renderers
+   */
+  public void render(float delta) {
+    viewport.apply();
+    stage.act(delta);
+    stage.draw();
+    statsRenderer.render(delta);
+    achievementsRenderer.render(delta);
+    buildMenu.render(delta);
+  }
 
 
-    /**
-     * Resizes UI content when the window is resized
-     * @param width New width
-     * @param height New height
-     */
-    public void resize(int width, int height){
-        viewport.update(width, height, true);
-        buildMenu.resize(width, height);
-        achievementsRenderer.resize(width, height);
-    }
+  /**
+   * Resizes UI content when the window is resized
+   *
+   * @param width  New width
+   * @param height New height
+   */
+  public void resize(int width, int height) {
+    viewport.update(width, height, true);
+    buildMenu.resize(width, height);
+    achievementsRenderer.resize(width, height);
+  }
 
-    /**
-     * Sets the input process to this class when called
-     */
-    public void takeInput() {
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(stage);
-        inputMultiplexer.addProcessor(achievementsRenderer.getInputProcessor());
-        Gdx.input.setInputProcessor(inputMultiplexer);
-    }
+  /**
+   * Sets the input process to this class when called
+   */
+  public void takeInput() {
+    InputMultiplexer inputMultiplexer = new InputMultiplexer();
+    inputMultiplexer.addProcessor(stage);
+    inputMultiplexer.addProcessor(achievementsRenderer.getInputProcessor());
+    Gdx.input.setInputProcessor(inputMultiplexer);
+  }
 
-    /**
-     * Disposes of content in this screen
-     */
-    public void dispose(){
-        stage.dispose();
-        achievementsRenderer.dispose();
-    }
+  /**
+   * Disposes of content in this screen
+   */
+  public void dispose() {
+    stage.dispose();
+    achievementsRenderer.dispose();
+  }
 
 }
