@@ -13,10 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.menus.BuildMenu;
-import com.vikingz.unitycoon.menus.EndMenu;
-import com.vikingz.unitycoon.menus.PauseMenu;
-import com.vikingz.unitycoon.menus.PopupMenu;
+import com.vikingz.unitycoon.menus.*;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.util.Achievement;
 import com.vikingz.unitycoon.events.Event;
@@ -44,7 +41,8 @@ public class UIRenderer {
     // Popup Menus
     private final PauseMenu pauseMenu;
     private final EndMenu endOfTimerPopup;
-    private final PopupMenu popupMenu; // For events
+    private final PopupMenu popupMenu;
+    private final IntroductionMenu introductionMenu;
 
     GameScreen gameScreen;
 
@@ -71,6 +69,7 @@ public class UIRenderer {
         pauseMenu = new PauseMenu(skin, this);
         endOfTimerPopup = new EndMenu(skin, "End of Game");
         popupMenu = new PopupMenu(skin);
+        introductionMenu = new IntroductionMenu(skin, () -> gameScreen.setPaused(false));
 
         Table pauseContainer = new Table();
         pauseContainer.setFillParent(true);
@@ -158,6 +157,15 @@ public class UIRenderer {
 
         // Remove current selected building to place
         gameScreen.getGameRenderer().getBuildingRenderer().clearSelectedBuilding();
+    }
+
+    /**
+     * Call when the game is starting, to show introduction popup
+     */
+    public void startGame()
+    {
+        introductionMenu.setPosition((stage.getWidth() - introductionMenu.getWidth()) / 2, (stage.getHeight() - introductionMenu.getHeight()) / 2);
+        stage.addActor(introductionMenu);
     }
 
     /**
