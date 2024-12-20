@@ -1,54 +1,64 @@
 package com.vikingz.unitycoon.render.menus;
 
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingCoinDict;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingSatisfactionDict;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.ACADEMIC;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.ACCOMMODATION;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.FOOD;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.RECREATIONAL;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.BuildingRenderer;
 
-import static com.vikingz.unitycoon.building.BuildingStats.BuildingCoinDict;
-import static com.vikingz.unitycoon.building.BuildingStats.BuildingSatisfactionDict;
-import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
-
 
 /**
  * This class is what creates the build menu in the game.
- * <p>
- * It contains a single constructor that takes a Skin, BuildingRenderer
- * and a Stage as parameters to create the Building Menu.
- * <p>
- * This class also creates the 4 buttons at the bottom of the game screen
- * by which the build menu is accessed
+ *
+ * <p>It contains a single constructor that takes a Skin, BuildingRenderer and a Stage as
+ * parameters to create the Building Menu.
+ *
+ * <p>This class also creates the 4 buttons at the bottom of the game screen by which the build
+ * menu is accessed.
  */
 public class BuildMenu {
-  //renders buildings and handles placing them
+  // Renders buildings and handles placing them
   private final BuildingRenderer buildingRenderer;
 
-  //the stage where the menu will be added to
+  // The stage where the menu will be added to
   private final Stage stage;
 
-  //The skin of the window
+  // The skin of the window
   private final Skin skin;
 
-  //Current displayed in game Menu
+  // Current displayed in game Menu
   private Window currentMenu;
 
+  // Building type counters
   private final Label academicBuildingsCount;
   private final Label accommodationBuildingsCount;
   private final Label recreationalBuildingsCount;
   private final Label foodBuildingsCount;
 
   /**
-   * Creates a new BuildMenu
+   * Creates a new BuildMenu.
    *
-   * @param skin             SKin of the buttons on the menu
+   * @param skin             Skin of the buttons on the menu
    * @param buildingRenderer BuildingRenderer instance that renders the buildings in the game
    * @param stage            The stage on which the menu is drawn
    */
@@ -75,36 +85,61 @@ public class BuildMenu {
     foodBuildingsCount.setFontScale(1.8f);
 
     //Texture atlas of building menu bar
-    Texture textureAtlas = new Texture(Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png")); // Load your 64x64 PNG
+    // Load your 64x64 PNG
+    Texture textureAtlas = new Texture(
+        Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png"));
 
     //Sets the pixel size of tiles used for build menu bar
     int atlasTileSize = 64;
-    TextureRegion academicBtnTexture = new TextureRegion(textureAtlas, 0, 0, atlasTileSize, atlasTileSize);
-    TextureRegion accommodationTexture = new TextureRegion(textureAtlas, atlasTileSize, 0, atlasTileSize, atlasTileSize);
-    TextureRegion recreationalBtnTexture = new TextureRegion(textureAtlas, atlasTileSize * 2, 0, atlasTileSize, atlasTileSize);
-    TextureRegion foodBtnTexture = new TextureRegion(textureAtlas, atlasTileSize * 3, 0, atlasTileSize, atlasTileSize);
-
-    TextureRegion academicBtnTexture_hover = new TextureRegion(textureAtlas, 0, atlasTileSize, atlasTileSize, atlasTileSize);
-    TextureRegion accommodationTexture_hover = new TextureRegion(textureAtlas, atlasTileSize, atlasTileSize, atlasTileSize, atlasTileSize);
-    TextureRegion recreationalBtnTexture_hover = new TextureRegion(textureAtlas, atlasTileSize * 2, atlasTileSize, atlasTileSize, atlasTileSize);
-    TextureRegion foodBtnTexture_hover = new TextureRegion(textureAtlas, atlasTileSize * 3, atlasTileSize, atlasTileSize, atlasTileSize);
 
     // Create ImageButtons
+    TextureRegion academicBtnTexture = new TextureRegion(textureAtlas,
+        0, 0,
+        atlasTileSize, atlasTileSize
+    );
+    TextureRegion academicBtnTextureHover = new TextureRegion(textureAtlas,
+        0, atlasTileSize,
+        atlasTileSize, atlasTileSize
+    );
     ImageButton academicBtn = new ImageButton(new ImageButton.ImageButtonStyle());
     academicBtn.getStyle().imageUp = new TextureRegionDrawable(academicBtnTexture);
-    academicBtn.getStyle().imageOver = new TextureRegionDrawable(academicBtnTexture_hover);
+    academicBtn.getStyle().imageOver = new TextureRegionDrawable(academicBtnTextureHover);
 
+    TextureRegion accommodationTexture = new TextureRegion(textureAtlas,
+        atlasTileSize, 0,
+        atlasTileSize, atlasTileSize
+    );
+    TextureRegion accommodationTextureHover = new TextureRegion(textureAtlas,
+        atlasTileSize, atlasTileSize,
+        atlasTileSize, atlasTileSize
+    );
     ImageButton accommodationBtn = new ImageButton(new ImageButton.ImageButtonStyle());
-    accommodationBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(accommodationTexture));
-    accommodationBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(accommodationTexture_hover));
+    accommodationBtn.getStyle().imageUp = new TextureRegionDrawable(accommodationTexture);
+    accommodationBtn.getStyle().imageOver = new TextureRegionDrawable(accommodationTextureHover);
 
+    TextureRegion recreationalBtnTexture = new TextureRegion(textureAtlas,
+        atlasTileSize * 2, 0,
+        atlasTileSize, atlasTileSize
+    );
+    TextureRegion recreationalBtnTextureHover = new TextureRegion(textureAtlas,
+        atlasTileSize * 2, atlasTileSize,
+        atlasTileSize, atlasTileSize
+    );
     ImageButton recreationalBtn = new ImageButton(new ImageButton.ImageButtonStyle());
-    recreationalBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(recreationalBtnTexture));
-    recreationalBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(recreationalBtnTexture_hover));
+    recreationalBtn.getStyle().imageUp = new TextureRegionDrawable(recreationalBtnTexture);
+    recreationalBtn.getStyle().imageOver = new TextureRegionDrawable(recreationalBtnTextureHover);
 
+    TextureRegion foodBtnTexture = new TextureRegion(textureAtlas,
+        atlasTileSize * 3, 0,
+        atlasTileSize, atlasTileSize
+    );
+    TextureRegion foodBtnTextureHover = new TextureRegion(textureAtlas,
+        atlasTileSize * 3, atlasTileSize,
+        atlasTileSize, atlasTileSize
+    );
     ImageButton foodBtn = new ImageButton(new ImageButton.ImageButtonStyle());
-    foodBtn.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(foodBtnTexture));
-    foodBtn.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(foodBtnTexture_hover));
+    foodBtn.getStyle().imageUp = new TextureRegionDrawable(foodBtnTexture);
+    foodBtn.getStyle().imageOver = new TextureRegionDrawable(foodBtnTextureHover);
 
     // Building category labels
     Label acedemicBuildingsLabel = new Label("Academic", skin);
@@ -154,9 +189,7 @@ public class BuildMenu {
     academicBtn.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        if (currentMenu != null) {
-          currentMenu.remove();
-        }
+        hideMenu();
         showMenu(ACADEMIC);
       }
     });
@@ -164,10 +197,7 @@ public class BuildMenu {
     accommodationBtn.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        if (currentMenu != null) {
-          currentMenu.remove();
-        }
-
+        hideMenu();
         showMenu(ACCOMMODATION);
       }
     });
@@ -175,10 +205,7 @@ public class BuildMenu {
     recreationalBtn.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        if (currentMenu != null) {
-          currentMenu.remove();
-        }
-
+        hideMenu();
         showMenu(RECREATIONAL);
       }
     });
@@ -186,13 +213,19 @@ public class BuildMenu {
     foodBtn.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        if (currentMenu != null) {
-          currentMenu.remove();
-        }
-
+        hideMenu();
         showMenu(FOOD);
       }
     });
+  }
+
+  /**
+   * Hide the current menu.
+   */
+  private void hideMenu() {
+    if (currentMenu != null) {
+      currentMenu.remove();
+    }
   }
 
   // Variables for the build menu window,
@@ -231,6 +264,7 @@ public class BuildMenu {
     buildingImage = new Image();
 
     Table statsTable = new Table();
+    statsTable.center();
 
     // Price
     Label buildingPriceLabel = new Label("Cost:", skin);
@@ -291,7 +325,7 @@ public class BuildMenu {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         buildingRenderer.selectBuilding(buildingType, index);
-        window.remove();
+        hideMenu();
       }
     });
 
@@ -301,7 +335,7 @@ public class BuildMenu {
     closeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        window.remove();
+        hideMenu();
       }
     });
 
@@ -317,7 +351,10 @@ public class BuildMenu {
 
     // Set size and position of the window
     window.setSize(800, 800);
-    window.setPosition((stage.getWidth() - window.getWidth()) / 2, (stage.getHeight() - window.getHeight()) / 2);
+    window.setPosition(
+        (stage.getWidth() - window.getWidth()) / 2,
+        (stage.getHeight() - window.getHeight()) / 2
+    );
 
     // Add window to the stage
     stage.addActor(window);
@@ -327,11 +364,12 @@ public class BuildMenu {
   }
 
   /**
-   * Sets the text of each label to current index
+   * Sets the text of each label to current index.
    */
   private void updateBuildingWindow() {
     buildingNameLabel.setText(BuildingStats.BuildingNameDict.get(buildingType)[index]);
-    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding(BuildingStats.BuildingDict.get(buildingType)[index]));
+    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding(
+        BuildingStats.BuildingDict.get(buildingType)[index]));
     buildingPriceValue.setText(BuildingStats.BuildingPriceDict.get(buildingType)[index]);
     buildingSatisfactionValue.setText(BuildingSatisfactionDict.get(buildingType)[index]);
     buildingStudentsValue.setText(BuildingStats.BuildingStudentDict.get(buildingType)[index]);
@@ -339,7 +377,7 @@ public class BuildMenu {
   }
 
   /**
-   * BuildingMenu render actors objects
+   * BuildingMenu render actors objects.
    */
   public void render(float delta) {
     stage.act(delta);
@@ -352,7 +390,7 @@ public class BuildMenu {
   }
 
   /**
-   * Called when the window resizes
+   * Called when on window resize.
    *
    * @param width  New width
    * @param height New height
@@ -362,10 +400,9 @@ public class BuildMenu {
   }
 
   /**
-   * Disposes of the build menu
+   * Disposes of the build menu.
    */
   public void dispose() {
     stage.dispose();
-
   }
 }
