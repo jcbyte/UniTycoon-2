@@ -31,7 +31,7 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Run Checkstyle
-      run: ./gradlew core:checkstyleMain
+      run: ./gradlew checkstyleMain
 
     - name: Upload Checkstyle Report
       if: always() # This ensures the Checkstyle report is uploaded regardless of whether checkstyle fails the build
