@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.global.GameGlobals;
 
@@ -47,11 +48,10 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
         TextButton previousMap = new TextButton("<-",skin);
 
         //Gp back Button
-        goBack.addListener(new InputListener(){
+        goBack.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
-            return true;
+            public void clicked(InputEvent event, float x, float y) {
+                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
             }
         });
 
@@ -59,41 +59,37 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
         Image mapImage = new Image(GameGlobals.map1Texture);
 
         //Selects the next map
-        nextMap.addListener(new InputListener(){
+        nextMap.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public void clicked(InputEvent event, float x, float y) {
                 mapSelection++;
                 if (mapSelection > 3) {
                     mapSelection = 1;
                 }
                 mapImage.setDrawable(mapArray[mapSelection-1]);
-                return true;
             }
         });
 
 
         //Selects the previous map
-        previousMap.addListener(new InputListener(){
+        previousMap.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public void clicked(InputEvent event, float x, float y) {
                 mapSelection--;
                 if (mapSelection < 1){
                     mapSelection = mapArray.length;
                 }
                 mapImage.setDrawable(mapArray[mapSelection-1]);
-                return true;
             }
         });
 
 
         mapText = new TextField("map".concat(Integer.toString(mapSelection)),skin);
 
-        startGame.addListener(new InputListener(){
+        startGame.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public void clicked(InputEvent event, float x, float y) {
                 ScreenMultiplexer.runGame(mapText.getText().toLowerCase());
-
-                return true;
             }
         });
 
