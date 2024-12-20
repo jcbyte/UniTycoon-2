@@ -37,7 +37,7 @@ public class EventsManager {
         }
     }
 
-    private List<ManagedEvent> events;
+    private final List<ManagedEvent> events;
 
     public EventsManager(GameScreen gameScreen)
     {
@@ -63,7 +63,8 @@ public class EventsManager {
             UniPartyEvent.class,
             CasinoEvent.class,
             CurriculumChangeEvent.class,
-            StrikeEvent.class
+            StrikeEvent.class,
+            BigOilEvent.class
         );
 
         // This contains the time of each random event which will be shown in the game

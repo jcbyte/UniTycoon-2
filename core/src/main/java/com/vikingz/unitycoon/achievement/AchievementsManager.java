@@ -6,7 +6,7 @@ import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
 public class AchievementsManager {
-    private GameScreen gameScreen;
+    private final GameScreen gameScreen;
     public Achievement[] achievements;
 
     public AchievementsManager(GameScreen gameScreen) {

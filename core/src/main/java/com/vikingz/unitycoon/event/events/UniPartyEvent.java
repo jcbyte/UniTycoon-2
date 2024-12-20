@@ -9,9 +9,7 @@ public class UniPartyEvent extends Event {
         super(() ->
             new Event(
                 "The students want the university to throw a party.",
-                new Event.Option(() -> {
-                    gameScreen.setPaused(false);
-                }, "Don't do anything"),
+                new Event.Option(() -> gameScreen.setPaused(false), "Don't do anything"),
                 new Event.Option(() -> {
                     GameGlobals.BALANCE -= 250;
                     GameGlobals.SATISFACTION += 100000;

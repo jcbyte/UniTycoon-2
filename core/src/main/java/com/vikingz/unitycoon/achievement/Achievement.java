@@ -6,14 +6,14 @@ import java.util.concurrent.Callable;
 
 public class Achievement
 {
-    public String name;
+    public final String name;
     private boolean got;
-    private Callable<Boolean> has;
+    private final Callable<Boolean> has;
 
-    public Texture logo;
+    public final Texture logo;
 
-    public Runnable reward;
-    public String rewardText;
+    public final Runnable reward;
+    public final String rewardText;
 
     public Achievement(String name, Callable<Boolean> has, Texture logo, Runnable reward, String rewardText)
     {

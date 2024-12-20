@@ -9,9 +9,7 @@ public class CasinoEvent extends Event {
     public CasinoEvent(GameScreen gameScreen) {
         super(
             "You are at the casino.\nDo you put it all on red?",
-            new Event.Option(() -> {
-                gameScreen.setPaused(false);
-            }, "Dont gamble"),
+            new Event.Option(() -> gameScreen.setPaused(false), "Dont gamble"),
             new Event.Option(() -> {
                 if (MathUtils.randomBoolean())
                     GameGlobals.BALANCE *= 2;
