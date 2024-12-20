@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.render.UIRenderer;
+import com.vikingz.unitycoon.render.UiRenderer;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 
 /**
@@ -23,7 +23,7 @@ public class PauseMenu extends Window {
    *
    * @param skin Contains the skin pack to be used with menu
    */
-  public PauseMenu(Skin skin, UIRenderer uiRenderer) {
+  public PauseMenu(Skin skin, UiRenderer uiRenderer) {
     super("", skin);
 
     this.setSize(800, 400);

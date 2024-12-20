@@ -24,7 +24,7 @@ public class FloodingEvent extends Event {
 
           if (!placedBuildings.isEmpty()) {
             int randomIndex = MathUtils.random(placedBuildings.size() - 1);
-            buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
+            buildingRenderer.removeBuilding(placedBuildings.get(randomIndex), false);
           }
 
           GameGlobals.SATISFACTION -= 50000;

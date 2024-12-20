@@ -25,9 +25,9 @@ public class EarthquakeEvent extends Event {
             if (placedBuildings.isEmpty()) {
               break;
             }
-            
+
             int randomIndex = MathUtils.random(placedBuildings.size() - 1);
-            buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
+            buildingRenderer.removeBuilding(placedBuildings.get(randomIndex), false);
           }
 
           gameScreen.setPaused(false);

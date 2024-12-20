@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.vikingz.unitycoon.audio.GameSounds;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingInfo;
 import com.vikingz.unitycoon.building.BuildingStats;
@@ -13,54 +14,51 @@ import com.vikingz.unitycoon.building.buildings.AccommodationBuilding;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.audio.GameSounds;
 import com.vikingz.unitycoon.util.Point;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class is in charge of drawing Buildings in the game.
- * <p>
- * This class also does the collision calculations for buildings
- * which make sure that the user is unable to place buildings on top
- * of each other, as well as using right click to be able to remove the
- * buildings from the game.
+ *
+ * <p>This class also does the collision calculations for buildings which make sure that the user
+ * is unable to place buildings on top of each other, as well as using right click to be able to
+ * remove the buildings from the game.
  */
 public class BuildingRenderer {
 
-  //Used to draw buildings textures
+  // Used to draw buildings textures
   private final SpriteBatch batch;
 
-  //X and Y values used to place buildings
-  private float previewX, previewY;
+  // X and Y values used to place buildings
+  private float previewX;
+  private float previewY;
 
-  //If building is being placed by user
+  // If building is being placed by user
   private boolean isPreviewing;
 
-  //List of all buildings placed and needs rendering
+  // List of all buildings placed and needs rendering
   private final List<Building> placedBuildings;
 
-  //Texture of Building to be placed
+  // Texture of Building to be placed
   private TextureRegion selectedTexture;
 
-  //Size of the building SCREEN_BUILDING_SIZExSCREEN_BUILDING_SIZE
-  private final int SCREEN_BUILDING_SIZE = 128;
+  // Size of the building SCREEN_BUILDING_SIZExSCREEN_BUILDING_SIZE
+  private static final int SCREEN_BUILDING_SIZE = 128;
 
   //Current Building being placed information
   private BuildingInfo currentBuildingInfo = null;
 
-  //GameRender used to get mouse position and background tiles
+  // GameRender used to get mouse position and background tiles
   private final GameRenderer gameRenderer;
 
   /**
-   * Creates a new Building Renderer
+   * Creates a new Building Renderer.
    *
    * @param gameRenderer Parent renderer {@code GameRenderer}
    */
   public BuildingRenderer(GameRenderer gameRenderer) {
     this.gameRenderer = gameRenderer;
-
     batch = new SpriteBatch();
     isPreviewing = false;
     placedBuildings = new ArrayList<>();
@@ -68,18 +66,11 @@ public class BuildingRenderer {
   }
 
   /**
-   * Renders buildings
+   * Renders buildings.
    *
    * @param delta Time since last frame
    */
   public void render(float delta) {
-    checkBuildings();
-  }
-
-  /**
-   * Checks if the user is currently adding or removing buildings
-   */
-  private void checkBuildings() {
     batch.begin();
 
     // Draw all placed textures
@@ -87,18 +78,33 @@ public class BuildingRenderer {
       batch.draw(building.getTexture(), building.getX(), building.getY());
     }
 
+    checkBuildings();
+
+    batch.end();
+  }
+
+  /**
+   * Checks if the user is currently adding or removing buildings.
+   */
+  private void checkBuildings() {
     // Update preview position to follow the mouse cursor
     if (isPreviewing && selectedTexture != null) {
 
       // Makes sure that the mouse is in the center of the building texture
       float centerOffset = ((float) SCREEN_BUILDING_SIZE / 2) * gameRenderer.getViewportScaling();
-      Point previewPoint = snapBuildingToGrid(Gdx.input.getX() - centerOffset, Gdx.input.getY() + centerOffset);
+      Point previewPoint = snapBuildingToGrid(
+          Gdx.input.getX() - centerOffset,
+          Gdx.input.getY() + centerOffset
+      );
 
       previewX = previewPoint.getX();
       previewY = previewPoint.getY();
 
       // If we cannot place here due to collision or balance then give visual feedback
-      if (!checkCollisions(previewX, previewY) || GameGlobals.BALANCE < currentBuildingInfo.getBuildingCost()) {
+      if (
+          !checkCollisions(previewX, previewY)
+              || GameGlobals.BALANCE < currentBuildingInfo.getBuildingCost()
+      ) {
         // Add tint to sprite
         batch.setColor(new Color(1f, 0.25f, 0.25f, 1f));
       }
@@ -110,7 +116,6 @@ public class BuildingRenderer {
       batch.setColor(Color.WHITE);
     }
 
-    batch.end();
 
     // Removes the building the user right clicks on
     if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && selectedTexture == null) {
@@ -126,7 +131,7 @@ public class BuildingRenderer {
             "Cancel",
             () -> gameRenderer.getGameScreen().setPaused(false),
             "Remove\n+" + getBuildingRefundAmount(buildingToRemove) + " Money", () -> {
-              removeBuilding(buildingToRemove);
+              removeBuilding(buildingToRemove, true);
               gameRenderer.getGameScreen().setPaused(false);
             }
         );
@@ -142,7 +147,6 @@ public class BuildingRenderer {
         if (balanceAfterPurchase < 0) {
           System.out.println("Not enough money to buy building!!");
           GameSounds.playPlaceError();
-
         } else {
           // Plays the sound of a building being places
           GameSounds.playPlacedBuilding();
@@ -151,62 +155,76 @@ public class BuildingRenderer {
           // to be drawn to the screen.
           switch (currentBuildingInfo.getBuildingType()) {
             case ACADEMIC:
-              placedBuildings.add(new AcademicBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo));
+              placedBuildings.add(new AcademicBuilding(
+                  selectedTexture, new Point(previewX, previewY), currentBuildingInfo));
               break;
 
             case ACCOMMODATION:
-              placedBuildings.add(new AccommodationBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo));
+              placedBuildings.add(new AccommodationBuilding(
+                  selectedTexture, new Point(previewX, previewY), currentBuildingInfo));
               break;
 
-
             case RECREATIONAL:
-              placedBuildings.add(new RecreationalBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo, currentBuildingInfo.getCoinsPerSecond()));
+              placedBuildings.add(new RecreationalBuilding(
+                  selectedTexture, new Point(previewX, previewY), currentBuildingInfo,
+                  currentBuildingInfo.getCoinsPerSecond()));
               break;
 
             case FOOD:
-              placedBuildings.add(new FoodBuilding(selectedTexture, new Point(previewX, previewY), currentBuildingInfo, currentBuildingInfo.getCoinsPerSecond()));
+              placedBuildings.add(new FoodBuilding(
+                  selectedTexture, new Point(previewX, previewY), currentBuildingInfo,
+                  currentBuildingInfo.getCoinsPerSecond()));
               break;
 
             case NONE:
               System.out.println("This shouldn't have happened hmm");
+              break;
 
             default:
               break;
           }
 
-          //Updates stats
+          // Update stats
           GameGlobals.BALANCE -= currentBuildingInfo.getBuildingCost();
           GameGlobals.STUDENTS += currentBuildingInfo.getNumberOfStudents();
           incrementBuildingsCount(currentBuildingInfo.getBuildingType(), 1);
 
         }
-        //the building is no longer being placed
+
+        // The building is no longer being placed
         clearSelectedBuilding();
       } else {
-        //if building is colliding with something
+        // If building is colliding with something
         System.err.println("Player Trying to place on a collision piece");
         GameSounds.playPlaceError();
       }
     }
-
   }
 
+  /**
+   * Get the amount a building should be refunded for.
+   */
   private int getBuildingRefundAmount(Building building) {
     return Math.round(building.getBuildingInfo().getBuildingCost() * 0.75f);
   }
 
-  public void removeBuilding(Building buildingToRemove) {
+  /**
+   * Remove a building.
+   */
+  public void removeBuilding(Building buildingToRemove, boolean refund) {
     if (buildingToRemove != null) {
       incrementBuildingsCount(buildingToRemove.getBuildingType(), -1);
       placedBuildings.remove(buildingToRemove);
-      GameGlobals.BALANCE += getBuildingRefundAmount(buildingToRemove);
+      if (refund) {
+        GameGlobals.BALANCE += getBuildingRefundAmount(buildingToRemove);
+      }
     } else {
       System.out.println("building was null: " + null);
     }
   }
 
   /**
-   * Selects a building by building ID
+   * Selects a building by building id.
    *
    * @param buildingType buildingType of the building that the user wants to place down
    * @param index        int the index of where it is in the dictionary
@@ -214,18 +232,22 @@ public class BuildingRenderer {
   public void selectBuilding(BuildingStats.BuildingType buildingType, int index) {
     isPreviewing = true;
     BuildingInfo newBuilding = BuildingStats.getInfo(buildingType, index);
-    selectedTexture = BuildingStats.getTextureOfBuilding(BuildingStats.BuildingDict.get(buildingType)[index]);
+    selectedTexture = BuildingStats.getTextureOfBuilding(
+        BuildingStats.BuildingDict.get(buildingType)[index]);
+
     if (selectedTexture == null) {
-      System.err.println("ERROR: Could not select building: " + BuildingStats.BuildingDict.get(buildingType)[index]);
+      System.err.println("ERROR: Could not select building: "
+          + BuildingStats.BuildingDict.get(buildingType)[index]);
     }
+
     currentBuildingInfo = newBuilding;
   }
 
   /**
-   * Increments the counter on the screen for the
-   * corresponding building that has been placed down
+   * Increments the counter on the screen for the corresponding building that has been placed.
    *
-   * @param type Type of the building that has been added
+   * @param type   Type of the building that has been added
+   * @param amount to increase it by, this can be negative to decrease
    */
   private void incrementBuildingsCount(BuildingStats.BuildingType type, int amount) {
     switch (type) {
@@ -233,15 +255,15 @@ public class BuildingRenderer {
       case ACCOMMODATION -> GameGlobals.ACCOMMODATION_BUILDINGS_COUNT += amount;
       case RECREATIONAL -> GameGlobals.RECREATIONAL_BUILDINGS_COUNT += amount;
       case FOOD -> GameGlobals.FOOD_BUILDINGS_COUNT += amount;
-      default -> System.out.println("Building type doesnt exist!");
+      default -> System.err.println("Building type doesnt exist!");
     }
   }
 
   /**
-   * Snaps the coordinates passed in to the grid
+   * Snaps the position to coordinates in the grid.
    *
-   * @param x X
-   * @param y Y
+   * @param x screen X coordinate
+   * @param y screen Y coordinate
    * @return Point new coordinates that occur on an intersection of the tiles in the background
    */
   private Point snapBuildingToGrid(float x, float y) {
@@ -257,62 +279,67 @@ public class BuildingRenderer {
   }
 
   /**
-   * Checks whether the user is trying to place a building
-   * on another building or not on grass
+   * Checks whether the user is trying to place a building on another building or not on grass.
    *
-   * @param x X
-   * @param y Y
-   * @return Boolean if there exists a building at the spot the user is trying to place the building at
-   * or if non grass is present in the buildings spot
+   * @param x grid X coordinate
+   * @param y grid Y coordinate
+   * @return if it is clear to place the building, there does not exist a building at the spot the
+   * user is trying to place the building at and grass is present in the buildings spot
    */
   private boolean checkCollisions(float x, float y) {
     //Checks building exists in spot
-    float RoundedX = Math.round(x);
-    float RoundedY = Math.round(y);
-    boolean flag = true;
+    float roundedX = Math.round(x);
+    float roundedY = Math.round(y);
+
     for (Building building : this.placedBuildings) {
       if (
-          (RoundedX > (building.getX() - SCREEN_BUILDING_SIZE) && RoundedX < (building.getX() + SCREEN_BUILDING_SIZE)) &&
-              (RoundedY > (building.getY() - SCREEN_BUILDING_SIZE) && RoundedY < (building.getY() + SCREEN_BUILDING_SIZE))
+          (
+              roundedX > (building.getX() - SCREEN_BUILDING_SIZE)
+                  && roundedX < (building.getX() + SCREEN_BUILDING_SIZE)
+          )
+              && (roundedY > (building.getY() - SCREEN_BUILDING_SIZE)
+              && roundedY < (building.getY() + SCREEN_BUILDING_SIZE)
+          )
       ) {
-        flag = false;
-        break;
+        return false;
       }
     }
-    BackgroundRenderer checkBackGround = gameRenderer.getBackgroundRenderer();
-    String hold = checkBackGround.getMap();
+
+    BackgroundRenderer backgroundRenderer = gameRenderer.getBackgroundRenderer();
+    String map = backgroundRenderer.getMap();
 
     //CheckTiles on the ground are grassBlocks
-    int yIndexLow = Math.round((RoundedY - 64) / 32) + 3;
-    int xIndexLow = Math.round((RoundedX - 64) / 32) + 2;
-    int lengthTiles = hold.split("\n").length;
-    char[][] TileSet = new char[4][4];
-    for (int yCord = 0; yCord < 4; yCord++) {
-      for (int xCord = 0; xCord < 4; xCord++) {
+    int indexLowY = Math.round((roundedY - 64) / 32) + 3;
+    int indexLowX = Math.round((roundedX - 64) / 32) + 2;
+    int lengthTiles = map.split("\n").length;
+    char[][] tileSet = new char[4][4];
+    for (int coordY = 0; coordY < 4; coordY++) {
+      for (int coordX = 0; coordX < 4; coordX++) {
         try {
-          TileSet[yCord][xCord] = hold.split("\n")[lengthTiles - (yIndexLow + yCord)].charAt(xIndexLow + xCord);
+          tileSet[coordY][coordX] = map.split("\n")[lengthTiles - (indexLowY + coordY)]
+              .charAt(indexLowX + coordX);
         } catch (Exception ignored) {
-
+          continue;
         }
       }
     }
-    for (char[] itemI : TileSet) {
+    for (char[] itemI : tileSet) {
       for (char itemJ : itemI) {
-        if (itemJ != checkBackGround.getGRASS() && itemJ != checkBackGround.getGRASS2()) {
-          flag = false;
-          break;
+        if (!backgroundRenderer.isGrass(itemJ)) {
+          return false;
         }
       }
     }
-    return flag;
+
+    return true;
   }
 
   /**
-   * Gets the building at the point paused in
+   * Gets the building at a screen coordinate.
    *
-   * @param mouseX Mouse X
-   * @param mouseY Mouse Y
-   * @return Building that was at the coords
+   * @param mouseX screen X coordinate
+   * @param mouseY screen Y coordinate
+   * @return Building at the coords
    */
   private Building getBuildingAtPoint(float mouseX, float mouseY) {
     Point translatedPoint = gameRenderer.translateCoords(new Point(mouseX, mouseY));
@@ -325,8 +352,10 @@ public class BuildingRenderer {
       float bx = building.getX();
       float by = building.getY();
 
-      if ((x > bx && x < (bx + building.getWidth())) &&
-          (y > by && y < (by + building.getHeight()))) {
+      if (
+          (x > bx && x < (bx + building.getWidth()))
+              && (y > by && y < (by + building.getHeight()))
+      ) {
         return building;
       }
     }
@@ -334,14 +363,13 @@ public class BuildingRenderer {
   }
 
   /**
-   * Updates the width and height when the window
-   * is resized
+   * Call on window resize.
    */
-  public void resize() {
+  public void resize(int width, int height) {
   }
 
   /**
-   * Clear currently selected building to place
+   * Clear currently selected building to place.
    */
   public void clearSelectedBuilding() {
     isPreviewing = false;
@@ -350,16 +378,14 @@ public class BuildingRenderer {
   }
 
   /**
-   * gets the current list of placed buildings
-   *
-   * @return placedBuildings List<Building>
+   * Gets the current list of placed buildings.
    */
   public List<Building> getPlaceBuildings() {
     return placedBuildings;
   }
 
   /**
-   * disposes building being drawn for garbage collection
+   * Dispose building for garbage collection.
    */
   public void dispose() {
     batch.dispose();

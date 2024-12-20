@@ -17,7 +17,7 @@ import com.vikingz.unitycoon.event.events.ScolarEvent;
 import com.vikingz.unitycoon.event.events.StrikeEvent;
 import com.vikingz.unitycoon.event.events.UniPartyEvent;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.render.UIRenderer;
+import com.vikingz.unitycoon.render.UiRenderer;
 import com.vikingz.unitycoon.screens.GameScreen;
 import com.vikingz.unitycoon.util.Pair;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.List;
  * Class to manage random and static events showing and their callbacks.
  */
 public class EventsManager {
-  UIRenderer uiRenderer;
+  UiRenderer uiRenderer;
   GameScreen gameScreen;
 
   /**
