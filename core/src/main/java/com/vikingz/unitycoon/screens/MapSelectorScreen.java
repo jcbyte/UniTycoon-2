@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.global.GameGlobals;
 
@@ -47,51 +48,49 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
         TextButton previousMap = new TextButton("<-",skin);
 
         //Gp back Button
-        goBack.addListener(e -> {
-            if (!goBack.isPressed()) return false;
-            ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
-            return true;
+        goBack.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
+            }
         });
 
 
         Image mapImage = new Image(GameGlobals.map1Texture);
 
         //Selects the next map
-        nextMap.addListener(new InputListener(){
+        nextMap.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public void clicked(InputEvent event, float x, float y) {
                 mapSelection++;
                 if (mapSelection > 3) {
                     mapSelection = 1;
                 }
                 mapImage.setDrawable(mapArray[mapSelection-1]);
-                return true;
             }
         });
 
 
         //Selects the previous map
-        previousMap.addListener(new InputListener(){
+        previousMap.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public void clicked(InputEvent event, float x, float y) {
                 mapSelection--;
                 if (mapSelection < 1){
                     mapSelection = mapArray.length;
                 }
                 mapImage.setDrawable(mapArray[mapSelection-1]);
-                return true;
             }
         });
 
 
         mapText = new TextField("map".concat(Integer.toString(mapSelection)),skin);
 
-        startGame.addListener(e -> {
-            if (!startGame.isPressed()) return false;
-
-            ScreenMultiplexer.runGame(mapText.getText().toLowerCase());
-
-            return true;
+        startGame.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ScreenMultiplexer.runGame(mapText.getText().toLowerCase());
+            }
         });
 
         // Create table for layout

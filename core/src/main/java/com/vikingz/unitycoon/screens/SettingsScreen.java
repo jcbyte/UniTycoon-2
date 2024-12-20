@@ -91,33 +91,31 @@ public class SettingsScreen extends SuperScreen implements Screen {
         });
 
         fullscreenButton = new TextButton("Fullscreen",skin);
-        fullscreenButton.addListener(e -> {
-            if (fullscreenButton.isPressed()){
-                GameConfigManager.setFullScreen();
-                if(gameScreen != null) { gameScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); }
-
-            }
-            return true;
+        fullscreenButton.addListener(new ClickListener() {
+             @Override
+             public void clicked(InputEvent event, float x, float y) {
+                 GameConfigManager.setFullScreen();
+                 if (gameScreen != null) {
+                     gameScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                 }
+             }
         });
 
         windowButton = new TextButton("Window Mode",skin);
-        windowButton.addListener(e -> {
-            if (windowButton.isPressed()){
-                GameConfigManager.setWindowScreen();
-            }
-            return true;
+        windowButton.addListener(new ClickListener() {
+             @Override
+             public void clicked(InputEvent event, float x, float y) {
+                 GameConfigManager.setWindowScreen();
+             }
         });
 
         saveGameConfigButton = new TextButton("Save",skin);
-        saveGameConfigButton.addListener(e -> {
-            if (saveGameConfigButton.isPressed()){
-                GameConfigManager.saveGameConfig();
-            }
-            return true;
+        saveGameConfigButton.addListener(new ClickListener() {
+             @Override
+             public void clicked(InputEvent event, float x, float y) {
+                 GameConfigManager.saveGameConfig();
+             }
         });
-
-
-
 
         // Create layout table
         Table table = new Table();
