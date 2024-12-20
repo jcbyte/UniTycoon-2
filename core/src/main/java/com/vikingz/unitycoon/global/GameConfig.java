@@ -1,119 +1,106 @@
 package com.vikingz.unitycoon.global;
 
-import com.badlogic.gdx.Gdx;
 import com.vikingz.unitycoon.util.LeaderboardManager;
-
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
- * This class contains all of the config for the game,
- * things such as width, height, sounds volume etc.
- * This class is also used by the GameConfig Manager to save
- * the current config so that when the user reloads the game
- * their settings are still present.
+ * This class contains all the config for the game, things such as width, height, sounds volume etc.
+ * This class is also used by the GameConfig Manager to save the current config so that when the
+ * user reloads the game their settings are still present.
  *
- * This is also a singleton class which means we instanciate it
- * once and then that instance can be fetched statically by calling
- * GameConfig.getInstance() and then from this instance we can retrieve
- * settings. We have chose to do this because by not making it static we
- * are able to implement Serializable which lets us save the GameConfig class
- * as is without any other logic.
+ * <p>Singleton class, meaning we instantiate it once and then that instance can be fetched
+ * statically by calling GameConfig.getInstance() and then from this instance we can retrieve
+ * settings. We have chose to do this because by not making it static we are able to implement
+ * Serializable which lets us save the GameConfig class as is without any other logic.
  */
-public class GameConfig implements Serializable{
+public class GameConfig implements Serializable {
 
-    // Constants for width and height MUST BE PUBLIC TO BE SERIALIZE
-    public int windowWidth;
-    public int windowHeight;
-    public float SoundVolumeValue;
-    public float MusicVolumeValue;
-    private static boolean VSync = false;
-    public float guiSize = 1;
+  // Constants must be public to serialise
+  private int windowWidth;
+  private int windowHeight;
 
-    public LeaderboardManager.LeaderboardRecord[] leaderboard;
+  public float soundVolumeValue;
+  public float musicVolumeValue;
 
-    // 31.5 rows
-    // 56 cols
+  public LeaderboardManager.LeaderboardRecord[] leaderboard;
 
-    // The single instance of GameConfig (eager initialization)
-    private static GameConfig INSTANCE = new GameConfig(
-        1792, 1008, 1f,1f, LeaderboardManager.generateBlankLeaderboard(5)
-); // Default values
+  // 31.5 rows
+  // 56 cols
 
-    // For JSON deserializing
-    private GameConfig() {}
+  // The single instance of GameConfig (eager initialization)
+  private static GameConfig INSTANCE = new GameConfig(
+      1792, 1008, 1f, 1f, LeaderboardManager.generateBlankLeaderboard(5)
+  ); // Default values
 
-    // Private constructor to prevent instantiation from outside
-    private GameConfig(int width, int height, float SoundVolumeValue, float MusicVolumeValue, LeaderboardManager.LeaderboardRecord[] leaderboard) {
-        this.windowWidth = width;
-        this.windowHeight = height;
-        this.SoundVolumeValue = SoundVolumeValue;
-        this.MusicVolumeValue = MusicVolumeValue;
-        this.leaderboard = leaderboard.clone();
-        // Sort the leaderboard to ensure it is in order
-        LeaderboardManager.sortLeaderboard(this.leaderboard);
-    }
+  // For JSON deserializing
+  private GameConfig() {
+  }
 
-    //Sets VSync mode for game on or off
-    public static boolean setVSync(boolean enable){
-        VSync = enable;
-        Gdx.graphics.setVSync(enable);
-        return VSync;
-    }
-    public static boolean getVSync(){
-        return VSync;
-    }
+  // Private constructor to prevent instantiation from outside
+  private GameConfig(int width, int height,
+                     float soundVolumeValue, float musicVolumeValue,
+                     LeaderboardManager.LeaderboardRecord[] leaderboard) {
+    this.windowWidth = width;
+    this.windowHeight = height;
+    this.soundVolumeValue = soundVolumeValue;
+    this.musicVolumeValue = musicVolumeValue;
+    this.leaderboard = leaderboard.clone();
 
-    public void setInstance(GameConfig conf){
-        INSTANCE = conf;
-    }
+    // Sort the leaderboard to ensure it is in order
+    LeaderboardManager.sortLeaderboard(this.leaderboard);
+  }
+
+  /**
+   * Method to set the single instance of GameConfig.
+   *
+   * <p>Used when loading in settings
+   */
+  public void setInstance(GameConfig conf) {
+    INSTANCE = conf;
+  }
+
+  /**
+   * Method to get the single instance of GameConfig.
+   */
+  public static GameConfig getInstance() {
+    return INSTANCE;
+  }
 
 
-    // Method to get the single instance of GameConfig
-    public static GameConfig getInstance() {
-        return INSTANCE;
-    }
+  public int getWindowWidth() {
+    return windowWidth;
+  }
 
+  public int getWindowHeight() {
+    return windowHeight;
+  }
 
-    // Getters and Setters
-    public int getWindowWidth() {
-        return windowWidth;
-    }
+  public LeaderboardManager.LeaderboardRecord[] getLeaderboard() {
+    return leaderboard;
+  }
 
-    public int getWindowHeight() {
-        return windowHeight;
-    }
+  /**
+   * Check if this score could be in the leaderboard.
+   */
+  public boolean isOnLeaderboard(int score) {
+    return LeaderboardManager.onLeaderboard(leaderboard, score);
+  }
 
-    public float getGuiSize() {
-        return guiSize;
-    }
+  public float getSoundVolumeValue() {
+    return soundVolumeValue;
+  }
 
-    public void setGuiSize(float guiSize) {
-        this.guiSize = guiSize;
-    }
+  public float getMusicVolumeValue() {
+    return musicVolumeValue;
+  }
 
-    public LeaderboardManager.LeaderboardRecord[] getLeaderboard() {
-        return leaderboard;
-    }
+  public void setSoundVolumeValue(float soundVolumeValue) {
+    this.soundVolumeValue = soundVolumeValue;
+  }
 
-    /**
-     * Update the leaderboard with the new record if it is in the top 5 records
-     * @return true if the leaderboard was updated
-     */
-    public boolean updateLeaderboard(LeaderboardManager.LeaderboardRecord record) {
-        return LeaderboardManager.updateLeaderboard(leaderboard, record);
-    }
-
-    /**
-     * Check if this score could be in the leaderboard
-     */
-    public boolean isOnLeaderboard(int score)
-    {
-        return LeaderboardManager.onLeaderboard(leaderboard, score);
-    }
+  public void setMusicVolumeValue(float musicVolumeValue) {
+    this.musicVolumeValue = musicVolumeValue;
+  }
 }
 
 

@@ -42,7 +42,7 @@ public class AchievementsManager {
         ),
         new Achievement(
             "Concrete Campus\nHave over 10 Buildings",
-            () -> GameGlobals.ACADEMIC_BUILDINGS_COUNT + GameGlobals.ACCOMODATION_BUILDINGS_COUNT
+            () -> GameGlobals.ACADEMIC_BUILDINGS_COUNT + GameGlobals.ACCOMMODATION_BUILDINGS_COUNT
                 + GameGlobals.FOOD_BUILDINGS_COUNT + GameGlobals.RECREATIONAL_BUILDINGS_COUNT > 10,
             new Texture("achievements/concrete-campus.png"),
             () -> {

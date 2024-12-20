@@ -23,113 +23,115 @@ import com.vikingz.unitycoon.util.LeaderboardManager;
 public class MenuScreen extends SuperScreen implements Screen {
 
 
-    /**
-     * Creates a new menu screen
-     */
-    public MenuScreen() {
-        Gdx.input.setInputProcessor(stage);
+  /**
+   * Creates a new menu screen
+   */
+  public MenuScreen() {
+    Gdx.input.setInputProcessor(stage);
 
-        // Load a default skin
+    // Load a default skin
 
-        // Create buttons
-        TextButton playButton = new TextButton("Play", skin);
-        TextButton settingsButton = new TextButton("Settings", skin);
-        TextButton quitButton = new TextButton("Quit", skin);
+    // Create buttons
+    TextButton playButton = new TextButton("Play", skin);
+    TextButton settingsButton = new TextButton("Settings", skin);
+    TextButton quitButton = new TextButton("Quit", skin);
 
-        // Add listeners to buttons
-        playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MAPSELECTION);
-            }
-        });
+    // Add listeners to buttons
+    playButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MAPSELECTION);
+      }
+    });
 
-        settingsButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.SETTINGS);
-            }
-        });
+    settingsButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.SETTINGS);
+      }
+    });
 
-        quitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit(); // Quit the application
-            }
-        });
+    quitButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        Gdx.app.exit(); // Quit the application
+      }
+    });
 
-        // Create a table for layout
-        Table table = new Table();
-        table.setFillParent(true);  // Center table on stage
-        table.center();
+    // Create a table for layout
+    Table table = new Table();
+    table.setFillParent(true);  // Center table on stage
+    table.center();
 
-        Image texture = new Image(new Texture(Gdx.files.internal("gameLogo.png")));
-        table.add(texture).pad(50);
-        table.row();
+    Image texture = new Image(new Texture(Gdx.files.internal("gameLogo.png")));
+    table.add(texture).pad(50);
+    table.row();
 
-        // Add buttons to table
-        Table buttonsTable = new Table();
-        buttonsTable.add(playButton).pad(10).row();
-        buttonsTable.add(settingsButton).pad(10).row();
-        buttonsTable.add(quitButton).pad(10);
-        table.add(buttonsTable);
+    // Add buttons to table
+    Table buttonsTable = new Table();
+    buttonsTable.add(playButton).pad(10).row();
+    buttonsTable.add(settingsButton).pad(10).row();
+    buttonsTable.add(quitButton).pad(10);
+    table.add(buttonsTable);
 
-        // Add the table to the stage
-        stage.addActor(table);
+    // Add the table to the stage
+    stage.addActor(table);
 
-        Label leaderboardLabel = new Label("Leaderboard:\n\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().leaderboard), skin);
-        leaderboardLabel.setFontScale(1.75f);
+    Label leaderboardLabel = new Label("Leaderboard:\n\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().getLeaderboard()), skin);
+    leaderboardLabel.setFontScale(1.75f);
 
-        // Add leaderboard to table
-        Table leaderboardTable = new Table();
-        leaderboardTable.setFillParent(true);
-        leaderboardTable.bottom().right();
-        leaderboardTable.add(leaderboardLabel).padBottom(20).padRight(100).bottom().right();
+    // Add leaderboard to table
+    Table leaderboardTable = new Table();
+    leaderboardTable.setFillParent(true);
+    leaderboardTable.bottom().right();
+    leaderboardTable.add(leaderboardLabel).padBottom(20).padRight(100).bottom().right();
 
-        // Add the table to the stage
-        stage.addActor(leaderboardTable);
-    }
+    // Add the table to the stage
+    stage.addActor(leaderboardTable);
+  }
 
-    @Override
-    public void show() {
-        // Called when this screen becomes the current screen for the game.
-    }
+  @Override
+  public void show() {
+    // Called when this screen becomes the current screen for the game.
+  }
 
-    @Override
-    public void render(float delta) {
-        // Clear the screen
-        Gdx.gl.glClearColor(25/255f, 25/255f, 25/255f, 1);
-        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+  @Override
+  public void render(float delta) {
+    // Clear the screen
+    Gdx.gl.glClearColor(25 / 255f, 25 / 255f, 25 / 255f, 1);
+    Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
 
-        // Draw the stage
-        stage.act(delta);
-        stage.draw();
-    }
+    // Draw the stage
+    stage.act(delta);
+    stage.draw();
+  }
 
-    @Override
-    public void resize(int width, int height) {
-        // Update the stage's viewport when the screen size changes
-        stage.getViewport().update(width, height, true);
-    }
+  @Override
+  public void resize(int width, int height) {
+    // Update the stage's viewport when the screen size changes
+    stage.getViewport().update(width, height, true);
+  }
 
-    @Override
-    public void pause() { }
+  @Override
+  public void pause() {
+  }
 
-    @Override
-    public void resume() { }
+  @Override
+  public void resume() {
+  }
 
-    @Override
-    public void hide() {
-        // This removes the bug where the user can still click the buttons from the game screen.
-    }
+  @Override
+  public void hide() {
+    // This removes the bug where the user can still click the buttons from the game screen.
+  }
 
-    /**
-     * disposes MenuScreen for garbage collection
-     */
-    @Override
-    public void dispose() {
-        // Dispose of assets when this screen is no longer used
-        stage.dispose();
-        skin.dispose();
-    }
+  /**
+   * disposes MenuScreen for garbage collection
+   */
+  @Override
+  public void dispose() {
+    // Dispose of assets when this screen is no longer used
+    stage.dispose();
+    skin.dispose();
+  }
 }

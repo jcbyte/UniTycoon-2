@@ -230,7 +230,7 @@ public class BuildingRenderer {
   private void incrementBuildingsCount(BuildingStats.BuildingType type, int amount) {
     switch (type) {
       case ACADEMIC -> GameGlobals.ACADEMIC_BUILDINGS_COUNT += amount;
-      case ACCOMMODATION -> GameGlobals.ACCOMODATION_BUILDINGS_COUNT += amount;
+      case ACCOMMODATION -> GameGlobals.ACCOMMODATION_BUILDINGS_COUNT += amount;
       case RECREATIONAL -> GameGlobals.RECREATIONAL_BUILDINGS_COUNT += amount;
       case FOOD -> GameGlobals.FOOD_BUILDINGS_COUNT += amount;
       default -> System.out.println("Building type doesnt exist!");

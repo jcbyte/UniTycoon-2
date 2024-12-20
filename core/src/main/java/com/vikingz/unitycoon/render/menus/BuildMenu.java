@@ -346,7 +346,7 @@ public class BuildMenu {
     stage.draw();
 
     academicBuildingsCount.setText(GameGlobals.ACADEMIC_BUILDINGS_COUNT);
-    accommodationBuildingsCount.setText(GameGlobals.ACCOMODATION_BUILDINGS_COUNT);
+    accommodationBuildingsCount.setText(GameGlobals.ACCOMMODATION_BUILDINGS_COUNT);
     recreationalBuildingsCount.setText(GameGlobals.RECREATIONAL_BUILDINGS_COUNT);
     foodBuildingsCount.setText(GameGlobals.FOOD_BUILDINGS_COUNT);
   }

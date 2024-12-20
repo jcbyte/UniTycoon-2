@@ -29,7 +29,7 @@ public class GameSounds {
   );
 
   //Sets the volume of the GameSounds to be played
-  public static float volume = GameConfig.getInstance().SoundVolumeValue;
+  public static float volume = GameConfig.getInstance().getSoundVolumeValue();
 
   /**
    * Plays the placed building sound.
@@ -76,6 +76,6 @@ public class GameSounds {
    */
   public static void setVolume(float volume) {
     GameSounds.volume = volume;
-    GameConfig.getInstance().SoundVolumeValue = volume;
+    GameConfig.getInstance().setSoundVolumeValue(volume);
   }
 }

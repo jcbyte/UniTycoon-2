@@ -13,7 +13,7 @@ public class GameMusic {
   private static Music backgroundMusic;
 
   //Sets the volume of the background music
-  public static float volume = GameConfig.getInstance().MusicVolumeValue;
+  public static float volume = GameConfig.getInstance().getMusicVolumeValue();
 
   /**
    * Initialises the Game music class by loading in the sound files and settings initial settings.
@@ -46,8 +46,8 @@ public class GameMusic {
    * @param volume New volume level
    */
   public static void setVolume(float volume) {
-    GameConfig.getInstance().MusicVolumeValue = volume;
-    GameMusic.volume = GameConfig.getInstance().MusicVolumeValue;
+    GameConfig.getInstance().setMusicVolumeValue(volume);
+    GameMusic.volume = GameConfig.getInstance().getMusicVolumeValue();
     play();
   }
 }
