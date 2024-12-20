@@ -42,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: checkstyle-report
-        path: ./core/build/reports/checkstyle/*
+        path: ./build/aggregated-reports/checkstyle/*
 
     - name: Build with Gradle
       run: ./gradlew build
