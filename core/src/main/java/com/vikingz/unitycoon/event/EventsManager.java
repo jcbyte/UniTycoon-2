@@ -1,10 +1,11 @@
-package com.vikingz.unitycoon.util;
+package com.vikingz.unitycoon.event;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.vikingz.unitycoon.events.*;
+import com.vikingz.unitycoon.event.events.*;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.UIRenderer;
 import com.vikingz.unitycoon.screens.GameScreen;
+import com.vikingz.unitycoon.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class EventsManager {
         }
     }
 
-    private List<ManagedEvent> events;
+    private final List<ManagedEvent> events;
 
     public EventsManager(GameScreen gameScreen)
     {
@@ -62,7 +63,8 @@ public class EventsManager {
             UniPartyEvent.class,
             CasinoEvent.class,
             CurriculumChangeEvent.class,
-            StrikeEvent.class
+            StrikeEvent.class,
+            BigOilEvent.class
         );
 
         // This contains the time of each random event which will be shown in the game

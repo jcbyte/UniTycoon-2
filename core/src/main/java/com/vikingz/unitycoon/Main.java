@@ -5,13 +5,11 @@ import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 import com.vikingz.unitycoon.util.FileHandler;
-import com.vikingz.unitycoon.util.GameMusic;
-
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+import com.vikingz.unitycoon.audio.GameMusic;
 
 /**
  * Main class
- *
+ * <p>
  * Entry point of the game
  */
 public class Main extends Game {

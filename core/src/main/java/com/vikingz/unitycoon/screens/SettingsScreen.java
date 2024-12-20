@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.vikingz.unitycoon.global.GameConfigManager;
-import com.vikingz.unitycoon.util.GameMusic;
-import com.vikingz.unitycoon.util.GameSounds;
+import com.vikingz.unitycoon.audio.GameMusic;
+import com.vikingz.unitycoon.audio.GameSounds;
 
 /**
  * This screen represents the settings screen in the game

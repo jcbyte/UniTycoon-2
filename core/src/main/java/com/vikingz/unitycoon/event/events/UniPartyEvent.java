@@ -1,5 +1,6 @@
-package com.vikingz.unitycoon.events;
+package com.vikingz.unitycoon.event.events;
 
+import com.vikingz.unitycoon.event.Event;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.GameScreen;
 
@@ -8,9 +9,7 @@ public class UniPartyEvent extends Event {
         super(() ->
             new Event(
                 "The students want the university to throw a party.",
-                new Event.Option(() -> {
-                    gameScreen.setPaused(false);
-                }, "Don't do anything"),
+                new Event.Option(() -> gameScreen.setPaused(false), "Don't do anything"),
                 new Event.Option(() -> {
                     GameGlobals.BALANCE -= 250;
                     GameGlobals.SATISFACTION += 100000;

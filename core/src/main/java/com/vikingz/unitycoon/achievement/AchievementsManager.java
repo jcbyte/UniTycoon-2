@@ -1,11 +1,12 @@
-package com.vikingz.unitycoon.util;
+package com.vikingz.unitycoon.achievement;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.GameScreen;
+import com.vikingz.unitycoon.util.StatsCalculator;
 
 public class AchievementsManager {
-    private GameScreen gameScreen;
+    private final GameScreen gameScreen;
     public Achievement[] achievements;
 
     public AchievementsManager(GameScreen gameScreen) {

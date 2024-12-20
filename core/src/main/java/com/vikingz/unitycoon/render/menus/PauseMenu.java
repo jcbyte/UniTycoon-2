@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.menus;
+package com.vikingz.unitycoon.render.menus;
 
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

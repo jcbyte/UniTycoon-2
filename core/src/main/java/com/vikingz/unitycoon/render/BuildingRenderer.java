@@ -13,7 +13,7 @@ import com.vikingz.unitycoon.building.buildings.AccommodationBuilding;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.util.GameSounds;
+import com.vikingz.unitycoon.audio.GameSounds;
 import com.vikingz.unitycoon.util.Point;
 
 import java.util.ArrayList;

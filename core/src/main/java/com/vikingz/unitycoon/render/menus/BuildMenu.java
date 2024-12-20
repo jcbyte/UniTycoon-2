@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.menus;
+package com.vikingz.unitycoon.render.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
