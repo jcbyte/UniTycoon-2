@@ -28,7 +28,6 @@ public class GameConfig implements Serializable{
     // Constants for width and height MUST BE PUBLIC TO BE SERIALIZE
     public int windowWidth;
     public int windowHeight;
-    public boolean skipMenus;
     public float SoundVolumeValue;
     public float MusicVolumeValue;
     private static boolean VSync = false;
@@ -41,17 +40,16 @@ public class GameConfig implements Serializable{
 
     // The single instance of GameConfig (eager initialization)
     private static GameConfig INSTANCE = new GameConfig(
-        1792, 1008, false, 1f,1f, LeaderboardManager.generateBlankLeaderboard(5)
+        1792, 1008, 1f,1f, LeaderboardManager.generateBlankLeaderboard(5)
 ); // Default values
 
     // For JSON deserializing
     private GameConfig() {}
 
     // Private constructor to prevent instantiation from outside
-    private GameConfig(int width, int height, boolean skipMenus, float SoundVolumeValue, float MusicVolumeValue, LeaderboardManager.LeaderboardRecord[] leaderboard) {
+    private GameConfig(int width, int height, float SoundVolumeValue, float MusicVolumeValue, LeaderboardManager.LeaderboardRecord[] leaderboard) {
         this.windowWidth = width;
         this.windowHeight = height;
-        this.skipMenus = skipMenus;
         this.SoundVolumeValue = SoundVolumeValue;
         this.MusicVolumeValue = MusicVolumeValue;
         this.leaderboard = leaderboard.clone();
@@ -87,10 +85,6 @@ public class GameConfig implements Serializable{
 
     public int getWindowHeight() {
         return windowHeight;
-    }
-
-    public boolean isSkipMenus() {
-        return skipMenus;
     }
 
     public float getGuiSize() {
