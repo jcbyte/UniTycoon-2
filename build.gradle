@@ -63,7 +63,6 @@ configure(subprojects) {
 }
 
 
-
 subprojects {
   version = '$projectVersion'
   ext.appName = 'UniTycoon2'
@@ -79,20 +78,16 @@ subprojects {
 }
 
 
-
-
-
-
 eclipse.project.name = 'UniTycoon' + '-parent'
 
 
 tasks.register('aggregateCheckstyleReports') {
   doLast {
-    def reportsDir = file("${rootProject.layout.buildDirectory.get()}/aggregated-reports/checkstyle")
+    File reportsDir = file("${rootProject.layout.buildDirectory.get()}/aggregated-reports/checkstyle")
     reportsDir.mkdirs()
 
     subprojects.each { Project subproject ->
-      def File checkstyleReportsDir = file("${subproject.layout.buildDirectory.get()}/reports/checkstyle")
+      File checkstyleReportsDir = file("${subproject.layout.buildDirectory.get()}/reports/checkstyle")
 
       // Check if the directory exists and then copy all files in it
       if (checkstyleReportsDir.exists()) {
