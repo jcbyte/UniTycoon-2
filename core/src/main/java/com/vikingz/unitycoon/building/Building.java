@@ -4,200 +4,175 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.util.Point;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
-
 /**
- * Building
- *
- * Abstract class that represents all of the buildings in the game.
+ * Abstract class that represents all the buildings in the game.
  */
 public abstract class Building {
 
-    // Building drawing properties
-    private TextureRegion texture;
-    private float x;
-    private float y;
-    private float width;
-    private float height;
+  // Building drawing properties
+  private TextureRegion texture;
+  private float posX;
+  private float posY;
+  private float width;
+  private float height;
+
+  // Building functional properties
+  private final BuildingStats.BuildingType buildingType;
+  private final float satisfactionMultiplier;
+  private final BuildingInfo buildingInfo;
+
+  /**
+   * Creates a new Building.
+   *
+   * @param texture      Texture
+   * @param x            X
+   * @param y            Y
+   * @param buildingInfo Building Info
+   */
+  public Building(TextureRegion texture, float x, float y, BuildingInfo buildingInfo) {
+    this.posX = x;
+    this.posY = y;
+    this.width = 128;
+    this.height = 128;
+    this.texture = texture;
+    this.buildingType = buildingInfo.getBuildingType();
+    this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();
+    this.buildingInfo = buildingInfo;
+  }
+
+  /**
+   * Creates a new Building.
+   *
+   * @param texture      Texture
+   * @param p            Point p
+   * @param buildingInfo Building Info
+   */
+  public Building(TextureRegion texture, Point p, BuildingInfo buildingInfo) {
+    this.posX = p.getX();
+    this.posY = p.getY();
+    this.width = 128;
+    this.height = 128;
+    this.texture = texture;
+    this.buildingType = buildingInfo.getBuildingType();
+    this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();
+    this.buildingInfo = buildingInfo;
+  }
+
+  /**
+   * Calculates satisfaction logic.
+   *
+   * @param numberOfStudents Number of students
+   * @return Amount of satisfaction
+   */
+  public int calculateSatisfaction(int numberOfStudents) {
+    return StatsCalculator.calculateSatisfaction(numberOfStudents, this.satisfactionMultiplier);
+  }
+
+  /**
+   * Gets the building information.
+   */
+  public BuildingInfo getBuildingInfo() {
+    return buildingInfo;
+  }
+
+  /**
+   * Get the building width in pixels.
+   */
+  public float getWidth() {
+    return width;
+  }
+
+  /**
+   * Set the pixel width of the building.
+   */
+  public void setWidth(float width) {
+    this.width = width;
+  }
+
+  /**
+   * Get the building height in pixels.
+   */
+  public float getHeight() {
+    return height;
+  }
+
+  /**
+   * Set the pixel height of the building.
+   */
+  public void setHeight(float height) {
+    this.height = height;
+  }
 
 
-    // Building functional properties
-    private BuildingStats.BuildingType buildingType;
-    private float satisfactionMultiplier;
-    private BuildingInfo buildingInfo;
+  /**
+   * Returns the current texture of the building used for seeing a preview of a building and
+   * rendering.
+   *
+   * @return TextureRegion Image of the building
+   */
+  public TextureRegion getTexture() {
+    return texture;
+  }
+
+  /**
+   * Sets the Texture of the building.
+   *
+   * @param textureBuilding Image of the building
+   */
+  public void setTexture(TextureRegion textureBuilding) {
+    this.texture = textureBuilding;
+  }
+
+  /**
+   * Gets the current middle point of the building X coordinate.
+   */
+  public float getX() {
+    return posX;
+  }
+
+  /**
+   * Sets the x coordinate of the building.
+   */
+  public void setX(float x) {
+    this.posX = x;
+  }
+
+  /**
+   * Gets the current middle point of the building Y coordinate.
+   */
+  public float getY() {
+    return posY;
+  }
+
+  /**
+   * Sets the y coordinate of the building.
+   */
+  public void setY(float y) {
+    this.posY = y;
+  }
+
+  /**
+   * Gets the buildings buildingType ENUM.
+   *
+   * @return BuildingStats.BuildingType ENUM value
+   */
+  public BuildingStats.BuildingType getBuildingType() {
+    return buildingType;
+  }
 
 
-    /**
-     * Creates a new Building
-     * @param texture Texture
-     * @param x X
-     * @param y Y
-     * @param buildingInfo Building Info
-     */
-    public Building(TextureRegion texture, float x, float y, BuildingInfo buildingInfo){
-        this.x = x;
-        this.y = y;
-        this.width = 128;
-        this.height = 128;
-        this.texture = texture;
-        this.buildingType = buildingInfo.getBuildingType();
-        this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();
-        this.buildingInfo = buildingInfo;
-    }
+  /**
+   * Display the class as a string.
+   */
+  public String toString() {
+    String str = "";
 
+    str += "x: " + this.posX;
+    str += " y: " + this.posY;
+    str += " width: " + this.width;
+    str += " height: " + this.height;
+    str += " type: " + this.buildingType;
 
-    /**
-     * Creates a new Building
-     * @param texture Texture
-     * @param p Point p
-     * @param buildingInfo Building Info
-     */
-    public Building(TextureRegion texture, Point p, BuildingInfo buildingInfo){
-        this.x = p.getX();
-        this.y = p.getY();
-        this.width = 128;
-        this.height = 128;
-        this.texture = texture;
-        this.buildingType = buildingInfo.getBuildingType();
-        this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();
-        this.buildingInfo = buildingInfo;
-    }
-
-
-
-    /**
-     * Calculates satisfaction logic
-     * @param numberOfStudents Number of students
-     * @return Amount of satisfaction
-     */
-    public int calculateSatisfaction(int numberOfStudents){
-
-        return StatsCalculator.calculateSatisfaction(numberOfStudents, this.satisfactionMultiplier);
-
-    }
-
-
-    // Getters and Setters
-
-
-    /**
-     * gets the building information of the building
-     * @return buildingInfo Building Info
-     */
-    public BuildingInfo getBuildingInfo() {
-        return buildingInfo;
-    }
-
-    /**
-     * returns the float of the building width in pixels
-     * @return width float of building
-     */
-    public float getWidth() {
-        return width;
-    }
-
-
-    /**
-     * Sets the pixel width of the building
-     * @param width float
-     */
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-
-    /**
-     * returns the float of the building height in pixels
-     * @return height float of building
-     */
-    public float getHeight() {
-        return height;
-    }
-
-    /**
-     * Sets the pixel height of the building
-     * @param height float
-     */
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-
-    /**
-     * Returns the current texture of the building,
-     * used for seeing a preview of a building and rendering
-     * @return TextureRegion Image of the building
-     */
-    public TextureRegion getTexture() {
-        return texture;
-    }
-
-    /**
-     * Sets the Texture of the building to passed param
-     * @param textureBuilding
-     */
-    public void setTexture(TextureRegion textureBuilding) {
-        this.texture = textureBuilding;
-    }
-
-    /**
-     * gets the current middle point of the building X coordinate
-     * @return x float
-     */
-    public float getX() {
-        return x;
-    }
-
-    /**
-     * Sets the x coordinate of the building to param float
-     * @param x
-     */
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    /**
-     * gets the current middle point of the building Y coordinate
-     * @return y float
-     */
-    public float getY() {
-        return y;
-    }
-
-    /**
-     * Sets the y coordinate of the building to param float
-     * @param y
-     */
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    /**
-     * gets the buildingType ENUM of the building
-     * @return BuildingStats.BuildingType ENUM value
-     */
-    public BuildingStats.BuildingType getBuildingType() {
-        return buildingType;
-    }
-
-
-    /**
-     * output the class to a string
-     * @return str String
-     */
-    public String toString(){
-        String str = "";
-
-        str += "x: " + this.x;
-        str += " y: " + this.y;
-        str += " width: " + this.width;
-        str += " height: " + this.height;
-        str += " type: " + this.buildingType;
-
-
-        return str;
-
-    }
-
-
-
+    return str;
+  }
 }
