@@ -12,8 +12,8 @@ import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UIRenderer;
-import com.vikingz.unitycoon.util.AchievementsManager;
-import com.vikingz.unitycoon.util.EventsManager;
+import com.vikingz.unitycoon.achievement.AchievementsManager;
+import com.vikingz.unitycoon.event.EventsManager;
 
 /**
  * This is the main game class from which the game is run.

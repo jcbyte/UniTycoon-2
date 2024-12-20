@@ -1,30 +1,32 @@
-package com.vikingz.unitycoon.events;
+package com.vikingz.unitycoon.event.events;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.vikingz.unitycoon.building.Building;
-import com.vikingz.unitycoon.global.GameGlobals;
+import com.vikingz.unitycoon.event.Event;
 import com.vikingz.unitycoon.render.BuildingRenderer;
 import com.vikingz.unitycoon.screens.GameScreen;
 
 import java.util.List;
 
-public class FloodingEvent extends Event {
-    public FloodingEvent(GameScreen gameScreen) {
+public class EarthquakeEvent extends Event {
+    public EarthquakeEvent(GameScreen gameScreen) {
         super(
-            "Major flooding has occurred, a building\nhas been destroyed and morale is low.",
+            "An earthquake has occurred and 4 buildings\nhave been destroyed.",
             new Event.Option(() -> {
                 BuildingRenderer buildingRenderer = gameScreen.getGameRenderer().getBuildingRenderer();
                 List<Building> placedBuildings = buildingRenderer.getPlaceBuildings();
 
-                if (!placedBuildings.isEmpty()) {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (placedBuildings.isEmpty())
+                        break;
+
                     int randomIndex = MathUtils.random(placedBuildings.size() - 1);
                     buildingRenderer.removeBuilding(placedBuildings.get(randomIndex));
                 }
 
-                GameGlobals.SATISFACTION -= 50000;
-
                 gameScreen.setPaused(false);
-            }, "-1 Building\n-Satisfaction")
+            }, "-4 Buildings")
         );
     }
 }

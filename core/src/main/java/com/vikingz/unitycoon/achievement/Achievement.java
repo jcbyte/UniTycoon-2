@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util;
+package com.vikingz.unitycoon.achievement;
 
 import com.badlogic.gdx.graphics.Texture;
 

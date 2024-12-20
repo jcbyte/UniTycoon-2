@@ -13,10 +13,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameGlobals;
-import com.vikingz.unitycoon.menus.*;
+import com.vikingz.unitycoon.render.menus.*;
 import com.vikingz.unitycoon.screens.GameScreen;
-import com.vikingz.unitycoon.util.Achievement;
-import com.vikingz.unitycoon.events.Event;
+import com.vikingz.unitycoon.achievement.Achievement;
+import com.vikingz.unitycoon.event.Event;
 
 /**
  * This class renders all the UI elements to the Screen.

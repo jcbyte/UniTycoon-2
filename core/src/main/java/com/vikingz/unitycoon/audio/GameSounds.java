@@ -1,4 +1,4 @@
-package com.vikingz.unitycoon.util;
+package com.vikingz.unitycoon.audio;
 
 import java.util.ArrayList;
 import java.util.Random;

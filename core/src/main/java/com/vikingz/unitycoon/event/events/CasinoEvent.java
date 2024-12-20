@@ -1,6 +1,7 @@
-package com.vikingz.unitycoon.events;
+package com.vikingz.unitycoon.event.events;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.vikingz.unitycoon.event.Event;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.GameScreen;
 

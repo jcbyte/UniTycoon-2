@@ -5,7 +5,7 @@ import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 import com.vikingz.unitycoon.util.FileHandler;
-import com.vikingz.unitycoon.util.GameMusic;
+import com.vikingz.unitycoon.audio.GameMusic;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 
