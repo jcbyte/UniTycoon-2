@@ -30,6 +30,13 @@ configure(subprojects) {
   apply plugin: 'java-library'
   sourceCompatibility = 17
 
+  apply plugin: 'checkstyle' // Apply Checkstyle plugin
+  checkstyle {
+    toolVersion = '10.21.0' // Use the desired Checkstyle version
+    configFile = rootProject.file('checkstyle.xml') // Path to the Checkstyle config
+    maxWarnings = 0 // Ensure the build fails on Checkstyle violations including warnings
+  }
+
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.
   tasks.register('generateAssetList') {
