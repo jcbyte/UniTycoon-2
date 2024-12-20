@@ -85,7 +85,7 @@ public class AchievementsManager {
     for (Achievement achievement : achievements) {
       if (achievement.calculate()) {
         gameScreen.setPaused(true);
-        gameScreen.getUIRenderer().showAchievement(achievement);
+        gameScreen.getUiRenderer().showAchievement(achievement);
       }
     }
   }

@@ -63,7 +63,7 @@ public class EventsManager {
    */
   public EventsManager(GameScreen gameScreen) {
     this.gameScreen = gameScreen;
-    this.uiRenderer = gameScreen.getUIRenderer();
+    this.uiRenderer = gameScreen.getUiRenderer();
 
     List<Class<? extends Event>> goodEvents = List.of(
         GrantEvent.class,

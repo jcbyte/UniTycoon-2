@@ -126,7 +126,7 @@ public class BuildingRenderer {
       if (buildingToRemove != null) {
         // Show confirm box before removing
         gameRenderer.getGameScreen().setPaused(true);
-        gameRenderer.getGameScreen().getUIRenderer().showPopup(
+        gameRenderer.getGameScreen().getUiRenderer().showPopup(
             "Confirm " + buildingToRemove.getBuildingInfo().getName() + " Removal",
             "Cancel",
             () -> gameRenderer.getGameScreen().setPaused(false),

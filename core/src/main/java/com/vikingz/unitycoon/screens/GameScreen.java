@@ -4,28 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.vikingz.unitycoon.achievement.AchievementsManager;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.building.buildings.FoodBuilding;
 import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
+import com.vikingz.unitycoon.event.EventsManager;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.render.GameRenderer;
 import com.vikingz.unitycoon.render.UiRenderer;
-import com.vikingz.unitycoon.achievement.AchievementsManager;
-import com.vikingz.unitycoon.event.EventsManager;
 
 /**
  * This is the main game class from which the game is run.
- * <p>
- * This game instantiates the 2 renderers which are the GameRenderer
- * and the UiRenderer, as well as contains the game loop that control how the game
- * runs.
- * <p>
- * The game loop contains a section where everything in that section is updated
- * every second which is where all of our game stats are updated.
- * <p>
- * Inherits Screen, SuperScreen
+ *
+ * <p>This game instantiates the two renderers which are the GameRenderer and the UiRenderer, as
+ * well as contains the game loop that control how the game runs.
+ *
+ * <p>The game loop contains a section which is run every second, this is where all the games
+ * stats are updated.
  */
 public class GameScreen extends SuperScreen implements Screen {
 
@@ -47,14 +44,15 @@ public class GameScreen extends SuperScreen implements Screen {
   public int startHeight;
 
   //Determines if first tick of game has passed
-  public boolean FirstTick;
+  public boolean firstTick;
 
+  // Managers for events and achievements
   private final EventsManager eventsManager;
   private final AchievementsManager achievementsManager;
 
 
   /**
-   * Creates a new Game Screen
+   * Creates a new Game Screen.
    *
    * @param mapName The name of the map that will be used
    */
@@ -75,15 +73,13 @@ public class GameScreen extends SuperScreen implements Screen {
     uiRenderer.startGame();
   }
 
-
   @Override
   public void show() {
     // Initialize game objects here
-
   }
 
   /**
-   * Contains the game loop, renders game all game content from this loop
+   * Contains the game loop, renders game all game content from this loop.
    *
    * @param delta Time since last frame
    */
@@ -93,17 +89,19 @@ public class GameScreen extends SuperScreen implements Screen {
     Gdx.gl.glClearColor(0.1f, 0.1f, 0.4f, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+    // Pause on ESC pressed
     if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
       pause();
     }
 
     if (!isPaused) {
-      elapsedTime += delta; // delta is the time elapsed since the last frame
-      if (elapsedTime >= 1) { // Increment counter every second
+      elapsedTime += delta;
+
+      // Increment counter every second
+      if (elapsedTime >= 1) {
         GameGlobals.ELAPSED_TIME--;
 
         // Calculate Game Stats
-
         for (Building building : gameRenderer.getBuildingRenderer().getPlaceBuildings()) {
           GameGlobals.SATISFACTION += building.calculateSatisfaction(GameGlobals.STUDENTS);
 
@@ -113,17 +111,16 @@ public class GameScreen extends SuperScreen implements Screen {
           }
 
           if (building.getBuildingType() == BuildingStats.BuildingType.RECREATIONAL) {
-            RecreationalBuilding foodBuilding = (RecreationalBuilding) building;
-            GameGlobals.BALANCE += (int) foodBuilding.calculateProfitMade();
+            RecreationalBuilding recreationalBuilding = (RecreationalBuilding) building;
+            GameGlobals.BALANCE += (int) recreationalBuilding.calculateProfitMade();
           }
-
         }
-        elapsedTime = 0; // Reset elapsed time
+
+        // Reset elapsed time
+        elapsedTime = 0;
       }
-
-
     }
-
+    
     eventsManager.render();
     achievementsManager.update();
 
@@ -131,50 +128,43 @@ public class GameScreen extends SuperScreen implements Screen {
       endGame();
     }
 
-
     // Draw
-    batch.begin();
     gameRenderer.render(delta);
     uiRenderer.render(delta);
-    batch.end();
 
-    //resizes to previous starting resolution
-    if (FirstTick) {
+    // Resizes to previous starting resolution
+    if (firstTick) {
       if (fullScreen) {
         GameConfigManager.setFullScreen();
       } else {
         Gdx.graphics.setWindowedMode(startWidth, startHeight);
       }
-      FirstTick = false;
+      firstTick = false;
     }
   }
 
 
   /**
-   * Checks if window has been resized
+   * Resize all elements if window gets resized.
    */
   @Override
   public void resize(int width, int height) {
     uiRenderer.resize(width, height);
     gameRenderer.resize(width, height);
-
-
   }
 
   /**
-   * Pauses the game and calls the UI renderer to display the
-   * pause menu UI
+   * Pauses the game and calls the UI renderer to display the pause menu UI.
    */
   @Override
   public void pause() {
     uiRenderer.pause();
-
   }
 
   boolean endCalled = false;
 
   /**
-   * This is called when the game finishes, ie when the timer runs out
+   * This is called when the game finishes, ie when the timer runs out.
    */
   private void endGame() {
     if (!endCalled) {
@@ -182,7 +172,6 @@ public class GameScreen extends SuperScreen implements Screen {
       uiRenderer.endGame();
       endCalled = true;
     }
-
   }
 
   @Override
@@ -193,19 +182,17 @@ public class GameScreen extends SuperScreen implements Screen {
   public void hide() {
   }
 
-
   /**
-   * disposes Renderers being drawn for garbage collection
+   * Dispose for garbage collection.
    */
   @Override
   public void dispose() {
-    batch.dispose();
     gameRenderer.dispose();
     uiRenderer.dispose();
   }
 
   /**
-   * Sets ui Renderer to having input control
+   * Sets ui Renderer to have input control.
    */
   @Override
   public void takeInput() {
@@ -213,7 +200,7 @@ public class GameScreen extends SuperScreen implements Screen {
   }
 
   /**
-   * Sets the game to be paused
+   * Sets the game to be paused.
    *
    * @param isPaused boolean of if the game is paused
    */
@@ -225,7 +212,7 @@ public class GameScreen extends SuperScreen implements Screen {
     return gameRenderer;
   }
 
-  public UiRenderer getUIRenderer() {
+  public UiRenderer getUiRenderer() {
     return uiRenderer;
   }
 
