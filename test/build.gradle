@@ -9,6 +9,12 @@ if (JavaVersion.current().isJava9Compatible()) {
   compileJava.options.release.set(17)
 }
 
+/*
+ * We need to add assets as a source directory during testing, similarly to the lwjgl3 project.
+ */
+sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
+sourceSets.test.resources.srcDirs += [ rootProject.file('assets').path ]
+
 mainClassName = 'com.vikingz.unitycoon.test.HeadlessLauncher'
 application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-test'
