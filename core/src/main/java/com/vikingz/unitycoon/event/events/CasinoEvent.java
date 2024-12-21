@@ -17,11 +17,12 @@ public class CasinoEvent extends Event {
         "You are at the casino.\nDo you put it all on red?",
         new Event.Option(() -> gameScreen.setPaused(false), "Dont gamble"),
         new Event.Option(() -> {
-          if (MathUtils.randomBoolean())
+          if (MathUtils.randomBoolean()) {
             GameGlobals.BALANCE *= 2;
-          else
+          } else {
             GameGlobals.BALANCE = 0;
-
+          }
+          
           gameScreen.setPaused(false);
         }, "All on red\n2x Money (50%)\nLose all money (50%)")
     );

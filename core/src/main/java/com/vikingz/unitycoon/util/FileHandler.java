@@ -23,17 +23,19 @@ public class FileHandler {
   /**
    * Object parser that has public variable to allow map json to dictionary.
    */
+  @SuppressWarnings({"checkstyle:MemberName", "checkstyle:AbbreviationAsWordInName"})
   private static class BuildingParse {
-    public String ACADEMIC[];
-    public String ACCOMODATION[];
-    public String RECREATIONAL[];
-    public String FOOD[];
-    public String NONE[];
+    public String[] ACADEMIC;
+    public String[] ACCOMODATION;
+    public String[] RECREATIONAL;
+    public String[] FOOD;
+    public String[] NONE;
   }
 
   /**
    * Object parser that has public variable to allow map json to dictionary.
    */
+  @SuppressWarnings({"checkstyle:MemberName", "checkstyle:AbbreviationAsWordInName"})
   private static class TextureParse {
     public String textureAtlasLocation = "textureAtlases/buildingsAtlas.png";
     public int atlasBuildingSize = 128;
@@ -56,7 +58,7 @@ public class FileHandler {
       // Read the content as a string
       mapData = fileHandle.readString();
     } else {
-      System.out.println("File not found!: " + fileHandle.toString());
+      System.out.println("File not found!: " + fileHandle);
     }
 
     return mapData;
@@ -128,9 +130,9 @@ public class FileHandler {
       BuildingStats.BuildingCoinDict.put(FOOD, coinParser.FOOD);
       BuildingStats.BuildingCoinDict.put(NONE, coinParser.NONE);
 
-      //IDs
+      // Ids
       BuildingParse idParser = gson.fromJson(arrayDict[5], BuildingParse.class);
-      BuildingStats.BuildingDict = new Hashtable<BuildingStats.BuildingType, String[]>();
+      BuildingStats.BuildingDict = new Hashtable<>();
       BuildingStats.BuildingDict.put(ACADEMIC, idParser.ACADEMIC);
       BuildingStats.BuildingDict.put(ACCOMMODATION, idParser.ACCOMODATION);
       BuildingStats.BuildingDict.put(RECREATIONAL, idParser.RECREATIONAL);

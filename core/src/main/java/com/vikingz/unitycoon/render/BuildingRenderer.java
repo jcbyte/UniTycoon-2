@@ -283,8 +283,7 @@ public class BuildingRenderer {
    *
    * @param x grid X coordinate
    * @param y grid Y coordinate
-   * @return if it is clear to place the building, there does not exist a building at the spot the
-   * user is trying to place the building at and grass is present in the buildings spot
+   * @return if it is clear to place the building
    */
   private boolean checkCollisions(float x, float y) {
     //Checks building exists in spot
