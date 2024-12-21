@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Json;
+import com.google.gson.JsonParseException;
 
 /**
  * This class allows us to save the GameConfig to a json file in player prefs.
@@ -65,20 +66,22 @@ public class GameConfigManager {
 
     Json json = new Json();
     Preferences prefs = Gdx.app.getPreferences("prefs");
-
-    prefs.clear(); // todo THIS NEEDS TO BE REMOVED BUT CURRENTLY THE JSON IS INVALID
-
+    
     String configString = prefs.getString("config");
     if (configString.isEmpty()) {
       System.out.println("Saved config not found");
       return;
     }
-    conf = json.fromJson(GameConfig.class, configString);
-    if (conf == null) {
-      System.err.println("Error demoralising config");
-      return;
-    }
 
-    GameConfig.getInstance().setInstance(conf);
+    try {
+      conf = json.fromJson(GameConfig.class, configString);
+      if (conf == null) {
+        throw new JsonParseException("null");
+      }
+
+      GameConfig.getInstance().setInstance(conf);
+    } catch (Exception e) {
+      System.err.println("Error deserializing config: " + e.getMessage());
+    }
   }
 }
