@@ -56,10 +56,13 @@ jobs:
           path: ./test/build/reports/tests/test
 
       - name: Generate JaCoCo Coverage Report
-        run: echo todo # todo
+        run: ./gradlew jacocoTestReport
 
       - name: Upload JaCoCo Coverage Report
-        run: echo todo # todo
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./test/build/reports/jacoco/test/html
 
       - name: Build with Gradle
         run: ./gradlew build
