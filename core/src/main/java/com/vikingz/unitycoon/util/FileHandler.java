@@ -37,7 +37,7 @@ public class FileHandler {
    */
   @SuppressWarnings({"checkstyle:MemberName", "checkstyle:AbbreviationAsWordInName"})
   private static class TextureParse {
-    public String textureAtlasLocation = "textureAtlases/buildingsAtlas.png";
+    public String textureAtlasLocation = "textures/textureAtlases/buildingsAtlas.png";
     public int atlasBuildingSize = 128;
     ArrayList<String> buildings;
     ArrayList<String> buildingPos;

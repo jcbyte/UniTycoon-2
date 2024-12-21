@@ -25,9 +25,9 @@ public class GameGlobals {
   public static int ELAPSED_TIME = 0;
 
   // Load map textures
-  public static final Texture map1Texture = new Texture(Gdx.files.internal("png/map1Texture.png"));
-  public static final Texture map2Texture = new Texture(Gdx.files.internal("png/map2Texture.png"));
-  public static final Texture map3Texture = new Texture(Gdx.files.internal("png/map3Texture.png"));
+  public static final Texture map1Texture = new Texture(Gdx.files.internal("maps/map1Texture.png"));
+  public static final Texture map2Texture = new Texture(Gdx.files.internal("maps/map2Texture.png"));
+  public static final Texture map3Texture = new Texture(Gdx.files.internal("maps/map3Texture.png"));
 
   public static final TextureRegionDrawable backGroundDrawable = new TextureRegionDrawable(
       new Texture("ui/sprites/background.png"));
