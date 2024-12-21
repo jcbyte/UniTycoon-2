@@ -62,7 +62,8 @@ public class BackgroundRenderer {
 
     //Texture of all tiles
     // Load your 64x64 PNG
-    Texture texture = new Texture(Gdx.files.internal("textures/textureAtlases/backgroundAtlas.png"));
+    Texture texture = new Texture(Gdx.files.internal(
+        "textures/textureAtlases/backgroundAtlas.png"));
 
     // Create TextureRegions for each tile
     int atlasTileSize = 64;
