@@ -51,7 +51,7 @@ public class FileHandler {
    */
   public static String loadMap(String fileName) {
     String mapData = "";
-    FileHandle fileHandle = Gdx.files.internal("maps/" + fileName + ".txt");
+    FileHandle fileHandle = Gdx.files.internal("gameData/maps/" + fileName + ".txt");
 
     // Check if the file exists
     if (fileHandle.exists()) {
@@ -63,13 +63,13 @@ public class FileHandler {
 
     return mapData;
   }
-  
+
   /**
    * Loads Building information maps into static Dictionaries in BuildingStats.
    */
   public static void loadBuildings() {
-    FileHandle fileHandle = Gdx.files.internal("gameData/buildingInfo.json");
-    FileHandle textureFileHandle = Gdx.files.internal("gameData/TextureAtlasMap.json");
+    FileHandle fileHandle = Gdx.files.internal("gameData/buildings/buildingInfo.json");
+    FileHandle textureFileHandle = Gdx.files.internal("gameData/buildings/buildingsAtlasMap.json");
 
     if (fileHandle.exists() && textureFileHandle.exists()) {
       // Json handle
