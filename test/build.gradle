@@ -64,8 +64,8 @@ jacocoTestReport {
   sourceSets project(':core').sourceSets.main
 
   reports {
-    html.required = true
     xml.required = false
+    html.required = true
     csv.required = false
   }
 }
