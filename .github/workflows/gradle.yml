@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -26,7 +26,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Grant execute permissions for Gradle wrapper
+      - name: Grant Execute Permissions for Gradle Wrapper
         run: chmod +x ./gradlew
 
       - name: Run Checkstyle
@@ -44,10 +44,13 @@ jobs:
           path: ./build/aggregated-reports/checkstyle/*
 
       - name: Run Unit Tests
-        run: echo todo # todo
+        run: ./gradlew test
 
       - name: Upload Unit Test Reports
-        run: echo todo # todo
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: ./test/build/reports/tests/test
 
       - name: Generate JaCoCo Coverage Report
         run: echo todo # todo
@@ -65,7 +68,7 @@ jobs:
           echo "JAR_FILENAME=$(basename $JAR_PATH)" >> $GITHUB_OUTPUT
           echo "JAR_PATH=$JAR_PATH" >> $GITHUB_OUTPUT
 
-      - name: Upload build artifact
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.jar-path.outputs.JAR_FILENAME}}
