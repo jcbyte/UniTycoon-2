@@ -29,7 +29,8 @@ public class TimeUtil {
    * @return Time in minutes and seconds
    */
   public static Time secondsToMinSecs(int secs) {
-    if (secs < 0) {
+    if (secs < 0)
+    {
       throw new IllegalArgumentException("secs cannot be negative");
     }
 
