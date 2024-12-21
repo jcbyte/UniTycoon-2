@@ -9,12 +9,16 @@ import com.vikingz.unitycoon.Main;
  * Launches the headless application.
  */
 public class HeadlessLauncher {
+  /**
+   * App entry.
+   */
   public static void main(String[] args) {
     createApplication();
   }
 
   private static Application createApplication() {
-    // Note: you can use a custom ApplicationListener implementation for the headless project instead of Gemo.
+    // We could use a custom ApplicationListener implementation for the headless project instead
+    // of Main.
     return new HeadlessApplication(new Main(), getDefaultConfiguration());
   }
 
