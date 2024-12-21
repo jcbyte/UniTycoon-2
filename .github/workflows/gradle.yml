@@ -32,6 +32,9 @@ jobs:
       - name: Run Checkstyle
         run: ./gradlew checkstyleMain
 
+      - name: Run Checkstyle on Tests
+        run: ./gradlew checkstyleTest
+
       - name: Aggregate Checkstyle Reports
         if: always() # This ensures the Checkstyle reports are aggregated regardless of whether checkstyle fails the build
         run: ./gradlew aggregateCheckstyleReports
