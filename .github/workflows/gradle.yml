@@ -44,12 +44,16 @@ jobs:
           path: ./build/aggregated-reports/checkstyle/*
 
       - name: Run Unit Tests
+        run: echo todo # todo
 
       - name: Upload Unit Test Reports
+        run: echo todo # todo
 
       - name: Generate JaCoCo Coverage Report
+        run: echo todo # todo
 
       - name: Upload JaCoCo Coverage Report
+        run: echo todo # todo
 
       - name: Build with Gradle
         run: ./gradlew build
