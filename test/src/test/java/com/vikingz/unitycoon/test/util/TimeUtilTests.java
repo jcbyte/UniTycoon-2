@@ -1,9 +1,9 @@
-package com.vikingz.unitycoon.test;
+package com.vikingz.unitycoon.test.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
 import com.vikingz.unitycoon.util.TimeUtil;
 import org.junit.jupiter.api.Test;
 
