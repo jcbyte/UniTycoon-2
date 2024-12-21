@@ -1,33 +1,27 @@
 package com.vikingz.unitycoon;
 
 import com.badlogic.gdx.Game;
-import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.audio.GameMusic;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
 import com.vikingz.unitycoon.util.FileHandler;
-import com.vikingz.unitycoon.audio.GameMusic;
 
 /**
- * Main class
- * <p>
- * Entry point of the game
+ * Main class.
+ *
+ * <p>Entry point of the game
  */
 public class Main extends Game {
-    @Override
-    public void create() {
-        GameConfigManager.loadGameConfig();
+  @Override
+  public void create() {
+    GameConfigManager.loadGameConfig();
 
-        new GameMusic().init();
-        GameMusic.play();
-        FileHandler.loadBuildings("buildingInfo","TextureAtlasMap");
-        ScreenMultiplexer.init(this);
+    new GameMusic().init();
+    GameMusic.play();
+    FileHandler.loadBuildings("buildingInfo", "TextureAtlasMap");
+    ScreenMultiplexer.init(this);
 
-        // If SKIP_MENUS is enabled in GameConfig, the game will load straight into the game.
-        if(GameConfig.getInstance().isSkipMenus()){
-            ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
-        }
-        else{
-            ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
-        }
-    }
+    // If SKIP_MENUS is enabled in GameConfig, the game will load straight into the game.
+    ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
+  }
 }

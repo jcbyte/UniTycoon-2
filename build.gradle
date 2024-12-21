@@ -30,6 +30,13 @@ configure(subprojects) {
   apply plugin: 'java-library'
   sourceCompatibility = 17
 
+  apply plugin: 'checkstyle' // Apply Checkstyle plugin
+  checkstyle {
+    toolVersion = '10.21.0' // Use the desired Checkstyle version
+    configFile = rootProject.file('checkstyle.xml') // Path to the Checkstyle config
+    maxWarnings = 0 // Ensure the build fails on Checkstyle violations including warnings
+  }
+
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.
   tasks.register('generateAssetList') {
@@ -56,7 +63,6 @@ configure(subprojects) {
 }
 
 
-
 subprojects {
   version = '$projectVersion'
   ext.appName = 'UniTycoon2'
@@ -72,8 +78,29 @@ subprojects {
 }
 
 
-
-
-
-
 eclipse.project.name = 'UniTycoon' + '-parent'
+
+
+tasks.register('aggregateCheckstyleReports') {
+  doLast {
+    File reportsDir = file("${rootProject.layout.buildDirectory.get()}/aggregated-reports/checkstyle")
+    reportsDir.mkdirs()
+
+    subprojects.each { Project subproject ->
+      File checkstyleReportsDir = file("${subproject.layout.buildDirectory.get()}/reports/checkstyle")
+
+      // Check if the directory exists and then copy all files in it
+      if (checkstyleReportsDir.exists()) {
+        copy {
+          from checkstyleReportsDir.absolutePath
+          into reportsDir.absolutePath
+          include '**/*'
+          rename { filename ->
+            // Rename the files to include the subproject name for uniqueness
+            "checkstyle-${subproject.name}-${filename}"
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,130 +6,129 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameConfig;
-import com.vikingz.unitycoon.util.LeaderboardManager;
+import com.vikingz.unitycoon.util.LeaderboardUtils;
 
 /**
  * This class represents the main menu of the game.
- * <p>
- * The main menu is where the user begins from. This menu
- * contains multiple buttons that allow the user to begin the game.
- * <p>
- * Inherits Screen, SuperScreen
+ *
+ * <p>The main menu is where the user begins from.
+ * This menu contains multiple buttons that allow the user to begin the game.
  */
 public class MenuScreen extends SuperScreen implements Screen {
+  /**
+   * Creates a new menu screen.
+   */
+  public MenuScreen() {
+    Gdx.input.setInputProcessor(stage);
 
+    // Create buttons
+    TextButton playButton = new TextButton("Play", skin);
+    playButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MAP_SELECTION);
+      }
+    });
 
-    /**
-     * Creates a new menu screen
-     */
-    public MenuScreen() {
-        Gdx.input.setInputProcessor(stage);
+    TextButton settingsButton = new TextButton("Settings", skin);
+    settingsButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.SETTINGS);
+      }
+    });
 
-        // Load a default skin
+    TextButton quitButton = new TextButton("Quit", skin);
+    quitButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        Gdx.app.exit(); // Quit the application
+      }
+    });
 
-        // Create buttons
-        TextButton playButton = new TextButton("Play", skin);
-        TextButton settingsButton = new TextButton("Settings", skin);
-        TextButton quitButton = new TextButton("Quit", skin);
+    // Create a table for layout
+    Table table = new Table();
+    table.setFillParent(true);
+    table.center();
 
-        // Add listeners to buttons
-        playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MAPSELECTION);
-            }
-        });
+    Image texture = new Image(new Texture(Gdx.files.internal("gameLogo.png")));
+    table.add(texture).pad(50).row();
 
-        settingsButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.SETTINGS);
-            }
-        });
+    // Add buttons to table
+    Table buttonsTable = new Table();
+    buttonsTable.add(playButton).pad(10).row();
+    buttonsTable.add(settingsButton).pad(10).row();
+    buttonsTable.add(quitButton).pad(10);
 
-        quitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit(); // Quit the application
-            }
-        });
+    // Add the table to the stage
+    table.add(buttonsTable);
+    stage.addActor(table);
 
-        // Create a table for layout
-        Table table = new Table();
-        table.setFillParent(true);  // Center table on stage
-        table.center();
+    // Create table for leaderboard
+    Table leaderboardTable = new Table();
+    leaderboardTable.setFillParent(true);
+    leaderboardTable.bottom().right();
 
-        Image texture = new Image(new Texture(Gdx.files.internal("gameLogo.png")));
-        table.add(texture).pad(50);
-        table.row();
+    Label leaderboardLabel = new Label(
+        "Leaderboard:\n\n"
+            + LeaderboardUtils.leaderboardToString(GameConfig.getInstance().getLeaderboard()),
+        skin);
+    leaderboardLabel.setFontScale(1.75f);
 
-        // Add buttons to table
-        Table buttonsTable = new Table();
-        buttonsTable.add(playButton).pad(10).row();
-        buttonsTable.add(settingsButton).pad(10).row();
-        buttonsTable.add(quitButton).pad(10);
-        table.add(buttonsTable);
+    // Add leaderboard to the stage
+    leaderboardTable.add(leaderboardLabel).padBottom(20).padRight(100).bottom().right();
+    stage.addActor(leaderboardTable);
+  }
 
-        // Add the table to the stage
-        stage.addActor(table);
+  @Override
+  public void show() {
+    // Called when this screen becomes the current screen for the game.
+  }
 
-        Label leaderboardLabel = new Label("Leaderboard:\n\n" + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().leaderboard), skin);
-        leaderboardLabel.setFontScale(1.75f);
+  @Override
+  public void render(float delta) {
+    // Clear the screen
+    Gdx.gl.glClearColor(25 / 255f, 25 / 255f, 25 / 255f, 1);
+    Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
 
-        // Add leaderboard to table
-        Table leaderboardTable = new Table();
-        leaderboardTable.setFillParent(true);
-        leaderboardTable.bottom().right();
-        leaderboardTable.add(leaderboardLabel).padBottom(20).padRight(100).bottom().right();
+    stage.act(delta);
+    stage.draw();
+  }
 
-        // Add the table to the stage
-        stage.addActor(leaderboardTable);
-    }
+  /**
+   * Updates the viewport when the window is resized.
+   *
+   * @param width  New width
+   * @param height New height
+   */
+  @Override
+  public void resize(int width, int height) {
+    stage.getViewport().update(width, height, true);
+  }
 
-    @Override
-    public void show() {
-        // Called when this screen becomes the current screen for the game.
-    }
+  @Override
+  public void pause() {
+  }
 
-    @Override
-    public void render(float delta) {
-        // Clear the screen
-        Gdx.gl.glClearColor(25/255f, 25/255f, 25/255f, 1);
-        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+  @Override
+  public void resume() {
+  }
 
-        // Draw the stage
-        stage.act(delta);
-        stage.draw();
-    }
+  @Override
+  public void hide() {
+  }
 
-    @Override
-    public void resize(int width, int height) {
-        // Update the stage's viewport when the screen size changes
-        stage.getViewport().update(width, height, true);
-    }
-
-    @Override
-    public void pause() { }
-
-    @Override
-    public void resume() { }
-
-    @Override
-    public void hide() {
-        // This removes the bug where the user can still click the buttons from the game screen.
-    }
-
-    /**
-     * disposes MenuScreen for garbage collection
-     */
-    @Override
-    public void dispose() {
-        // Dispose of assets when this screen is no longer used
-        stage.dispose();
-        skin.dispose();
-    }
+  /**
+   * Dispose for garbage collection.
+   */
+  @Override
+  public void dispose() {
+    // Dispose of assets when this screen is no longer used
+    stage.dispose();
+    skin.dispose();
+  }
 }

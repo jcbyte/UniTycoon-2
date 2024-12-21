@@ -1,6 +1,5 @@
 package com.vikingz.unitycoon.render;
 
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,108 +17,111 @@ import com.vikingz.unitycoon.util.TimeUtil;
 
 /**
  * This class is used for drawing game stats to the screen.
- * <p>
- * This class contains all the labels that are on the
- * top right of the screen that display the users balance,
+ *
+ * <p>This class contains all the labels that are in the top bar that display the users balance,
  * satisfaction etc.
  */
 public class StatsRenderer {
 
-    //Used to render UI
-    private final Stage stage;
-    private final BitmapFont font;
+  //Used to render UI
+  private final Stage stage;
+  private final BitmapFont font;
 
-    // Labels
-    String balStr;
-    Label balanceLabel;
+  // Labels
+  private final String balStr;
+  private final Label balanceLabel;
 
-    String studentsStr;
-    Label studentsLabel;
+  private final String studentsStr;
+  private final Label studentsLabel;
 
-    String satisStr;
-    Label satisfactionLabel;
+  private final String satisStr;
+  private final Label satisfactionLabel;
 
-    String timerStr;
-    Label timerLabel;
+  private final String timerStr;
+  private final Label timerLabel;
 
-    /**
-     * Creates a new stats renderer
-     * @param skin Skin that determines the style of the text
-     */
-    public StatsRenderer(Skin skin) {
-        stage = new Stage();
-        font = new BitmapFont();
-        font.getData().setScale(1.5f);
+  /**
+   * Creates a new stat's renderer.
+   *
+   * @param skin Skin that determines the style of the text
+   */
+  public StatsRenderer(Skin skin) {
+    stage = new Stage();
 
-        // Label strings
-        balStr = "Balance: ";
-        studentsStr = "Students: ";
-        satisStr = "Satisfaction: ";
-        timerStr = "Timer: ";
+    font = new BitmapFont();
+    font.getData().setScale(1.5f);
 
-        // Creating labels
-        balanceLabel = new Label(balStr, skin);
-        balanceLabel.setColor(Color.BLACK);
-        balanceLabel.setFontScale(2f);
+    // Label strings
+    balStr = "Balance: ";
+    studentsStr = "Students: ";
+    satisStr = "Satisfaction: ";
+    timerStr = "Timer: ";
 
-        studentsLabel = new Label(studentsStr, skin);
-        studentsLabel.setColor(Color.BLACK);
-        studentsLabel.setFontScale(2f);
+    // Creating labels
+    balanceLabel = new Label(balStr, skin);
+    balanceLabel.setColor(Color.BLACK);
+    balanceLabel.setFontScale(2f);
 
-        satisfactionLabel = new Label(satisStr, skin);
-        satisfactionLabel.setColor(Color.BLACK);
-        satisfactionLabel.setFontScale(2f);
+    studentsLabel = new Label(studentsStr, skin);
+    studentsLabel.setColor(Color.BLACK);
+    studentsLabel.setFontScale(2f);
 
-        timerLabel = new Label(timerStr, skin);
-        timerLabel.setColor(Color.BLACK);
-        timerLabel.setFontScale(2f);
+    satisfactionLabel = new Label(satisStr, skin);
+    satisfactionLabel.setColor(Color.BLACK);
+    satisfactionLabel.setFontScale(2f);
 
-        // Create a background color texture
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(0.95f, 0.95f, 1f, 0.9f);
-        pixmap.fill();
-        Drawable background = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
-        pixmap.dispose();
+    timerLabel = new Label(timerStr, skin);
+    timerLabel.setColor(Color.BLACK);
+    timerLabel.setFontScale(2f);
 
-        // Create layout tables
-        Table outerTable = new Table();
-        outerTable.setFillParent(true);
-        outerTable.top();
+    // Create layout tables
+    Table outerTable = new Table();
+    outerTable.setFillParent(true);
+    outerTable.top();
 
-        Table table = new Table();
-        table.setBackground(background);
-        table.defaults().pad(5, 10, 5, 10).width(380);
+    // Create a background color texture
+    Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+    pixmap.setColor(0.95f, 0.95f, 1f, 0.9f);
+    pixmap.fill();
+    Drawable background = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+    pixmap.dispose();
 
-        // Adds the labels to the table
-        table.add(balanceLabel);
-        table.add(studentsLabel);
-        table.add(satisfactionLabel);
-        table.add(timerLabel);
+    Table table = new Table();
+    table.setBackground(background);
+    table.defaults().pad(5, 10, 5, 10).width(380);
 
-        outerTable.add(table).expandX().fillX();
-        stage.addActor(outerTable);
-    }
+    // Adds the labels to the table
+    table.add(balanceLabel);
+    table.add(studentsLabel);
+    table.add(satisfactionLabel);
+    table.add(timerLabel);
 
-    /**
-     * Draws the labels to the screen
-     * @param delta Time since last frame
-     */
-    public void render(float delta) {
-        // Update the label contents each frame
-        balanceLabel.setText(balStr + GameGlobals.BALANCE);
-        studentsLabel.setText(studentsStr + GameGlobals.STUDENTS);
-        satisfactionLabel.setText(satisStr + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION));
-        timerLabel.setText(timerStr + TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME));
+    outerTable.add(table).expandX().fillX();
+    stage.addActor(outerTable);
+  }
 
-        stage.act(delta);
-        stage.draw();
-    }
+  /**
+   * Draws the labels to the screen.
+   *
+   * @param delta Time since last frame
+   */
+  public void render(float delta) {
+    // Update the label contents each frame
+    balanceLabel.setText(balStr + GameGlobals.BALANCE);
+    studentsLabel.setText(studentsStr + GameGlobals.STUDENTS);
+    satisfactionLabel.setText(
+        satisStr + StatsCalculator.getFormattedSatisfaction(GameGlobals.SATISFACTION));
+    timerLabel.setText(timerStr + TimeUtil.secondsToMinSecs(GameGlobals.ELAPSED_TIME));
 
-    /**
-     * disposes stats being drawn for garbage collection
-     */
-    public void dispose(){
-        stage.dispose();
-        font.dispose();
-    }
+    stage.act(delta);
+    stage.draw();
+  }
+
+  /**
+   * Dispose for garbage collection.
+   */
+  public void dispose() {
+    stage.dispose();
+    font.dispose();
+  }
 }

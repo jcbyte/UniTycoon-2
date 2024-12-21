@@ -1,256 +1,228 @@
 package com.vikingz.unitycoon.screens;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.audio.GameMusic;
 import com.vikingz.unitycoon.audio.GameSounds;
+import com.vikingz.unitycoon.global.GameConfigManager;
 
 /**
- * This screen represents the settings screen in the game
- * <p>
- * It contains multiple buttons and slider which edit different game settings
- * <p>
- * Inherits Screen, SuperScreen
+ * This screen represents the settings screen in the game.
+ *
+ * <p>It contains multiple buttons and slider which edit different game settings
  */
 public class SettingsScreen extends SuperScreen implements Screen {
+  // Components on the settings screen
+  private final Label resolutionLabel;
+  private String resolutionString;
+  private String musicVolume;
+  private String soundVolume;
 
+  // Music and Sounds Components
+  private final Slider soundVolumeSlider;
+  private final Label soundVolumeLabel;
+  private final Slider musicVolumeSlider;
+  private final Label musicVolumeLabel;
 
-    // Components on the settings screen
-    private final Label resolutionLabel;
-    private String resolutionString;
-    private String musicVolume;
-    private String soundVolume;
+  // Stores the previous screen before settings
+  private ScreenMultiplexer.Screens previousScreen;
 
-    //Music and Sounds Components
-    private final Slider SoundVolumeSlider;
-    private final Label SoundVolumeLabel;
-    private final Slider MusicVolumeSlider;
-    private final Label MusicVolumeLabel;
+  private GameScreen gameScreen;
 
-    //Stores the previous screen before settings
-    private ScreenMultiplexer.Screens previousScreen;
+  /**
+   * Creates a new settings screen.
+   */
+  public SettingsScreen() {
+    super();
 
-    //Button that fullscreen game
-    private final TextButton fullscreenButton;
+    resolutionString = GameConfigManager.getFriendlyWindowSize();
+
+    previousScreen = ScreenMultiplexer.Screens.MENU;
+    resolutionLabel = new Label(GameConfigManager.getFriendlyWindowSize(), skin);
+    resolutionLabel.setFontScale(2f);
+
+    // Create Sound volume slider
+    soundVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
+    soundVolumeSlider.setValue(GameSounds.getVolume());
+    soundVolumeLabel = new Label(soundVolume, skin);
+    soundVolumeLabel.setFontScale(1.8f);
+    soundVolume = "Sound Volume: " + soundVolumeSlider.getValue();
+
+    // Create Music volume slider
+    musicVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
+    musicVolumeSlider.setValue(GameMusic.getVolume());
+    musicVolumeLabel = new Label(soundVolume, skin);
+    musicVolumeLabel.setFontScale(1.8f);
+    this.musicVolume = "Music Volume: " + musicVolumeSlider.getValue();
+
+    // Back button to return to MenuScreen
+    TextButton backButton = new TextButton("Back", skin);
+    backButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        goBack();
+      }
+    });
+
+    // Quit button to quit the application
+    TextButton quitButton = new TextButton("Quit Game", skin);
+    quitButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        Gdx.app.exit();
+      }
+    });
+
+    // Button that fullscreen game
+    TextButton fullscreenButton = new TextButton("Fullscreen", skin);
+    fullscreenButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        GameConfigManager.setFullScreen();
+        if (gameScreen != null) {
+          gameScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+      }
+    });
+
     //Button that makes the game window
-    private final TextButton windowButton;
+    TextButton windowButton = new TextButton("Window Mode", skin);
+    windowButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        GameConfigManager.setWindowScreen();
+      }
+    });
+
     //Saves the configuration of GameConfig
-    private final TextButton saveGameConfigButton;
+    TextButton saveGameConfigButton = new TextButton("Save", skin);
+    saveGameConfigButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        GameConfigManager.saveGameConfig();
+      }
+    });
 
-    private GameScreen gameScreen;
+    // Create layout table
+    Table table = new Table();
+    table.setFillParent(true);
+    table.center();
 
+    table.add(resolutionLabel).colspan(2).row();
+    table.add(soundVolumeLabel).colspan(2).uniformX().pad(10).row();
+    table.add(soundVolumeSlider).colspan(2).uniformX().width(500).pad(10).row();
+    table.add(musicVolumeLabel).colspan(2).uniformX().pad(10).row();
+    table.add(musicVolumeSlider).colspan(2).uniformX().width(500).pad(10).row();
+    table.add(fullscreenButton).fillX().uniformX().pad(10);
+    table.add(windowButton).fillX().uniformX().pad(10).row();
+    table.add(saveGameConfigButton).colspan(2).pad(10).padTop(60).row();
+    table.add(backButton).colspan(2).uniformX().pad(10).row();
+    table.add(quitButton).colspan(2).uniformX().pad(10).padTop(60);
 
-    /**
-     * Creates a new settings screen
-     */
-    public SettingsScreen() {
-        super();
-        resolutionString = GameConfigManager.CurrentWindowSize();
+    // Add table to stage
+    stage.addActor(table);
+  }
 
-        this.previousScreen = ScreenMultiplexer.Screens.MENU;
-        this.resolutionLabel = new Label(GameConfigManager.CurrentWindowSize(), skin);
+  /**
+   * Switches screens back to the screen the user accessed settings from.
+   */
+  public void goBack() {
+    System.out.println(previousScreen.name());
 
-        // Create Sound volume slider
-        SoundVolumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
-        SoundVolumeSlider.setValue(GameSounds.getVolume());
-        SoundVolumeLabel = new Label(soundVolume, skin);
-        this.soundVolume = "Sound Volume: " + SoundVolumeSlider.getValue();
+    if (previousScreen.name().equals("GAME")) {
+      ScreenMultiplexer.switchScreens(previousScreen);
+    } else {
+      ScreenMultiplexer.openMenu();
+    }
+  }
 
-        // Create Music volume slider
-        MusicVolumeSlider = new Slider(0, 1, 0.1f, false, skin); // Min: 0, Max: 100, Step: 1
-        MusicVolumeSlider.setValue(GameMusic.getVolume());
-        MusicVolumeLabel = new Label(soundVolume, skin);
-        this.musicVolume = "Music Volume: " + MusicVolumeSlider.getValue();
+  @Override
+  public void show() {
+  }
 
+  /**
+   * Draws the components of the settings screen.
+   *
+   * @param delta Time since last frame
+   */
+  @Override
+  public void render(float delta) {
+    // Clear screen
+    Gdx.gl.glClearColor(0, 0, 0, 1);
+    Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
 
-        // Adds event listeners to buttons
-
-        // Back button to return to MenuScreen
-        TextButton backButton = new TextButton("Back", skin);
-        backButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                goBack();
-            }
-        });
-
-        TextButton quitButton = new TextButton("Quit Game", skin);
-        quitButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.app.exit(); // Quit the application
-            }
-        });
-
-        fullscreenButton = new TextButton("Fullscreen",skin);
-        fullscreenButton.addListener(new ClickListener() {
-             @Override
-             public void clicked(InputEvent event, float x, float y) {
-                 GameConfigManager.setFullScreen();
-                 if (gameScreen != null) {
-                     gameScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-                 }
-             }
-        });
-
-        windowButton = new TextButton("Window Mode",skin);
-        windowButton.addListener(new ClickListener() {
-             @Override
-             public void clicked(InputEvent event, float x, float y) {
-                 GameConfigManager.setWindowScreen();
-             }
-        });
-
-        saveGameConfigButton = new TextButton("Save",skin);
-        saveGameConfigButton.addListener(new ClickListener() {
-             @Override
-             public void clicked(InputEvent event, float x, float y) {
-                 GameConfigManager.saveGameConfig();
-             }
-        });
-
-        // Create layout table
-        Table table = new Table();
-        table.setFillParent(true);
-        table.center();
-
-        table.add((Actor) null);
-        table.add(resolutionLabel);
-        table.row();
-
-        // Add elements to the table
-        table.add((Actor) null);
-        table.add(SoundVolumeLabel).uniformX().pad(10);
-        table.row();
-
-        table.add((Actor) null);
-        table.add(SoundVolumeSlider).fillX().uniformX().pad(10);
-        table.row();
-
-        table.add((Actor) null);
-        table.add(MusicVolumeLabel).uniformX().pad(10);
-        table.row();
-
-        table.add((Actor) null);
-        table.add(MusicVolumeSlider).fillX().uniformX().pad(10);
-        table.row();
-
-        table.add(fullscreenButton).fillX().uniformX().pad(10);
-        table.add(saveGameConfigButton).fillX().pad(10);
-        table.add(windowButton).fillX().uniformX().pad(10);
-        table.row();
-
-
-        table.add((Actor) null);
-        table.add(backButton).fillX().uniformX().pad(10);
-
-        table.row();
-        table.add((Actor) null);
-
-        table.add(quitButton).fillX().pad(10);
-        table.row();
-
-        table.row();
-
-
-        // Add table to stage
-        stage.addActor(table);
+    // Go back when pressing ESC
+    if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+      goBack();
     }
 
-    /**
-     * Switches screens back to the screen the user access the settings from
-     */
-    public void goBack(){
-        System.out.println(previousScreen.name());
-        if (previousScreen.name().equals("GAME")) {
-            ScreenMultiplexer.switchScreens(previousScreen);
-        }
-        else {
-            ScreenMultiplexer.openMenu();
-        }
-    }
+    soundVolume = "Sound Volume: " + Math.round(soundVolumeSlider.getValue() * 10);
+    musicVolume = "Music Volume: " + Math.round(musicVolumeSlider.getValue() * 10);
 
-    @Override
-    public void show() { }
+    GameSounds.setVolume(soundVolumeSlider.getValue());
+    GameMusic.setVolume(musicVolumeSlider.getValue());
 
-    /**
-     * Draws the components of the settings screen
-     * @param delta Time since last frame
-     */
-    @Override
-    public void render(float delta) {
-        // Clear screen
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+    soundVolumeLabel.setText(soundVolume);
+    musicVolumeLabel.setText(musicVolume);
+    resolutionLabel.setText(resolutionString);
 
-        //back button
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            goBack();
-        }
+    stage.act(delta);
+    stage.draw();
+  }
 
-        soundVolume = "Sound Volume: " + Math.round(SoundVolumeSlider.getValue() * 10);
-        musicVolume = "Music Volume: " + Math.round(MusicVolumeSlider.getValue() * 10);
+  /**
+   * Changes SettingScreen to new resolution and updates resolutionText.
+   *
+   * @param width  int resolution
+   * @param height int resolution
+   */
+  @Override
+  public void resize(int width, int height) {
+    stage.getViewport().update(width, height, true);
+    resolutionString = "Resolution: " + width + "x" + height;
+  }
 
-        GameSounds.setVolume(SoundVolumeSlider.getValue());
-        GameMusic.setVolume(MusicVolumeSlider.getValue());
+  @Override
+  public void pause() {
+  }
 
-        SoundVolumeLabel.setText(soundVolume);
-        MusicVolumeLabel.setText(musicVolume);
-        resolutionLabel.setText(resolutionString);
+  @Override
+  public void resume() {
+  }
 
-        stage.act(delta);
-        stage.draw();
-    }
+  @Override
+  public void hide() {
+  }
 
-    /**
-     * Changes SettingScreen to new resolution,
-     * and updates resolutionText
-     * @param width int resolution
-     * @param height int resolution
-     */
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-        resolutionString = "Resolution: " + width + "x" + height;
-    }
+  /**
+   * Dispose for garbage collection.
+   */
+  @Override
+  public void dispose() {
 
-    @Override
-    public void pause() { }
+    stage.dispose();
+    skin.dispose();
+  }
 
-    @Override
-    public void resume() { }
+  /**
+   * Sets the previous screen.
+   *
+   * @param prevScreen Previous screen
+   */
+  public void setPrevScreen(ScreenMultiplexer.Screens prevScreen) {
+    this.previousScreen = prevScreen;
+  }
 
-    @Override
-    public void hide() { }
-
-    /**
-     * Disposes SettingsScreen for garbage collection
-     */
-    @Override
-    public void dispose() {
-
-        stage.dispose();
-        skin.dispose();
-    }
-
-    /**
-     * Sets the previous screen
-     * @param prevScreen Previous screen
-     */
-    public void setPrevScreen(ScreenMultiplexer.Screens prevScreen){
-        this.previousScreen = prevScreen;
-    }
-
-    public void setGameScreen(GameScreen gameScreen) {
-        this.gameScreen = gameScreen;
-    }
+  public void setGameScreen(GameScreen gameScreen) {
+    this.gameScreen = gameScreen;
+  }
 
 }

@@ -3,168 +3,153 @@ package com.vikingz.unitycoon.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vikingz.unitycoon.global.GameGlobals;
 
 /**
- * This class represents the screen where the user chooses the
- * map they want to play.
+ * This class represents the screen where the user chooses the map they want to play.
  *
- * This class contains a bunch of buttons that allow the user to
- * cycle through the different maps available as well as go back
- * to the main menu or play game.
- *
- * Inherits Screen, SuperScreen
- *
+ * <p>This class contains a bunch of buttons that allow the user to cycle through the different
+ * maps available as well as go back to the main menu or play game.
  */
 public class MapSelectorScreen extends SuperScreen implements Screen {
 
-    //Text that shows which map is currently selected
-    private final TextField mapText;
+  //Text that shows which map is currently selected
+  private final TextField mapText;
 
-    //List of map Image that are used to set the preview image
-    private final TextureRegionDrawable[] mapArray;
+  //List of map Image that are used to set the preview image
+  private final TextureRegionDrawable[] mapArray;
 
-    //Current map Selected
-    private int mapSelection = 1;
+  //Current map Selected
+  private int mapSelection = 1;
 
-    /**
-     * Creates a new Map selector screen
-     */
-    public MapSelectorScreen() {
-        super();
+  /**
+   * Creates a new Map selector screen.
+   */
+  public MapSelectorScreen() {
+    super();
 
-        //Loads maps from global config
-        mapArray = GameGlobals.mapArray;
+    //Loads maps from global config
+    mapArray = GameGlobals.mapArray;
 
-        TextButton goBack = new TextButton("Go Back",skin);
-        TextButton startGame = new TextButton("Start Game",skin);
-        TextButton nextMap = new TextButton("->",skin);
-        TextButton previousMap = new TextButton("<-",skin);
+    Image mapImage = new Image(GameGlobals.map1Texture);
 
-        //Gp back Button
-        goBack.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
-            }
-        });
+    // Selects the next map
+    TextButton nextMap = new TextButton("->", skin);
+    nextMap.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        mapSelection++;
+        if (mapSelection > 3) {
+          mapSelection = 1;
+        }
+        mapImage.setDrawable(mapArray[mapSelection - 1]);
+      }
+    });
 
+    // Selects the previous map
+    TextButton previousMap = new TextButton("<-", skin);
+    previousMap.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        mapSelection--;
+        if (mapSelection < 1) {
+          mapSelection = mapArray.length;
+        }
+        mapImage.setDrawable(mapArray[mapSelection - 1]);
+      }
+    });
 
-        Image mapImage = new Image(GameGlobals.map1Texture);
+    mapText = new TextField("map".concat(Integer.toString(mapSelection)), skin);
 
-        //Selects the next map
-        nextMap.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                mapSelection++;
-                if (mapSelection > 3) {
-                    mapSelection = 1;
-                }
-                mapImage.setDrawable(mapArray[mapSelection-1]);
-            }
-        });
+    TextButton startGame = new TextButton("Start Game", skin);
+    startGame.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        ScreenMultiplexer.runGame(mapText.getText().toLowerCase());
+      }
+    });
 
+    TextButton goBack = new TextButton("Go Back", skin);
+    goBack.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
+      }
+    });
 
-        //Selects the previous map
-        previousMap.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                mapSelection--;
-                if (mapSelection < 1){
-                    mapSelection = mapArray.length;
-                }
-                mapImage.setDrawable(mapArray[mapSelection-1]);
-            }
-        });
+    // Create table for layout
+    Table table = new Table();
+    table.setFillParent(true);
+    table.center();
 
+    table.add(mapImage).colspan(3).width(300).height(350).pad(10).row();
+    table.add(previousMap).pad(10);
+    table.add(mapText).pad(10);
+    table.add(nextMap).pad(10).row();
+    table.add(startGame).colspan(3).pad(10).padTop(80).row();
+    table.add(goBack).colspan(3).pad(10);
 
-        mapText = new TextField("map".concat(Integer.toString(mapSelection)),skin);
+    // Add the table to the stage
+    stage.addActor(table);
+  }
 
-        startGame.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ScreenMultiplexer.runGame(mapText.getText().toLowerCase());
-            }
-        });
+  @Override
+  public void show() {
+    // This method is called when the screen is shown
+  }
 
-        // Create table for layout
-        Table table = new Table();
-        table.setFillParent(true);
-        table.center();
+  /**
+   * Renders the stage to the screen.
+   *
+   * @param delta Time since last frame
+   */
+  @Override
+  public void render(float delta) {
+    // Clear the screen
+    Gdx.gl.glClearColor(25 / 255f, 25 / 255f, 25 / 255f, 1);
+    Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+    mapText.setText("Map".concat(Integer.toString(mapSelection)));
 
+    stage.act(delta);
+    stage.draw();
+  }
 
-        table.add((Actor) null);
-        table.add(mapImage).width(300).height(350).pad(10);
+  /**
+   * Updates the viewport when the window is resized.
+   *
+   * @param width  New width
+   * @param height New height
+   */
+  @Override
+  public void resize(int width, int height) {
+    stage.getViewport().update(width, height, true);
+  }
 
-        table.row();
+  @Override
+  public void pause() {
+  }
 
-        table.add(previousMap).pad(10);
-        table.add(mapText).pad(10);
-        table.add(nextMap).pad(10);
-        table.row();
-        table.row();
+  @Override
+  public void resume() {
+  }
 
-        table.add(goBack).pad(10);
-        table.add((Actor) null);
-        table.add(startGame).pad(10);
+  @Override
+  public void hide() {
+  }
 
-
-        // Add the table to the stage
-        stage.addActor(table);
-    }
-
-    @Override
-    public void show() {
-        // This method is called when the screen is shown
-    }
-    /**
-     * Renders the stage to the screen
-     * @param delta Time since last frame
-     */
-    @Override
-    public void render(float delta) {
-        // Clear the screen
-        Gdx.gl.glClearColor(25/255f, 25/255f, 25/255f, 1);
-        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
-        mapText.setText("Map".concat(Integer.toString(mapSelection)));
-
-        stage.act(delta);
-        stage.draw();
-    }
-
-
-    /**
-     * Updates the viewport when the window is resized
-     * @param width New width
-     * @param height New height
-     */
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-    }
-
-    @Override
-    public void pause() { }
-
-    @Override
-    public void resume() { }
-
-    @Override
-    public void hide() { }
-
-    /**
-     * disposes MapScreen for garbage collection
-     */
-    @Override
-    public void dispose() {
-        // Dispose of resources
-        stage.dispose();
-        skin.dispose();
-    }
+  /**
+   * Dispose for garbage collection.
+   */
+  @Override
+  public void dispose() {
+    stage.dispose();
+    skin.dispose();
+  }
 }
