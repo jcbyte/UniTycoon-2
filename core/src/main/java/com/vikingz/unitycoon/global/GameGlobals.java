@@ -30,7 +30,7 @@ public class GameGlobals {
   public static final Texture map3Texture = new Texture(Gdx.files.internal("png/map3Texture.png"));
 
   public static final TextureRegionDrawable backGroundDrawable = new TextureRegionDrawable(
-      new Texture("png/background.png"));
+      new Texture("ui/sprites/background.png"));
 
   //Loads map as a drawable to allow changing Image Actors to different images
   public static final TextureRegionDrawable map1Draw = new TextureRegionDrawable(map1Texture);

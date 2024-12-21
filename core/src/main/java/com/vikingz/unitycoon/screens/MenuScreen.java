@@ -55,7 +55,7 @@ public class MenuScreen extends SuperScreen implements Screen {
     table.setFillParent(true);
     table.center();
 
-    Image texture = new Image(new Texture(Gdx.files.internal("gameLogo.png")));
+    Image texture = new Image(new Texture(Gdx.files.internal("ui/sprites/gameLogo.png")));
     table.add(texture).pad(50).row();
 
     // Add buttons to table
