@@ -63,17 +63,13 @@ public class FileHandler {
 
     return mapData;
   }
-
-
+  
   /**
    * Loads Building information maps into static Dictionaries in BuildingStats.
-   *
-   * @param fileName        String Name of the file to load
-   * @param textureFileName String Name of the texture file
    */
-  public static void loadBuildings(String fileName, String textureFileName) {
-    FileHandle fileHandle = Gdx.files.internal("config/" + fileName + ".json");
-    FileHandle textureFileHandle = Gdx.files.internal("config/" + textureFileName + ".json");
+  public static void loadBuildings() {
+    FileHandle fileHandle = Gdx.files.internal("gameData/buildingInfo.json");
+    FileHandle textureFileHandle = Gdx.files.internal("gameData/TextureAtlasMap.json");
 
     if (fileHandle.exists() && textureFileHandle.exists()) {
       // Json handle

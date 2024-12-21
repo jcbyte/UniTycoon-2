@@ -18,7 +18,7 @@ public class Main extends Game {
 
     new GameMusic().init();
     GameMusic.play();
-    FileHandler.loadBuildings("buildingInfo", "TextureAtlasMap");
+    FileHandler.loadBuildings();
     ScreenMultiplexer.init(this);
 
     // If SKIP_MENUS is enabled in GameConfig, the game will load straight into the game.
