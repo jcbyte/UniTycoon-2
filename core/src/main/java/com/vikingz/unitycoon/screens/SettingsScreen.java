@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.vikingz.unitycoon.audio.GameMusic;
 import com.vikingz.unitycoon.audio.GameSounds;
 import com.vikingz.unitycoon.global.GameConfigManager;
@@ -145,8 +146,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
   @Override
   public void render(float delta) {
     // Clear screen
-    Gdx.gl.glClearColor(0, 0, 0, 1);
-    Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+    ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1);
 
     // Go back when pressing ESC
     if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {

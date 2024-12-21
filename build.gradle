@@ -37,6 +37,13 @@ configure(subprojects) {
     maxWarnings = 0 // Ensure the build fails on Checkstyle violations including warnings
   }
 
+  tasks.withType(Checkstyle).configureEach {
+    reports {
+      xml.required = false
+      html.required = true
+    }
+  }
+
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.
   tasks.register('generateAssetList') {

@@ -1,0 +1,85 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  ci-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant Execute Permissions for Gradle Wrapper
+        run: chmod +x ./gradlew
+
+      - name: Run Checkstyle
+        if: always() # Always run checkstyle
+        run: |
+          ./gradlew checkstyleMain
+          ./gradlew checkstyleTest
+
+      - name: Aggregate Checkstyle Reports
+        if: always() # Ensures the checkstyle reports are aggregated regardless of whether checkstyle fails the build
+        run: ./gradlew aggregateCheckstyleReports
+
+      - name: Upload Checkstyle Report
+        if: always() # Ensures the checkstyle reports is uploaded regardless of whether checkstyle fails the build
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkstyle-report
+          path: ./build/aggregated-reports/checkstyle/*
+
+      - name: Run Unit Tests
+        if: always() # Always run the unit tests
+        run: ./gradlew test
+
+      - name: Upload Unit Test Reports
+        if: always() # Ensures the test reports are uploaded regardless of whether they fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: ./test/build/reports/tests/test
+
+      - name: Generate JaCoCo Coverage Reports
+        if: always() # Always run the coverage report
+        run: ./gradlew jacocoTestReport
+
+      - name: Upload JaCoCo Coverage Reports
+        if: always() # Ensures the coverage reports are uploaded regardless of whether anything as failed
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./test/build/reports/jacoco/test/html
+
+      - name: Build with Gradle
+        if: success() # Only build if all checks have passed
+        run: ./gradlew build
+
+      - name: Find JAR File
+        id: jar-path
+        run: |
+          JAR_PATH=$(find ${{ github.workspace }}/lwjgl3/build/libs -name "*.jar" -print -quit)
+          echo "JAR_FILENAME=$(basename $JAR_PATH)" >> $GITHUB_OUTPUT
+          echo "JAR_PATH=$JAR_PATH" >> $GITHUB_OUTPUT
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.jar-path.outputs.JAR_FILENAME}}
+          path: ${{ steps.jar-path.outputs.JAR_PATH }}

@@ -13,19 +13,7 @@ public class TimeUtil {
    *
    * <p>Only serves as a return type
    */
-  public static class Time {
-
-    private final int secs;
-    private final int mins;
-
-    /**
-     * Create time object with specified data.
-     */
-    public Time(int secs, int mins) {
-      this.secs = secs;
-      this.mins = mins;
-    }
-
+  public record Time(int secs, int mins) {
     /**
      * Returns the time in a min:second format where each value will always be padded to 2 digits.
      */
@@ -41,6 +29,10 @@ public class TimeUtil {
    * @return Time in minutes and seconds
    */
   public static Time secondsToMinSecs(int secs) {
+    if (secs < 0) {
+      throw new IllegalArgumentException("secs cannot be negative");
+    }
+
     int m = secs / 60;
     int s = secs % 60;
 
