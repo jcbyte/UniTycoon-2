@@ -9,9 +9,8 @@ if (JavaVersion.current().isJava9Compatible()) {
   compileJava.options.release.set(17)
 }
 
-/*
- * We need to add assets as a source directory during testing, similarly to the lwjgl3 project.
- */
+
+// We need to add assets as a source directory during testing, similarly to the lwjgl3 project.
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 sourceSets.test.resources.srcDirs += [ rootProject.file('assets').path ]
 
@@ -49,10 +48,24 @@ tasks.register('dist') {
   dependsOn 'jar'
 }
 
-// Tell Gradle about our use of JUnit and have JaCoCo look at core sources
-jacocoTestReport {
-  sourceSets project(':core').sourceSets.main
-}
+
+
+// Run JUnit when we want to test
 test {
   useJUnitPlatform()
+}
+
+// Generate coverage report
+jacocoTestReport {
+  // Ensure tests have run before generating the report
+  dependsOn tasks.test
+
+  // Tell JaCoCo to look at core sources
+  sourceSets project(':core').sourceSets.main
+
+  reports {
+    html.required = true
+    xml.required = false
+    csv.required = false
+  }
 }
