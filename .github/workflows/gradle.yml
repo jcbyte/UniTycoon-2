@@ -30,40 +30,46 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run Checkstyle
+        if: always() # Always run checkstyle
         run: |
           ./gradlew checkstyleMain
           ./gradlew checkstyleTest
 
       - name: Aggregate Checkstyle Reports
-        if: always() # This ensures the Checkstyle reports are aggregated regardless of whether checkstyle fails the build
+        if: always() # Ensures the checkstyle reports are aggregated regardless of whether checkstyle fails the build
         run: ./gradlew aggregateCheckstyleReports
 
       - name: Upload Checkstyle Report
-        if: always() # This ensures the Checkstyle reports is uploaded regardless of whether checkstyle fails the build
+        if: always() # Ensures the checkstyle reports is uploaded regardless of whether checkstyle fails the build
         uses: actions/upload-artifact@v4
         with:
           name: checkstyle-report
           path: ./build/aggregated-reports/checkstyle/*
 
       - name: Run Unit Tests
+        if: always() # Always run the unit tests
         run: ./gradlew test
 
       - name: Upload Unit Test Reports
+        if: always() # Ensures the test reports are uploaded regardless of whether they fail
         uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: ./test/build/reports/tests/test
 
-      - name: Generate JaCoCo Coverage Report
+      - name: Generate JaCoCo Coverage Reports
+        if: always() # Always run the coverage report
         run: ./gradlew jacocoTestReport
 
-      - name: Upload JaCoCo Coverage Report
+      - name: Upload JaCoCo Coverage Reports
+        if: always() # Ensures the coverage reports are uploaded regardless of whether anything as failed
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: ./test/build/reports/jacoco/test/html
 
       - name: Build with Gradle
+        if: success() # Only build if all checks have passed
         run: ./gradlew build
 
       - name: Find JAR File
