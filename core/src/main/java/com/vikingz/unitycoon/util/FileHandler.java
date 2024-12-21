@@ -26,7 +26,7 @@ public class FileHandler {
   @SuppressWarnings({"checkstyle:MemberName", "checkstyle:AbbreviationAsWordInName"})
   private static class BuildingParse {
     public String[] ACADEMIC;
-    public String[] ACCOMODATION;
+    public String[] ACCOMMODATION;
     public String[] RECREATIONAL;
     public String[] FOOD;
     public String[] NONE;
@@ -37,7 +37,7 @@ public class FileHandler {
    */
   @SuppressWarnings({"checkstyle:MemberName", "checkstyle:AbbreviationAsWordInName"})
   private static class TextureParse {
-    public String textureAtlasLocation = "textureAtlases/buildingsAtlas.png";
+    public String textureAtlasLocation = "textures/textureAtlases/buildingsAtlas.png";
     public int atlasBuildingSize = 128;
     ArrayList<String> buildings;
     ArrayList<String> buildingPos;
@@ -51,7 +51,7 @@ public class FileHandler {
    */
   public static String loadMap(String fileName) {
     String mapData = "";
-    FileHandle fileHandle = Gdx.files.internal("maps/" + fileName + ".txt");
+    FileHandle fileHandle = Gdx.files.internal("gameData/maps/" + fileName + ".txt");
 
     // Check if the file exists
     if (fileHandle.exists()) {
@@ -64,80 +64,69 @@ public class FileHandler {
     return mapData;
   }
 
-
   /**
    * Loads Building information maps into static Dictionaries in BuildingStats.
-   *
-   * @param fileName        String Name of the file to load
-   * @param textureFileName String Name of the texture file
    */
-  public static void loadBuildings(String fileName, String textureFileName) {
-    FileHandle fileHandle = Gdx.files.internal("config/" + fileName + ".json");
-    FileHandle textureFileHandle = Gdx.files.internal("config/" + textureFileName + ".json");
+  public static void loadBuildings() {
+    FileHandle fileHandle = Gdx.files.internal("gameData/buildings/buildingInfo.json");
+    FileHandle textureFileHandle = Gdx.files.internal("gameData/buildings/buildingsAtlasMap.json");
 
     if (fileHandle.exists() && textureFileHandle.exists()) {
       // Json handle
-      String fileRead = fileHandle.readString();
-
-      String[] arrayDict = fileRead.split("\n");
       Gson gson = new Gson();
-      if (arrayDict.length != 6) {
+      BuildingParse[] buildingInfo = gson.fromJson(fileHandle.readString(), BuildingParse[].class);
+
+      if (buildingInfo.length != 6) {
         System.out.println("File corruption detected");
       }
 
       // Name
-      BuildingParse nameParser = gson.fromJson(arrayDict[0], BuildingParse.class);
       BuildingStats.BuildingNameDict = new Hashtable<>();
-      BuildingStats.BuildingNameDict.put(ACADEMIC, nameParser.ACADEMIC);
-      BuildingStats.BuildingNameDict.put(ACCOMMODATION, nameParser.ACCOMODATION);
-      BuildingStats.BuildingNameDict.put(RECREATIONAL, nameParser.RECREATIONAL);
-      BuildingStats.BuildingNameDict.put(FOOD, nameParser.FOOD);
-      BuildingStats.BuildingNameDict.put(NONE, nameParser.NONE);
+      BuildingStats.BuildingNameDict.put(ACADEMIC, buildingInfo[0].ACADEMIC);
+      BuildingStats.BuildingNameDict.put(ACCOMMODATION, buildingInfo[0].ACCOMMODATION);
+      BuildingStats.BuildingNameDict.put(RECREATIONAL, buildingInfo[0].RECREATIONAL);
+      BuildingStats.BuildingNameDict.put(FOOD, buildingInfo[0].FOOD);
+      BuildingStats.BuildingNameDict.put(NONE, buildingInfo[0].NONE);
 
       // Price
-      BuildingParse priceParser = gson.fromJson(arrayDict[1], BuildingParse.class);
       BuildingStats.BuildingPriceDict = new Hashtable<>();
-      BuildingStats.BuildingPriceDict.put(ACADEMIC, priceParser.ACADEMIC);
-      BuildingStats.BuildingPriceDict.put(ACCOMMODATION, priceParser.ACCOMODATION);
-      BuildingStats.BuildingPriceDict.put(RECREATIONAL, priceParser.RECREATIONAL);
-      BuildingStats.BuildingPriceDict.put(FOOD, priceParser.FOOD);
-      BuildingStats.BuildingPriceDict.put(NONE, priceParser.NONE);
+      BuildingStats.BuildingPriceDict.put(ACADEMIC, buildingInfo[1].ACADEMIC);
+      BuildingStats.BuildingPriceDict.put(ACCOMMODATION, buildingInfo[1].ACCOMMODATION);
+      BuildingStats.BuildingPriceDict.put(RECREATIONAL, buildingInfo[1].RECREATIONAL);
+      BuildingStats.BuildingPriceDict.put(FOOD, buildingInfo[1].FOOD);
+      BuildingStats.BuildingPriceDict.put(NONE, buildingInfo[1].NONE);
 
       // Students
-      BuildingParse studentParser = gson.fromJson(arrayDict[2], BuildingParse.class);
       BuildingStats.BuildingStudentDict = new Hashtable<>();
-      BuildingStats.BuildingStudentDict.put(ACADEMIC, studentParser.ACADEMIC);
-      BuildingStats.BuildingStudentDict.put(ACCOMMODATION, studentParser.ACCOMODATION);
-      BuildingStats.BuildingStudentDict.put(RECREATIONAL, studentParser.RECREATIONAL);
-      BuildingStats.BuildingStudentDict.put(FOOD, studentParser.FOOD);
-      BuildingStats.BuildingStudentDict.put(NONE, studentParser.NONE);
+      BuildingStats.BuildingStudentDict.put(ACADEMIC, buildingInfo[2].ACADEMIC);
+      BuildingStats.BuildingStudentDict.put(ACCOMMODATION, buildingInfo[2].ACCOMMODATION);
+      BuildingStats.BuildingStudentDict.put(RECREATIONAL, buildingInfo[2].RECREATIONAL);
+      BuildingStats.BuildingStudentDict.put(FOOD, buildingInfo[2].FOOD);
+      BuildingStats.BuildingStudentDict.put(NONE, buildingInfo[2].NONE);
 
       // Satisfaction
-      BuildingParse satisfactionParser = gson.fromJson(arrayDict[3], BuildingParse.class);
       BuildingStats.BuildingSatisfactionDict = new Hashtable<>();
-      BuildingStats.BuildingSatisfactionDict.put(ACADEMIC, satisfactionParser.ACADEMIC);
-      BuildingStats.BuildingSatisfactionDict.put(ACCOMMODATION, satisfactionParser.ACCOMODATION);
-      BuildingStats.BuildingSatisfactionDict.put(RECREATIONAL, satisfactionParser.RECREATIONAL);
-      BuildingStats.BuildingSatisfactionDict.put(FOOD, satisfactionParser.FOOD);
-      BuildingStats.BuildingSatisfactionDict.put(NONE, satisfactionParser.NONE);
+      BuildingStats.BuildingSatisfactionDict.put(ACADEMIC, buildingInfo[3].ACADEMIC);
+      BuildingStats.BuildingSatisfactionDict.put(ACCOMMODATION, buildingInfo[3].ACCOMMODATION);
+      BuildingStats.BuildingSatisfactionDict.put(RECREATIONAL, buildingInfo[3].RECREATIONAL);
+      BuildingStats.BuildingSatisfactionDict.put(FOOD, buildingInfo[3].FOOD);
+      BuildingStats.BuildingSatisfactionDict.put(NONE, buildingInfo[3].NONE);
 
       // Coins
-      BuildingParse coinParser = gson.fromJson(arrayDict[4], BuildingParse.class);
       BuildingStats.BuildingCoinDict = new Hashtable<>();
-      BuildingStats.BuildingCoinDict.put(ACADEMIC, coinParser.ACADEMIC);
-      BuildingStats.BuildingCoinDict.put(ACCOMMODATION, coinParser.ACCOMODATION);
-      BuildingStats.BuildingCoinDict.put(RECREATIONAL, coinParser.RECREATIONAL);
-      BuildingStats.BuildingCoinDict.put(FOOD, coinParser.FOOD);
-      BuildingStats.BuildingCoinDict.put(NONE, coinParser.NONE);
+      BuildingStats.BuildingCoinDict.put(ACADEMIC, buildingInfo[4].ACADEMIC);
+      BuildingStats.BuildingCoinDict.put(ACCOMMODATION, buildingInfo[4].ACCOMMODATION);
+      BuildingStats.BuildingCoinDict.put(RECREATIONAL, buildingInfo[4].RECREATIONAL);
+      BuildingStats.BuildingCoinDict.put(FOOD, buildingInfo[4].FOOD);
+      BuildingStats.BuildingCoinDict.put(NONE, buildingInfo[4].NONE);
 
       // Ids
-      BuildingParse idParser = gson.fromJson(arrayDict[5], BuildingParse.class);
       BuildingStats.BuildingDict = new Hashtable<>();
-      BuildingStats.BuildingDict.put(ACADEMIC, idParser.ACADEMIC);
-      BuildingStats.BuildingDict.put(ACCOMMODATION, idParser.ACCOMODATION);
-      BuildingStats.BuildingDict.put(RECREATIONAL, idParser.RECREATIONAL);
-      BuildingStats.BuildingDict.put(FOOD, idParser.FOOD);
-      BuildingStats.BuildingDict.put(NONE, idParser.NONE);
+      BuildingStats.BuildingDict.put(ACADEMIC, buildingInfo[5].ACADEMIC);
+      BuildingStats.BuildingDict.put(ACCOMMODATION, buildingInfo[5].ACCOMMODATION);
+      BuildingStats.BuildingDict.put(RECREATIONAL, buildingInfo[5].RECREATIONAL);
+      BuildingStats.BuildingDict.put(FOOD, buildingInfo[5].FOOD);
+      BuildingStats.BuildingDict.put(NONE, buildingInfo[5].NONE);
 
       // Passing child elements from types
       Enumeration<String[]> buildingIdsIterator = BuildingStats.BuildingDict.elements();

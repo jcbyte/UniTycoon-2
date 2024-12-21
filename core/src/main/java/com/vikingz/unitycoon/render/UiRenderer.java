@@ -75,7 +75,7 @@ public class UiRenderer {
     Table pauseContainer = new Table();
     pauseContainer.setFillParent(true);
     pauseContainer.bottom().left();
-    Texture pauseTex = new Texture(Gdx.files.internal("png/pause.png"));
+    Texture pauseTex = new Texture(Gdx.files.internal("ui/sprites/pause.png"));
     Image pauseButton = new Image(pauseTex);
     pauseButton.addListener(new ClickListener() {
       @Override

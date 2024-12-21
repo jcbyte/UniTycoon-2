@@ -87,7 +87,7 @@ public class BuildMenu {
     //Texture atlas of building menu bar
     // Load your 64x64 PNG
     Texture textureAtlas = new Texture(
-        Gdx.files.internal("textureAtlases/buildMenuButtonsAtlas.png"));
+        Gdx.files.internal("textures/textureAtlases/buildMenuButtonsAtlas.png"));
 
     //Sets the pixel size of tiles used for build menu bar
     int atlasTileSize = 64;

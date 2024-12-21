@@ -22,7 +22,7 @@ public class AchievementsManager {
         new Achievement(
             "Dean of Dollars\nHave a balance over 15k",
             () -> GameGlobals.BALANCE > 15000,
-            new Texture("achievements/dean-of-dollars.png"),
+            new Texture("textures/achievements/dean-of-dollars.png"),
             () -> {
               GameGlobals.SATISFACTION += 100000;
               gameScreen.setPaused(false);
@@ -33,7 +33,7 @@ public class AchievementsManager {
             "A+ Atmosphere\nHave over " + StatsCalculator.getFormattedSatisfaction(1_000_000)
                 + " Satisfaction",
             () -> GameGlobals.SATISFACTION > 1000000,
-            new Texture("achievements/aplus-atmosphere.png"),
+            new Texture("textures/achievements/a-plus-atmosphere.png"),
             () -> {
               GameGlobals.BALANCE += 400;
               gameScreen.setPaused(false);
@@ -44,7 +44,7 @@ public class AchievementsManager {
             "Concrete Campus\nHave over 10 Buildings",
             () -> GameGlobals.ACADEMIC_BUILDINGS_COUNT + GameGlobals.ACCOMMODATION_BUILDINGS_COUNT
                 + GameGlobals.FOOD_BUILDINGS_COUNT + GameGlobals.RECREATIONAL_BUILDINGS_COUNT > 10,
-            new Texture("achievements/concrete-campus.png"),
+            new Texture("textures/achievements/concrete-campus.png"),
             () -> {
               GameGlobals.BALANCE += 150;
               GameGlobals.STUDENTS += 150;
@@ -55,7 +55,7 @@ public class AchievementsManager {
         new Achievement(
             "Crowded Campus\nHave over 1000 Students",
             () -> GameGlobals.STUDENTS > 1000,
-            new Texture("achievements/crowded-campus.png"),
+            new Texture("textures/achievements/crowded-campus.png"),
             () -> {
               GameGlobals.SATISFACTION += 50000;
               GameGlobals.STUDENTS += 100;
@@ -66,7 +66,7 @@ public class AchievementsManager {
         new Achievement(
             "Work Hard, Play Harder\nHave over 5 recreational buildings",
             () -> GameGlobals.RECREATIONAL_BUILDINGS_COUNT > 5,
-            new Texture("achievements/work-play.png"),
+            new Texture("textures/achievements/work-play.png"),
             () -> {
               GameGlobals.SATISFACTION += 100000;
               gameScreen.setPaused(false);

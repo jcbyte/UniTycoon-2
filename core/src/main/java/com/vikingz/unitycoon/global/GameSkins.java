@@ -16,7 +16,7 @@ public class GameSkins {
    * Constructor creates and loads GameSkins from assets files.
    */
   public GameSkins() {
-    defaultSkin = new Skin(Gdx.files.internal("glassy-ui/skin/glassy-ui.json"));
+    defaultSkin = new Skin(Gdx.files.internal("ui/glassy-ui/skin/glassy-ui.json"));
   }
 
   public Skin getDefaultSkin() {

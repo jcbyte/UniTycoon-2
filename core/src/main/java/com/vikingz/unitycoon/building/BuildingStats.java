@@ -32,7 +32,7 @@ public class BuildingStats {
    * <li> BuildingTextureMap contains the positions of every building's Texture, lookup using
    * String of the buildings ShortHandName
    */
-  //Loaded from buildingInfo.json
+  // Loaded from buildingInfo.json
   public static Dictionary<BuildingType, String[]> BuildingNameDict;
   public static Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict;
   public static Dictionary<BuildingStats.BuildingType, String[]> BuildingSatisfactionDict;
