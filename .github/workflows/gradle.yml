@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "main"
+      - "43-create-unit-tests-framework" # todo REMOVE AFTER TESTING
   pull_request:
     branches:
       - "main"
@@ -41,6 +42,14 @@ jobs:
         with:
           name: checkstyle-report
           path: ./build/aggregated-reports/checkstyle/*
+
+      - name: Run Unit Tests
+
+      - name: Upload Unit Test Reports
+
+      - name: Generate JaCoCo Coverage Report
+
+      - name: Upload JaCoCo Coverage Report
 
       - name: Build with Gradle
         run: ./gradlew build
