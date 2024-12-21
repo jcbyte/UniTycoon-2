@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - "main"
-      - "43-create-unit-tests-framework" # todo REMOVE AFTER TESTING
   pull_request:
     branches:
       - "main"
