@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.util.LeaderboardUtils;
 
@@ -92,8 +93,7 @@ public class MenuScreen extends SuperScreen implements Screen {
   @Override
   public void render(float delta) {
     // Clear the screen
-    Gdx.gl.glClearColor(25 / 255f, 25 / 255f, 25 / 255f, 1);
-    Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+    ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1f);
 
     stage.act(delta);
     stage.draw();

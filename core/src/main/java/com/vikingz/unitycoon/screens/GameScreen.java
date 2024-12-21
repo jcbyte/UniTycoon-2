@@ -3,7 +3,7 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.vikingz.unitycoon.achievement.AchievementsManager;
 import com.vikingz.unitycoon.building.Building;
 import com.vikingz.unitycoon.building.BuildingStats;
@@ -86,8 +86,7 @@ public class GameScreen extends SuperScreen implements Screen {
   @Override
   public void render(float delta) {
     // Clear screen
-    Gdx.gl.glClearColor(0.1f, 0.1f, 0.4f, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    ScreenUtils.clear(0.1f, 0.1f, 0.4f, 1);
 
     // Pause on ESC pressed
     if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -120,7 +119,7 @@ public class GameScreen extends SuperScreen implements Screen {
         elapsedTime = 0;
       }
     }
-    
+
     eventsManager.render();
     achievementsManager.update();
 

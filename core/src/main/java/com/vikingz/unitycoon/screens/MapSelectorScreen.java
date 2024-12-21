@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.vikingz.unitycoon.global.GameGlobals;
 
 /**
@@ -113,8 +114,8 @@ public class MapSelectorScreen extends SuperScreen implements Screen {
   @Override
   public void render(float delta) {
     // Clear the screen
-    Gdx.gl.glClearColor(25 / 255f, 25 / 255f, 25 / 255f, 1);
-    Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+    ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1);
+
     mapText.setText("Map".concat(Integer.toString(mapSelection)));
 
     stage.act(delta);
