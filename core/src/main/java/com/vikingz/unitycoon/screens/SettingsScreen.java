@@ -3,7 +3,6 @@ package com.vikingz.unitycoon.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -72,15 +71,6 @@ public class SettingsScreen extends SuperScreen implements Screen {
       }
     });
 
-    // Quit button to quit the application
-    TextButton quitButton = new TextButton("Quit Game", skin);
-    quitButton.addListener(new ClickListener() {
-      @Override
-      public void clicked(InputEvent event, float x, float y) {
-        Gdx.app.exit();
-      }
-    });
-
     // Button that fullscreen game
     TextButton fullscreenButton = new TextButton("Fullscreen", skin);
     fullscreenButton.addListener(new ClickListener() {
@@ -124,8 +114,7 @@ public class SettingsScreen extends SuperScreen implements Screen {
     table.add(fullscreenButton).fillX().uniformX().pad(10);
     table.add(windowButton).fillX().uniformX().pad(10).row();
     table.add(saveGameConfigButton).colspan(2).pad(10).padTop(60).row();
-    table.add(backButton).colspan(2).uniformX().pad(10).row();
-    table.add(quitButton).colspan(2).uniformX().pad(10).padTop(60);
+    table.add(backButton).colspan(2).uniformX().pad(10);
 
     // Add table to stage
     stage.addActor(table);
