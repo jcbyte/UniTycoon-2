@@ -1,6 +1,128 @@
-{"FOOD":["McD", "Greggs"],"RECREATIONAL":["YSV", "Long Boi Statue"],"ACCOMODATION":["David Kato","Anne Lister"],"ACADEMIC":["Ron Cooke","Piazza"],"NONE":["NONE"]}
-{"FOOD":["200", "250"],"RECREATIONAL":["200", "500"],"ACCOMODATION":["100","150"],"ACADEMIC":["100","150"],"NONE":["NONE"]}
-{"FOOD":["NONE", "NONE"],"RECREATIONAL":["NONE", "NONE"],"ACCOMODATION":["100","150"],"ACADEMIC":["NONE","NONE"],"NONE":["NONE"]}
-{"FOOD":["1.1", "1.4"],"RECREATIONAL":["1.5", "2"],"ACCOMODATION":["NONE","NONE"],"ACADEMIC":["1.0","1.5"],"NONE":["NONE"]}
-{"FOOD":["10", "15"],"RECREATIONAL":["10", "NONE"],"ACCOMODATION":["NONE","NONE"],"ACADEMIC":["NONE","NONE"],"NONE":["NONE"]}
-{"FOOD":["MCD", "GREGG"],"RECREATIONAL":["YSV", "LONGBS"],"ACCOMODATION":["KATO","LISTER"],"ACADEMIC":["RCH","PZA"],"NONE":[null]}
+[
+  {
+    "FOOD": [
+      "McD",
+      "Greggs"
+    ],
+    "RECREATIONAL": [
+      "YSV",
+      "Long Boi Statue"
+    ],
+    "ACCOMMODATION": [
+      "David Kato",
+      "Anne Lister"
+    ],
+    "ACADEMIC": [
+      "Ron Cooke",
+      "Piazza"
+    ],
+    "NONE": [
+      "NONE"
+    ]
+  },
+  {
+    "FOOD": [
+      "200",
+      "250"
+    ],
+    "RECREATIONAL": [
+      "200",
+      "500"
+    ],
+    "ACCOMMODATION": [
+      "100",
+      "150"
+    ],
+    "ACADEMIC": [
+      "100",
+      "150"
+    ],
+    "NONE": [
+      "NONE"
+    ]
+  },
+  {
+    "FOOD": [
+      "NONE",
+      "NONE"
+    ],
+    "RECREATIONAL": [
+      "NONE",
+      "NONE"
+    ],
+    "ACCOMMODATION": [
+      "100",
+      "150"
+    ],
+    "ACADEMIC": [
+      "NONE",
+      "NONE"
+    ],
+    "NONE": [
+      "NONE"
+    ]
+  },
+  {
+    "FOOD": [
+      "1.1",
+      "1.4"
+    ],
+    "RECREATIONAL": [
+      "1.5",
+      "2"
+    ],
+    "ACCOMMODATION": [
+      "NONE",
+      "NONE"
+    ],
+    "ACADEMIC": [
+      "1.0",
+      "1.5"
+    ],
+    "NONE": [
+      "NONE"
+    ]
+  },
+  {
+    "FOOD": [
+      "10",
+      "15"
+    ],
+    "RECREATIONAL": [
+      "10",
+      "NONE"
+    ],
+    "ACCOMMODATION": [
+      "NONE",
+      "NONE"
+    ],
+    "ACADEMIC": [
+      "NONE",
+      "NONE"
+    ],
+    "NONE": [
+      "NONE"
+    ]
+  },
+  {
+    "FOOD": [
+      "MCD",
+      "GREGG"
+    ],
+    "RECREATIONAL": [
+      "YSV",
+      "LONGBS"
+    ],
+    "ACCOMMODATION": [
+      "KATO",
+      "LISTER"
+    ],
+    "ACADEMIC": [
+      "RCH",
+      "PZA"
+    ],
+    "NONE": [
+      null
+    ]
+  }
+]
