@@ -14,7 +14,7 @@ import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.global.GameGlobals;
 import com.vikingz.unitycoon.screens.ScreenMultiplexer;
-import com.vikingz.unitycoon.util.LeaderboardManager;
+import com.vikingz.unitycoon.util.LeaderboardUtils;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
 /**
@@ -87,11 +87,11 @@ public class EndMenu extends Window {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         // Add to leaderboard and save to file
-        LeaderboardManager.LeaderboardRecord record = new LeaderboardManager.LeaderboardRecord(
+        LeaderboardUtils.LeaderboardRecord record = new LeaderboardUtils.LeaderboardRecord(
             leaderboardTextField.getText(),
             GameGlobals.SATISFACTION
         );
-        LeaderboardManager.updateLeaderboard(GameConfig.getInstance().getLeaderboard(), record);
+        LeaderboardUtils.updateLeaderboard(GameConfig.getInstance().getLeaderboard(), record);
         GameConfigManager.saveGameConfig();
 
         // Update visual leaderboard and hide the panel to only allow one to be added
@@ -119,7 +119,7 @@ public class EndMenu extends Window {
   private void refreshLeaderboardText() {
     leaderboardLabel.setText(
         "Leaderboard:\n"
-            + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().getLeaderboard())
+            + LeaderboardUtils.leaderboardToString(GameConfig.getInstance().getLeaderboard())
     );
   }
 

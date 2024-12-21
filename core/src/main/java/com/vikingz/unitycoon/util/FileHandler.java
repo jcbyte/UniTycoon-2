@@ -1,26 +1,48 @@
 package com.vikingz.unitycoon.util;
 
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.ACADEMIC;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.ACCOMMODATION;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.FOOD;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.NONE;
+import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.RECREATIONAL;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-
 import com.google.gson.Gson;
 import com.vikingz.unitycoon.building.BuildingStats;
-
-import java.util.*;
-
-import static com.vikingz.unitycoon.building.BuildingStats.BuildingType.*;
-
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 /**
- * This class handles loading in files
- * <p>
- * Main use is to load in the map file
- * and loading building information
+ * This class handles loading in files.
+ *
+ * <p>Main use is to load in the map file and loading building information
  */
 public class FileHandler {
+  /**
+   * Object parser that has public variable to allow map json to dictionary.
+   */
+  private static class BuildingParse {
+    public String ACADEMIC[];
+    public String ACCOMODATION[];
+    public String RECREATIONAL[];
+    public String FOOD[];
+    public String NONE[];
+  }
 
   /**
-   * Loads in the map from a file
+   * Object parser that has public variable to allow map json to dictionary.
+   */
+  private static class TextureParse {
+    public String textureAtlasLocation = "textureAtlases/buildingsAtlas.png";
+    public int atlasBuildingSize = 128;
+    ArrayList<String> buildings;
+    ArrayList<String> buildingPos;
+  }
+
+  /**
+   * Loads in the map from a file.
    *
    * @param fileName Name of the file to load in
    * @return String The map
@@ -28,13 +50,11 @@ public class FileHandler {
   public static String loadMap(String fileName) {
     String mapData = "";
     FileHandle fileHandle = Gdx.files.internal("maps/" + fileName + ".txt");
-    //FileHandle fileHandle = Gdx.files.internal("maps/map1.txt");
 
     // Check if the file exists
     if (fileHandle.exists()) {
       // Read the content as a string
       mapData = fileHandle.readString();
-
     } else {
       System.out.println("File not found!: " + fileHandle.toString());
     }
@@ -44,8 +64,7 @@ public class FileHandler {
 
 
   /**
-   * Loads Building information maps,
-   * into static Dictionaries in BuildingStats
+   * Loads Building information maps into static Dictionaries in BuildingStats.
    *
    * @param fileName        String Name of the file to load
    * @param textureFileName String Name of the texture file
@@ -53,134 +72,101 @@ public class FileHandler {
   public static void loadBuildings(String fileName, String textureFileName) {
     FileHandle fileHandle = Gdx.files.internal("config/" + fileName + ".json");
     FileHandle textureFileHandle = Gdx.files.internal("config/" + textureFileName + ".json");
-    if (fileHandle.exists() && textureFileHandle.exists()) {
 
-      //JSON HANDLE
+    if (fileHandle.exists() && textureFileHandle.exists()) {
+      // Json handle
       String fileRead = fileHandle.readString();
-      String textureFileRead = textureFileHandle.readString();
+
       String[] arrayDict = fileRead.split("\n");
       Gson gson = new Gson();
       if (arrayDict.length != 6) {
-        System.out.println("FILE CORRUPTION DETECTED");
+        System.out.println("File corruption detected");
       }
 
-      //Name
+      // Name
       BuildingParse nameParser = gson.fromJson(arrayDict[0], BuildingParse.class);
+      BuildingStats.BuildingNameDict = new Hashtable<>();
+      BuildingStats.BuildingNameDict.put(ACADEMIC, nameParser.ACADEMIC);
+      BuildingStats.BuildingNameDict.put(ACCOMMODATION, nameParser.ACCOMODATION);
+      BuildingStats.BuildingNameDict.put(RECREATIONAL, nameParser.RECREATIONAL);
+      BuildingStats.BuildingNameDict.put(FOOD, nameParser.FOOD);
+      BuildingStats.BuildingNameDict.put(NONE, nameParser.NONE);
 
-      BuildingStats.BuildingNameDict = new Hashtable<BuildingStats.BuildingType, String[]>() {{
-        put(ACADEMIC, nameParser.ACADEMIC);
-        put(ACCOMMODATION, nameParser.ACCOMODATION);
-        put(RECREATIONAL, nameParser.RECREATIONAL);
-        put(FOOD, nameParser.FOOD);
-        put(NONE, nameParser.NONE);
-      }};
-
-      //Price
+      // Price
       BuildingParse priceParser = gson.fromJson(arrayDict[1], BuildingParse.class);
-      BuildingStats.BuildingPriceDict = new Hashtable<BuildingStats.BuildingType, String[]>() {{
-        put(ACADEMIC, priceParser.ACADEMIC);
-        put(ACCOMMODATION, priceParser.ACCOMODATION);
-        put(RECREATIONAL, priceParser.RECREATIONAL);
-        put(FOOD, priceParser.FOOD);
-        put(NONE, priceParser.NONE);
-      }};
+      BuildingStats.BuildingPriceDict = new Hashtable<>();
+      BuildingStats.BuildingPriceDict.put(ACADEMIC, priceParser.ACADEMIC);
+      BuildingStats.BuildingPriceDict.put(ACCOMMODATION, priceParser.ACCOMODATION);
+      BuildingStats.BuildingPriceDict.put(RECREATIONAL, priceParser.RECREATIONAL);
+      BuildingStats.BuildingPriceDict.put(FOOD, priceParser.FOOD);
+      BuildingStats.BuildingPriceDict.put(NONE, priceParser.NONE);
 
-      //Student
+      // Students
       BuildingParse studentParser = gson.fromJson(arrayDict[2], BuildingParse.class);
-      BuildingStats.BuildingStudentDict = new Hashtable<BuildingStats.BuildingType, String[]>() {{
-        put(ACADEMIC, studentParser.ACADEMIC);
-        put(ACCOMMODATION, studentParser.ACCOMODATION);
-        put(RECREATIONAL, studentParser.RECREATIONAL);
-        put(FOOD, studentParser.FOOD);
-        put(NONE, studentParser.NONE);
-      }};
+      BuildingStats.BuildingStudentDict = new Hashtable<>();
+      BuildingStats.BuildingStudentDict.put(ACADEMIC, studentParser.ACADEMIC);
+      BuildingStats.BuildingStudentDict.put(ACCOMMODATION, studentParser.ACCOMODATION);
+      BuildingStats.BuildingStudentDict.put(RECREATIONAL, studentParser.RECREATIONAL);
+      BuildingStats.BuildingStudentDict.put(FOOD, studentParser.FOOD);
+      BuildingStats.BuildingStudentDict.put(NONE, studentParser.NONE);
 
-      //Satisfaction
+      // Satisfaction
       BuildingParse satisfactionParser = gson.fromJson(arrayDict[3], BuildingParse.class);
-      BuildingStats.BuildingSatisfactionDict = new Hashtable<BuildingStats.BuildingType, String[]>() {{
-        put(ACADEMIC, satisfactionParser.ACADEMIC);
-        put(ACCOMMODATION, satisfactionParser.ACCOMODATION);
-        put(RECREATIONAL, satisfactionParser.RECREATIONAL);
-        put(FOOD, satisfactionParser.FOOD);
-        put(NONE, satisfactionParser.NONE);
-      }};
+      BuildingStats.BuildingSatisfactionDict = new Hashtable<>();
+      BuildingStats.BuildingSatisfactionDict.put(ACADEMIC, satisfactionParser.ACADEMIC);
+      BuildingStats.BuildingSatisfactionDict.put(ACCOMMODATION, satisfactionParser.ACCOMODATION);
+      BuildingStats.BuildingSatisfactionDict.put(RECREATIONAL, satisfactionParser.RECREATIONAL);
+      BuildingStats.BuildingSatisfactionDict.put(FOOD, satisfactionParser.FOOD);
+      BuildingStats.BuildingSatisfactionDict.put(NONE, satisfactionParser.NONE);
 
-      //Coins
-
+      // Coins
       BuildingParse coinParser = gson.fromJson(arrayDict[4], BuildingParse.class);
-      BuildingStats.BuildingCoinDict = new Hashtable<BuildingStats.BuildingType, String[]>() {{
-        put(ACADEMIC, coinParser.ACADEMIC);
-        put(ACCOMMODATION, coinParser.ACCOMODATION);
-        put(RECREATIONAL, coinParser.RECREATIONAL);
-        put(FOOD, coinParser.FOOD);
-        put(NONE, coinParser.NONE);
-      }};
-
+      BuildingStats.BuildingCoinDict = new Hashtable<>();
+      BuildingStats.BuildingCoinDict.put(ACADEMIC, coinParser.ACADEMIC);
+      BuildingStats.BuildingCoinDict.put(ACCOMMODATION, coinParser.ACCOMODATION);
+      BuildingStats.BuildingCoinDict.put(RECREATIONAL, coinParser.RECREATIONAL);
+      BuildingStats.BuildingCoinDict.put(FOOD, coinParser.FOOD);
+      BuildingStats.BuildingCoinDict.put(NONE, coinParser.NONE);
 
       //IDs
       BuildingParse idParser = gson.fromJson(arrayDict[5], BuildingParse.class);
-      BuildingStats.BuildingDict = new Hashtable<BuildingStats.BuildingType, String[]>() {{
-        put(ACADEMIC, idParser.ACADEMIC);
-        put(ACCOMMODATION, idParser.ACCOMODATION);
-        put(RECREATIONAL, idParser.RECREATIONAL);
-        put(FOOD, idParser.FOOD);
-        put(NONE, idParser.NONE);
-      }};
+      BuildingStats.BuildingDict = new Hashtable<BuildingStats.BuildingType, String[]>();
+      BuildingStats.BuildingDict.put(ACADEMIC, idParser.ACADEMIC);
+      BuildingStats.BuildingDict.put(ACCOMMODATION, idParser.ACCOMODATION);
+      BuildingStats.BuildingDict.put(RECREATIONAL, idParser.RECREATIONAL);
+      BuildingStats.BuildingDict.put(FOOD, idParser.FOOD);
+      BuildingStats.BuildingDict.put(NONE, idParser.NONE);
 
-      //passing child elements from types
-      Enumeration<String[]> BuildingIDsIterator = BuildingStats.BuildingDict.elements();
-      BuildingStats.BuildingIDs = new ArrayList<String>();
-      while (BuildingIDsIterator.hasMoreElements()) {
-        for (String item : BuildingIDsIterator.nextElement()) {
+      // Passing child elements from types
+      Enumeration<String[]> buildingIdsIterator = BuildingStats.BuildingDict.elements();
+      BuildingStats.BuildingIds = new ArrayList<>();
+      while (buildingIdsIterator.hasMoreElements()) {
+        for (String item : buildingIdsIterator.nextElement()) {
           if (item != null) {
-            BuildingStats.BuildingIDs.add(item);
+            BuildingStats.BuildingIds.add(item);
           }
         }
       }
 
+      // Textures
+      String textureFileRead = textureFileHandle.readString();
 
-      //Textures
-      BuildingStats.BuildingTextureMap = new Hashtable<String, int[]>();
       TextureParse textureParse = gson.fromJson(textureFileRead, TextureParse.class);
       BuildingStats.textureAtlasLocation = textureParse.textureAtlasLocation;
       BuildingStats.atlasBuildingSize = textureParse.atlasBuildingSize;
+
+      BuildingStats.BuildingTextureMap = new Hashtable<>();
       for (int i = 0; i < textureParse.buildings.size(); i++) {
-        int[] convertValue = new int[]{Integer.parseInt(textureParse.buildingPos.get(i).split(",")[0]),
+        int[] convertValue = new int[]{
+            Integer.parseInt(textureParse.buildingPos.get(i).split(",")[0]),
             Integer.parseInt(textureParse.buildingPos.get(i).split(",")[1]),
         };
         BuildingStats.BuildingTextureMap.put(textureParse.buildings.get(i), convertValue);
       }
 
-
       System.out.println("Successfully Loaded Buildings");
-
     } else {
-      System.err.println("File not found!: " + fileHandle.toString());
+      System.err.println("File not found!: " + fileHandle);
     }
   }
-
-
 }
-
-/**
- * Object parser that has public variable
- * to allow map json to dictionary.
- */
-class BuildingParse {
-  public String ACADEMIC[];
-  public String ACCOMODATION[];
-  public String RECREATIONAL[];
-  public String FOOD[];
-  public String NONE[];
-}
-
-class TextureParse {
-  public String textureAtlasLocation = "textureAtlases/buildingsAtlas.png";
-  public int atlasBuildingSize = 128;
-  ArrayList<String> buildings;
-  ArrayList<String> buildingPos;
-
-}
-
-
-

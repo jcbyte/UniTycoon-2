@@ -1,6 +1,6 @@
 package com.vikingz.unitycoon.global;
 
-import com.vikingz.unitycoon.util.LeaderboardManager;
+import com.vikingz.unitycoon.util.LeaderboardUtils;
 import java.io.Serializable;
 
 /**
@@ -22,14 +22,14 @@ public class GameConfig implements Serializable {
   public float soundVolumeValue;
   public float musicVolumeValue;
 
-  public LeaderboardManager.LeaderboardRecord[] leaderboard;
+  public LeaderboardUtils.LeaderboardRecord[] leaderboard;
 
   // 31.5 rows
   // 56 cols
 
   // The single instance of GameConfig (eager initialization)
   private static GameConfig INSTANCE = new GameConfig(
-      1792, 1008, 1f, 1f, LeaderboardManager.generateBlankLeaderboard(5)
+      1792, 1008, 1f, 1f, LeaderboardUtils.generateBlankLeaderboard(5)
   ); // Default values
 
   // For JSON deserializing
@@ -39,7 +39,7 @@ public class GameConfig implements Serializable {
   // Private constructor to prevent instantiation from outside
   private GameConfig(int width, int height,
                      float soundVolumeValue, float musicVolumeValue,
-                     LeaderboardManager.LeaderboardRecord[] leaderboard) {
+                     LeaderboardUtils.LeaderboardRecord[] leaderboard) {
     this.windowWidth = width;
     this.windowHeight = height;
     this.soundVolumeValue = soundVolumeValue;
@@ -47,7 +47,7 @@ public class GameConfig implements Serializable {
     this.leaderboard = leaderboard.clone();
 
     // Sort the leaderboard to ensure it is in order
-    LeaderboardManager.sortLeaderboard(this.leaderboard);
+    LeaderboardUtils.sortLeaderboard(this.leaderboard);
   }
 
   /**
@@ -75,7 +75,7 @@ public class GameConfig implements Serializable {
     return windowHeight;
   }
 
-  public LeaderboardManager.LeaderboardRecord[] getLeaderboard() {
+  public LeaderboardUtils.LeaderboardRecord[] getLeaderboard() {
     return leaderboard;
   }
 
@@ -83,7 +83,7 @@ public class GameConfig implements Serializable {
    * Check if this score could be in the leaderboard.
    */
   public boolean isOnLeaderboard(int score) {
-    return LeaderboardManager.onLeaderboard(leaderboard, score);
+    return LeaderboardUtils.onLeaderboard(leaderboard, score);
   }
 
   public float getSoundVolumeValue() {

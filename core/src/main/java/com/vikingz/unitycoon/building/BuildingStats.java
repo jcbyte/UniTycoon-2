@@ -39,7 +39,7 @@ public class BuildingStats {
   public static Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict;
   public static Dictionary<BuildingStats.BuildingType, String[]> BuildingCoinDict;
   public static Dictionary<BuildingStats.BuildingType, String[]> BuildingDict;
-  public static ArrayList<String> BuildingIDs;
+  public static ArrayList<String> BuildingIds;
 
   //Loaded from TextureAtlasMap.json
   public static Dictionary<String, int[]> BuildingTextureMap;

@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vikingz.unitycoon.global.GameConfig;
-import com.vikingz.unitycoon.util.LeaderboardManager;
+import com.vikingz.unitycoon.util.LeaderboardUtils;
 
 /**
  * This class represents the main menu of the game.
@@ -75,7 +75,7 @@ public class MenuScreen extends SuperScreen implements Screen {
 
     Label leaderboardLabel = new Label(
         "Leaderboard:\n\n"
-            + LeaderboardManager.LeaderboardToString(GameConfig.getInstance().getLeaderboard()),
+            + LeaderboardUtils.leaderboardToString(GameConfig.getInstance().getLeaderboard()),
         skin);
     leaderboardLabel.setFontScale(1.75f);
 
