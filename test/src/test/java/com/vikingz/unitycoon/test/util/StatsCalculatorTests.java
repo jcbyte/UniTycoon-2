@@ -23,4 +23,9 @@ public class StatsCalculatorTests extends AbstractHeadlessGdxTest {
         assertEquals(0, StatsCalculator.calculateSatisfaction(200,0));
         assertEquals(3765, StatsCalculator.calculateSatisfaction(562, 6.7f));
     }
+
+    @Test
+    public void TestcalculateProfitMade(){
+        assertEquals(50, StatsCalculator.calculateProfitMade(50));
+    }
 }
