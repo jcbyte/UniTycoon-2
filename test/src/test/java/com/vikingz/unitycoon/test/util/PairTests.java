@@ -13,7 +13,7 @@ public class PairTests extends AbstractHeadlessGdxTest {
   @Test
   public void testPair() {
     Pair pair = new Pair(11, 15);
-    assertEquals(pair.first, 11);
-    assertEquals(pair.second, 15);
+    assertEquals(11, pair.first);
+    assertEquals(15, pair.second);
   }
 }
