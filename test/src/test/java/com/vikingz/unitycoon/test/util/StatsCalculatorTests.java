@@ -16,6 +16,8 @@ public class StatsCalculatorTests extends AbstractHeadlessGdxTest {
     assertEquals("0.00%", StatsCalculator.getFormattedSatisfaction(0));
     assertEquals("100.00%", StatsCalculator.getFormattedSatisfaction(100000000));
     assertEquals("0.45%", StatsCalculator.getFormattedSatisfaction(45000));
+    assertEquals("0.00%", StatsCalculator.getFormattedSatisfaction(-9000));
+    assertEquals("100.00%", StatsCalculator.getFormattedSatisfaction(123400000));
   }
 
   @Test
