@@ -6,6 +6,9 @@ import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
 import com.vikingz.unitycoon.util.Point;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests checking {@link Point}.
+ */
 public class PointTests extends AbstractHeadlessGdxTest {
 
   @Test
