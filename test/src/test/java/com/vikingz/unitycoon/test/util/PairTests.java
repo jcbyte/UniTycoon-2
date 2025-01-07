@@ -11,12 +11,22 @@ import org.junit.jupiter.api.Test;
  */
 public class PairTests extends AbstractHeadlessGdxTest {
   @Test
-  public void testPair() {
+  public void testIntPair() {
     Pair<Integer, Integer> pair = new Pair<>(11, 15);
     assertEquals(11, pair.first);
     assertEquals(15, pair.second);
     pair.first = 45;
     assertEquals(45, pair.first);
     assertEquals(15, pair.second);
+  }
+
+  @Test
+  public void testIntStringPair() {
+    Pair<Integer, String> pair = new Pair<>(11, "Hello");
+    assertEquals(11, pair.first);
+    assertEquals("Hello", pair.second);
+    pair.second = "World!";
+    assertEquals(11, pair.first);
+    assertEquals("World!", pair.second);
   }
 }
