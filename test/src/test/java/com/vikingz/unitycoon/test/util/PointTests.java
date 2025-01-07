@@ -11,8 +11,8 @@ public class PointTests extends AbstractHeadlessGdxTest {
   @Test
   public void testPointGet() {
     Point thing = new Point(4, 10);
-    assertEquals(thing.getX(), 4);
-    assertEquals(thing.getY(), 10);
+    assertEquals(4, thing.getX());
+    assertEquals(10, thing.getY());
   }
 
   @Test
@@ -20,8 +20,11 @@ public class PointTests extends AbstractHeadlessGdxTest {
     Point thing = new Point(0, 0);
     thing.setX(5);
     thing.setY(10);
-    assertEquals(thing.getX(), 5);
-    assertEquals(thing.getY(), 10);
+    assertEquals(5, thing.getX());
+    assertEquals(10, thing.getY());
+    thing.setX(15);
+    assertEquals(15, thing.getX());
+    assertEquals(10, thing.getY());
   }
 
 }
