@@ -1,27 +1,19 @@
 package com.vikingz.unitycoon.test.audio;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Audio;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
-import com.badlogic.gdx.files.FileHandle;
 import com.vikingz.unitycoon.audio.GameSounds;
 import com.vikingz.unitycoon.global.GameConfig;
-import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 /**
  * Tests checking {@link com.vikingz.unitycoon.audio.GameSounds} .
