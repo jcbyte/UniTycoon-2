@@ -15,6 +15,7 @@ import com.vikingz.unitycoon.audio.GameMusic;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -22,18 +23,23 @@ import org.junit.jupiter.api.Test;
  * Tests checking {@link com.vikingz.unitycoon.audio.GameMusic} .
  */
 public class GameMusicTests extends AbstractHeadlessGdxTest {
-  private static Music backgroundMusicMock;
+  private Music backgroundMusicMock;
 
   /**
    * Initialise `Gdx.files` for loading assets.
-   * Mock `Gdx.audio` and our own Music to allow for testing.
-   * Initialise GameMusic.
    */
   @BeforeAll
   public static void setupAll() {
     // Initialise Gdx.files
     Gdx.files = new HeadlessFiles();
+  }
 
+  /**
+   * Mock `Gdx.audio` and our own Music to allow for testing.
+   * Initialise GameMusic.
+   */
+  @BeforeEach
+  public void setup() {
     // Mock Gdx.audio
     backgroundMusicMock = mock(Music.class);
     Audio audioMock = mock(Audio.class);
@@ -66,6 +72,6 @@ public class GameMusicTests extends AbstractHeadlessGdxTest {
     assertEquals(0.7f, GameMusic.getVolume());
     assertEquals(0.7f, GameMusic.volume);
     assertEquals(0.7f, GameConfig.getInstance().musicVolumeValue);
-    verify(backgroundMusicMock, times(2)).play();
+    verify(backgroundMusicMock, times(1)).play();
   }
 }
