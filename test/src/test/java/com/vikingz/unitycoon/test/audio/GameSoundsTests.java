@@ -57,6 +57,9 @@ public class GameSoundsTests extends AbstractHeadlessGdxTest {
 
   @Test
   public void testVolume() {
+    // Reset GameConfig instance to ensure test and game are in sync
+    GameConfig.resetInstance();
+
     GameSounds.setVolume(0.7f);
     assertEquals(0.7f, GameSounds.getVolume());
     assertEquals(0.7f, GameSounds.volume);
