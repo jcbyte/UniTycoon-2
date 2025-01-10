@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.Hashtable;
 
 /**
  * This class contains all the static data or data loaded from a file.
@@ -32,16 +32,16 @@ public class BuildingStats {
    * String of the buildings ShortHandName
    */
   // Loaded from buildingInfo.json
-  public static Dictionary<BuildingType, String[]> BuildingNameDict;
-  public static Dictionary<BuildingStats.BuildingType, String[]> BuildingPriceDict;
-  public static Dictionary<BuildingStats.BuildingType, String[]> BuildingSatisfactionDict;
-  public static Dictionary<BuildingStats.BuildingType, String[]> BuildingStudentDict;
-  public static Dictionary<BuildingStats.BuildingType, String[]> BuildingCoinDict;
-  public static Dictionary<BuildingStats.BuildingType, String[]> BuildingDict;
+  public static Hashtable<BuildingType, String[]> BuildingNameDict;
+  public static Hashtable<BuildingStats.BuildingType, String[]> BuildingPriceDict;
+  public static Hashtable<BuildingStats.BuildingType, String[]> BuildingSatisfactionDict;
+  public static Hashtable<BuildingStats.BuildingType, String[]> BuildingStudentDict;
+  public static Hashtable<BuildingStats.BuildingType, String[]> BuildingCoinDict;
+  public static Hashtable<BuildingStats.BuildingType, String[]> BuildingDict;
   public static ArrayList<String> BuildingIds;
 
   //Loaded from TextureAtlasMap.json
-  public static Dictionary<String, int[]> BuildingTextureMap;
+  public static Hashtable<String, int[]> BuildingTextureMap;
 
   //Textures information
   public static String textureAtlasLocation;
