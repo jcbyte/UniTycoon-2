@@ -55,6 +55,13 @@ public class BuildingStatsTests extends AbstractHeadlessGdxTest {
 
   @Test
   public void testGetTexture() {
-    // todo
+    TextureRegion t = BuildingStats.getTextureOfBuilding("GREGG");
+    assertNotNull(t);
+    if (t.getTexture() != null) {
+      t.getTexture().dispose();
+    }
+
+    TextureRegion t1 = BuildingStats.getTextureOfBuilding("something crazy");
+    assertNull(t1);
   }
 }
