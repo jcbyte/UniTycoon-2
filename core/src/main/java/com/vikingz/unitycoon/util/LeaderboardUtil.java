@@ -68,7 +68,8 @@ public class LeaderboardUtil {
    * @param records the leaderboard to sort in place.
    */
   public static void sortLeaderboard(LeaderboardRecord[] records) {
-    Arrays.sort(records, Comparator.comparing((LeaderboardRecord record) -> record.score).reversed());
+    Arrays.sort(records,
+        Comparator.comparing((LeaderboardRecord record) -> record.score).reversed());
   }
 
   /**
