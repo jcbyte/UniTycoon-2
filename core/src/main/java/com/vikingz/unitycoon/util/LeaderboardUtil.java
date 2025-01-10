@@ -30,6 +30,27 @@ public class LeaderboardUtil {
       this.name = name;
       this.score = score;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+      if (obj == null || getClass() != obj.getClass()) {
+        return false;
+      }
+
+      LeaderboardRecord that = (LeaderboardRecord) obj;
+      return score == that.score
+          && name != null ? name.equals(that.name) : that.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+      int result = name != null ? name.hashCode() : 0;
+      result = 31 * result + score;
+      return result;
+    }
   }
 
   /**
@@ -47,7 +68,7 @@ public class LeaderboardUtil {
    * @param records the leaderboard to sort in place.
    */
   public static void sortLeaderboard(LeaderboardRecord[] records) {
-    Arrays.sort(records, Comparator.comparing(record -> record.score));
+    Arrays.sort(records, Comparator.comparing((LeaderboardRecord record) -> record.score).reversed());
   }
 
   /**
