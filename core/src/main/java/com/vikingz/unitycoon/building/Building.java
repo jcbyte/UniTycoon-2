@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.building;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.vikingz.unitycoon.annotations.DebugMethodExcludeGeneratedJacoco;
 import com.vikingz.unitycoon.util.Point;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
@@ -141,19 +142,17 @@ public abstract class Building {
     return buildingType;
   }
 
-
   /**
    * Display the class as a string.
    */
+  @DebugMethodExcludeGeneratedJacoco
   public String toString() {
     String str = "";
-
     str += "x: " + this.posX;
     str += " y: " + this.posY;
     str += " width: " + this.width;
     str += " height: " + this.height;
     str += " type: " + this.buildingType;
-
     return str;
   }
 }
