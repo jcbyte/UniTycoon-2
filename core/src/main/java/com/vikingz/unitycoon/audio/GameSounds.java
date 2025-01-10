@@ -2,6 +2,7 @@ package com.vikingz.unitycoon.audio;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.vikingz.unitycoon.annotations.DebugMethodExcludeGeneratedJacoco;
 import com.vikingz.unitycoon.global.GameConfig;
 import java.util.Random;
 
@@ -11,22 +12,33 @@ import java.util.Random;
 public class GameSounds {
 
   // Load the sounds fx
-  private static final Sound placeBuilding1 = Gdx.audio.newSound(
+  private static Sound placeBuilding1 = Gdx.audio.newSound(
       Gdx.files.internal("audio/place_1.ogg")
   );
-  private static final Sound placeBuilding2 = Gdx.audio.newSound(
+  private static Sound placeBuilding2 = Gdx.audio.newSound(
       Gdx.files.internal("audio/place_2.ogg")
   );
-  private static final Sound placeBuilding3 = Gdx.audio.newSound(
+  private static Sound placeBuilding3 = Gdx.audio.newSound(
       Gdx.files.internal("audio/place_3.ogg")
   );
-
-  private static final Sound placeError1 = Gdx.audio.newSound(
+  private static Sound placeError1 = Gdx.audio.newSound(
       Gdx.files.internal("audio/place_error_1.ogg")
   );
-  private static final Sound placeError2 = Gdx.audio.newSound(
+  private static Sound placeError2 = Gdx.audio.newSound(
       Gdx.files.internal("audio/place_error_2.ogg")
   );
+
+  /**
+   * Method to allow us to inject our sounds for testing.
+   */
+  @DebugMethodExcludeGeneratedJacoco
+  public static void setBuildingSounds(Sound placedBuildingSounds, Sound placeErrorSounds) {
+    placeBuilding1 = placedBuildingSounds;
+    placeBuilding2 = placedBuildingSounds;
+    placeBuilding3 = placedBuildingSounds;
+    placeError1 = placeErrorSounds;
+    placeError2 = placeErrorSounds;
+  }
 
   //Sets the volume of the GameSounds to be played
   public static float volume = GameConfig.getInstance().getSoundVolumeValue();

@@ -28,9 +28,17 @@ public class GameConfig implements Serializable {
   // 56 cols
 
   // The single instance of GameConfig (eager initialization)
-  private static GameConfig INSTANCE = new GameConfig(
+  private static final GameConfig DEFAULT_GAME_CONFIG = new GameConfig(
       1792, 1008, 1f, 1f, LeaderboardUtil.generateBlankLeaderboard(5)
-  ); // Default values
+  );
+  private static GameConfig INSTANCE = DEFAULT_GAME_CONFIG;
+
+  /**
+   * Reset the single instance of GameConfig.
+   */
+  public static void resetInstance() {
+    INSTANCE = DEFAULT_GAME_CONFIG;
+  }
 
   // For JSON deserializing
   private GameConfig() {
