@@ -25,25 +25,6 @@ public abstract class Building {
    * Creates a new Building.
    *
    * @param texture      Texture
-   * @param x            X
-   * @param y            Y
-   * @param buildingInfo Building Info
-   */
-  public Building(TextureRegion texture, float x, float y, BuildingInfo buildingInfo) {
-    this.posX = x;
-    this.posY = y;
-    this.width = 128;
-    this.height = 128;
-    this.texture = texture;
-    this.buildingType = buildingInfo.getBuildingType();
-    this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();
-    this.buildingInfo = buildingInfo;
-  }
-
-  /**
-   * Creates a new Building.
-   *
-   * @param texture      Texture
    * @param p            Point p
    * @param buildingInfo Building Info
    */

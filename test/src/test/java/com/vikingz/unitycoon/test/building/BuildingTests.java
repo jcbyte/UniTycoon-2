@@ -13,6 +13,8 @@ import com.vikingz.unitycoon.building.buildings.RecreationalBuilding;
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
 import com.vikingz.unitycoon.util.Point;
 import com.vikingz.unitycoon.util.StatsCalculator;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -23,7 +25,26 @@ import org.junit.jupiter.api.Test;
  * {@link com.vikingz.unitycoon.building.buildings.RecreationalBuilding}.
  */
 public class BuildingTests extends AbstractHeadlessGdxTest {
-  private final TextureRegion testTexture = new TextureRegion();
+  private static TextureRegion testTexture;
+
+  /**
+   * Initialise shared resources.
+   */
+  @BeforeAll
+  public static void setupAll() {
+    testTexture = new TextureRegion();
+  }
+
+  /**
+   * Dispose of shared resources.
+   */
+  @AfterAll
+  public static void teardownAll() {
+    // If there is a texture associated then dispose of it
+    if (testTexture.getTexture() != null) {
+      testTexture.getTexture().dispose();
+    }
+  }
 
   @Test
   public void testAcademicBuilding() {
@@ -139,37 +160,42 @@ public class BuildingTests extends AbstractHeadlessGdxTest {
     assertEquals(testTexture, b.getTexture());
   }
 
-//
-//  @Test
-//  public void testSetDimensions() {
-//    Building testBuilding = new Building(testTexture, 0, 0, testBuildingInfo);
-//
-//    testBuilding.setHeight(0);
-//    testBuilding.setWidth(0);
-//    assertEquals(testBuilding.getWidth(), 0);
-//    assertEquals(testBuilding.getHeight(), 0);
-//
-//    testBuilding.setHeight(9000);
-//    testBuilding.setWidth(9000);
-//    assertEquals(testBuilding.getHeight(), 9000);
-//    assertEquals(testBuilding.getWidth(), 9000);
-//  }
-//
-//  @Test
-//  public void testSetCoordinates() {
-//    Building testBuilding = new Building(testTexture, 0, 0, testBuildingInfo);
-//
-//    testBuilding.setX(5);
-//    testBuilding.setY(5);
-//    assertEquals(testBuilding.getX(), 5);
-//    assertEquals(testBuilding.getY(), 5);
-//
-//    testBuilding.setX(9000);
-//    testBuilding.setY(9000);
-//    assertEquals(testBuilding.getX(), 9000);
-//    assertEquals(testBuilding.getY(), 9000);
-//  }
-//
+  @Test
+  public void testSetBuildingAttributes() {
+    BuildingInfo i = new BuildingInfo(
+        "TEST_ACADEMIC",
+        "TestAcademicBuilding",
+        BuildingStats.BuildingType.ACADEMIC,
+        200,
+        2.3f,
+        500,
+        200);
+    AcademicBuilding b = new AcademicBuilding(testTexture, new Point(23, -14), i);
+
+    assertEquals(23, b.getX());
+    assertEquals(-14, b.getY());
+    b.setX(-12);
+    b.setY(90);
+    assertEquals(-12, b.getX());
+    assertEquals(90, b.getY());
+
+    assertEquals(128, b.getHeight());
+    assertEquals(128, b.getWidth());
+    b.setHeight(64);
+    b.setWidth(64);
+    assertEquals(64, b.getHeight());
+    assertEquals(64, b.getWidth());
+
+    assertEquals(testTexture, b.getTexture());
+    TextureRegion newTexture = new TextureRegion();
+    b.setTexture(newTexture);
+    assertEquals(newTexture, b.getTexture());
+    // If there is a texture associated then dispose of it
+    if (newTexture.getTexture() != null) {
+      newTexture.getTexture().dispose();
+    }
+  }
+
 //  @Test
 //  public void testToString() {
 //    Building testBuilding = new Building(testTexture, 0, 0, testBuildingInfo);
