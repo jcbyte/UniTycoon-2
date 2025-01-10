@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vikingz.unitycoon.building.BuildingInfo;
 import com.vikingz.unitycoon.building.BuildingStats;
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
@@ -51,6 +52,16 @@ public class BuildingStatsTests extends AbstractHeadlessGdxTest {
 
     BuildingInfo i2 = BuildingStats.getInfo(BuildingStats.BuildingType.ACCOMMODATION, 8790);
     assertNull(i2);
+
+    BuildingInfo i3 = BuildingStats.getInfo(BuildingStats.BuildingType.ACCOMMODATION, 1);
+    assertNotNull(i3);
+    assertEquals("LISTER", i3.getBuildingId());
+    assertEquals(150, i3.getBuildingCost());
+    assertEquals(BuildingStats.BuildingType.ACCOMMODATION, i3.getBuildingType());
+    assertEquals(0f, i3.getSatisfactionMultiplier());
+    assertEquals("Anne Lister", i3.getName());
+    assertEquals(0, i3.getCoinsPerSecond());
+    assertEquals(150, i3.getNumberOfStudents());
   }
 
   @Test
