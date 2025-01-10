@@ -129,15 +129,15 @@ public class FileHandler {
       BuildingStats.BuildingDict.put(NONE, buildingInfo[5].NONE);
 
       // Passing child elements from types
-      Enumeration<String[]> buildingIdsIterator = BuildingStats.BuildingDict.elements();
-      BuildingStats.BuildingIds = new ArrayList<>();
-      while (buildingIdsIterator.hasMoreElements()) {
-        for (String item : buildingIdsIterator.nextElement()) {
-          if (item != null) {
-            BuildingStats.BuildingIds.add(item);
+      ArrayList<String> idList = new ArrayList<>();
+      for (String[] ids : BuildingStats.BuildingDict.values()) {
+        for (String id : ids) {
+          if (id != null) {
+            idList.add(id);
           }
         }
       }
+      BuildingStats.BuildingIds = idList;
 
       // Textures
       String textureFileRead = textureFileHandle.readString();
