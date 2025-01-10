@@ -20,5 +20,6 @@ public class Main extends Game {
     GameMusic.play();
     FileHandler.loadBuildings();
     ScreenMultiplexer.init(this);
+    ScreenMultiplexer.switchScreens(ScreenMultiplexer.Screens.MENU);
   }
 }
