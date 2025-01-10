@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.building;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.vikingz.unitycoon.annotations.DebugMethodExcludeGeneratedJacoco;
 import com.vikingz.unitycoon.util.Point;
 import com.vikingz.unitycoon.util.StatsCalculator;
 
@@ -20,25 +21,6 @@ public abstract class Building {
   private final BuildingStats.BuildingType buildingType;
   private final float satisfactionMultiplier;
   private final BuildingInfo buildingInfo;
-
-  /**
-   * Creates a new Building.
-   *
-   * @param texture      Texture
-   * @param x            X
-   * @param y            Y
-   * @param buildingInfo Building Info
-   */
-  public Building(TextureRegion texture, float x, float y, BuildingInfo buildingInfo) {
-    this.posX = x;
-    this.posY = y;
-    this.width = 128;
-    this.height = 128;
-    this.texture = texture;
-    this.buildingType = buildingInfo.getBuildingType();
-    this.satisfactionMultiplier = buildingInfo.getSatisfactionMultiplier();
-    this.buildingInfo = buildingInfo;
-  }
 
   /**
    * Creates a new Building.
@@ -160,19 +142,17 @@ public abstract class Building {
     return buildingType;
   }
 
-
   /**
    * Display the class as a string.
    */
+  @DebugMethodExcludeGeneratedJacoco
   public String toString() {
     String str = "";
-
     str += "x: " + this.posX;
     str += " y: " + this.posY;
     str += " width: " + this.width;
     str += " height: " + this.height;
     str += " type: " + this.buildingType;
-
     return str;
   }
 }

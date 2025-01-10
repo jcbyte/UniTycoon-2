@@ -54,7 +54,7 @@ public class LeaderboardUtil {
   }
 
   /**
-   * Generate an empty leaderboard, for initialisation.
+   * Generate an empty leaderboard, for initialisation. 
    *
    * @param no amount of records in the leaderboard
    */

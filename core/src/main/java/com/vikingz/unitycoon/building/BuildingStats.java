@@ -3,7 +3,6 @@ package com.vikingz.unitycoon.building;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import java.util.ArrayList;
 import java.util.Dictionary;
 
@@ -127,15 +126,5 @@ public class BuildingStats {
     } catch (Exception e) {
       return null;
     }
-  }
-
-  /**
-   * Returns a drawable Texture region, used for building UI.
-   *
-   * @param id Selects which building is being used the building StringID
-   * @return TextureRegionDrawable
-   */
-  public static TextureRegionDrawable getTextureDrawableOfBuilding(String id) {
-    return new TextureRegionDrawable(BuildingStats.getTextureOfBuilding(id));
   }
 }
