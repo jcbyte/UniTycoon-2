@@ -42,17 +42,29 @@ public class GameSoundsTests extends AbstractHeadlessGdxTest {
   @Test
   public void testPlayPlacedBuilding() {
     GameSounds.setVolume(0.5f);
-    GameSounds.playPlacedBuilding();
 
+    verify(placedBuildingSoundMock, times(0)).play(0.5f);
+    GameSounds.playPlacedBuilding();
     verify(placedBuildingSoundMock, times(1)).play(0.5f);
+    GameSounds.playPlacedBuilding();
+    verify(placedBuildingSoundMock, times(2)).play(0.5f);
+    GameSounds.playPlacedBuilding();
+    verify(placedBuildingSoundMock, times(3)).play(0.5f);
+    GameSounds.playPlacedBuilding();
+    verify(placedBuildingSoundMock, times(4)).play(0.5f);
   }
 
   @Test
   public void testPlayPlaceError() {
     GameSounds.setVolume(0.5f);
-    GameSounds.playPlaceError();
 
+    verify(placeErrorSoundMock, times(0)).play(0.5f);
+    GameSounds.playPlaceError();
     verify(placeErrorSoundMock, times(1)).play(0.5f);
+    GameSounds.playPlaceError();
+    verify(placeErrorSoundMock, times(2)).play(0.5f);
+    GameSounds.playPlaceError();
+    verify(placeErrorSoundMock, times(3)).play(0.5f);
   }
 
   @Test
