@@ -195,21 +195,4 @@ public class BuildingTests extends AbstractHeadlessGdxTest {
       newTexture.getTexture().dispose();
     }
   }
-
-//  @Test
-//  public void testToString() {
-//    Building testBuilding = new Building(testTexture, 0, 0, testBuildingInfo);
-//    String str = "";
-//
-//    str += "x: 0" + this.posX;
-//    str += " y: 0" + this.posY;
-//    str += " width: 128" + this.width;
-//    str += " height: 128" + this.height;
-//    str += " type: ???" + this.buildingType;
-//
-//
-//    assertEquals(testBuilding.toString(), str);
-//  }
-
-
 }
