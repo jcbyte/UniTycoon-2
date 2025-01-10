@@ -16,6 +16,7 @@ public class LeaderboardUtilTests extends AbstractHeadlessGdxTest {
   public void testGenerateBlankLeaderboard() {
     LeaderboardUtil.LeaderboardRecord[] l = LeaderboardUtil.generateBlankLeaderboard(3);
     assertEquals(3, l.length);
+
     LeaderboardUtil.LeaderboardRecord[] l1 = LeaderboardUtil.generateBlankLeaderboard(0);
     assertEquals(0, l1.length);
   }
@@ -84,5 +85,21 @@ public class LeaderboardUtilTests extends AbstractHeadlessGdxTest {
   }
 
   @Test
-  public void testLeaderboardToString() {}
+  public void testLeaderboardToString() {
+    LeaderboardUtil.LeaderboardRecord[] l = {
+        new LeaderboardUtil.LeaderboardRecord("1", 1_000_000),
+        new LeaderboardUtil.LeaderboardRecord("2", 200_000),
+        new LeaderboardUtil.LeaderboardRecord("3", 50_000),
+        new LeaderboardUtil.LeaderboardRecord(),
+        new LeaderboardUtil.LeaderboardRecord(),
+    };
+    assertEquals("1: 10.00%\n2: 2.00%\n3: 0.50%\n", LeaderboardUtil.leaderboardToString(l));
+
+    LeaderboardUtil.LeaderboardRecord[] l2 = {
+        new LeaderboardUtil.LeaderboardRecord(),
+        new LeaderboardUtil.LeaderboardRecord(),
+    };
+    assertEquals("No Records\n", LeaderboardUtil.leaderboardToString(l2));
+
+  }
 }
