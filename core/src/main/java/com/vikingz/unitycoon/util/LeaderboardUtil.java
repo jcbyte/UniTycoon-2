@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 /**
  * Class to for leaderboard functions.
  */
-public class LeaderboardUtils {
+public class LeaderboardUtil {
   /**
    * Class to represent a leaderboard record.
    */
@@ -30,6 +30,27 @@ public class LeaderboardUtils {
       this.name = name;
       this.score = score;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+      if (obj == null || getClass() != obj.getClass()) {
+        return false;
+      }
+
+      LeaderboardRecord that = (LeaderboardRecord) obj;
+      return score == that.score
+          && name != null ? name.equals(that.name) : that.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+      int result = name != null ? name.hashCode() : 0;
+      result = 31 * result + score;
+      return result;
+    }
   }
 
   /**
@@ -47,7 +68,8 @@ public class LeaderboardUtils {
    * @param records the leaderboard to sort in place.
    */
   public static void sortLeaderboard(LeaderboardRecord[] records) {
-    Arrays.sort(records, Comparator.comparing(record -> record.score));
+    Arrays.sort(records,
+        Comparator.comparing((LeaderboardRecord record) -> record.score).reversed());
   }
 
   /**
@@ -93,7 +115,7 @@ public class LeaderboardUtils {
    */
   public static String leaderboardToString(LeaderboardRecord[] leaderboard) {
     StringBuilder text = new StringBuilder();
-    for (LeaderboardUtils.LeaderboardRecord record : leaderboard) {
+    for (LeaderboardUtil.LeaderboardRecord record : leaderboard) {
       if (record.name != null) {
         text.append(record.name).append(": ")
             .append(StatsCalculator.getFormattedSatisfaction(record.score)).append("\n");
