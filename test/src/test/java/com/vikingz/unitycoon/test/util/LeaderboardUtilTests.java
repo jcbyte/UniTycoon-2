@@ -58,25 +58,33 @@ public class LeaderboardUtilTests extends AbstractHeadlessGdxTest {
         new LeaderboardUtil.LeaderboardRecord("3", 100),
         new LeaderboardUtil.LeaderboardRecord(),
     };
-    assertTrue(LeaderboardUtil.updateLeaderboard(l, new LeaderboardUtil.LeaderboardRecord("1b", 300)));
+
+    assertTrue(LeaderboardUtil.updateLeaderboard(l,
+        new LeaderboardUtil.LeaderboardRecord("1b", 300)));
     assertEquals(4, l.length);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("1", 400), l[0]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("1b", 300), l[1]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("2", 200), l[2]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("3", 100), l[3]);
-    assertFalse(LeaderboardUtil.updateLeaderboard(l, new LeaderboardUtil.LeaderboardRecord("4", 100)));
+
+    assertFalse(LeaderboardUtil.updateLeaderboard(l,
+        new LeaderboardUtil.LeaderboardRecord("4", 100)));
     assertEquals(4, l.length);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("1", 400), l[0]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("1b", 300), l[1]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("2", 200), l[2]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("3", 100), l[3]);
-    assertFalse(LeaderboardUtil.updateLeaderboard(l, new LeaderboardUtil.LeaderboardRecord("5", 20)));
+
+    assertFalse(LeaderboardUtil.updateLeaderboard(l,
+        new LeaderboardUtil.LeaderboardRecord("5", 20)));
     assertEquals(4, l.length);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("1", 400), l[0]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("1b", 300), l[1]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("2", 200), l[2]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("3", 100), l[3]);
-    assertTrue(LeaderboardUtil.updateLeaderboard(l, new LeaderboardUtil.LeaderboardRecord("0", 400)));
+
+    assertTrue(LeaderboardUtil.updateLeaderboard(l,
+        new LeaderboardUtil.LeaderboardRecord("0", 400)));
     assertEquals(4, l.length);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("0", 400), l[0]);
     assertEquals(new LeaderboardUtil.LeaderboardRecord("1", 400), l[1]);
