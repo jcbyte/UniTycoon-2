@@ -9,18 +9,13 @@ import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.vikingz.unitycoon.audio.GameMusic;
-import com.vikingz.unitycoon.audio.GameSounds;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import com.badlogic.gdx.audio.Music;
-import org.junit.jupiter.api.TestMethodOrder;
 
 
 /**
@@ -29,6 +24,11 @@ import org.junit.jupiter.api.TestMethodOrder;
 public class GameMusicTests extends AbstractHeadlessGdxTest {
   private static Music backgroundMusicMock;
 
+  /**
+   * Initialise `Gdx.files` for loading assets.
+   * Mock `Gdx.audio` and our own Music to allow for testing.
+   * Initialise GameMusic.
+   */
   @BeforeAll
   public static void setupAll() {
     // Initialise Gdx.files

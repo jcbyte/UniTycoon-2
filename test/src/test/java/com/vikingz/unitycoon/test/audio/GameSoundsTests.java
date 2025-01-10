@@ -24,8 +24,7 @@ public class GameSoundsTests extends AbstractHeadlessGdxTest {
 
   /**
    * Initialise `Gdx.files` for loading assets.
-   * Mock `Gdx.audio` to allow for testing.
-   * Re-initialise GameConfig for consistency.
+   * Mock `Gdx.audio` and our own Sound's to allow for testing.
    */
   @BeforeAll
   public static void setupAll() {
