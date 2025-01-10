@@ -3,6 +3,8 @@ package com.vikingz.unitycoon.test.audio;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.Audio;
@@ -21,9 +23,8 @@ import org.mockito.Mockito;
  * Tests checking {@link com.vikingz.unitycoon.audio.GameSounds} .
  */
 public class GameSoundsTests extends AbstractHeadlessGdxTest {
-  private static Sound soundMock1;
-  private static Sound soundMock2;
-  private static Sound soundMock3;
+  private static Sound placedBuildingSoundMock;
+  private static Sound placeErrorSoundMock;
 
   /**
    * Initialise `Gdx.files` for loading assets.
@@ -35,13 +36,10 @@ public class GameSoundsTests extends AbstractHeadlessGdxTest {
     Gdx.files = new HeadlessFiles();
 
     // Mock Gdx.audio
-    soundMock1 = mock(Sound.class);
-    soundMock2 = mock(Sound.class);
-    soundMock3 = mock(Sound.class);
-
+    placedBuildingSoundMock = mock(Sound.class);
+    placeErrorSoundMock = mock(Sound.class);
     Gdx.audio = mock(Audio.class);
-    when(Gdx.audio.newSound(any(FileHandle.class)))
-        .thenReturn(soundMock1, soundMock2, soundMock3);
+    GameSounds.setBuildingSounds(placedBuildingSoundMock, placeErrorSoundMock);
   }
 
   @Test
@@ -49,10 +47,7 @@ public class GameSoundsTests extends AbstractHeadlessGdxTest {
     GameSounds.setVolume(0.5f);
     GameSounds.playPlacedBuilding();
 
-    int totalCalls = (Mockito.mockingDetails(soundMock1).getInvocations().size()
-        + Mockito.mockingDetails(soundMock2).getInvocations().size()
-        + Mockito.mockingDetails(soundMock3).getInvocations().size());
-    assertEquals(1, totalCalls);
+    verify(placedBuildingSoundMock, times(1)).play(0.5f);
   }
 
   @Test
@@ -60,10 +55,7 @@ public class GameSoundsTests extends AbstractHeadlessGdxTest {
     GameSounds.setVolume(0.5f);
     GameSounds.playPlaceError();
 
-    int totalCalls = (Mockito.mockingDetails(soundMock1).getInvocations().size()
-        + Mockito.mockingDetails(soundMock2).getInvocations().size()
-        + Mockito.mockingDetails(soundMock3).getInvocations().size());
-    assertEquals(1, totalCalls);
+    verify(placeErrorSoundMock, times(1)).play(0.5f);
   }
 
   @Test
