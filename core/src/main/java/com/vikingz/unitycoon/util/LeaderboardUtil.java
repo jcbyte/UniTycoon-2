@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 /**
  * Class to for leaderboard functions.
  */
-public class LeaderboardUtils {
+public class LeaderboardUtil {
   /**
    * Class to represent a leaderboard record.
    */
@@ -93,7 +93,7 @@ public class LeaderboardUtils {
    */
   public static String leaderboardToString(LeaderboardRecord[] leaderboard) {
     StringBuilder text = new StringBuilder();
-    for (LeaderboardUtils.LeaderboardRecord record : leaderboard) {
+    for (LeaderboardUtil.LeaderboardRecord record : leaderboard) {
       if (record.name != null) {
         text.append(record.name).append(": ")
             .append(StatsCalculator.getFormattedSatisfaction(record.score)).append("\n");
