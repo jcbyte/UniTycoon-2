@@ -128,14 +128,4 @@ public class BuildingStats {
       return null;
     }
   }
-
-  /**
-   * Returns a drawable Texture region, used for building UI.
-   *
-   * @param id Selects which building is being used the building StringID
-   * @return TextureRegionDrawable
-   */
-  public static TextureRegionDrawable getTextureDrawableOfBuilding(String id) {
-    return new TextureRegionDrawable(BuildingStats.getTextureOfBuilding(id));
-  }
 }

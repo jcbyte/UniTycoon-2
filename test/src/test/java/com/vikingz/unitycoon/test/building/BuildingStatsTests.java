@@ -57,9 +57,4 @@ public class BuildingStatsTests extends AbstractHeadlessGdxTest {
   public void testGetTexture() {
     // todo
   }
-
-  @Test
-  public void testGetTextureDrawable() {
-    // todo
-  }
 }

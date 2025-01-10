@@ -368,8 +368,8 @@ public class BuildMenu {
    */
   private void updateBuildingWindow() {
     buildingNameLabel.setText(BuildingStats.BuildingNameDict.get(buildingType)[index]);
-    buildingImage.setDrawable(BuildingStats.getTextureDrawableOfBuilding(
-        BuildingStats.BuildingDict.get(buildingType)[index]));
+    buildingImage.setDrawable(new TextureRegionDrawable(BuildingStats.getTextureOfBuilding(
+        BuildingStats.BuildingDict.get(buildingType)[index])));
     buildingPriceValue.setText(BuildingStats.BuildingPriceDict.get(buildingType)[index]);
     buildingSatisfactionValue.setText(BuildingSatisfactionDict.get(buildingType)[index]);
     buildingStudentsValue.setText(BuildingStats.BuildingStudentDict.get(buildingType)[index]);
