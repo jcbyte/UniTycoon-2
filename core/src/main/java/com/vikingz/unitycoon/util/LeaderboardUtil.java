@@ -1,5 +1,6 @@
 package com.vikingz.unitycoon.util;
 
+import com.vikingz.unitycoon.annotations.DebugMethodExcludeGeneratedJacoco;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Stream;
@@ -54,7 +55,7 @@ public class LeaderboardUtil {
   }
 
   /**
-   * Generate an empty leaderboard, for initialisation. 
+   * Generate an empty leaderboard, for initialisation.
    *
    * @param no amount of records in the leaderboard
    */

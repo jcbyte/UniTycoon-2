@@ -2,6 +2,7 @@ package com.vikingz.unitycoon.test.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
@@ -12,6 +13,26 @@ import org.junit.jupiter.api.Test;
  * Tests checking {@link LeaderboardUtil}.
  */
 public class LeaderboardUtilTests extends AbstractHeadlessGdxTest {
+  @Test
+  public void testLeaderboardRecordEqual() {
+    LeaderboardUtil.LeaderboardRecord l =
+        new LeaderboardUtil.LeaderboardRecord("hello", 42);
+    assertEquals(new LeaderboardUtil.LeaderboardRecord("hello", 42), l);
+    assertEquals(new LeaderboardUtil.LeaderboardRecord("hello", 42).hashCode(),
+        l.hashCode());
+    assertNotEquals(new LeaderboardUtil.LeaderboardRecord("hiy", 42), l);
+    assertNotEquals(new LeaderboardUtil.LeaderboardRecord("hiy", 42).hashCode(),
+        l.hashCode());
+    assertNotEquals(new LeaderboardUtil.LeaderboardRecord("hello", 12), l);
+    assertNotEquals(new LeaderboardUtil.LeaderboardRecord("hello", 12).hashCode(),
+        l.hashCode());
+    assertNotEquals(null, l);
+
+    LeaderboardUtil.LeaderboardRecord l1 = new LeaderboardUtil.LeaderboardRecord();
+    assertEquals(new LeaderboardUtil.LeaderboardRecord(), l1);
+    assertEquals(new LeaderboardUtil.LeaderboardRecord().hashCode(), l1.hashCode());
+  }
+
   @Test
   public void testGenerateBlankLeaderboard() {
     LeaderboardUtil.LeaderboardRecord[] l = LeaderboardUtil.generateBlankLeaderboard(3);
