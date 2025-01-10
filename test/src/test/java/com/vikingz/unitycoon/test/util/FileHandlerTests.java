@@ -1,6 +1,7 @@
 package com.vikingz.unitycoon.test.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
@@ -24,6 +25,18 @@ public class FileHandlerTests extends AbstractHeadlessGdxTest {
   public static void setupAll() {
     // Initialise Gdx.files
     Gdx.files = new HeadlessFiles();
+  }
+
+  @Test
+  public void testLoadMap() {
+    String m = FileHandler.loadMap("map2");
+    assertTrue(m.length() > 50);
+
+    String m1 = FileHandler.loadMap("map0");
+    assertEquals("", m1);
+
+    String m2 = FileHandler.loadMap("somemap");
+    assertEquals("", m2);
   }
 
   @Test
