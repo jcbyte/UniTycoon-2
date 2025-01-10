@@ -7,13 +7,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.files.FileHandle;
 import com.vikingz.unitycoon.audio.GameSounds;
 import com.vikingz.unitycoon.global.GameConfig;
+import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,6 +33,7 @@ public class GameSoundsTests extends AbstractHeadlessGdxTest {
   /**
    * Initialise `Gdx.files` for loading assets.
    * Mock `Gdx.audio` to allow for testing.
+   * Re-initialise GameConfig for consistency.
    */
   @BeforeAll
   public static void setupAll() {

@@ -66,9 +66,9 @@ public class GameConfigManager {
 
     Json json = new Json();
     Preferences prefs = Gdx.app.getPreferences("prefs");
-    
+
     String configString = prefs.getString("config");
-    if (configString.isEmpty()) {
+    if (configString == null || configString.isEmpty()) {
       System.out.println("Saved config not found");
       return;
     }
