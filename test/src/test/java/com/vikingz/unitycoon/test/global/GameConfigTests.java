@@ -1,6 +1,8 @@
 package com.vikingz.unitycoon.test.global;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.Preferences;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
+import com.vikingz.unitycoon.util.LeaderboardUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -144,5 +147,21 @@ public class GameConfigTests extends AbstractHeadlessGdxTest {
     assertEquals(1f, GameConfig.getInstance().getMusicVolumeValue());
     GameConfig.getInstance().setMusicVolumeValue(0.78f);
     assertEquals(0.78f, GameConfig.getInstance().getMusicVolumeValue());
+  }
+
+  @Test
+  public void testConfigLeaderboard() {
+    LeaderboardUtil.LeaderboardRecord[] l = new LeaderboardUtil.LeaderboardRecord[] {
+        new LeaderboardUtil.LeaderboardRecord("1", 400),
+        new LeaderboardUtil.LeaderboardRecord("2", 200),
+        new LeaderboardUtil.LeaderboardRecord("3", 100),
+    };
+    GameConfig.getInstance().leaderboard = l;
+    assertEquals(l, GameConfig.getInstance().getLeaderboard());
+
+    assertTrue(GameConfig.getInstance().isOnLeaderboard(500));
+    assertTrue(GameConfig.getInstance().isOnLeaderboard(300));
+    assertFalse(GameConfig.getInstance().isOnLeaderboard(100));
+    assertFalse(GameConfig.getInstance().isOnLeaderboard(10));
   }
 }
