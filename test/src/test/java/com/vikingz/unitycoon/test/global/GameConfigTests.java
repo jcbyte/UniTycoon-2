@@ -1,7 +1,6 @@
 package com.vikingz.unitycoon.test.global;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -90,7 +89,11 @@ public class GameConfigTests extends AbstractHeadlessGdxTest {
     assertEquals(1f, GameConfig.getInstance().getMusicVolumeValue());
     assertEquals(5, GameConfig.getInstance().getLeaderboard().length);
 
-    savedJsonString = "{windowWidth:1000,windowHeight:600,soundVolumeValue:0.7,musicVolumeValue:0.4,leaderboard:[{},{}]}";
+    savedJsonString = "{windowWidth:1000,"
+        + "windowHeight:600,"
+        + "soundVolumeValue:0.7,"
+        + "musicVolumeValue:0.4,"
+        + "leaderboard:[{},{}]}";
     when(preferencesMock.getString("config")).thenReturn(savedJsonString);
     GameConfigManager.loadGameConfig();
     assertEquals(1000, GameConfig.getInstance().getWindowWidth());
@@ -106,13 +109,23 @@ public class GameConfigTests extends AbstractHeadlessGdxTest {
     mockPreferences(preferencesMock);
 
     GameConfigManager.saveGameConfig();
-    verify(preferencesMock, times(1)).putString(eq("config"), eq("{windowWidth:1792,windowHeight:1008,soundVolumeValue:1,musicVolumeValue:1,leaderboard:[{},{},{},{},{}]}"));
+    verify(preferencesMock, times(1)).putString(eq("config"),
+        eq("{windowWidth:1792,"
+            + "windowHeight:1008,"
+            + "soundVolumeValue:1,"
+            + "musicVolumeValue:1,"
+            + "leaderboard:[{},{},{},{},{}]}"));
     verify(preferencesMock, times(1)).flush();
 
     GameConfig.getInstance().setSoundVolumeValue(0.1f);
     GameConfig.getInstance().setMusicVolumeValue(0.6f);
     GameConfigManager.saveGameConfig();
-    verify(preferencesMock, times(1)).putString(eq("config"), eq("{windowWidth:1792,windowHeight:1008,soundVolumeValue:0.1,musicVolumeValue:0.6,leaderboard:[{},{},{},{},{}]}"));
+    verify(preferencesMock, times(1)).putString(eq("config"),
+        eq("{windowWidth:1792,"
+            + "windowHeight:1008,"
+            + "soundVolumeValue:0.1,"
+            + "musicVolumeValue:0.6,"
+            + "leaderboard:[{},{},{},{},{}]}"));
     verify(preferencesMock, times(2)).flush();
   }
 
