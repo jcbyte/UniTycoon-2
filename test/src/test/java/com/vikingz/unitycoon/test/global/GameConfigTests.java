@@ -1,7 +1,10 @@
 package com.vikingz.unitycoon.test.global;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -14,6 +17,7 @@ import com.badlogic.gdx.Preferences;
 import com.vikingz.unitycoon.global.GameConfig;
 import com.vikingz.unitycoon.global.GameConfigManager;
 import com.vikingz.unitycoon.test.AbstractHeadlessGdxTest;
+import com.vikingz.unitycoon.util.LeaderboardUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -62,40 +66,70 @@ public class GameConfigTests extends AbstractHeadlessGdxTest {
   private void mockPreferences(Preferences mockedPreferences) {
     Application appMock = mock(Application.class);
     when(appMock.getPreferences(any())).thenReturn(mockedPreferences);
+    Gdx.app = appMock;
   }
 
   @Test
   public void testLoadGameConfig() {
-    String savedJsonString = "";
-
     Preferences preferencesMock = mock(Preferences.class);
-    when(preferencesMock.getString("config")).thenReturn(savedJsonString);
     mockPreferences(preferencesMock);
 
+    String savedJsonString = "";
+    when(preferencesMock.getString("config")).thenReturn(savedJsonString);
     GameConfigManager.loadGameConfig();
-
-    // todo check same
+    assertEquals(1792, GameConfig.getInstance().getWindowWidth());
+    assertEquals(1008, GameConfig.getInstance().getWindowHeight());
+    assertEquals(1f, GameConfig.getInstance().getSoundVolumeValue());
+    assertEquals(1f, GameConfig.getInstance().getMusicVolumeValue());
+    assertEquals(5, GameConfig.getInstance().getLeaderboard().length);
 
     savedJsonString = "{\"invalid json\",]]";
     when(preferencesMock.getString("config")).thenReturn(savedJsonString);
+    GameConfigManager.loadGameConfig();
+    assertEquals(1792, GameConfig.getInstance().getWindowWidth());
+    assertEquals(1008, GameConfig.getInstance().getWindowHeight());
+    assertEquals(1f, GameConfig.getInstance().getSoundVolumeValue());
+    assertEquals(1f, GameConfig.getInstance().getMusicVolumeValue());
+    assertEquals(5, GameConfig.getInstance().getLeaderboard().length);
 
-    // todo check throw
-
-    savedJsonString = ""; // todo add valid
+    savedJsonString = "{windowWidth:1000,"
+        + "windowHeight:600,"
+        + "soundVolumeValue:0.7,"
+        + "musicVolumeValue:0.4,"
+        + "leaderboard:[{},{}]}";
     when(preferencesMock.getString("config")).thenReturn(savedJsonString);
-
-    // todo check sets correctly
+    GameConfigManager.loadGameConfig();
+    assertEquals(1000, GameConfig.getInstance().getWindowWidth());
+    assertEquals(600, GameConfig.getInstance().getWindowHeight());
+    assertEquals(0.7f, GameConfig.getInstance().getSoundVolumeValue());
+    assertEquals(0.4f, GameConfig.getInstance().getMusicVolumeValue());
+    assertEquals(2, GameConfig.getInstance().getLeaderboard().length);
   }
 
   @Test
   public void testSaveGameConfig() {
     Preferences preferencesMock = mock(Preferences.class);
-    // when(preferencesMock.putString(any(), any())); // todo get parameters used and assert these
     mockPreferences(preferencesMock);
 
     GameConfigManager.saveGameConfig();
-
+    verify(preferencesMock, times(1)).putString(eq("config"),
+        eq("{windowWidth:1792,"
+            + "windowHeight:1008,"
+            + "soundVolumeValue:1,"
+            + "musicVolumeValue:1,"
+            + "leaderboard:[{},{},{},{},{}]}"));
     verify(preferencesMock, times(1)).flush();
+
+    GameConfig.getInstance().setSoundVolumeValue(0.1f);
+    GameConfig.getInstance().setMusicVolumeValue(0.6f);
+    GameConfigManager.saveGameConfig();
+    verify(preferencesMock, times(1)).putString(eq("config"),
+        eq("{windowWidth:1792,"
+            + "windowHeight:1008,"
+            + "soundVolumeValue:0.1,"
+            + "musicVolumeValue:0.6,"
+            + "leaderboard:[{},{},{},{},{}]}"));
+    verify(preferencesMock, times(2)).flush();
   }
 
   @Test
@@ -113,5 +147,21 @@ public class GameConfigTests extends AbstractHeadlessGdxTest {
     assertEquals(1f, GameConfig.getInstance().getMusicVolumeValue());
     GameConfig.getInstance().setMusicVolumeValue(0.78f);
     assertEquals(0.78f, GameConfig.getInstance().getMusicVolumeValue());
+  }
+
+  @Test
+  public void testConfigLeaderboard() {
+    LeaderboardUtil.LeaderboardRecord[] l = new LeaderboardUtil.LeaderboardRecord[] {
+        new LeaderboardUtil.LeaderboardRecord("1", 400),
+        new LeaderboardUtil.LeaderboardRecord("2", 200),
+        new LeaderboardUtil.LeaderboardRecord("3", 100),
+    };
+    GameConfig.getInstance().leaderboard = l;
+    assertEquals(l, GameConfig.getInstance().getLeaderboard());
+
+    assertTrue(GameConfig.getInstance().isOnLeaderboard(500));
+    assertTrue(GameConfig.getInstance().isOnLeaderboard(300));
+    assertFalse(GameConfig.getInstance().isOnLeaderboard(100));
+    assertFalse(GameConfig.getInstance().isOnLeaderboard(10));
   }
 }
