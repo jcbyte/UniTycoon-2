@@ -15,12 +15,13 @@ import org.junit.jupiter.api.Test;
 public class AchievementTests extends AbstractHeadlessGdxTest {
   @Test
   public void testAchievement() {
-    boolean aRes = false; // todo get reference
-    Achievement a = new Achievement("a", () -> aRes, null, () -> {}, "ar");
+    // Create this as an array so that it is used as a reference
+    boolean[] cond = {false};
+    Achievement a = new Achievement("a", () -> cond[0], null, () -> {}, "ar");
     assertFalse(a.hasAchieved());
     assertFalse(a.calculate());
     assertFalse(a.hasAchieved());
-    aRes = true;
+    cond[0] = true;
     assertTrue(a.calculate());
     assertTrue(a.hasAchieved());
     assertFalse(a.calculate());
