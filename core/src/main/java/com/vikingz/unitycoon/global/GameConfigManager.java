@@ -35,7 +35,7 @@ public class GameConfigManager {
   public static String getFriendlyWindowSize() {
     Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
     if (Gdx.graphics.isFullscreen()) {
-      return displayMode.toString();
+      return "Fullscreen";
     }
     return String.format(
         "%dx%d",
