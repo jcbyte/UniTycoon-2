@@ -74,7 +74,6 @@ public class GameConfig implements Serializable {
     return INSTANCE;
   }
 
-
   public int getWindowWidth() {
     return windowWidth;
   }
