@@ -137,7 +137,7 @@ public class EventsManager {
   /**
    * Get a random instance of an event from a list of possible event classes.
    */
-  public Event getRandomEvent(List<Class<? extends Event>> eventList) {
+  private Event getRandomEvent(List<Class<? extends Event>> eventList) {
     if (eventList.isEmpty()) {
       throw new RuntimeException("There are no events");
     }

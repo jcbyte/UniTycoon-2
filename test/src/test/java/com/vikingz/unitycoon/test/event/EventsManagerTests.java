@@ -45,6 +45,4 @@ public class EventsManagerTests extends AbstractHeadlessGdxTest {
     verify(uiRendererMock, times(9)).showEvent(any());
     verify(uiRendererMock, times(1)).showEvent(isA(GraduationEvent.class));
   }
-
-  // todo test getRandomEvent
 }
