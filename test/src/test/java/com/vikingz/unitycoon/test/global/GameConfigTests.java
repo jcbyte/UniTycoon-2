@@ -62,19 +62,22 @@ public class GameConfigTests extends AbstractHeadlessGdxTest {
   private void mockPreferences(Preferences mockedPreferences) {
     Application appMock = mock(Application.class);
     when(appMock.getPreferences(any())).thenReturn(mockedPreferences);
+    Gdx.app = appMock;
   }
 
   @Test
   public void testLoadGameConfig() {
-    String savedJsonString = "";
-
     Preferences preferencesMock = mock(Preferences.class);
-    when(preferencesMock.getString("config")).thenReturn(savedJsonString);
     mockPreferences(preferencesMock);
 
+    String savedJsonString = "";
+    when(preferencesMock.getString("config")).thenReturn(savedJsonString);
     GameConfigManager.loadGameConfig();
-
-    // todo check same
+    assertEquals(1792, GameConfig.getInstance().getWindowWidth());
+    assertEquals(1008, GameConfig.getInstance().getWindowHeight());
+    assertEquals(1f, GameConfig.getInstance().getSoundVolumeValue());
+    assertEquals(1f, GameConfig.getInstance().getMusicVolumeValue());
+    assertEquals(5, GameConfig.getInstance().getLeaderboard().length);
 
     savedJsonString = "{\"invalid json\",]]";
     when(preferencesMock.getString("config")).thenReturn(savedJsonString);
