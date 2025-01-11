@@ -49,7 +49,7 @@ public class EventTests extends AbstractHeadlessGdxTest {
     assertFalse(o.isDisabled());
 
     Event.Option o1 = new Event.Option(r, "World!", true);
-    assertEquals("World", o1.getText());
+    assertEquals("World!", o1.getText());
     assertEquals(r, o1.getAction());
     assertTrue(o1.isDisabled());
   }
