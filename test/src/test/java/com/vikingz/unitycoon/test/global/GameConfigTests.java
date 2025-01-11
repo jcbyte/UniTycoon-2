@@ -1,7 +1,9 @@
 package com.vikingz.unitycoon.test.global;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -81,23 +83,32 @@ public class GameConfigTests extends AbstractHeadlessGdxTest {
 
     savedJsonString = "{\"invalid json\",]]";
     when(preferencesMock.getString("config")).thenReturn(savedJsonString);
+    GameConfigManager.loadGameConfig();
+    assertEquals(1792, GameConfig.getInstance().getWindowWidth());
+    assertEquals(1008, GameConfig.getInstance().getWindowHeight());
+    assertEquals(1f, GameConfig.getInstance().getSoundVolumeValue());
+    assertEquals(1f, GameConfig.getInstance().getMusicVolumeValue());
+    assertEquals(5, GameConfig.getInstance().getLeaderboard().length);
 
-    // todo check throw
-
-    savedJsonString = ""; // todo add valid
+    savedJsonString = "{windowWidth:1000,windowHeight:600,soundVolumeValue:0.7,musicVolumeValue:0.4,leaderboard:[{},{}]}";
     when(preferencesMock.getString("config")).thenReturn(savedJsonString);
-
-    // todo check sets correctly
+    GameConfigManager.loadGameConfig();
+    assertEquals(1000, GameConfig.getInstance().getWindowWidth());
+    assertEquals(600, GameConfig.getInstance().getWindowHeight());
+    assertEquals(0.7f, GameConfig.getInstance().getSoundVolumeValue());
+    assertEquals(0.4f, GameConfig.getInstance().getMusicVolumeValue());
+    assertEquals(2, GameConfig.getInstance().getLeaderboard().length);
   }
 
   @Test
   public void testSaveGameConfig() {
     Preferences preferencesMock = mock(Preferences.class);
-    // when(preferencesMock.putString(any(), any())); // todo get parameters used and assert these
     mockPreferences(preferencesMock);
 
     GameConfigManager.saveGameConfig();
 
+    // todo this any() should be the specific parameters from GameConfig
+    verify(preferencesMock, times(1)).putString(eq("config"), any());
     verify(preferencesMock, times(1)).flush();
   }
 
