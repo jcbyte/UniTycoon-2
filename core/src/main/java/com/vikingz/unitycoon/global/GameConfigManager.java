@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Json;
-import com.google.gson.JsonParseException;
 
 /**
  * This class allows us to save the GameConfig to a json file in player prefs.
@@ -76,7 +75,7 @@ public class GameConfigManager {
     try {
       conf = json.fromJson(GameConfig.class, configString);
       if (conf == null) {
-        throw new JsonParseException("null");
+        throw new Exception();
       }
 
       GameConfig.getInstance().setInstance(conf);
