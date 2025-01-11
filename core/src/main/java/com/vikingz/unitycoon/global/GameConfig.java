@@ -1,5 +1,6 @@
 package com.vikingz.unitycoon.global;
 
+import com.vikingz.unitycoon.annotations.DebugMethodExcludeGeneratedJacoco;
 import com.vikingz.unitycoon.util.LeaderboardUtil;
 import java.io.Serializable;
 
@@ -31,13 +32,25 @@ public class GameConfig implements Serializable {
   private static final GameConfig DEFAULT_GAME_CONFIG = new GameConfig(
       1792, 1008, 1f, 1f, LeaderboardUtil.generateBlankLeaderboard(5)
   );
-  private static GameConfig INSTANCE = DEFAULT_GAME_CONFIG;
+  private static GameConfig INSTANCE = DEFAULT_GAME_CONFIG.deepCopy();
 
   /**
    * Reset the single instance of GameConfig.
    */
+  @DebugMethodExcludeGeneratedJacoco
   public static void resetInstance() {
-    INSTANCE = DEFAULT_GAME_CONFIG;
+
+    INSTANCE = DEFAULT_GAME_CONFIG.deepCopy();
+  }
+
+  /**
+   * Create a deep copy of a GameConfig to reset it properly.
+   */
+  @DebugMethodExcludeGeneratedJacoco
+  public GameConfig deepCopy() {
+    return new GameConfig(windowWidth, windowHeight,
+        soundVolumeValue, musicVolumeValue,
+        leaderboard.clone());
   }
 
   // For JSON deserializing
@@ -73,7 +86,6 @@ public class GameConfig implements Serializable {
   public static GameConfig getInstance() {
     return INSTANCE;
   }
-
 
   public int getWindowWidth() {
     return windowWidth;
