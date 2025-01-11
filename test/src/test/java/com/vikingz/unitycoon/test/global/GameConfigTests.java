@@ -106,10 +106,14 @@ public class GameConfigTests extends AbstractHeadlessGdxTest {
     mockPreferences(preferencesMock);
 
     GameConfigManager.saveGameConfig();
-
-    // todo this any() should be the specific parameters from GameConfig
-    verify(preferencesMock, times(1)).putString(eq("config"), any());
+    verify(preferencesMock, times(1)).putString(eq("config"), eq("{windowWidth:1792,windowHeight:1008,soundVolumeValue:1,musicVolumeValue:1,leaderboard:[{},{},{},{},{}]}"));
     verify(preferencesMock, times(1)).flush();
+
+    GameConfig.getInstance().setSoundVolumeValue(0.1f);
+    GameConfig.getInstance().setMusicVolumeValue(0.6f);
+    GameConfigManager.saveGameConfig();
+    verify(preferencesMock, times(1)).putString(eq("config"), eq("{windowWidth:1792,windowHeight:1008,soundVolumeValue:0.1,musicVolumeValue:0.6,leaderboard:[{},{},{},{},{}]}"));
+    verify(preferencesMock, times(2)).flush();
   }
 
   @Test
