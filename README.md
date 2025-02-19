@@ -39,3 +39,7 @@ Creates a coverage report from the tests, located at `test/build/reports/jacoco`
 ```
 
 Will run checkstyle on all source code and test code files to ensure consistent coding practice.
+
+## Licence
+
+[Apache License 2.0](LICENSE)
